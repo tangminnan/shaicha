@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.carousel.dao.BannerDao">
+
+	<select id="get" resultType="com.shaicha.carousel.domain.BannerDO">
+		SELECT
+			ba.`name` AS `name`,
+			ba.id AS id,
+			ba.place AS place,
+			CASE
+				WHEN ba.place = 1 THEN '首页顶部'
+				ELSE '首页顶部'
+			END as placeName,
+			ba.type AS type,
+			CASE
+				WHEN ba.type = 1 THEN '一张图片'
+				ELSE '一张图片'
+			END as typeName,
+			date_format(ba.start_time, '%Y-%m-%d %H:%i:%s') AS startTime,
+			date_format(ba.end_time, '%Y-%m-%d %H:%i:%s') AS endTime,
+			date_format(ba.start_time, '%Y-%m-%d %H:%i:%s') AS startTime1,
+			date_format(ba.end_time, '%Y-%m-%d %H:%i:%s') AS endTime1,
+			ba.is_enable AS isEnable,
+			ba.add_time AS addTime,
+			ba.update_time AS updateTime,
+			ba.user_id AS userId,
+			ba.url AS url
+		FROM
+		t_banner AS ba
+		where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.carousel.domain.BannerDO">
+		SELECT
+			ba.`name` AS `name`,
+			ba.id AS id,
+			ba.place AS place,
+			ba.type AS type,
+			ba.start_time AS startTime,
+			ba.end_time AS endTime,
+			ba.is_enable AS isEnable,
+			ba.add_time AS addTime,
+			ba.update_time AS updateTime,
+			ba.user_id AS userId,
+			ba.url AS url
+		FROM
+		t_banner AS ba
+		<where>  
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="name != null and name != ''"> and name like concat('%',#{name},'%') </if>
+			<if test="place != null and place != ''"> and place = #{place} </if>
+			<if test="isEnable != null and isEnable != ''"> and is_enable = #{isEnable} </if>
+			<if test="startTime != null and startTime != ''"> and start_time &gt;=  #{startTime} </if>
+			<if test="endTime != null and endTime != ''"> and end_time &lt;= #{endTime} </if>
+		</where>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by id desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*) from t_banner
+		<where>  
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="name != null and name != ''"> and name = #{name} </if>
+			<if test="place != null and place != ''"> and place = #{place} </if>
+			<if test="isEnable != null and isEnable != ''"> and is_enable = #{isEnable} </if>
+			<if test="startTime != null and startTime != ''"> and start_time &gt;=  #{startTime} </if>
+			<if test="endTime != null and endTime != ''"> and end_time &lt;= #{endTime} </if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.carousel.domain.BannerDO" useGeneratedKeys="true" keyProperty="id">
+		INSERT into t_banner (name,place,type,start_time,end_time,is_enable,add_time,update_time,user_id,url)
+		values
+		(
+			#{name}, 
+			#{place}, 
+			#{type},
+			#{startTime},
+			#{endTime},
+			#{isEnable},
+			#{addTime},
+			#{updateTime},
+			#{userId},
+			#{url}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.carousel.domain.BannerDO">
+		update t_banner 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="place != null">`place` = #{place}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="startTime != null">`start_time` = #{startTime}, </if>
+			<if test="endTime != null">`end_time` = #{endTime}, </if>
+			<if test="isEnable != null">`is_enable` = #{isEnable}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="url != null">`url` = #{url} </if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_banner where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_banner where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

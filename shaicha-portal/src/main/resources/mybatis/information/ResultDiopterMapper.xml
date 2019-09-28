@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultDiopterDao">
+
+	<select id="getByOptometryId" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,`ifRL` from t_result_diopter where t_optometry_id = #{tOptometryId} 
+	</select>
+	<insert id="saveDiopterDO" parameterType="com.shaicha.information.domain.ResultDiopterDO" useGeneratedKeys="true" keyProperty="tDiopterId">
+		insert into t_result_diopter
+		(
+			`t_optometry_id`, 
+			`diopter_s`, 
+			`diopter_c`, 
+			`diopter_a`, 
+			`believe`, 
+			`num`, 
+			`type`, 
+			`ifRL`,
+			first_second
+		)
+		values
+		(
+			#{tOptometryId}, 
+			#{diopterS}, 
+			#{diopterC}, 
+			#{diopterA}, 
+			#{believe}, 
+			#{num}, 
+			#{type}, 
+			#{ifrl},
+			#{firstSecond}
+		)
+	</insert>
+	
+	
+	<delete id="removeAll">
+		delete from t_result_diopter where t_optometry_id=#{value}
+	</delete>
+	
+
+</mapper>

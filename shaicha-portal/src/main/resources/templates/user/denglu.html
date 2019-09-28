@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>登录</title>
+<script type="text/javascript" src="/js/Font.js"></script>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
+<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+<!-- jQuery Validation plugin javascript-->
+<script src="/js/ajax-util.js"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+<script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
+<script type="text/javascript">
+	//密码可视设置
+	function OpenEye(){
+		 $('#seeEye').addClass('hid');
+		 $('#closeEye').removeClass('hid');
+		 $('#password').attr('type','password');
+	}
+	function ShutEye(){
+		 $('#closeEye').addClass('hid');
+		 $('#seeEye').removeClass('hid');
+		$('#password').attr('type','text');
+	}
+	//
+	function st_OpenEye(){
+		 $('#st-seeEye').addClass('hid');
+		 $('#st-closeEye').removeClass('hid');
+		 $('#st-password').attr('type','password');
+	}
+	function st_ShutEye(){
+		 $('#st-closeEye').addClass('hid');
+		 $('#st-seeEye').removeClass('hid');
+		$('#st-password').attr('type','text');
+	}
+
+    function login() {
+    	
+    	var phonePattern = /^1\d{10}$/; //手机号 /^1[3|5|7|8]\d{9}$/
+    	if( $('#username').val()==null || $('#username').val()==""){
+    		layer.msg("请输入手机号"); return;
+    	}
+    	if(phonePattern.test($('#username').val())==false){
+			layer.msg("请输入正确手机号");
+			return false;
+		}
+    	if( $('#password').val()==null || $('#password').val()==""){
+    		layer.msg("请输入密码"); return;
+    	}
+        $.ajax({
+            type: "POST",
+            url: ctx+"login",
+            data: $('#signupForm').serialize(),
+            success: function (r) {
+                 if (r.code == 0) {
+                    var index = layer.load(1, {
+                        shade: [0.1,'#fff'] //0.1透明度的白色背景
+                    });
+                    parent.location.href = '/index';
+                } else {
+                    layer.msg(r.msg);
+                }
+            },
+        });
+    }
+
+</script>
+</head>
+<body>
+<div class="Top">登录</div>
+<section>
+	<div class="logo"><img src="/img/LOGO.png" alt=""/></div>
+    <div class="login">
+     <form id="signupForm">
+        <div class="tel">
+            <em></em>
+            <input type="text" id="region" name="username" id="username" placeholder="请输入手机号码" maxlength="11" value="" />
+        </div>
+        
+       <div class="tel psd">
+            <em></em>
+            <input class="loginPsd" type="password" maxlength="16" id="password" name="password" value="" placeholder="请输入密码">
+            <i id="closeEye" onclick="ShutEye()"></i><i id="seeEye" onclick="OpenEye()" class="hid"></i>
+        </div>
+      	<div class="txt font-28"><a href="/zhuce" class="fl">注册账号</a><a href="/wangjimima" class="fr">忘记密码</a></div>
+        <a id="login" onclick="login();" class="denglu font-36">登<i></i>录</a>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>
+

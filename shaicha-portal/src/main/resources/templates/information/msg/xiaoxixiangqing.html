@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="/img/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>消息详情</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#forDetailsDiv").html($("#forDetailsIn").val());
+});
+</script>
+</head>
+<body class="bg-white">
+<div class="Top"><span onclick="javascript:history.back(-1);">&nbsp;</span>消息详情</div>
+<dl class="msg-xiangq">
+	<dt th:text="${msg.name}"></dt>
+	<dd th:text="${msg.addTime1}"></dd>
+</dl>
+
+	<input type="hidden" id="forDetailsIn" th:value="${msg.forDetails}">
+<div class="jieshao" style="border:none;" th:html="${msg.forDetails}" id="forDetailsDiv">
+<p>梵蒂冈和钛合金他估计</p>
+	<!-- 
+	<p>阿尔伯特·爱因斯坦（Albert.Einstein，1879年3月14日—1955年4月18日），出生于德国符腾堡王国乌尔姆市，毕业于苏黎世大学，犹太裔物理学家。</p>
+    <img src="images/pic.jpg" alt=""/>
+    <p>爱因斯坦1879年出生于德国乌尔姆市的一个犹太人家庭（父母均为犹太人），1900年毕业于苏黎世联邦理工学院，入瑞士国籍。1905年，获苏黎世大学哲学博士学位，爱因斯坦提出光子假设，成功解释了光电效应，因此获得1921年诺贝尔物理奖，1905年创立狭义相对论。1915年创立广义相对论。1955年4月18日去世，享年76岁。
+爱因斯坦为核能开发奠定了理论基础，开创了现代科学技术新纪元，被公认为是继伽利略、牛顿以来最伟大的物理学家。1999年12月26日，爱因斯坦被美国《时代周刊》评选为“世纪伟人”。</p>
+ -->
+</div>
+</body>
+</html>
+

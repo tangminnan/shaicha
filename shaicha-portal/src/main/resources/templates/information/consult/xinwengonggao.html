@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="/img/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>新闻公告</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+</head>
+<body>
+<!--头部-->
+<div class="news-tit font-36">
+	<p class="fl" style="font-size: .3rem;width: .95rem;height: .9rem;text-align: right;background: url(../img/fanhui.png) no-repeat left center;-webkit-background-size: .24rem .44rem;background-size: .24rem .44rem; position: absolute;left: .24rem;top: 0;" 
+	onclick="javascript:location.href='/index';"></p>
+	<span onclick="javascript:location.href = '/index'">&nbsp;</span><span>银网物业</span>
+	
+</div>
+<!--新闻公告导航-->
+<div class="news-daoh bg-white font-30">
+	<ul>
+		<li th:class="${type == 0 ? 'on' : ''}" ><a href="/information/consult?type=0" >物业动态</a></li>
+		<li th:class="${type == 1 ? 'on' : ''}" ><a href="/information/consult?type=1">小区广告</a></li>
+		<li th:class="${type == 2 ? 'on' : ''}" ><a href="/information/consult?type=2">小区新闻</a></li>
+	</ul>
+</div>
+<!--新闻公告详情-->
+<div class="news-xiang">
+		<label th:each="con:${consultList}" class="checkbox-inline">
+			<div class="txt bg-white font-20">
+				<p th:text="${con.addTime}">2015-09-08<i></i>20:30:23</p>
+				<h3 th:text="${con.title}"></h3>
+				<label th:if="${con.url != ''}" class="checkbox-inline">
+					<ul>
+						<li><img th:src="${con.url}"  alt=""/></li>
+					</ul>
+				</label>
+				<a href="/information/consult/queryMsgDetails" th:href="${'/information/consult/queryMsgDetails?id='+con.id}">查看详情</a>
+			</div>
+	</label>
+<!-- 
+	<div class="txt bg-white font-20">
+    	<p>2015-09-08<i></i>20:30:23</p>
+        <h3>无首图物业动态</h3>
+        <a href="">查看详情</a>
+    </div>
+    <div class="txt bg-white font-20">
+    	<p>2015-09-08<i></i>20:30:23</p>
+        <h3 style="border:none;">有首图物业动态</h3>
+        <ul>
+        	<li><img src="images/xinwen.jpg" alt=""/></li>
+            <li><img src="images/xinwen.jpg" alt=""/></li>
+            <li><img src="images/xinwen.jpg" alt=""/></li>
+            <span>10图</span>
+        </ul>
+        <a href="">查看详情</a>
+    </div>
+	 -->
+</div>
+
+
+
+
+<!--底部-->
+<div class="bottom font-22">
+	<ul>
+		<a href="/index"><li class="sy">首页</li></a>
+		<a href="/owner/user"><li class="wode on">我的</li></a>
+	</ul>
+	<a href="/jiaofei/wuye"><img  src="/img/jiaofei.png" alt=""/></a>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+	//banner切换
+	TouchSlide({ 
+		slideCell:"#focus",
+		titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+		mainCell:".bd ul", 
+		effect:"left", 
+		autoPlay:true,//自动播放
+		autoPage:true, //自动分页 
+	});
+	
+	//小喇叭通告
+	function autoScroll(obj){  
+		$(obj).find("ul").animate({  
+			marginTop : "-.72rem"  
+		},500,function(){  
+			$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);  
+		})  
+	};  
+	$(function(){  
+		setInterval('autoScroll(".notice")',2000);
+	}); 
+</script>

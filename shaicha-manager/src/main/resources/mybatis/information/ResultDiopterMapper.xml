@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultDiopterDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,`ifRL`,first_second from t_result_diopter where t_diopter_id = #{value}
+	</select>
+
+	<select id="getByToptometryId" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,`ifRL`,first_second from t_result_diopter where t_optometry_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,`ifRL`,first_second from t_result_diopter
+        <where>  
+		  		  <if test="tDiopterId != null and tDiopterId != ''"> and t_diopter_id = #{tDiopterId} </if>
+		  		  <if test="tOptometryId != null and tOptometryId != ''"> and t_optometry_id = #{tOptometryId} </if>
+		  		  <if test="diopterS != null and diopterS != ''"> and diopter_s = #{diopterS} </if>
+		  		  <if test="diopterC != null and diopterC != ''"> and diopter_c = #{diopterC} </if>
+		  		  <if test="diopterA != null and diopterA != ''"> and diopter_a = #{diopterA} </if>
+		  		  <if test="believe != null and believe != ''"> and believe = #{believe} </if>
+		  		  <if test="num != null and num != ''"> and num = #{num} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="ifrl != null and ifrl != ''"> and ifRL = #{ifrl} </if>
+		  		  <if test="firstSecond != null and firstSecond != ''"> and first_second = #{firstSecond} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t_diopter_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_diopter
+		 <where>  
+		  		  <if test="tDiopterId != null and tDiopterId != ''"> and t_diopter_id = #{tDiopterId} </if>
+		  		  <if test="tOptometryId != null and tOptometryId != ''"> and t_optometry_id = #{tOptometryId} </if>
+		  		  <if test="diopterS != null and diopterS != ''"> and diopter_s = #{diopterS} </if>
+		  		  <if test="diopterC != null and diopterC != ''"> and diopter_c = #{diopterC} </if>
+		  		  <if test="diopterA != null and diopterA != ''"> and diopter_a = #{diopterA} </if>
+		  		  <if test="believe != null and believe != ''"> and believe = #{believe} </if>
+		  		  <if test="num != null and num != ''"> and num = #{num} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="ifrl != null and ifrl != ''"> and ifRL = #{ifrl} </if>
+		  		  <if test="firstSecond != null and firstSecond != ''"> and first_second = #{firstSecond} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.ResultDiopterDO" useGeneratedKeys="true" keyProperty="tDiopterId">
+		insert into t_result_diopter
+		(
+			`t_optometry_id`, 
+			`diopter_s`, 
+			`diopter_c`, 
+			`diopter_a`, 
+			`believe`, 
+			`num`, 
+			`type`, 
+			`ifRL`,
+			first_second
+		)
+		values
+		(
+			#{tOptometryId}, 
+			#{diopterS}, 
+			#{diopterC}, 
+			#{diopterA}, 
+			#{believe}, 
+			#{num}, 
+			#{type}, 
+			#{ifrl},
+			#{firstSecond}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.ResultDiopterDO">
+		update t_result_diopter 
+		<set>
+			<if test="tOptometryId != null">`t_optometry_id` = #{tOptometryId}, </if>
+			<if test="diopterS != null">`diopter_s` = #{diopterS}, </if>
+			<if test="diopterC != null">`diopter_c` = #{diopterC}, </if>
+			<if test="diopterA != null">`diopter_a` = #{diopterA}, </if>
+			<if test="believe != null">`believe` = #{believe}, </if>
+			<if test="num != null">`num` = #{num}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="ifrl != null">`ifRL` = #{ifrl},</if>
+			<if test="firstSecond != null">`first_second` = #{firstSecond}</if>
+		</set>
+		where t_diopter_id = #{tDiopterId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_diopter where t_diopter_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_diopter where t_diopter_id in 
+		<foreach item="tDiopterId" collection="array" open="(" separator="," close=")">
+			#{tDiopterId}
+		</foreach>
+	</delete>
+
+</mapper>

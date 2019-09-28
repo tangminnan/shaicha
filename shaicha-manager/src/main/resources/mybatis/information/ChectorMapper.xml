@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ChectorDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.ChectorDO">
+		select `chector_id`,username,hospital,section,`deleted`,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,ifnull(`headshot`,'/img/tousu-pic1.jpg') headshot,`add_time`,`update_time`,`remark` from t_chector where chector_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.ChectorDO">
+		select `chector_id`,username,`deleted`,hospital,section,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,`headshot`,`add_time`,`update_time`,`remark` from t_chector
+        where deleted=0  
+		  		  <if test="chectorId != null and chectorId != ''"> and chector_id = #{chectorId} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		  <if test="chectorName != null and chectorName != ''"> and chector_name like concat('%', #{chectorName},'%')</if>
+		  		  <if test="doctorNum != null and doctorNum != ''"> and doctor_num = #{doctorNum} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="idCard != null and idCard != ''"> and id_card = #{idCard} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="headshot != null and headshot != ''"> and headshot = #{headshot} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  	
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by chector_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_chector where deleted=0  
+		
+		  		  <if test="chectorId != null and chectorId != ''"> and chector_id = #{chectorId} </if>
+		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		  <if test="chectorName != null and chectorName != ''"> and chector_name like concat('%', #{chectorName},'%') </if>
+		  		  <if test="doctorNum != null and doctorNum != ''"> and doctor_num = #{doctorNum} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="idCard != null and idCard != ''"> and id_card = #{idCard} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="headshot != null and headshot != ''"> and headshot = #{headshot} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.ChectorDO" useGeneratedKeys="true" keyProperty="chectorId">
+		insert into t_chector
+		(
+			`deleted`, 
+			`chector_name`, 
+			`doctor_num`, 
+			`sex`, 
+			`age`, 
+			`id_card`, 
+			`phone`, 
+			`email`, 
+			`headshot`, 
+			`add_time`, 
+			`update_time`, 
+			`remark`,
+			hospital,
+			section,
+			username
+		)
+		values
+		(
+			#{deleted}, 
+			#{chectorName}, 
+			#{doctorNum}, 
+			#{sex}, 
+			#{age}, 
+			#{idCard}, 
+			#{phone}, 
+			#{email}, 
+			#{headshot}, 
+			#{addTime}, 
+			#{updateTime}, 
+			#{remark},
+			#{hospital},
+			#{section},
+			#{username}	
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.ChectorDO">
+		update t_chector 
+		<set>
+			<if test="deleted != null">`deleted` = #{deleted}, </if>
+			<if test="chectorName != null">`chector_name` = #{chectorName}, </if>
+			<if test="doctorNum != null">`doctor_num` = #{doctorNum}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="idCard != null">`id_card` = #{idCard}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="headshot != null">`headshot` = #{headshot}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="remark != null">`remark` = #{remark},</if>
+			<if test="hospital != null">`hospital` = #{hospital}, </if>
+			<if test="section != null">`section` = #{section}</if>
+		</set>
+		where chector_id = #{chectorId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_chector where chector_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_chector where chector_id in 
+		<foreach item="chectorId" collection="array" open="(" separator="," close=")">
+			#{chectorId}
+		</foreach>
+	</delete>
+
+</mapper>

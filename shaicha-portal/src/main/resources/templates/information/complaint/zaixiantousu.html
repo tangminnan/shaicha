@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>个人信息</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<script type="text/javascript">
+		$(function(){
+			wuye();
+		})
+		var i = 0;
+		var num = 0;
+		function deleteLi(id){
+			$("#"+id).remove();
+			num--;
+		} 
+
+		function udpateFileUrl(obj,id){
+			if(num >= 5){
+				alert('最多可上传5张');
+				return false;
+			}
+			var fileURL = getObjectURL(obj.files[0]);
+			if(fileURL) {
+				i++;
+				var li = '<li id="addFile'+i+'">';
+				li+='<input type="file" style="display: none;" onchange="udpateFileUrl(this,\''+i+'\')" id="files'+i+'" name="listImg" accept="image/*" ></input>';
+				li+='<label for="files'+i+'"><img id="addFileImg'+i+'" src="/img/tousu-pic1.jpg" alt=""/></label>';
+				li+='</li>';
+				$("#addFileImg"+id).attr("src", fileURL);
+				$("#addFile"+id).after(li) 
+				$("#addFile"+id).append('<em onclick="deleteLi(\'addFile'+id+'\');"></em>'); 
+				num++
+			}
+		}
+		
+		//建立一個可存取到該file的url
+		function getObjectURL(file) {
+			var url = null ; 
+			if (window.createObjectURL!=undefined) { // basic
+				url = window.createObjectURL(file) ;
+			} else if (window.URL!=undefined) { // mozilla(firefox)
+				url = window.URL.createObjectURL(file) ;
+			} else if (window.webkitURL!=undefined) { // webkit or chrome
+				url = window.webkitURL.createObjectURL(file) ;
+			}
+			return url;
+		}
+		
+		function wuye(){
+			var id = $("#plotId").val();
+			$.ajax({
+				url : '/information/complaint/getPlotPhone',
+				data : {'id':id},
+				type :  "POST",
+				dataType : this.dataType,
+				async : this.async,
+				success : function(data) {
+					if (data.code == 0) {
+						$("#phone").html(data.phone);
+					} else {
+						layer.msg(data.msg)
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("error: " + errorThrown);
+				}
+			});
+
+		}
+		
+		function save() {
+			var content = $('#content').val();
+			if(content == ''){
+				layer.msg("请描述您要投诉的详情")
+				return false;
+			}
+			$("#findDxCode").removeAttr("onclick");
+			for(var j = 0; j<= num;j++){
+				var files = $("#files"+j).val();
+				if(files == '' || typeof(files)=="undefined"){
+					deleteLi('addFile'+j);
+				}
+			}
+			/* var files = $("input[name]").attr("listImg"); //$('input[name="listImg"]').prop('files');//获取到文件列表
+			alert(files);
+			if(files.length == 0){
+				alert('请选择文件');
+				return;
+			} 
+			
+			return;
+			*/
+			
+			var formData = new FormData(document.getElementById("signupForm"));
+		 	$.ajax({
+					//url : '/owner/editInfo',
+					url : '/information/complaint/save',
+				 	data: formData, 
+					type : "POST",
+					dataType : this.dataType,
+					processData:false,
+					contentType:false,
+					async : this.async,
+					success : function(data) {
+						if (data.code == 0) {
+							layer.msg("操作成功");
+							 setTimeout(function(){
+								 parent.location.href = '/index';
+		 					}, 2000 )
+						} else {
+							$("#findDxCode").bind("click",save);
+							layer.msg(data.msg)
+						}
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						$("#findDxCode").bind("click",save);
+						layer.msg("error: " + errorThrown);
+					}
+				});
+			/* var formData = new FormData($( "#signupForm" )[0]);
+			$.ajax({
+				url : "/information/complaint/save",
+				data : formData,// 你的formid
+				type : "POST",
+				dataType : this.dataType,
+				processData:false,
+				contentType:false,
+				async : this.async,
+				success : function(data) {
+					if (data.code == 0) {
+						layer.msg("操作成功");
+						setTimeout(function(){ 
+							window.location.href='/index';
+						}, 1000);
+					} else {
+						layer.msg(data.msg)
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					layer.msg("error: " + errorThrown);
+				}
+			}); */
+		}
+	</script>
+</head>
+<body>
+<div class="Top"><span onclick="javascript:history.back(-1);">&nbsp;</span>在线投诉</div>
+<div id="edit">
+<form id="signupForm">
+	<div class="tousu-online">
+		<p>
+			<span>投诉类型</span>
+			<em style="background: none">
+				<select id="type" name="type">
+					<option value="1">服务投诉</option>
+					<option value="2">环境投诉</option>
+					<option value="3">噪音投诉</option>
+					<option value="4">扰民投诉</option>
+					<option value="5">乱收费投诉</option>
+					<option value="9">其它</option>
+				</select>
+			</em>
+		</p>
+		<div class="wenzi"><textarea name="content" maxlength="200" id="content" cols="30" rows="10" placeholder="请输入详细描述，最多200字"></textarea></div>
+			<ul class="tousu-pic imgDelete">
+				<li id="addFile0">
+					
+					<input type="file" style="display: none;" onchange="udpateFileUrl(this,'0')" id="files0" name="listImg" accept="image/*" ></input>
+					<label for="files0"><img id="addFileImg0" src="/img/tousu-pic1.jpg" alt=""/></label>
+					
+				</li>
+			</ul>
+			<div class="cl"></div>
+			<ul class="tousu-txt bg-white">
+				<li>
+					<span>物业地址</span>
+					<em>
+						<select id="plotId" name="plotId" onchange="wuye();">
+							<div th:each="plot:${pdoL}">
+								<option  th:value="${plot.plotId}"   th:text="${plot.address}"></option>
+							</div>
+						</select>
+					</em>
+				</li>
+				<li><span>物业电话</span><em id="phone"></em></li>
+			</ul>
+	</div>
+	<input class="tijiao font-32" type="button" id="findDxCode" onclick="save();" value="提交投诉"/>
+	
+	<!-- <ul class="xinxi font-30">
+	<li class="toux"><p>头像</p><span><input type="file" style="display: none;" onchange="udpateFileUrl(this)" id="files" name="fileImg" accept="image/*" ></input><label for="files"><img th:src="${user.heardUrl==null? '/img/touxiang.png': user.heardUrl}" alt="" id="addFileImg"/></label></span></li>
+	<li><p>昵称</p><input type="text" th:value="${user.nickname}" maxlength="10" name="nickname"></input></li>
+	<li>
+		<p>手机号</p>
+		<input type="text" th:value="${user.phone}" name="username" readonly="readonly"></input>
+	</li>
+	<li><p>真实姓名</p><input type="text" th:value="${user.name}" name="name"></input></li>
+	<li><p>身份证号</p><input type="text" th:value="${user.identityCard}" name="identityCard" id="identityCard" maxlength="18"></input></li>
+</ul>
+<div class="tuichu" style="background-color:red"><a onclick="query();">确定</a></div> -->
+</form>
+</div>
+</body>
+</html>
+

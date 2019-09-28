@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.owneruser.dao.OwnerUserDao">
+
+	<select id="get" resultType="com.shaicha.owneruser.domain.OwnerUserDO">
+		select `id`,`user_id`,username,`open_id`,`nickname`,`password`,`phone`,`heard_url`,`name`,`identity_card`,`register_time`,`pay_num`,`serve_num`,`balance`,`restitution`,`pay_time`,`login_time`,`add_time`,`update_time`,`delete_flag`,`username`,`sex`,`birthday` from t_chector where id = #{value}	
+	</select>
+	
+	<select id="getbyname" resultType="com.shaicha.owneruser.domain.OwnerUserDO">
+		select `chector_id`,username,`deleted`,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,`headshot`,`add_time`,`update_time`,`remark`,`hospital`,`section` from t_chector where username = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.owneruser.domain.OwnerUserDO">
+		select `chector_id`,username,`deleted`,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,`headshot`,`add_time`,`update_time`,`remark`,`hospital`,`section` from t_chector
+        <where>  
+		  		<if test="chectorId != null and chectorId != ''"> and chector_id = #{chectorId} </if>
+		  		<if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
+		  		<if test="chectorName != null and chectorName != ''"> and chector_name like concat('%', #{chectorName},'%')</if>
+		  		<if test="doctorNum != null and doctorNum != ''"> and doctor_num = #{doctorNum} </if>
+		  		<if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		<if test="age != null and age != ''"> and age = #{age} </if>
+		  		<if test="idCard != null and idCard != ''"> and id_card = #{idCard} </if>
+		  		<if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		<if test="email != null and email != ''"> and email = #{email} </if>
+		  		<if test="headshot != null and headshot != ''"> and headshot = #{headshot} </if>
+		  		<if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		<if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		<if test="username != null and username != ''"> and username = #{username} </if>
+		  		<if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by chector_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_user
+		 <where>  
+		  		 <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		  		  <if test="openId != null and openId != ''"> and open_id = #{openId} </if>
+		  		  <if test="nickname != null and nickname != ''"> and nickname = #{nickname} </if>
+		  		  <if test="password != null and password != ''"> and password = #{password} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="heardUrl != null and heardUrl != ''"> and heard_url = #{heardUrl} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="registerTime != null and registerTime != ''"> and register_time = #{registerTime} </if>
+		  		  <if test="payNum != null and payNum != ''"> and pay_num = #{payNum} </if>
+		  		  <if test="serveNum != null and serveNum != ''"> and serve_num = #{serveNum} </if>
+		  		  <if test="balance != null and balance != ''"> and balance = #{balance} </if>
+		  		  <if test="restitution != null and restitution != ''"> and restitution = #{restitution} </if>
+		  		  <if test="payTime != null and payTime != ''"> and pay_time = #{payTime} </if>
+		  		  <if test="loginTime != null and loginTime != ''"> and login_time = #{loginTime} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.owneruser.domain.OwnerUserDO" useGeneratedKeys="true" keyProperty="chectorId">
+		insert into t_chector
+		(
+			`deleted`, 
+			`chector_name`, 
+			`doctor_num`, 
+			`sex`, 
+			`age`, 
+			`id_card`, 
+			`phone`, 
+			`email`, 
+			`headshot`, 
+			`add_time`, 
+			`update_time`, 
+			`remark`,
+			hospital,
+			section,
+			username,
+			login_time
+		)
+		values
+		(
+			#{deleted}, 
+			#{chectorName}, 
+			#{doctorNum}, 
+			#{sex}, 
+			#{age}, 
+			#{idCard}, 
+			#{phone}, 
+			#{email}, 
+			#{headshot}, 
+			#{addTime}, 
+			#{updateTime}, 
+			#{remark},
+			#{hospital},
+			#{section},
+			#{username},
+			#{loginTime}	
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.shaicha.owneruser.domain.OwnerUserDO">
+		update t_chector 
+		<set>
+			<if test="deleted != null">`deleted` = #{deleted}, </if>
+			<if test="chectorName != null">`chector_name` = #{chectorName}, </if>
+			<if test="doctorNum != null">`doctor_num` = #{doctorNum}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="idCard != null">`id_card` = #{idCard}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="headshot != null">`headshot` = #{headshot}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="remark != null">`remark` = #{remark},</if>
+			<if test="hospital != null">`hospital` = #{hospital}, </if>
+			<if test="section != null">`section` = #{section},</if>
+			<if test="loginTime != null">`login_time` = #{loginTime},</if>
+			<if test="username != null">`username` = #{username}</if>
+		</set>
+		where chector_id = #{chectorId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_user where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_user where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

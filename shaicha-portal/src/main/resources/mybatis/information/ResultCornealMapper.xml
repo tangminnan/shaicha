@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultCornealDao">
+
+	<select id="getByOptometryId" resultType="com.shaicha.information.domain.ResultCornealDO">
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL` from t_result_corneal where t_optometry_id = #{tOptometryId} 
+	</select>
+	<delete id="removeAll">
+		delete from t_result_corneal where t_optometry_id=#{value}
+	</delete>
+	
+	<insert id="saveCornealDO" parameterType="com.shaicha.information.domain.ResultCornealDO" useGeneratedKeys="true" keyProperty="tCornealId">
+		insert into t_result_corneal
+		(
+			`t_optometry_id`, 
+			`corneal_mm`, 
+			`corneal_d`, 
+			`corneal_deg`, 
+			`type`, 
+			`ifRL`,
+			first_second
+		)
+		values
+		(
+			#{tOptometryId}, 
+			#{cornealMm}, 
+			#{cornealD}, 
+			#{cornealDeg}, 
+			#{type}, 
+			#{ifrl},
+			#{firstSecond}
+		)
+	</insert>
+	
+</mapper>

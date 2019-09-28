@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="id" name="id" type="text" th:value="${model.id}" class="form-control" type="hidden">
+                        <div class="form-group">
+								<label class="col-sm-3 control-label">广告名称：</label>
+								<div class="col-sm-8">
+									<input id="name" readonly="readonly" name="name" class="form-control" type="text" th:value="${model.name}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">图片位置：</label>
+								<div class="col-sm-8">
+									<input id="name" readonly="readonly" name="name" class="form-control" type="text" th:value="${model.placeName}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">显示样式：</label>
+								<div class="col-sm-8">
+									<input id="name" readonly="readonly" name="name" class="form-control" type="text" th:value="${model.typeName}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">开始时间：</label>
+								<div class="col-sm-8">
+									<input id="startTime" readonly="readonly" name="startTime" th:value="${model.startTime1}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">结束时间：</label>
+								<div class="col-sm-8">
+									<input id="endTime" readonly="readonly" name="endTime" th:value="${model.endTime1}" class="form-control" type="text">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">状态：</label>
+								<div class="col-sm-8">
+									<select name="isEnable" disabled="disabled"  data-placeholder="选择类别" class="form-control chosen-select" tabindex="2" style="width: 100%">
+										<option value="0">启用</option>
+										<option value="1">禁用</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">上传图片：</label>
+								<div class="col-sm-8">
+									<img width="100" height="100" id="fileImgimgFile" alt="" th:src="${model.url}">
+								</div>
+							</div>
+                        <!-- <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/carousel/banner/edit.js"></script>
+
+</body>
+</html>

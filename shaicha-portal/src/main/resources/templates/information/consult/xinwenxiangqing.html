@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="/img/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>新闻详情</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#forDetailsDiv").html($("#forDetailsIn").val());
+	});
+</script>
+</head>
+<body class="bg-white">
+
+<div class="Top">
+	<span onclick="javascript:history.back(-1);">返回</span>
+	<!-- //0：物业动态；1：小区广告；2：小区新闻 -->
+	<label th:if="${consult.type == 0}">
+	物业动态
+	</label>
+	<label th:if="${consult.type == 1}">
+	小区广告
+	</label>
+	<label th:if="${consult.type == 2}">
+	小区新闻
+	</label>
+</div>
+
+<div class="wuye-dt font-26">
+	<h3 th:text="${consult.title}"></h3>
+	<span th:text="${consult.addTime1}"></span>
+	<p id="forDetailsDiv"></p>
+	<input type="hidden" id="forDetailsIn" th:value="${consult.details}">
+</div>
+
+</body>
+</html>
+

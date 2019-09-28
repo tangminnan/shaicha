@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>注册</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<script type="text/javascript">
+	//密码可视设置
+	function OpenEye(){
+		 $('#seeEye').addClass('hid');
+		 $('#closeEye').removeClass('hid');
+		 $('#password').attr('type','password');
+	}
+	function ShutEye(){
+		 $('#closeEye').addClass('hid');
+		 $('#seeEye').removeClass('hid');
+		$('#password').attr('type','text');
+	}
+	//
+	function st_OpenEye(){
+		 $('#st-seeEye').addClass('hid');
+		 $('#st-closeEye').removeClass('hid');
+		 $('#st-password').attr('type','password');
+	}
+	function st_ShutEye(){
+		 $('#st-closeEye').addClass('hid');
+		 $('#st-seeEye').removeClass('hid');
+		$('#st-password').attr('type','text');
+	}
+	//注册
+	function zhuce(){
+		
+		var phonePattern = /^1\d{10}$/; //手机号 /^1[3|5|7|8]\d{9}$/
+		var nickPattern = /^[A-Za-z\u4e00-\u9fa5]+$/; //昵称
+		var pwdPattern = new RegExp("[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,20}"); //密码
+		
+		//验证手机号
+		var phoneVal = $("#username").val();
+		if(phoneVal==""){
+			layer.msg("手机号不能为空");return false;
+			
+			//隐藏短信验证码按钮，如果手机号没有问题才打开
+		/* 	$("#findDxCode").removeAttr("style");
+			$("#findDxCode").removeAttr("onclick"); */
+		}
+		if(phonePattern.test(phoneVal)==false){
+			layer.msg("请输入正确手机号");
+			return false;
+		}
+		var nickn =$('#nickname').val();
+		if(nickn!=null || nickn!=""){
+			if(nickPattern.test(nickn)==false){
+				layer.msg("昵称只能输入中文或字母");
+				return false;
+			}
+		}
+		//验证密码
+		var pwdVal = $("#password").val();
+		if(pwdVal==""){
+			layer.msg("密码不能为空");
+			return false;
+		}
+		if(pwdPattern.test(pwdVal)==false){
+			layer.msg("请输入正确密码");
+			 return false;
+		}
+		
+		//验证二次密码
+		var pwd1Val = $("#st-password").val();
+		if(pwdVal!="" && pwd1Val!=pwdVal){
+			layer.msg("两次密码不一致");
+			return false;
+		}
+		
+		//验证图形验证码
+		var codeVal = $("#codenum").val();
+		if(codeVal==""){
+			layer.msg("验证码不能为空");
+			return false;
+		}
+		 $.ajax({
+	            type: "POST",
+	            url: ctx+"zhuce",
+	            data : {
+					'username' : phoneVal,
+					'password' : pwdVal,
+					'nickname' : $('#nickname').val(),
+					'codenum' : codeVal,
+				},
+	            success: function (r) {
+	                 if (r.code == 0) {
+	                	 layer.msg("注册成功");
+	                	 setTimeout(function(){
+	                		 parent.location.href = '/login';
+	 					}, 2000 )
+	                } else {
+	                    layer.msg(r.msg);
+	                }
+	            },
+	        });
+	}
+	//发送验证码
+	var wait=60;//倒计时
+	function sendcode(){
+ 		
+		var phonePattern = /^1\d{10}$/; //手机号 /^1[3|5|7|8]\d{9}$/
+		var pwdPattern = new RegExp("[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,20}"); //密码
+		
+		//验证手机号
+		var phoneVal = $("#username").val();
+		if(phoneVal==""){
+			layer.msg("手机号不能为空");return false;
+			
+		 } 
+		if(phonePattern.test(phoneVal)==false){
+			layer.msg("请输入正确手机号");
+			return false;
+		} 
+		//首次点击时发送验证码
+		if(wait==60){
+			verificationcodeNumber(phoneVal);//发送短信
+		}else if(wait==0){
+			wait=60;
+			$("#findDxCode").text("重新发送");
+			$("#findDxCode").attr("style","background:#4899eb;");
+			$("#findDxCode").bind("click",sendcode);
+		}else{
+			$("#findDxCode").text(wait + "s后重新发送");
+			wait--;
+			setTimeout(function(){sendcode();},1000);
+		}
+		
+	}
+	function verificationcodeNumber(phone){
+		 $.ajax({
+	            type: "POST",
+	            url: ctx+"verificationcodeNumber",
+	            data : {
+					'phone' : phone,
+					'type' : '0',
+				},
+	            success: function (r) {
+	                 if (r.code == 0) {
+	                	 layer.msg("短信发送成功");
+	                	 $("#findDxCode").text(wait + "s后重新发送");
+						$("#findDxCode").removeAttr("style");
+						$("#findDxCode").removeAttr("onclick");
+						$("#findDxCode").unbind("click");
+						wait--;
+						sendcode();
+	                } else {
+	                    layer.msg(r.msg);
+	                }
+	            },
+	        });
+	}
+</script>
+</head>
+<body>
+<div class="Top"><a href=/login""><span>&nbsp;</span></a>注册</div>
+<section class="zhuce">
+    <div class="login">
+       <form id="signupForm">
+        <div class="tel nic">
+            <em></em>
+            <input type="text"  placeholder="请输入昵称" id="nickname" name="nickname"  maxlength="10"/>
+        </div>
+        <div class="tel psd">
+            <em></em>
+            <input class="loginPsd" type="text" maxlength="16" id="password" name="password" value="" placeholder="请输入密码">
+            <i id="closeEye" class="hid" onclick="ShutEye()"></i><i id="seeEye" onclick="OpenEye()"></i>
+        </div>
+       <div class="tel psd st-psd">
+            <em></em>
+            <input class="loginPsd" type="text" maxlength="16" id="st-password" name="st-password" value="" placeholder="请输入确认密码">
+            <i id="st-closeEye" class="hid" onclick="st_ShutEye()"></i><i id="st-seeEye" onclick="st_OpenEye()"></i>
+        </div>
+        <div class="tel sent">
+            <em></em>
+            <input type="text" placeholder="请输入手机号" maxlength="11" id="username" name="username"/>
+            <span onclick="sendcode();" id="findDxCode">获取验证码</span>
+        </div>
+        <div class="tel bh">  
+            <em></em>
+            <input type="text" placeholder="请输入验证码" id="codenum" name="codenum"/>
+        </div>
+      	
+        <a class="denglu font-36" onclick="zhuce();" >注<i></i>册</a>
+      </form>
+    </div>
+</section>
+</body>
+</html>
+

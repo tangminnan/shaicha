@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.StudentDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.StudentDO">
+		select `id`,last_check_time,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code from t_student where id = #{value}
+	</select>
+	
+	<update id="updateLastCheckTime">
+		update t_student set last_check_time=#{date} where id=#{studentId}
+	</update>
+	
+	<select id="getStudentInfo" resultType="com.shaicha.information.domain.StudentDO">
+		select `id`,last_check_time,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code from t_student where identity_card = #{value}
+	</select>
+
+</mapper>

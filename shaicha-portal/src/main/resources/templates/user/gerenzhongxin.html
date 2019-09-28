@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>我的</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+</head>
+<body>
+<div class="zxin font-30">
+	<div class="zx-top">
+    	<div class="Top" style="background:none;margin-bottom:.2rem"><a href="/index"><span>&nbsp;</span></a>我的</div>
+    	<img th:src="${user.heardUrl==null? '/img/touxiang.png': user.heardUrl}" alt=""/>
+        <p th:text="${user.nickname}"></p>
+        <p th:text="${user.phone}"></p>
+        <div class="my font-28">
+        	<a href="/owner/userPlot">我的房屋</a>
+            <a href="/information/order">我的账单</a>
+        </div>
+        <a href="/owner/userInfo"><em></em></a>
+    </div>
+    <div class="zx-mid">
+    	<ul>
+    		<a href="/information/questionnaire/myQuestionnaire"><li>我的活动</li></a>
+           <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2ee172ca5977381&redirect_uri=https%3a%2f%2fdingshi.wx.hg.jergavin.com%2finformation%2frepair%2flistMap&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect"> <li class="fuw">我的服务</li></a>
+    	</ul>
+        <ul>
+    		<li class="tell">客服电话</li>
+            <a href="/jieshao"><li class="js">公司介绍</li></a>
+    	</ul>
+    </div>
+    <div class="bottom font-22">
+    	<ul>
+        <a href="/index"><li class="sy">首页</li></a>
+       <a href="/owner/user"> <li class="wode on">我的</li></a>
+    	</ul>
+        <a href="/jiaofei/wuye"><img  src="/img/jiaofei.png" alt=""/></a>
+    </div>    
+</div>
+<div class="pop-kefu font-28">
+	<div></div>
+	<ul>
+		<li><p>客服电话1</p><span><a href="tel:13255687943">13255687943</a></span></li>
+		<li><p>客服电话2</p><span><a href="tel:13255687943">13255687943</a></span></li>
+		<li class="last"><p>客服电话3</p><span><a href="tel:10086">10086</a></span></li>
+		<img src="/img/kefu.png" alt=""/>
+	</ul>
+</div>
+</body>
+</html>
+<script>
+	$('.zx-mid .tell').click(function(){
+		$('.pop-kefu div').show();
+		$('.pop-kefu ul').show();
+	});
+	$('.pop-kefu div').click(function(){
+		$('.pop-kefu div').hide();
+		$('.pop-kefu ul').hide();
+	});
+</script>

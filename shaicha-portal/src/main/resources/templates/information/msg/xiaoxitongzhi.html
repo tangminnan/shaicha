@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="/img/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+
+<title>消息通知</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script type="text/javascript">
+	function index(){
+		window.location.href='/index';
+	}
+</script>
+</head>
+<body>
+<div class="Top"><span onclick="index();">&nbsp;</span>消息通知</div>
+<div class="msg-tongzhi">
+	<label th:each="msg:${msgList}" class="checkbox-inline">
+		<div class="tongzhi bg-white">
+			<p><span th:text="${msg.addTime}"></span><span style="color: #3896ff;" th:text="${msg.name}"></span></p>
+			<a href="/information/msg/queryMsgDetails" th:href="${'/information/msg/queryMsgDetails?id='+msg.id+'&muId='+msg.muId}">查看详情</a>
+		</div>
+	</label>
+	<!-- 
+	<div class="tongzhi bg-white">
+    	<p><span>2015-09-08<i></i>20:30:23</span>个人通知</p>
+        <a href="">查看详情</a>
+    </div>
+    <div class="tongzhi bg-white">
+    	<p><span>2015-09-08<i></i>20:30:23</span>个人通知</p>
+        <a href="">查看详情</a>
+    </div>
+	 -->
+	
+</div>
+
+</body>
+</html>
+

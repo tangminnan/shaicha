@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultAdjustingDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.ResultAdjustingDO">
+		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting where t_adjusting__id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.ResultAdjustingDO">
+		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting
+        <where>  
+		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting__id = #{tAdjustingId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="adjustingOd != null and adjustingOd != ''"> and adjusting_od = #{adjustingOd} </if>
+		  		  <if test="adjustingOs != null and adjustingOs != ''"> and adjusting_os = #{adjustingOs} </if>
+		  		  <if test="adjustingOu != null and adjustingOu != ''"> and adjusting_ou = #{adjustingOu} </if>
+		  		  <if test="jjOd != null and jjOd != ''"> and jj_od = #{jjOd} </if>
+		  		  <if test="jjOs != null and jjOs != ''"> and jj_os = #{jjOs} </if>
+		  		  <if test="jjOu != null and jjOu != ''"> and jj_ou = #{jjOu} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t_adjusting__id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_adjusting
+		 <where>  
+		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting__id = #{tAdjustingId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="adjustingOd != null and adjustingOd != ''"> and adjusting_od = #{adjustingOd} </if>
+		  		  <if test="adjustingOs != null and adjustingOs != ''"> and adjusting_os = #{adjustingOs} </if>
+		  		  <if test="adjustingOu != null and adjustingOu != ''"> and adjusting_ou = #{adjustingOu} </if>
+		  		  <if test="jjOd != null and jjOd != ''"> and jj_od = #{jjOd} </if>
+		  		  <if test="jjOs != null and jjOs != ''"> and jj_os = #{jjOs} </if>
+		  		  <if test="jjOu != null and jjOu != ''"> and jj_ou = #{jjOu} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.ResultAdjustingDO" useGeneratedKeys="true" keyProperty="tAdjustingId">
+		insert into t_result_adjusting
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`adjusting_od`, 
+			`adjusting_os`, 
+			`adjusting_ou`, 
+			`jj_od`, 
+			`jj_os`, 
+			`jj_ou`, 
+			`check_date`, 
+			`delete_flag`
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{adjustingOd}, 
+			#{adjustingOs}, 
+			#{adjustingOu}, 
+			#{jjOd}, 
+			#{jjOs}, 
+			#{jjOu}, 
+			#{checkDate}, 
+			#{deleteFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.ResultAdjustingDO">
+		update t_result_adjusting 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="adjustingOd != null">`adjusting_od` = #{adjustingOd}, </if>
+			<if test="adjustingOs != null">`adjusting_os` = #{adjustingOs}, </if>
+			<if test="adjustingOu != null">`adjusting_ou` = #{adjustingOu}, </if>
+			<if test="jjOd != null">`jj_od` = #{jjOd}, </if>
+			<if test="jjOs != null">`jj_os` = #{jjOs}, </if>
+			<if test="jjOu != null">`jj_ou` = #{jjOu}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+		</set>
+		where t_adjusting__id = #{tAdjustingId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_adjusting where t_adjusting__id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_adjusting where t_adjusting__id in 
+		<foreach item="tAdjustingId" collection="array" open="(" separator="," close=")">
+			#{tAdjustingId}
+		</foreach>
+	</delete>
+
+</mapper>

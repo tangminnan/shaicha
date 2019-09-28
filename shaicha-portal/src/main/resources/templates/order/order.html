@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>我的账单</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+</head>
+<body>
+<div class="my-zhangdan">
+	<div class="my-zhangdan-top bg-white">
+    	<a href="/owner/user"><p class="fanhui fl"><img src="/img/zdan-arr.png" alt=""/></p></a>
+        <p class="txt fl font-36">我的账单</p>
+        <!-- <p class="sousuo fr"><img src="images/zdan-sousuo.png" alt=""/></p> -->
+    </div>
+    <div class="my-zhangdan-hu bg-white">
+    	<div class="bg">
+        	<p class="all font-24">全部账户</p>
+            <ul class="txt font-28">
+            	<li>全部支出：<span th:text="${sum}"></span></li>
+             <!--    <li>当月返还：<span>6,360.00</span></li> -->
+            </ul>
+            <p class="danwei font-24">单位：元</p>
+<!--             <div class="nav">
+                <p>2017-12</p>
+                <ul class="new">
+                    <li>2017-11</li>
+                    <li>2017-10</li>
+                    <li>2017-09</li>
+                    <li>2017-08</li>
+                    <li>2017-07</li>
+                    <li>2017-06</li>
+                    <li>2017-05</li>
+                    <li>2017-04</li>
+                    <li>2017-03</li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
+    <div class="my-zhangdan-jilu bg-white">
+    	<p>账单记录</p>
+        <ul>
+        <label th:each="order:${orderList}" class="checkbox-inline">
+        	<li>
+            	<span class="fl"><i th:text="${order.body}"></i><em th:text="${order.orderNo}"></em></span>
+                <span class="fr">- ¥<i th:text="${order.totalFee}"></i><em th:text="${order.createTime}"></em></span>
+            </li>
+         </label>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+$(function(){
+
+	$(".nav p").click(function(){
+		var ul=$(".new");
+		if(ul.css("display")=="none"){
+			ul.slideDown();
+		}else{
+			ul.slideUp();
+		}
+	});
+	
+	$(".nav li").click(function(){
+		var li=$(this).text();
+		$(".nav p").html(li);
+		$(".new").hide();
+		/*$(".set").css({background:'none'});*/
+		$("p").removeClass("select") ;   
+	});
+})
+</script>
+

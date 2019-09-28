@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultCornealDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.ResultCornealDO">
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal where t_corneal_id = #{value}
+	</select>
+	
+	<select id="queryByToptometryTd" resultType="com.shaicha.information.domain.ResultCornealDO">
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal where t_optometry_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.ResultCornealDO">
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal
+        <where>  
+		  		  <if test="tCornealId != null and tCornealId != ''"> and t_corneal_id = #{tCornealId} </if>
+		  		  <if test="tOptometryId != null and tOptometryId != ''"> and t_optometry_id = #{tOptometryId} </if>
+		  		  <if test="cornealMm != null and cornealMm != ''"> and corneal_mm = #{cornealMm} </if>
+		  		  <if test="cornealD != null and cornealD != ''"> and corneal_d = #{cornealD} </if>
+		  		  <if test="cornealDeg != null and cornealDeg != ''"> and corneal_deg = #{cornealDeg} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="ifrl != null and ifrl != ''"> and ifRL = #{ifrl} </if>
+		  		   <if test="firstSecond != null and firstSecond != ''"> and first_second = #{firstSecond} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t_corneal_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_corneal
+		 <where>  
+		  		  <if test="tCornealId != null and tCornealId != ''"> and t_corneal_id = #{tCornealId} </if>
+		  		  <if test="tOptometryId != null and tOptometryId != ''"> and t_optometry_id = #{tOptometryId} </if>
+		  		  <if test="cornealMm != null and cornealMm != ''"> and corneal_mm = #{cornealMm} </if>
+		  		  <if test="cornealD != null and cornealD != ''"> and corneal_d = #{cornealD} </if>
+		  		  <if test="cornealDeg != null and cornealDeg != ''"> and corneal_deg = #{cornealDeg} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="ifrl != null and ifrl != ''"> and ifRL = #{ifrl} </if>
+		  		  <if test="firstSecond != null and firstSecond != ''"> and first_second = #{firstSecond} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.ResultCornealDO" useGeneratedKeys="true" keyProperty="tCornealId">
+		insert into t_result_corneal
+		(
+			`t_optometry_id`, 
+			`corneal_mm`, 
+			`corneal_d`, 
+			`corneal_deg`, 
+			`type`, 
+			`ifRL`,
+			first_second
+		)
+		values
+		(
+			#{tOptometryId}, 
+			#{cornealMm}, 
+			#{cornealD}, 
+			#{cornealDeg}, 
+			#{type}, 
+			#{ifrl},
+			#{firstSecond}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.ResultCornealDO">
+		update t_result_corneal 
+		<set>
+			<if test="tOptometryId != null">`t_optometry_id` = #{tOptometryId}, </if>
+			<if test="cornealMm != null">`corneal_mm` = #{cornealMm}, </if>
+			<if test="cornealD != null">`corneal_d` = #{cornealD}, </if>
+			<if test="cornealDeg != null">`corneal_deg` = #{cornealDeg}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="ifrl != null">`ifRL` = #{ifrl},</if>
+			<if test="firstSecond != null">`first_second` = #{firstSecond}</if>
+		</set>
+		where t_corneal_id = #{tCornealId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_corneal where t_corneal_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_corneal where t_corneal_id in 
+		<foreach item="tCornealId" collection="array" open="(" separator="," close=")">
+			#{tCornealId}
+		</foreach>
+	</delete>
+
+</mapper>

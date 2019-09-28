@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png"
+	type="image/x-icon" />
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>修改房屋</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<style>
+/*------------------------------定位------------------------------*/
+.GPS{background:#fff;margin-top:.25rem;overflow: hidden;padding:.25rem 0;}
+.GPS select{width: 2.5rem;font-size:.26rem;float: left;margin-left:.25rem;height: .46rem;border:1px solid #cfcfcf;color:#333;}
+.shi{background:#fff;margin:.25rem 0;height:1.2rem;line-height:1.2rem;}
+/*.shi span{float: left;font-size:.3rem;color:#3896ff;width:1.5rem;position: relative;padding-left:.25rem;}
+.shi span em{width:.18rem;height:1.2rem;position:absolute;top:0;right:0;background:url(../images/xiala.png) no-repeat center;-webkit-background-size: contain;background-size: contain;}*/
+.shi input{float: left;width:7rem;margin-left:.25rem;margin-top:.2rem;font-size:.23rem;border:1px solid #cfcfcf;border-radius:.55rem;padding:.24rem .74rem;outline:none;background:url(../images/sousuo.png) no-repeat .3rem center;-webkit-background-size:.28rem .28rem;background-size:.28rem .28rem;}
+.dqxq dt{line-height:.6rem;margin-top:.15rem;margin-left:.24rem;color:#666;}
+.dqxq dd{line-height:.88rem;background:#fff;width: 100%;padding-left:.24rem;position: relative;color:#333;border-bottom:1px solid #f1f1f1;}
+.dqxq dd span{color: #3896ff;height: .88rem;line-height: .88rem;position:absolute;top:0;right:.24rem;}
+</style>
+<script type="text/javascript">
+	function chossef() {
+		$('#fangzhu').addClass('on');
+		$('#qinshu').removeClass('on');
+		$('#zuhu').removeClass('on');
+		$('#fangzhudiv').show();
+		$('#otherdiv').hide();
+		$('#relation').val("房主");
+	}
+	function chosseq() {
+		$('#qinshu').addClass('on');
+		$('#fangzhu').removeClass('on');
+		$('#zuhu').removeClass('on');
+		$('#fangzhudiv').hide();
+		$('#otherdiv').show();
+		$('#relation').val("亲属");
+	}
+	function chossez() {
+		$('#zuhu').addClass('on');
+		$('#fangzhu').removeClass('on');
+		$('#qinshu').removeClass('on');
+		$('#fangzhudiv').hide();
+		$('#otherdiv').show();
+		$('#relation').val("租户");
+	}
+	function chossed() {
+		$('#addplotid').hide();
+		$('#dingweiid').show();
+	}
+
+	function getplot() {
+		var city = $("#cityId").val();
+
+		$.ajax({
+			url : '/owner/getplot',
+			data : {
+				'city' : city
+			},
+			type : "POST",
+			dataType : this.dataType,
+			async : this.async,
+			success : function(data) {
+				if (data.code == 0) {
+					var temp_html = "";
+					$.each(data.plotList, function(i, plot) {
+						temp_html += "<option value='"+plot.id+"'>" + plot.name
+								+ "</option>";
+					});
+					$("#plotIds").html(temp_html);
+				} else {
+					layer.msg(data.msg)
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("error: " + errorThrown);
+			}
+		});
+
+	}
+	function savedizhi() {
+		var cityd = $("#cityId").val();
+		var plotd = $("#plotIds").val();
+		var plotdtxt = $("#plotIds").find("option:selected").text();
+		var addressd = $("#addressd").val();
+		if (addressd == null | addressd == "") {
+			layer.msg("请输入详细地址");
+			return;
+		}
+		$('#addplotid').show();
+		$('#dingweiid').hide();
+		$('em[name="dizhid"]').html($.trim(cityd) + $.trim(plotdtxt) + $.trim(addressd));
+		$('#plotId').val(plotd);
+		$('#address').val($.trim(cityd) + $.trim(plotdtxt) + $.trim(addressd));
+
+	}
+	
+    function submitplot() {
+    	var phonePattern = /^1\d{10}$/; //手机号 /^1[3|5|7|8]\d{9}$/
+    	if($('#qinshu').hasClass('on')||$('#zuhu').hasClass('on')){
+        	if( $('#fangdongname').val()==null || $('#fangdongname').val()=="" ){
+        		layer.msg("请输入房东姓名"); return;
+        	}
+        	if( $('#fangdongid').val()==null || $('#fangdongid').val()=="" ){
+        		layer.msg("请输入房东身份证号"); return;
+        	}
+        	if( $('#fangdongphone').val()==null || $('#fangdongphone').val()=="" ){
+        		layer.msg("请输入房东手机号"); return;
+        	}
+        	if(phonePattern.test($('#fangdongphone').val())==false){
+    			layer.msg("请输入正确手机号");
+    			return false;
+    		}
+    		if(!isCardNo($.trim($('#fangdongid').val()))){
+    			layer.msg('身份证号不正确');
+    			return;
+    		}
+    	}else{
+    		if( $('#username').val()==null || $('#username').val()=="" ){
+        		layer.msg("请输入姓名"); return;
+        	}
+        	if( $('#identityCard').val()==null || $('#identityCard').val()=="" ){
+        		layer.msg("请输入身份证号"); return;
+        	}
+
+		   if(!isCardNo($.trim($('#identityCard').val()))){
+			  layer.msg('身份证号不正确');
+			  return;
+		    }
+    	}
+
+    	if( $('#address').val()==null || $('#address').val()==""){
+    		layer.msg("请选择房屋地址"); return;
+    	}
+    	$.ajax({
+			url : '/owner/editplotQ',
+/* 			data : {
+				'userId' : $('#userId').val(),
+				'plotId' : $('#plotId').val(),
+				'address' : $('#address').val(),
+				'relation' : $('#relation').val(),
+				'fangdongname' : $('#fangdongname').val(),
+				'fangdongid' : $('#fangdongid').val()
+			}, */
+		 	data: $('#signupForm').serialize(), 
+			type : "POST",
+			dataType : this.dataType,
+			async : this.async,
+			success : function(data) {
+				if (data.code == 0) {
+					layer.msg("修改成功");
+					 setTimeout(function(){
+						 parent.location.href = '/owner/userPlot';
+ 					}, 2000 )
+				} else {
+					layer.msg(data.msg)
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("error: " + errorThrown);
+			}
+		});
+    }
+  //验证身份证 
+    function isCardNo(card) { 
+    	var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+    	return pattern.test(card); 
+    }
+</script>
+</head>
+<body>
+	<div id="addplotid">
+		<form id="signupForm">
+		<div class="Top">
+			<a href="/owner/userPlot"><span>&nbsp;</span></a>修改房屋
+		</div>
+
+		<div class="fangwu-add">
+			<ul>
+				<li class="on" onclick="chossef()" id="fangzhu"></li>
+				<li class="qinshu" onclick="chosseq()" id="qinshu"></li>
+				<li class="zuhu" onclick="chossez()" id="zuhu"></li>
+			</ul>
+		</div>
+		<input type="hidden" value="房东" name="relation" id="relation"/>
+		<div class="fangwu-add-txt bg-white" id="fangzhudiv">
+			<ul>
+				<li><span>真实姓名</span><em><input type="text" maxlength="6"  th:value="${user.name}"
+						placeholder="请输入姓名" name="username" id="username"/></em></li>
+				<input type="hidden" th:value="${user.id}" name="userId" id="userId"/>
+				<input type="hidden" th:value="${updo.id}" name="id"/>
+				<input type="hidden" value="" name="plotId" id="plotId"/>
+				<li><span>证件类型</span><em>身份证</em></li>
+				<li><span>请输入证件号码</span><em><input type="text" th:value="${user.identityCard}" 
+						maxlength="18" placeholder="请输入房主身份证号码" name="identityCard"  id="identityCard"/></em>
+				</li>
+				<li  onclick="chossed()" style="border-top: .14rem solid #f1f1f1;"><span>房屋地址</span><em th:text="${updo.address}"
+					name="dizhid"><i></i></em></li>
+			</ul>
+		</div>
+		<div class="fangwu-add-txt bg-white" id="otherdiv"
+			 style="display: none">
+			<ul>
+				<li><span>房主姓名</span><em><input type="text" maxlength="6" th:value="${updo.fangdongname}"
+						placeholder="请输入房主姓名" name="fangdongname" id="fangdongname"/></em></li>
+				<li><span>证件类型</span><em>身份证</em></li>
+				<li><span>请输入证件号码</span><em><input type="text"
+						maxlength="18" placeholder="请输入房主身份证号码" name="fangdongid"  id="fangdongid"  th:value="${updo.fangdongid}"/></em></li>
+				<li><span>请输入手机号码</span><em><input type="text"
+						maxlength="11" placeholder="请输入房主手机号码" name="fangdongphone"  id="fangdongphone"  th:value="${updo.fangdongphone}"/></em></li>
+				<li onclick="chossed()" style="border-top: .14rem solid #f1f1f1;"><span>房屋地址</span><em th:text="${updo.address}"
+					name="dizhid"><i></i></em></li>
+			</ul>
+		</div>
+		<input type="hidden" th:value="${updo.address}" name="address" id="address"/>
+		<input class="tijiao font-32" type="button" id="saveplot" value="提交" onclick="submitplot()"/>
+		</form>
+	</div>
+	<div id="dingweiid" style="display: none">
+		<div class="Top">
+			<span>&nbsp;</span>定位
+		</div>
+		
+		<div class="GPS">
+			<select id="cityId" name="cityId"
+					onchange="getplot()">
+						<div th:each="city:${cityList}">
+							<option th:value="${city}" th:text="${city}"></option>
+						</div>
+				</select> 
+				<select id="plotIds" name="plotIds">
+				<div th:each="plot:${plotList}">
+						<option th:value="${plot.id}" th:text="${plot.name}"></option>
+						</div>
+				</select>
+
+		</div>
+		<div class="shi">
+			<input type="text" placeholder="请输入楼号单元门牌号" id="addressd" />
+		</div>
+		<input class="tijiao font-32" type="submit" onclick="savedizhi();"
+			value="确定" />
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png"
+	type="image/x-icon" />
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>定位</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<style>
+/*------------------------------定位------------------------------*/
+.GPS{background:#fff;margin-top:.25rem;overflow: hidden;padding:.25rem 0;}
+.GPS select{width: 2.5rem;font-size:.26rem;float: left;margin-left:.25rem;height: .46rem;border:1px solid #cfcfcf;color:#333;}
+.shi{background:#fff;margin:.25rem 0;height:1.2rem;line-height:1.2rem;}
+/*.shi span{float: left;font-size:.3rem;color:#3896ff;width:1.5rem;position: relative;padding-left:.25rem;}
+.shi span em{width:.18rem;height:1.2rem;position:absolute;top:0;right:0;background:url(../images/xiala.png) no-repeat center;-webkit-background-size: contain;background-size: contain;}*/
+.shi input{float: left;width:7rem;margin-left:.25rem;margin-top:.2rem;font-size:.23rem;border:1px solid #cfcfcf;border-radius:.55rem;padding:.24rem .74rem;outline:none;background:url(../images/sousuo.png) no-repeat .3rem center;-webkit-background-size:.28rem .28rem;background-size:.28rem .28rem;}
+.dqxq dt{line-height:.6rem;margin-top:.15rem;margin-left:.24rem;color:#666;}
+.dqxq dd{line-height:.88rem;background:#fff;width: 100%;padding-left:.24rem;position: relative;color:#333;border-bottom:1px solid #f1f1f1;}
+.dqxq dd span{color: #3896ff;height: .88rem;line-height: .88rem;position:absolute;top:0;right:.24rem;}
+</style>
+<script type="text/javascript">
+
+	function getplot() {
+		var city = $("#cityId").val();
+
+		$.ajax({
+			url : '/owner/getplot',
+			data : {
+				'city' : city
+			},
+			type : "POST",
+			dataType : this.dataType,
+			async : this.async,
+			success : function(data) {
+				if (data.code == 0) {
+					var temp_html = "";
+					$.each(data.plotList, function(i, plot) {
+						temp_html += "<option value='"+plot.id+"'>" + plot.name
+								+ "</option>";
+					});
+					$("#plotIds").html(temp_html);
+				} else {
+					layer.msg(data.msg)
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("error: " + errorThrown);
+			}
+		});
+
+	}
+</script>
+</head>
+<body>
+	<div id="dingweiid">
+		<div class="Top">
+			<a href="/index"><span>&nbsp;</span></a>定位
+		</div>
+		
+		<div class="GPS">
+			<select id="cityId" name="cityId"
+					onchange="getplot()">
+						<div th:each="city:${cityList}">
+							<option th:value="${city}" th:text="${city}"></option>
+						</div>
+				</select> 
+				<select id="plotIds" name="plotIds">
+				<div th:each="plot:${plotList}">
+						<option th:value="${plot.id}" th:text="${plot.name}"></option>
+						</div>
+				</select>
+
+		</div>
+		<div class="shi">
+			<input type="text" placeholder="请输入楼号单元门牌号" id="addressd" />
+		</div>
+	</div>
+</body>
+</html>
+

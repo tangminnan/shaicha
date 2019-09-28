@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>首页</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/TouchSlide.1.1.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+</head>
+<body>
+<!--头部切换-->
+<div id="focus" class="focus">
+	<div class="title">
+		<!-- <a  href="/owner/shoudingwei"><img class="fl" src="/img/index-add.png" alt=""/></a> -->
+		<span>银网物业</span>
+		<a  href="/information/msg"><img class="fr" src="/img/index-msg.png" alt=""/></a>
+	</div>
+	<div class="hd"> <ul></ul></div>
+	<div class="bd">
+		<ul>
+			<label th:each="banner:${bannerList}" class="checkbox-inline">
+				<li><a href="#"><img th:src="${banner.url}" alt=""/></a></li>
+			</label>
+			<!-- 
+			<li><a href="#"><img src="/img/banner.png" alt=""/></a></li>
+			<li><a href="#"><img src="/img/banner.png" alt=""/></a></li>
+			<li><a href="#"><img src="/img/banner.png" alt=""/></a></li>
+			 -->
+		</ul>
+	</div>
+</div>
+
+<!--小喇叭滚动通告-->
+<div class="notice font-26">
+	<img src="/img/index-laba.png" alt=""/>
+	<ul>
+		<label th:each="notice:${noticeList}" class="checkbox-inline">
+			<li><a th:href="${'/information/notice/'+notice.id}" th:text="${notice.title}"></a></li>
+		</label>
+		<!-- 
+		<li>今晚小区停水1小时，请业主注意储水</li>  
+		<li>今晚小区停水1小时，请业主注意储水</li> 
+		 -->
+	</ul> 
+</div>
+
+<!--问卷调查-->
+<ul class="wenj">
+	<li class="fl" onclick="isQuestionnaire();"><a href="#"><img src="/img/index-wenj.jpg" alt=""/></a></li>
+    <li class="fr"><a href="/information/repair"><img src="/img/index-fuwu.jpg" alt=""/></a></li>
+</ul>
+
+<!--底部导航-->
+<ul class="dongtai bg-white font-28">
+	<li><a href="/information/consult?type=0"><img src="/img/index-dtai.png" alt=""/>物业动态</a></li>
+    <li><a href="/information/complaint"><img src="/img/index-tousu.png" alt=""/>在线投诉</a></li>
+    <li><a href="/information/consult?type=1"><img src="/img/index-ggao.png" alt=""/>小区广告</a></li>
+    <li><a href="/information/consult?type=2"><img src="/img/index-news.png" alt=""/>小区新闻</a></li>
+</ul>
+
+<!--底部-->
+<div class="bottom font-22">
+	<ul>
+		<a href="/index"><li class="sy on">首页</li></a>
+		<a href="/owner/user"> <li class="wode">我的</li></a>
+	</ul>
+	<a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa2ee172ca5977381&redirect_uri=https%3a%2f%2fdingshi.wx.hg.jergavin.com%2fjiaofei%2fwuye&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect"><img  src="/img/jiaofei.png" alt=""/></a>
+</div>    
+
+</body>
+</html>
+<script type="text/javascript">
+	//banner切换
+    TouchSlide({ 
+        slideCell:"#focus",
+        titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+        mainCell:".bd ul", 
+        effect:"leftLoop", 
+        autoPlay:true,//自动播放
+        autoPage:true, //自动分页 
+    });
+	
+	//小喇叭通告
+	function autoScroll(obj){  
+		$(obj).find("ul").animate({  
+			marginTop : "-.72rem"  
+		},500,function(){  
+			$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);  
+		})  
+	};  
+	$(function(){  
+		setInterval('autoScroll(".notice")',2000);
+	}); 
+	
+	function isQuestionnaire(){
+		$.ajax({
+			url : '/information/questionnaire/isQuestionnaire',
+			data : {},
+			type :  "POST",
+			dataType : this.dataType,
+			async : this.async,
+			success : function(data) {
+				if (data.code == 0) {
+					window.location.href='/information/questionnaire';
+				} else {
+					window.location.href='/information/questionnaire/myQuestionnaireDetailsNo';
+					//window.location.href='/information/questionnaire/myQuestionnaire';
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("error: " + errorThrown);
+			}
+		});
+	}
+</script>

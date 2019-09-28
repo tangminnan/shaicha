@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultVisibilityDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.ResultVisibilityDO">
+		select `t_visibility_id`,`student_id`,`checkor_id`,`stereoscopic_viewing_value`,`stereoscopic_viewing_dis`,`adjustment_range_od`,`adjustment_range_oc`,`adjustment_range_ou`,`gather_near_od`,`gather_near_oc`,`gather_near_ou`,`oblique_value`,`oblique_dis`,`before_after_od_value`,`before_after_od_dis`,`before_after_os_value`,`before_after_os_dis`,`check_date`,`delete_flag` from t_result_visibility where t_visibility_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.ResultVisibilityDO">
+		select `t_visibility_id`,`student_id`,`checkor_id`,`stereoscopic_viewing_value`,`stereoscopic_viewing_dis`,`adjustment_range_od`,`adjustment_range_oc`,`adjustment_range_ou`,`gather_near_od`,`gather_near_oc`,`gather_near_ou`,`oblique_value`,`oblique_dis`,`before_after_od_value`,`before_after_od_dis`,`before_after_os_value`,`before_after_os_dis`,`check_date`,`delete_flag` from t_result_visibility
+        <where>  
+		  		  <if test="tVisibilityId != null and tVisibilityId != ''"> and t_visibility_id = #{tVisibilityId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="stereoscopicViewingValue != null and stereoscopicViewingValue != ''"> and stereoscopic_viewing_value = #{stereoscopicViewingValue} </if>
+		  		  <if test="stereoscopicViewingDis != null and stereoscopicViewingDis != ''"> and stereoscopic_viewing_dis = #{stereoscopicViewingDis} </if>
+		  		  <if test="adjustmentRangeOd != null and adjustmentRangeOd != ''"> and adjustment_range_od = #{adjustmentRangeOd} </if>
+		  		  <if test="adjustmentRangeOc != null and adjustmentRangeOc != ''"> and adjustment_range_oc = #{adjustmentRangeOc} </if>
+		  		  <if test="adjustmentRangeOu != null and adjustmentRangeOu != ''"> and adjustment_range_ou = #{adjustmentRangeOu} </if>
+		  		  <if test="gatherNearOd != null and gatherNearOd != ''"> and gather_near_od = #{gatherNearOd} </if>
+		  		  <if test="gatherNearOc != null and gatherNearOc != ''"> and gather_near_oc = #{gatherNearOc} </if>
+		  		  <if test="gatherNearOu != null and gatherNearOu != ''"> and gather_near_ou = #{gatherNearOu} </if>
+		  		  <if test="obliqueValue != null and obliqueValue != ''"> and oblique_value = #{obliqueValue} </if>
+		  		  <if test="obliqueDis != null and obliqueDis != ''"> and oblique_dis = #{obliqueDis} </if>
+		  		  <if test="beforeAfterOdValue != null and beforeAfterOdValue != ''"> and before_after_od_value = #{beforeAfterOdValue} </if>
+		  		  <if test="beforeAfterOdDis != null and beforeAfterOdDis != ''"> and before_after_od_dis = #{beforeAfterOdDis} </if>
+		  		  <if test="beforeAfterOsValue != null and beforeAfterOsValue != ''"> and before_after_os_value = #{beforeAfterOsValue} </if>
+		  		  <if test="beforeAfterOsDis != null and beforeAfterOsDis != ''"> and before_after_os_dis = #{beforeAfterOsDis} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t_visibility_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_visibility
+		 <where>  
+		  		  <if test="tVisibilityId != null and tVisibilityId != ''"> and t_visibility_id = #{tVisibilityId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="stereoscopicViewingValue != null and stereoscopicViewingValue != ''"> and stereoscopic_viewing_value = #{stereoscopicViewingValue} </if>
+		  		  <if test="stereoscopicViewingDis != null and stereoscopicViewingDis != ''"> and stereoscopic_viewing_dis = #{stereoscopicViewingDis} </if>
+		  		  <if test="adjustmentRangeOd != null and adjustmentRangeOd != ''"> and adjustment_range_od = #{adjustmentRangeOd} </if>
+		  		  <if test="adjustmentRangeOc != null and adjustmentRangeOc != ''"> and adjustment_range_oc = #{adjustmentRangeOc} </if>
+		  		  <if test="adjustmentRangeOu != null and adjustmentRangeOu != ''"> and adjustment_range_ou = #{adjustmentRangeOu} </if>
+		  		  <if test="gatherNearOd != null and gatherNearOd != ''"> and gather_near_od = #{gatherNearOd} </if>
+		  		  <if test="gatherNearOc != null and gatherNearOc != ''"> and gather_near_oc = #{gatherNearOc} </if>
+		  		  <if test="gatherNearOu != null and gatherNearOu != ''"> and gather_near_ou = #{gatherNearOu} </if>
+		  		  <if test="obliqueValue != null and obliqueValue != ''"> and oblique_value = #{obliqueValue} </if>
+		  		  <if test="obliqueDis != null and obliqueDis != ''"> and oblique_dis = #{obliqueDis} </if>
+		  		  <if test="beforeAfterOdValue != null and beforeAfterOdValue != ''"> and before_after_od_value = #{beforeAfterOdValue} </if>
+		  		  <if test="beforeAfterOdDis != null and beforeAfterOdDis != ''"> and before_after_od_dis = #{beforeAfterOdDis} </if>
+		  		  <if test="beforeAfterOsValue != null and beforeAfterOsValue != ''"> and before_after_os_value = #{beforeAfterOsValue} </if>
+		  		  <if test="beforeAfterOsDis != null and beforeAfterOsDis != ''"> and before_after_os_dis = #{beforeAfterOsDis} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.ResultVisibilityDO" useGeneratedKeys="true" keyProperty="tVisibilityId">
+		insert into t_result_visibility
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`stereoscopic_viewing_value`, 
+			`stereoscopic_viewing_dis`, 
+			`adjustment_range_od`, 
+			`adjustment_range_oc`, 
+			`adjustment_range_ou`, 
+			`gather_near_od`, 
+			`gather_near_oc`, 
+			`gather_near_ou`, 
+			`oblique_value`, 
+			`oblique_dis`, 
+			`before_after_od_value`, 
+			`before_after_od_dis`, 
+			`before_after_os_value`, 
+			`before_after_os_dis`, 
+			`check_date`, 
+			`delete_flag`
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{stereoscopicViewingValue}, 
+			#{stereoscopicViewingDis}, 
+			#{adjustmentRangeOd}, 
+			#{adjustmentRangeOc}, 
+			#{adjustmentRangeOu}, 
+			#{gatherNearOd}, 
+			#{gatherNearOc}, 
+			#{gatherNearOu}, 
+			#{obliqueValue}, 
+			#{obliqueDis}, 
+			#{beforeAfterOdValue}, 
+			#{beforeAfterOdDis}, 
+			#{beforeAfterOsValue}, 
+			#{beforeAfterOsDis}, 
+			#{checkDate}, 
+			#{deleteFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.ResultVisibilityDO">
+		update t_result_visibility 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="stereoscopicViewingValue != null">`stereoscopic_viewing_value` = #{stereoscopicViewingValue}, </if>
+			<if test="stereoscopicViewingDis != null">`stereoscopic_viewing_dis` = #{stereoscopicViewingDis}, </if>
+			<if test="adjustmentRangeOd != null">`adjustment_range_od` = #{adjustmentRangeOd}, </if>
+			<if test="adjustmentRangeOc != null">`adjustment_range_oc` = #{adjustmentRangeOc}, </if>
+			<if test="adjustmentRangeOu != null">`adjustment_range_ou` = #{adjustmentRangeOu}, </if>
+			<if test="gatherNearOd != null">`gather_near_od` = #{gatherNearOd}, </if>
+			<if test="gatherNearOc != null">`gather_near_oc` = #{gatherNearOc}, </if>
+			<if test="gatherNearOu != null">`gather_near_ou` = #{gatherNearOu}, </if>
+			<if test="obliqueValue != null">`oblique_value` = #{obliqueValue}, </if>
+			<if test="obliqueDis != null">`oblique_dis` = #{obliqueDis}, </if>
+			<if test="beforeAfterOdValue != null">`before_after_od_value` = #{beforeAfterOdValue}, </if>
+			<if test="beforeAfterOdDis != null">`before_after_od_dis` = #{beforeAfterOdDis}, </if>
+			<if test="beforeAfterOsValue != null">`before_after_os_value` = #{beforeAfterOsValue}, </if>
+			<if test="beforeAfterOsDis != null">`before_after_os_dis` = #{beforeAfterOsDis}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+		</set>
+		where t_visibility_id = #{tVisibilityId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_visibility where t_visibility_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_visibility where t_visibility_id in 
+		<foreach item="tVisibilityId" collection="array" open="(" separator="," close=")">
+			#{tVisibilityId}
+		</foreach>
+	</delete>
+
+</mapper>

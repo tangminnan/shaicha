@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultAdjustingDao">
+
+	<select id="getAdjustingDO" resultType="com.shaicha.information.domain.ResultAdjustingDO">
+		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting where student_id = #{studentId} and check_date=#{lastCheckTime}
+	</select>
+	<insert id="saveAdjustingDO" parameterType="com.shaicha.information.domain.ResultAdjustingDO" useGeneratedKeys="true" keyProperty="tAdjustingId">
+		insert into t_result_adjusting
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`adjusting_od`, 
+			`adjusting_os`, 
+			`adjusting_ou`, 
+			`jj_od`, 
+			`jj_os`, 
+			`jj_ou`, 
+			`check_date`, 
+			`delete_flag`
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{adjustingOd}, 
+			#{adjustingOs}, 
+			#{adjustingOu}, 
+			#{jjOd}, 
+			#{jjOs}, 
+			#{jjOu}, 
+			#{checkDate}, 
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="updateAdjustingDO" parameterType="com.shaicha.information.domain.ResultAdjustingDO">
+		update t_result_adjusting 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="adjustingOd != null">`adjusting_od` = #{adjustingOd}, </if>
+			<if test="adjustingOs != null">`adjusting_os` = #{adjustingOs}, </if>
+			<if test="adjustingOu != null">`adjusting_ou` = #{adjustingOu}, </if>
+			<if test="jjOd != null">`jj_od` = #{jjOd}, </if>
+			<if test="jjOs != null">`jj_os` = #{jjOs}, </if>
+			<if test="jjOu != null">`jj_ou` = #{jjOu}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+		</set>
+		where t_adjusting__id = #{tAdjustingId}
+	</update>
+</mapper>

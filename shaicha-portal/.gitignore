@@ -1,0 +1,12 @@
+/m2/
+/target/
+/.settings/
+/logs/
+/.metadata/
+/m2/
+/RemoteSystemsTempFiles/
+.classpath
+.project
+/bin/
+/applog/
+/doc/

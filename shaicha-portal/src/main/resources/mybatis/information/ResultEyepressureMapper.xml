@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultEyepressureDao">
+
+	<select id="getEyepressureDO" resultType="com.shaicha.information.domain.ResultEyepressureDO">
+		select `t_eyepressure_id`,`student_id`,`checkor_id`,`eye_pressure_od`,`eye_pressure_os`,`check_date`,`delete_flag` from t_result_eyepressure where student_id = #{studentId} and check_date=#{lastCheckTime}
+	</select>
+	<insert id="saveEyepressureDO" parameterType="com.shaicha.information.domain.ResultEyepressureDO" useGeneratedKeys="true" keyProperty="tEyepressureId">
+		insert into t_result_eyepressure
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`eye_pressure_od`, 
+			`eye_pressure_os`, 
+			`check_date`, 
+			`delete_flag`
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{eyePressureOd}, 
+			#{eyePressureOs}, 
+			#{checkDate}, 
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="updateEyepressureDO" parameterType="com.shaicha.information.domain.ResultEyepressureDO">
+		update t_result_eyepressure 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="eyePressureOd != null">`eye_pressure_od` = #{eyePressureOd}, </if>
+			<if test="eyePressureOs != null">`eye_pressure_os` = #{eyePressureOs}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+		</set>
+		where t_eyepressure_id = #{tEyepressureId}
+	</update>
+
+</mapper>

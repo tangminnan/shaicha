@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.StudentDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.StudentDO">
+		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time from t_student where id = #{value}
+	</select>
+	
+	<select id="getList" resultType="com.shaicha.information.domain.StudentDO">
+		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time from t_student
+		GROUP BY school
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.StudentDO">
+		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time from t_student
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="studentName != null and studentName != ''"> and student_name = #{studentName} </if>
+		  		  <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
+		  		  <if test="nation != null and nation != ''"> and nation = #{nation} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="school != null and school != ''"> and school = #{school} </if>
+		  		  <if test="grade != null and grade != ''"> and grade = #{grade} </if>
+		  		  <if test="studentClass != null and studentClass != ''"> and student_class = #{studentClass} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="height != null and height != ''"> and height = #{height} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="QRCode != null and QRCode != ''"> and q_r_code = #{QRCode} </if>
+		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_student
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="studentName != null and studentName != ''"> and student_name = #{studentName} </if>
+		  		  <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
+		  		  <if test="nation != null and nation != ''"> and nation = #{nation} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="school != null and school != ''"> and school = #{school} </if>
+		  		  <if test="grade != null and grade != ''"> and grade = #{grade} </if>
+		  		  <if test="studentClass != null and studentClass != ''"> and student_class = #{studentClass} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="height != null and height != ''"> and height = #{height} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="QRCode != null and QRCode != ''"> and q_r_code = #{QRCode} </if>
+		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.StudentDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_student
+		(
+			`student_name`, 
+			`student_sex`, 
+			`nation`, 
+			`birthday`, 
+			`identity_card`, 
+			`school`, 
+			`grade`, 
+			`student_class`, 
+			`phone`, 
+			`address`, 
+			`height`, 
+			`weight`, 
+			`add_time`, 
+			`status`,
+			q_r_code,
+			last_check_time
+		)
+		values
+		(
+			#{studentName}, 
+			#{studentSex}, 
+			#{nation}, 
+			#{birthday}, 
+			#{identityCard}, 
+			#{school}, 
+			#{grade}, 
+			#{studentClass}, 
+			#{phone}, 
+			#{address}, 
+			#{height}, 
+			#{weight}, 
+			#{addTime}, 
+			#{status},
+			#{QRCode},
+			#{lastCheckTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.StudentDO">
+		update t_student 
+		<set>
+			<if test="studentName != null">`student_name` = #{studentName}, </if>
+			<if test="studentSex != null">`student_sex` = #{studentSex}, </if>
+			<if test="nation != null">`nation` = #{nation}, </if>
+			<if test="birthday != null">`birthday` = #{birthday}, </if>
+			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
+			<if test="school != null">`school` = #{school}, </if>
+			<if test="grade != null">`grade` = #{grade}, </if>
+			<if test="studentClass != null">`student_class` = #{studentClass}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="height != null">`height` = #{height}, </if>
+			<if test="weight != null">`weight` = #{weight}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="status != null">`status` = #{status},</if>
+			<if test="QRCode != null">`q_r_code` = #{QRCode},</if>
+			<if test="lastCheckTime != null">`last_check_time` = #{lastCheckTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_student where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_student where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<insert id="saveAnswer" parameterType="com.shaicha.information.domain.AnswerResultDO" useGeneratedKeys="true" keyProperty="answerId">
+		insert into t_answer_result(
+  			`identity_card`,
+  			`add_time`,
+  			`status`,
+  			`file_name`,
+  			`answer_result1`,
+  			`answer_result2`,
+  			`answer_result3`,
+  			`answer_result4`,
+  			`answer_result5`,
+  			`answer_result6`,
+  			`answer_result7`,
+  			`answer_result8`,
+  			`answer_result9`,
+  			`answer_result10`,
+  			`answer_result11`,
+  			`answer_result12`,
+  			`answer_result13`,
+  			`answer_result14`,
+  			`answer_result15`,
+  			`answer_result16`,
+  			`answer_result17`,
+  			`answer_result18`,
+  			`answer_result19`,
+  			`answer_result20`,
+  			`answer_result21`,
+  			`answer_result22`,
+  			`answer_result23`,
+  			`answer_result24`,
+  			`answer_result25`,
+  			`answer_result26`,
+  			`answer_result27`,
+  			`answer_result28`,
+  			`answer_result29`,
+  			`answer_result30`,
+  			`answer_result31`,
+  			`answer_result32`,
+  			`answer_result33`,
+  			`answer_result34`,
+  			`answer_result35`,
+  			`answer_result36`,
+  			`answer_result37`,
+  			`answer_result38`,
+  			`answer_result39`,
+  			`answer_result40`,
+  			`answer_result41`,
+  			`answer_result42`,
+  			`answer_result43`,
+  			`answer_result44`,
+  			`answer_result45`,
+  			`answer_result46`,
+  			`answer_result47`,
+  			`answer_result48`,
+  			`answer_result49`,
+  			`answer_result50`,
+  			`answer_result51`,
+  			`answer_result52`,
+  			`answer_result53`,
+  			`answer_result54`,
+  			`answer_result55`,
+  			`answer_result56`,
+  			`answer_result57`,
+  			`answer_result58`,
+  			`answer_result59`,
+  			`answer_result60`,
+  			`answer_result61`,
+  			`answer_result62`,
+  			`answer_result63`,
+  			`answer_result64`,
+  			`answer_result65`,
+  			`answer_result66`,
+  			`answer_result67`,
+  			`answer_result68`,
+  			`answer_result69`,
+  			`answer_result70`,
+  			`answer_result71`,
+  			`answer_result72`,
+  			`answer_result73`,
+  			`answer_result74`,
+  			`answer_result75`
+  			
+		)
+		values(
+			#{identityCard},
+			#{addTime},
+			#{status},
+			#{fileName},
+			#{answerResult1},
+			#{answerResult2},
+			#{answerResult3},
+			#{answerResult4},
+			#{answerResult5},
+			#{answerResult6},
+			#{answerResult7},
+			#{answerResult8},
+			#{answerResult9},
+			#{answerResult10},
+			#{answerResult11},
+			#{answerResult12},
+			#{answerResult13},
+			#{answerResult14},
+			#{answerResult15},
+			#{answerResult16},
+			#{answerResult17},
+			#{answerResult18},
+			#{answerResult19},
+			#{answerResult20},
+			#{answerResult21},
+			#{answerResult22},
+			#{answerResult23},
+			#{answerResult24},
+			#{answerResult25},
+			#{answerResult26},
+			#{answerResult27},
+			#{answerResult28},
+			#{answerResult29},
+			#{answerResult30},
+			#{answerResult31},
+			#{answerResult32},
+			#{answerResult33},
+			#{answerResult34},
+			#{answerResult35},
+			#{answerResult36},
+			#{answerResult37},
+			#{answerResult38},
+			#{answerResult39},
+			#{answerResult40},
+			#{answerResult41},
+			#{answerResult42},
+			#{answerResult43},
+			#{answerResult44},
+			#{answerResult45},
+			#{answerResult46},
+			#{answerResult47},
+			#{answerResult48},
+			#{answerResult49},
+			#{answerResult50},
+			#{answerResult51},
+			#{answerResult52},
+			#{answerResult53},
+			#{answerResult54},
+			#{answerResult55},
+			#{answerResult56},
+			#{answerResult57},
+			#{answerResult58},
+			#{answerResult59},
+			#{answerResult60},
+			#{answerResult61},
+			#{answerResult62},
+			#{answerResult63},
+			#{answerResult64},
+			#{answerResult65},
+			#{answerResult66},
+			#{answerResult67},
+			#{answerResult68},
+			#{answerResult69},
+			#{answerResult70},
+			#{answerResult71},
+			#{answerResult72},
+			#{answerResult73},
+			#{answerResult74},
+			#{answerResult75}
+		)
+	</insert>
+	
+	<select id="listDati" resultType="com.shaicha.information.domain.AnswerResultDO">
+		select * from t_answer_result
+		<where>
+			 <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+			 <if test="addTime != null and addTime != ''"> and DATE_FORMAT(add_time,'%Y-%m-%d') = #{addTime} </if>
+		</where>
+		<choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by answer_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="countDati" resultType="int">
+		select count(answer_id) from t_answer_result
+		<where>
+			 <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		</where>
+	</select>
+
+</mapper>

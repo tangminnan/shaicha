@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button shiro:hasPermission="carousel:banner:add" type="button"
+								class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="carousel:banner:batchRemove"
+								type="button" class="btn  btn-danger" onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						
+						<div class="columns pull-right col-md-2 nopadding ">
+							<input id="endTime" name="endTime" class="form-control" placeholder="结束时间：" type="text">
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="startTime" name="startTime" class="form-control" placeholder="开始时间：" type="text">
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select id="place" name="place" data-placeholder="图片位置" class="form-control chosen-select" tabindex="2" style="width: 100%">
+								<option value="">图片位置</option>
+								<option value="1">首页轮播</option>
+							</select>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select id="isEnable" name="isEnable" data-placeholder="状态" class="form-control chosen-select" tabindex="2" style="width: 100%">
+								<option value="">状态</option>
+								<option value="0">开启</option>
+								<option value="1">禁用</option>
+							</select>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding ">
+							<input id="name" name="name" class="form-control" placeholder="广告名称：" type="text">
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+	<div>
+		<script type="text/javascript">
+			var s_edit_h = '';
+			var s_remove_h = '';
+			var s_resetPwd_h = 'hidden';
+			var s_add_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="carousel:banner:edit">
+		<script type="text/javascript">
+			s_edit_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="carousel:banner:remove">
+		<script type="text/javascript">
+			var s_remove_h = '';
+		</script>
+	</div>
+	<div shiro:hasPermission="carousel:banner:add">
+		<script type="text/javascript">
+			s_add_h = '';
+		</script>
+	</div>
+
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/carousel/banner/banner.js"></script>
+	<script type="text/javascript">
+	laydate.render({
+		elem: '#startTime',
+		type: 'datetime'
+	});
+	laydate.render({
+		elem: '#endTime',
+		type: 'datetime'
+	});
+	</script>
+</body>
+</html>

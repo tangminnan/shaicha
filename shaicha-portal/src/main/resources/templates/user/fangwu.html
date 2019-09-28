@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>我的房屋</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+</head>
+<body>
+<div class="Top"><a href="/owner/user"><span></span></a>我的房屋</div>
+<div class="new-add fangwu font-28">
+	<span>新增地址</span><a href="/owner/addPlot"><img src="/img/arr-big.png" alt=""/></a>
+</div>
+
+<!--房屋信息-->
+<label th:each="plot:${pdoL}" class="checkbox-inline">
+<a th:href="${'/owner/editPlot?id='+plot.id}">
+<div class="fangwu-msg font-24 bg-white"> 
+	<h3 th:class="${plot.relation == '房东' ? 'c-blue' : 'c-green'}">房屋信息</h3>
+	<p><i th:text="${user.name}"></i> <i th:text="${user.identityCard}"></i> <span class="bg-blue" th:text="${plot.relation}"></span></p>
+	<p class="dizhi" th:text="${plot.address}"></p>
+</div>
+</a>
+</label>
+
+</body>
+</html>
+

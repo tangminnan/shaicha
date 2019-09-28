@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultEyeaxisDao">
+
+	<select id="getEyeaxisDO" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
+			select `t_eyeaxis_id`,`student_id`,`checkor_id`,`first_check_od`,`first_check_os`,`check_date`,`second_check_od`,`second_check_os`,`delete_flag` from t_result_eyeaxis  where student_id = #{studentId} and check_date=#{lastCheckTime}
+	</select>
+	<insert id="saveEyeaxisDO" parameterType="com.shaicha.information.domain.ResultEyeaxisDO" useGeneratedKeys="true" keyProperty="tEyeaxisId">
+		insert into t_result_eyeaxis
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`first_check_od`, 
+			`first_check_os`, 
+			`check_date`, 
+			`second_check_od`, 
+			`second_check_os`, 
+			`delete_flag`
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{firstCheckOd}, 
+			#{firstCheckOs}, 
+			#{checkDate}, 
+			#{secondCheckOd}, 
+			#{secondCheckOs}, 
+			#{deleteFlag}
+		)
+	</insert>
+	
+	<update id="updateEyeaxisDO" parameterType="com.shaicha.information.domain.ResultEyeaxisDO">
+		update t_result_eyeaxis 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="firstCheckOd != null">`first_check_od` = #{firstCheckOd}, </if>
+			<if test="firstCheckOs != null">`first_check_os` = #{firstCheckOs}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="secondCheckOd != null">`second_check_od` = #{secondCheckOd}, </if>
+			<if test="secondCheckOs != null">`second_check_os` = #{secondCheckOs}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+		</set>
+		where t_eyeaxis_id = #{tEyeaxisId}
+	</update>
+</mapper>

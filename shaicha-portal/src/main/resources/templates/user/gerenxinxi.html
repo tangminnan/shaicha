@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="shortcut icon" href="images/logo_bank_gfyh.png" type="image/x-icon"/>
+<link rel="stylesheet" href="/css/base.css" type="text/css">
+<title>我的</title>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/Font.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<style>
+input{width: 3.5rem;height: .9rem;float: right;color: #8e8e8e;margin-right:.25rem;font-size:.3rem;line-height:.9rem;text-align: right;}
+.toux input{margin-top:.25rem;}
+</style>
+<script type="text/javascript">
+ function edit() {
+	$('#edit').show();
+	$('#show').hide();
+}
+	function udpateFileUrl(obj){
+		var fileURL = getObjectURL(obj.files[0]);
+		if(fileURL) {
+			$("#addFileImg").attr("src", fileURL);
+		}
+	}
+	
+	//建立一個可存取到該file的url
+	function getObjectURL(file) {
+		var url = null ; 
+		if (window.createObjectURL!=undefined) { // basic
+			url = window.createObjectURL(file) ;
+		} else if (window.URL!=undefined) { // mozilla(firefox)
+			url = window.URL.createObjectURL(file) ;
+		} else if (window.webkitURL!=undefined) { // webkit or chrome
+			url = window.webkitURL.createObjectURL(file) ;
+		}
+		return url;
+	}
+ function query() {
+		if(!isCardNo($.trim($('#identityCard').val()))){
+			layer.msg('身份证号不正确');
+			return;
+		}
+	var formData = new FormData(document.getElementById("signupForm"));
+ 	$.ajax({
+			url : '/owner/editInfo',
+		 	data: formData, 
+			type : "POST",
+			dataType : this.dataType,
+			processData:false,
+			contentType:false,
+			async : this.async,
+			success : function(data) {
+				if (data.code == 0) {
+					layer.msg("修改成功");
+					 setTimeout(function(){
+						 parent.location.href = '/owner/userInfo';
+ 					}, 2000 )
+				} else {
+					layer.msg(data.msg)
+				}
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("error: " + errorThrown);
+			}
+		});
+ }
+//验证身份证 
+ function isCardNo(card) { 
+ 	var pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+ 	return pattern.test(card); 
+ }
+</script>
+</head>
+<body>
+<div class="Top"><a href="/owner/user"><span>&nbsp;</span></a>我的<a onclick="edit();"  style="font-size:.28rem;color:#333;position:absolute;top:0;right:.24rem;">编辑</a></div>
+<div id="show">
+<ul class="xinxi font-30">
+	<li class="toux"><p>头像</p><span><img th:src="${user.heardUrl==null? '/img/touxiang.png': user.heardUrl}" alt=""/><em></em></span></li>
+    <li><p>昵称</p><span th:text="${user.nickname}"><em></em></span></li>
+    <li><p>手机号</p><span th:text="${user.phone}"><em></em></span></li>
+    <li><p>真实姓名</p><span th:text="${user.name}"><i></i></span></li>
+    <li><p>身份证号</p><span th:text="${user.identityCard}"><i></i></span></li>
+</ul>
+<div class="tuichu"><a href="/logout">退出登录</a></div>
+</div>
+<div id="edit" style="display: none">
+<form id="signupForm">
+<ul class="xinxi font-30">
+	<li class="toux"><p>头像</p><span><input type="file" style="display: none;" onchange="udpateFileUrl(this)" id="files" name="fileImg" accept="image/png,image/jpeg" ></input><label for="files"><img th:src="${user.heardUrl==null? '/img/touxiang.png': user.heardUrl}" alt="" id="addFileImg"/></label></span></li>
+	<li><p>昵称</p><input type="text" th:value="${user.nickname}" maxlength="10" name="nickname"></input></li>
+	<li>
+		<p>手机号</p>
+		<input type="text" th:value="${user.phone}" name="username" readonly="readonly"></input>
+	</li>
+	<li><p>真实姓名</p><input type="text" th:value="${user.name}" name="name"></input></li>
+	<li><p>身份证号</p><input type="text" th:value="${user.identityCard}" name="identityCard" id="identityCard" maxlength="18"></input></li>
+</ul>
+<div style="height: 2rem"></div>
+<div class="tuichu" style="background-color:red"><a onclick="query();" style="color: #fff">确定</a></div>
+</form>
+</div>
+</body>
+</html>
+

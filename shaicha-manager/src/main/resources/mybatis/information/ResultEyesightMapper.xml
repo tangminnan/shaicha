@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.ResultEyesightDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.ResultEyesightDO">
+		select `t_eyesight_id`,`student_id`,`checkor_id`,`life_farvision_od`,`life_farvision_os`,`naked_farvision_od`,`naked_farvision_os`,`correction_farvision_od`,`correction_farvision_os`,`life_nearvision_od`,`life_nearvision_os`,`naked_nearvision_od`,`naked_nearvision_os`,`check_date`,`delete_flag` from t_result_eyesight where t_eyesight_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.ResultEyesightDO">
+		select `t_eyesight_id`,`student_id`,`checkor_id`,`life_farvision_od`,`life_farvision_os`,`naked_farvision_od`,`naked_farvision_os`,`correction_farvision_od`,`correction_farvision_os`,`life_nearvision_od`,`life_nearvision_os`,`naked_nearvision_od`,`naked_nearvision_os`,`check_date`,date_format(t_result_eyesight.check_date, '%Y-%m-%d') as checkDate1,`delete_flag` from t_result_eyesight
+        <where>  
+		  		  <if test="tEyesightId != null and tEyesightId != ''"> and t_eyesight_id = #{tEyesightId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="lifeFarvisionOd != null and lifeFarvisionOd != ''"> and life_farvision_od = #{lifeFarvisionOd} </if>
+		  		  <if test="lifeFarvisionOs != null and lifeFarvisionOs != ''"> and life_farvision_os = #{lifeFarvisionOs} </if>
+		  		  <if test="nakedFarvisionOd != null and nakedFarvisionOd != ''"> and naked_farvision_od = #{nakedFarvisionOd} </if>
+		  		  <if test="nakedFarvisionOs != null and nakedFarvisionOs != ''"> and naked_farvision_os = #{nakedFarvisionOs} </if>
+		  		  <if test="correctionFarvisionOd != null and correctionFarvisionOd != ''"> and correction_farvision_od = #{correctionFarvisionOd} </if>
+		  		  <if test="correctionFarvisionOs != null and correctionFarvisionOs != ''"> and correction_farvision_os = #{correctionFarvisionOs} </if>
+		  		  <if test="lifeNearvisionOd != null and lifeNearvisionOd != ''"> and life_nearvision_od = #{lifeNearvisionOd} </if>
+		  		  <if test="lifeNearvisionOs != null and lifeNearvisionOs != ''"> and life_nearvision_os = #{lifeNearvisionOs} </if>
+		  		  <if test="nakedNearvisionOd != null and nakedNearvisionOd != ''"> and naked_nearvision_od = #{nakedNearvisionOd} </if>
+		  		  <if test="nakedNearvisionOs != null and nakedNearvisionOs != ''"> and naked_nearvision_os = #{nakedNearvisionOs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t_eyesight_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_eyesight
+		 <where>  
+		  		  <if test="tEyesightId != null and tEyesightId != ''"> and t_eyesight_id = #{tEyesightId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="lifeFarvisionOd != null and lifeFarvisionOd != ''"> and life_farvision_od = #{lifeFarvisionOd} </if>
+		  		  <if test="lifeFarvisionOs != null and lifeFarvisionOs != ''"> and life_farvision_os = #{lifeFarvisionOs} </if>
+		  		  <if test="nakedFarvisionOd != null and nakedFarvisionOd != ''"> and naked_farvision_od = #{nakedFarvisionOd} </if>
+		  		  <if test="nakedFarvisionOs != null and nakedFarvisionOs != ''"> and naked_farvision_os = #{nakedFarvisionOs} </if>
+		  		  <if test="correctionFarvisionOd != null and correctionFarvisionOd != ''"> and correction_farvision_od = #{correctionFarvisionOd} </if>
+		  		  <if test="correctionFarvisionOs != null and correctionFarvisionOs != ''"> and correction_farvision_os = #{correctionFarvisionOs} </if>
+		  		  <if test="lifeNearvisionOd != null and lifeNearvisionOd != ''"> and life_nearvision_od = #{lifeNearvisionOd} </if>
+		  		  <if test="lifeNearvisionOs != null and lifeNearvisionOs != ''"> and life_nearvision_os = #{lifeNearvisionOs} </if>
+		  		  <if test="nakedNearvisionOd != null and nakedNearvisionOd != ''"> and naked_nearvision_od = #{nakedNearvisionOd} </if>
+		  		  <if test="nakedNearvisionOs != null and nakedNearvisionOs != ''"> and naked_nearvision_os = #{nakedNearvisionOs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.ResultEyesightDO" useGeneratedKeys="true" keyProperty="tEyesightId">
+		insert into t_result_eyesight
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`life_farvision_od`, 
+			`life_farvision_os`, 
+			`naked_farvision_od`, 
+			`naked_farvision_os`, 
+			`correction_farvision_od`, 
+			`correction_farvision_os`, 
+			`life_nearvision_od`, 
+			`life_nearvision_os`, 
+			`naked_nearvision_od`, 
+			`naked_nearvision_os`, 
+			`check_date`, 
+			`delete_flag`
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{lifeFarvisionOd}, 
+			#{lifeFarvisionOs}, 
+			#{nakedFarvisionOd}, 
+			#{nakedFarvisionOs}, 
+			#{correctionFarvisionOd}, 
+			#{correctionFarvisionOs}, 
+			#{lifeNearvisionOd}, 
+			#{lifeNearvisionOs}, 
+			#{nakedNearvisionOd}, 
+			#{nakedNearvisionOs}, 
+			#{checkDate}, 
+			#{deleteFlag}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.ResultEyesightDO">
+		update t_result_eyesight 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="lifeFarvisionOd != null">`life_farvision_od` = #{lifeFarvisionOd}, </if>
+			<if test="lifeFarvisionOs != null">`life_farvision_os` = #{lifeFarvisionOs}, </if>
+			<if test="nakedFarvisionOd != null">`naked_farvision_od` = #{nakedFarvisionOd}, </if>
+			<if test="nakedFarvisionOs != null">`naked_farvision_os` = #{nakedFarvisionOs}, </if>
+			<if test="correctionFarvisionOd != null">`correction_farvision_od` = #{correctionFarvisionOd}, </if>
+			<if test="correctionFarvisionOs != null">`correction_farvision_os` = #{correctionFarvisionOs}, </if>
+			<if test="lifeNearvisionOd != null">`life_nearvision_od` = #{lifeNearvisionOd}, </if>
+			<if test="lifeNearvisionOs != null">`life_nearvision_os` = #{lifeNearvisionOs}, </if>
+			<if test="nakedNearvisionOd != null">`naked_nearvision_od` = #{nakedNearvisionOd}, </if>
+			<if test="nakedNearvisionOs != null">`naked_nearvision_os` = #{nakedNearvisionOs}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+		</set>
+		where t_eyesight_id = #{tEyesightId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_eyesight where t_eyesight_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_eyesight where t_eyesight_id in 
+		<foreach item="tEyesightId" collection="array" open="(" separator="," close=")">
+			#{tEyesightId}
+		</foreach>
+	</delete>
+
+</mapper>
