@@ -52,8 +52,16 @@ public class StudentDO implements Serializable {
 	private String QRCode;
 	//更新时间
 	private Date lastCheckTime;
-	
-	
+	//模板类型  XUE_XIAO=学校
+	private String  modelType;
+	//证件类型 SHEN_FENZHENG=身份证
+	private String  ideentityType;
+	//学校编码
+	private String schoolCode;
+	//学部
+	private String xueBu;
+	//检查类型 PU_TONG=普通筛查 SHI_FANXIAO=示范校筛查
+	private String checkType;
 
 	
 	public Date getLastCheckTime() {
@@ -248,4 +256,35 @@ public class StudentDO implements Serializable {
 	public Integer getStatus() {
 		return status;
 	}
+	public String getModelType() {
+		return modelType;
+	}
+	public void setModelType(String modelType) {
+		this.modelType = modelType;
+	}
+	public String getIdeentityType() {
+		return ideentityType;
+	}
+	public void setIdeentityType(String ideentityType) {
+		this.ideentityType = ideentityType;
+	}
+	public String getSchoolCode() {
+		return schoolCode;
+	}
+	public void setSchoolCode(String schoolCode) {
+		this.schoolCode = schoolCode;
+	}
+	public String getXueBu() {
+		return xueBu;
+	}
+	public void setXueBu(String xueBu) {
+		this.xueBu = xueBu;
+	}
+	public String getCheckType() {
+		return checkType;
+	}
+	public void setCheckType(String checkType) {
+		this.checkType = checkType;
+	}
+	
 }

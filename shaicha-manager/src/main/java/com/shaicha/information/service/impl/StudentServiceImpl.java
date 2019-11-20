@@ -10,19 +10,26 @@ import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableCell;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.microsoft.schemas.office.visio.x2012.main.CellType;
+
+
+
 import com.shaicha.common.config.BootdoConfig;
 import com.shaicha.common.utils.QRCodeUtil;
-import com.shaicha.common.utils.Query;
+
 import com.shaicha.common.utils.R;
-import com.shaicha.common.utils.ShiroUtils;
+
 import com.shaicha.information.dao.StudentDao;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.ResultDiopterDO;
+import com.shaicha.information.domain.ResultEyesightDO;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.StudentService;
 import com.shaicha.system.config.ExcelUtils;
@@ -33,14 +40,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+
+
 import java.util.Date;
-import java.util.GregorianCalendar;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -99,71 +106,49 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@ResponseBody
-	public R importMember(MultipartFile file) {
+	public R importMember(String checkType, MultipartFile file) {
 		System.out.println("==============file================"+file);
 		int num = 0;
 		InputStream in=null;
 		Workbook book=null;
-		List<Integer> errnum = new ArrayList<>();
 		try {
 			if(file != null){
 				in = file.getInputStream();
 				book =ExcelUtils.getBook(in);
 				Sheet sheet = book.getSheetAt(0);
 				Row row=null;
-				for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
-					try {
-						row = sheet.getRow(rowNum);
-						String name = ExcelUtils.getCellFormatValue(row.getCell((short)0));			//姓名
-						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)1));		//手机号
-						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)2));		//民族
+				String modelType= "",school = "", schoolCode= "";
+				for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
+					row = sheet.getRow(rowNum);
+					if(rowNum==0){
+						modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
+						school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
+						schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
+					}
+					if(rowNum>1){
+						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
+						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
+						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
 						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
-						String birthday = ExcelUtils.getCellFormatValue(row.getCell((short)4));		//生日
-						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)5));	//身份证号
-						String school = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//学校
-						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)7));		//年级
-						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)8));	//班级
-						String address = ExcelUtils.getCellFormatValue(row.getCell((short)9));		//联系地址
-						String height = ExcelUtils.getCellFormatValue(row.getCell((short)10));		//身高
-						String weight = ExcelUtils.getCellFormatValue(row.getCell((short)11));		//体重
-					//	String addTime = ExcelUtils.getCellFormatValue(row.getCell((short)12));		//添加时间
+						String birthday =row.getCell(4).getStringCellValue();//生日
+						String xueBu = ExcelUtils.getCellFormatValue(row.getCell((short)5));		//学部
+						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//年级
+						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)7));	//班级
+						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)8));		//手机号
+						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)9));		//民族
 						StudentDO student = new StudentDO();
-				    	
-						if(name != null && name !=""){
-							student.setStudentName(name);
-						}else{
-							errnum.add(rowNum);
-							continue;
-						}
-						if(phone != null && phone != ""){
-							student.setPhone(phone);
-						}else{
-							errnum.add(rowNum);
-							continue;
-						}
-						if(identityCard != null && identityCard != ""){
-							Map<String,Object> map = new HashMap<String,Object>();
-							map.put("identityCard", identityCard);
-							List<StudentDO> list = studentDao.list(map);
-							if(list.size()>0){
-								errnum.add(rowNum);
-								continue;
-							}else{
-								student.setIdentityCard(identityCard);
-								//String imgSrc = "https://cli.im/api/qrcode/code?text="+identityCard;
-								String destPath = bootdoConfig.getUploadPath();
-								String rand = new Random().nextInt(99999999)+".jpg";
-								//生成二维码
-								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
-								student.setQRCode("/files/"+rand);
-							}
-						}else{
-							errnum.add(rowNum);
-							continue;
-						}
-						if(nation != null && nation != ""){
-							student.setNation(nation);
-						}
+						student.setCheckType(checkType);
+						student.setStudentName(name);
+						student.setPhone(phone);
+						student.setNation(nation);
+						student.setSchool(school);
+						student.setGrade(grade);
+						student.setStudentClass(studentClass);
+						student.setStatus(0);
+						student.setIdeentityType(ideentityType);
+						student.setXueBu(xueBu);
+						student.setSchoolCode(schoolCode);
+						student.setModelType(modelType);
 						if(sex != null && sex != ""){
 							if(sex.equals("男")){
 								student.setStudentSex(1);
@@ -173,50 +158,38 @@ public class StudentServiceImpl implements StudentService {
 							}
 						}
 						if(birthday != null && birthday != ""){
-							Calendar c = new GregorianCalendar(1900,0,-1);
-							Date d = c.getTime();
-							Date _d = DateUtils.addDays(d, Integer.parseInt(birthday));
-							student.setBirthday(_d);
+							
+							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
 						}
 						student.setAddTime(new Date());
-//						if(addTime != null && addTime != ""){
-//							student.setAddTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(addTime));
-//						}
-						if(height != null && height != ""){
-							student.setHeight(Double.parseDouble(height));
+						if(identityCard != null && identityCard != ""){
+							Map<String,Object> map = new HashMap<String,Object>();
+							map.put("identityCard", identityCard);
+							List<StudentDO> list = studentDao.list(map);
+							if(list.size()>0){
+								continue;
+							}else{
+								student.setIdentityCard(identityCard);
+								String destPath = bootdoConfig.getUploadPath();
+								String rand = new Random().nextInt(99999999)+".jpg";
+								//生成二维码
+								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
+								student.setQRCode("/files/"+rand);
+							}
+						}else{
+							continue;
 						}
-						if(weight != null && weight != ""){
-							student.setWeight(Double.parseDouble(weight));
-						}
-						if(school != null && school != ""){
-							student.setSchool(school);
-						}
-						if(grade != null && grade != ""){
-							student.setGrade(grade);
-						}
-						if(studentClass != null && studentClass != ""){
-							student.setStudentClass(studentClass);
-						}
-						if(address != null && address != ""){
-							student.setAddress(address);
-						}
-				    	
-						student.setStatus(0);
-				    	
-					    studentDao.save(student);
-				    	num++;
-					} catch (Exception e) {
-						return R.error("导入失败！第"+rowNum+"条");
+							studentDao.save(student);
+							num++;
 					}
+						
 				}
-				if(errnum.size()>0){
-					return R.ok("上传成功,共增加["+num+"]条,第"+errnum+"条上传失败，原因姓名,手机号或者身份证号为空/身份证号重复");
-				}else{
+				if(num>0)
 					return R.ok("上传成功,共增加["+num+"]条");
-				}
-				
+				else
+					return R.ok();
 			}else{
-				return R.error("请选择导入的文件!");
+			return R.error("请选择导入的文件!");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -225,7 +198,7 @@ public class StudentServiceImpl implements StudentService {
 			try {
 				if(book!=null)
 					book.close();
-				if(book!=null)
+				if(in!=null)
 					in.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -338,7 +311,9 @@ public class StudentServiceImpl implements StudentService {
      * @param params 参数 
      */  
     public void replaceInPara(XWPFParagraph para, Map<String, Object> params) {  
-        List<XWPFRun> runs;  
+      String text = para.getParagraphText();
+      System.out.println(text);
+    	List<XWPFRun> runs;  
         if (this.matcher(para.getParagraphText()).find()) {  
             runs = para.getRuns();  
             int start = -1;  
@@ -467,4 +442,150 @@ public class StudentServiceImpl implements StudentService {
 	public int countDati(Map<String, Object> map) {
 		return studentDao.countDati(map);
 	}
+
+	/**
+	 * 筛查结果导出
+	 */
+	@Override
+	public void shaichajieguodaochu(Integer[] ids, HttpServletResponse response) {
+		for(int i=0;i<ids.length;i++){
+			Map<String, Object> params = createPeramsMap(ids[i]);
+			if(params==null) continue;
+			XWPFDocument doc;  
+		    String fileNameInResource = "普通筛查导出模板.docx";  
+		    InputStream is = getClass().getClassLoader().getResourceAsStream(fileNameInResource);       
+			OutputStream os=null;
+		    try {
+				doc = new XWPFDocument(is);
+	//			this.replaceInPara(doc, params);  
+				this.replaceInTable(doc, params);
+				response.setContentType("application/msword");
+		        response.setHeader("Content-disposition","attachment;filename="+new String(ids[i].toString().getBytes(),"iso-8859-1")+".docx");
+		        os = response.getOutputStream(); 
+		        doc.write(os);  
+		        os.flush();
+		    } catch (IOException e) {
+				e.printStackTrace();
+			}finally{
+				 this.close(os);  
+			     this.close(is);  
+			}
+		}		
+		
+		  
+	          
+	       
+	       
+	}
+	
+	/**
+	 * 拼装数据
+	 */
+	private Map<String,Object> createPeramsMap(Integer id){
+		Map<String, Object> params = new HashMap<String, Object>(); 
+		//基本信息获取
+		StudentDO studentDO = studentDao.get(id);
+		if(studentDO==null || studentDO.getLastCheckTime()==null) return null;
+		params.put("${school}", studentDO.getSchool());
+		params.put("${grade}",studentDO.getGrade());
+		params.put("${studentClass} ",studentDO.getStudentClass());
+		params.put("${studentName}",studentDO.getStudentName());
+		params.put("${studentSex}", studentDO.getStudentSex());
+		params.put("${lastCheckTime}", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
+		
+		//视力检查结果获取
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+		if(resultEyesightDOList.size()>0)
+			resultEyesightDO=resultEyesightDOList.get(0);
+		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd());
+		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs());
+		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd());
+		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs());
+		
+		//自动电脑验光结果(左眼) 
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("${diopterSL}",resultDiopterDO.getDiopterS());
+		params.put("${diopterCL}",resultDiopterDO.getDiopterC());
+		params.put("${diopterAL}",resultDiopterDO.getDiopterA());;
+		
+		
+		
+		//自动电脑验光结果(右眼) 
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("${diopterSR}",resultDiopterDO.getDiopterS());
+		params.put("${diopterCR}",resultDiopterDO.getDiopterC());
+		params.put("${diopterAR}",resultDiopterDO.getDiopterA());;
+		System.out.println("===========================");
+		System.out.println("===========================");
+		return params;
+	}
+	
+	/** 
+     * 替换表格里面的变量 
+     * 
+     * @param doc    要替换的文档 
+     * @param params 参数 
+     */  
+    public void replaceInTable(XWPFDocument doc, Map<String, Object> params) {  
+        Iterator<XWPFTable> iterator = doc.getTablesIterator();  
+        XWPFTable table;  
+        List<XWPFTableRow> rows;  
+        List<XWPFTableCell> cells;  
+        List<XWPFParagraph> paras;  
+        while (iterator.hasNext()) {  
+            table = iterator.next();  
+            rows =  table.getRows();
+            for (int i=0;i<rows.size();i++) {
+            	cells = rows.get(i).getTableCells();  
+	            for (XWPFTableCell cell : cells) {  
+	            	paras = cell.getParagraphs(); 
+	            	for (XWPFParagraph para : paras) {  
+	            		this.replaceInPara(para, params);  
+	            	}  
+	            }
+            
+            }  
+        }  
+    } 
+    
+    
+    /** 
+     * 关闭输入流 
+     * 
+     * @param is 
+     */  
+    public void close(InputStream is) {  
+        if (is != null) {  
+            try {  
+                is.close();  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+
+    /** 
+     * 关闭输出流 
+     * 
+     * @param os 
+     */  
+    public void close(OutputStream os) {  
+        if (os != null) {  
+            try {  
+                os.close();  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
 }
+
+
+

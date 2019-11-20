@@ -28,9 +28,6 @@
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimaxiazai()">
 									   二维码下载
 								</button>
-								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
-									   筛查结果导出
-								</button>
 							</div>
 						</div>
 						<div class="columns pull-right">
@@ -51,17 +48,12 @@
                     		</select>
 						</div>
 						
-								
-								<div class="columns pull-right col-md-2 nopadding">
-									<input id="lastCheckTime" name="lastCheckTime" class="form-control" type="text" placeholder="筛查日期">
-								</div>
-							
-						<!-- <div class="columns pull-right col-md-2 nopadding">
+						<div class="columns pull-right col-md-2 nopadding">
 							<select class="form-control" name="school" id="school" >
                         		<option value="">学校</option>
                         		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
                     		</select>
-						</div> -->
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -94,12 +86,6 @@
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/information/student/student.js"></script>
-	<script type="text/javascript">
-	laydate.render({
-		elem: '#lastCheckTime',
-		type: 'date'
-	});
-	</script>
+	<script type="text/javascript" src="/js/appjs/information/student/shifanstudent.js"></script>
 </body>
 </html>

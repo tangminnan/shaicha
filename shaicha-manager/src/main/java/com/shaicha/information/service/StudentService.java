@@ -36,7 +36,7 @@ public interface StudentService {
 	
 	int batchRemove(Integer[] ids);
 	
-	R importMember(MultipartFile file);
+	R importMember(String checkType, MultipartFile file);
 	
 	List<StudentDO> getList();
 
@@ -47,4 +47,8 @@ public interface StudentService {
 	List<AnswerResultDO> listDati(Map<String, Object> map);
 
 	int countDati(Map<String,Object> map);
+	/**
+	 * 筛查结果导出
+	 */
+	void shaichajieguodaochu(Integer[] ids, HttpServletResponse response);
 }

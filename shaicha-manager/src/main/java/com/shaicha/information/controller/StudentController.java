@@ -63,7 +63,32 @@ public class StudentController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<StudentDO> studentList = studentService.list(query);
+        query.put("checkType", "PU_TONG");
+        List<StudentDO> studentList = studentService.list(query);
+		int total = studentService.count(query);
+		PageUtils pageUtils = new PageUtils(studentList, total);
+		return pageUtils;
+	}
+	/**
+	 * 示范校筛查
+	 */
+	@GetMapping("/demonstration")
+	public String demonstration(Model model){
+		List<StudentDO> studentList = studentService.getList();
+		model.addAttribute("studentList", studentList);
+	    return "information/student/shifanstudent";
+	}
+	
+	/**
+	 * 示范校筛查
+	 */
+	@ResponseBody
+	@GetMapping("/listshifan")
+	public PageUtils listshifan(@RequestParam Map<String, Object> params){
+		//查询列表数据
+        Query query = new Query(params);
+        query.put("checkType", "SHI_FANXIAO");
+        List<StudentDO> studentList = studentService.list(query);
 		int total = studentService.count(query);
 		PageUtils pageUtils = new PageUtils(studentList, total);
 		return pageUtils;
@@ -161,10 +186,16 @@ public class StudentController {
 	}
 	
 	
-	@GetMapping("/importtemplate")
+	@GetMapping("/importtemplate/{checkType}")
 	@RequiresPermissions("information:student:student")
-	public String importtemplate(){
-		return "information/student/importtemplate";
+	public String importtemplate(Model model,@PathVariable("checkType") String checkType){
+		model.addAttribute("checkType", checkType);
+		if("PU_TONG".equals(checkType)){
+			return "information/student/importtemplate";
+		}
+		if("SHI_FANXIAO".equals(checkType))
+			return "information/student/shifanimporttemplate";
+		return null;  
 	}
 	
 	
@@ -180,8 +211,8 @@ public class StudentController {
 	@PostMapping( "/importMember")
 	@ResponseBody
 	@RequiresPermissions("information:student:student")
-	public R importMember(MultipartFile file){
-		return studentService.importMember(file);
+	public R importMember(String checkType, MultipartFile file){
+		return studentService.importMember(checkType,file);
 		
 	}
 	
@@ -199,6 +230,13 @@ public class StudentController {
 	public void  downloadErweima(Integer[] ids,HttpServletResponse response){
 		studentService.downloadErweima(ids,response);
 		System.out.println(ids);
+	}
+	/**
+	 * 筛查结果导出
+	 */
+	@GetMapping("/shaichajieguodaochu")
+	public void shaichajieguodaochu(Integer[] ids,HttpServletResponse response){
+		studentService.shaichajieguodaochu(ids,response);
 	}
 	
 	/**

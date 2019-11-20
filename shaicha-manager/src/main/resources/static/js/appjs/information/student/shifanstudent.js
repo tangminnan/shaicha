@@ -9,7 +9,7 @@ function load() {
 			.bootstrapTable(
 					{
 						method : 'get', // 服务器数据的请求方式 get or post
-						url : prefix + "/list", // 服务器数据的加载地址
+						url : prefix + "/listshifan", // 服务器数据的加载地址
 					//	showRefresh : true,
 					//	showToggle : true,
 					//	showColumns : true,
@@ -36,8 +36,7 @@ function load() {
 								studentName:$("#studentName").val(),
 								phone:$("#phone").val(),
 								school:$("#school option:selected").val(),
-								studentSex:$("#studentSex option:selected").val(),
-								lastCheckTime:$("#lastCheckTime").val()
+								studentSex:$("#studentSex option:selected").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -56,9 +55,17 @@ function load() {
 									field : 'id', 
 									title : 'id' 
 								},
+								{
+									field : 'ideentityType', 
+									title : '证件类型' 
+								},
+								{
+									field : 'identityCard', 
+									title : '证件号码' 
+								},
 																{
 									field : 'studentName', 
-									title : '学生姓名' 
+									title : '姓名' 
 								},
 																{
 									field : 'studentSex', 
@@ -73,21 +80,26 @@ function load() {
 									   	}
 									}
 								},
+								{
+									field : 'birthday', 
+									title : '出生日期' 
+								},
 																{
 									field : 'nation', 
 									title : '民族' 
 								},
-																{
-									field : 'birthday', 
-									title : '出生年月' 
-								},
-																{
-									field : 'identityCard', 
-									title : '身份证号' 
-								},
+																
+								{
+									field : 'xueBu', 
+									title : '学部' 
+								},								
 																{
 									field : 'school', 
 									title : '学校' 
+								},
+								{
+									field : 'schoolCode', 
+									title : '学校编码' 
 								},
 																{
 									field : 'grade', 
@@ -99,7 +111,7 @@ function load() {
 								},
 																{
 									field : 'phone', 
-									title : '联系电话' 
+									title : '联系人电话' 
 								},
 //																{
 //									field : 'address', 
@@ -215,7 +227,7 @@ function datijieguoR(identityCard){
  * 模板导入会员
  */
 function importtemplate(){
-	var checkType='PU_TONG';
+	var checkType='SHI_FANXIAO';
 	layer.open({
 		type : 2,
 		title : '导入会员',
@@ -375,21 +387,4 @@ function erweimaxiazai(){
 	});
 	
 	window.location.href="/information/student/downloadErweima?ids="+ids
-}
-
-/**
- * 普通筛查结果导出
- */
-function shaichajieguodaochu(){
-	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
-	if (rows.length == 0) {
-		layer.msg("选择要导出结果的学生");
-		return;
-	}
-	var ids=[];
-	$.each(rows, function(i, row) {
-		ids[i] = row['id'];
-	});
-	
-	window.location.href="/information/student/shaichajieguodaochu?ids="+ids
 }
