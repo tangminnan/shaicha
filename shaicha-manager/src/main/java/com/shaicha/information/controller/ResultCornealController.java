@@ -70,8 +70,8 @@ public class ResultCornealController {
 		List<ResultOptometryDO> list = resultOptometryService.list(params);
 		for (ResultOptometryDO resultOptometryDO : list) {
 			Integer tOptometryId = resultOptometryDO.gettOptometryId();
-			ResultCornealDO resultCornealDO = resultCornealService.queryByToptometryTd(tOptometryId);
-			resultCornealList.add(resultCornealDO);
+			resultCornealList = resultCornealService.queryByToptometryTd(tOptometryId);
+		
 		}
 		int size = resultCornealList.size();
 		PageUtils pageUtils = new PageUtils(resultCornealList, size);

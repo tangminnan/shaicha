@@ -53,7 +53,7 @@ public class ResultDiopterServiceImpl implements ResultDiopterService {
 	}
 
 	@Override
-	public ResultDiopterDO getByToptometryId(Integer tOptometryId) {
+	public List<ResultDiopterDO> getByToptometryId(Integer tOptometryId) {
 		return resultDiopterDao.getByToptometryId(tOptometryId);
 	}
 	

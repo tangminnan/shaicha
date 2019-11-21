@@ -28,5 +28,5 @@ public interface ResultCornealService {
 	
 	int batchRemove(Integer[] tCornealIds);
 	
-	ResultCornealDO queryByToptometryTd(Integer tOptometryId);
+	List<ResultCornealDO> queryByToptometryTd(Integer tOptometryId);
 }

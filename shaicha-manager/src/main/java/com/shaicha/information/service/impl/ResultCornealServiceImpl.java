@@ -53,7 +53,7 @@ public class ResultCornealServiceImpl implements ResultCornealService {
 	}
 
 	@Override
-	public ResultCornealDO queryByToptometryTd(Integer tOptometryId) {
+	public List<ResultCornealDO> queryByToptometryTd(Integer tOptometryId) {
 		return resultCornealDao.queryByToptometryTd(tOptometryId);
 	}
 	

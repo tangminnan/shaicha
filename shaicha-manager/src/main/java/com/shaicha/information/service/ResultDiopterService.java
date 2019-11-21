@@ -28,5 +28,5 @@ public interface ResultDiopterService {
 	
 	int batchRemove(Integer[] tDiopterIds);
 	
-	ResultDiopterDO getByToptometryId(Integer tOptometryId);
+	List<ResultDiopterDO> getByToptometryId(Integer tOptometryId);
 }

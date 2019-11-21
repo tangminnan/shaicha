@@ -25,10 +25,12 @@ import com.shaicha.common.config.BootdoConfig;
 import com.shaicha.common.utils.QRCodeUtil;
 
 import com.shaicha.common.utils.R;
-
+import com.shaicha.common.utils.WordUtils;
 import com.shaicha.information.dao.StudentDao;
 import com.shaicha.information.domain.AnswerResultDO;
 import com.shaicha.information.domain.ResultDiopterDO;
+import com.shaicha.information.domain.ResultEyeaxisDO;
+import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.StudentService;
@@ -49,12 +51,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -105,6 +104,9 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.batchRemove(ids);
 	}
 
+	/**
+	 * excel数据导入
+	 */
 	@ResponseBody
 	public R importMember(String checkType, MultipartFile file) {
 		System.out.println("==============file================"+file);
@@ -236,7 +238,7 @@ public class StudentServiceImpl implements StudentService {
 				String fileNameInResource = "erweima.docx";  
 				InputStream is = getClass().getClassLoader().getResourceAsStream(fileNameInResource);       
 				XWPFDocument doc = new XWPFDocument(is);
-				this.replaceInPara(doc, params);  
+				WordUtils.replaceInPara(doc, params);  
 				doc.write(new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(studentDO.getIdentityCard().getBytes(),"iso-8859-1")+".docx")));
 			}
 			craeteZipPath(bootdoConfig.getPoiword(),response);
@@ -251,7 +253,9 @@ public class StudentServiceImpl implements StudentService {
 	        }
 	     }  
 	}
-	
+	/**
+	 * zip文件下载
+	 */
 	public static void craeteZipPath(String path,HttpServletResponse response) throws IOException{  
 
         ZipOutputStream zipOutputStream = null;
@@ -288,112 +292,9 @@ public class StudentServiceImpl implements StudentService {
         }  
     } 
 
-	
-	/** 
-     * 替换段落里面的变量 
-     * 
-     * @param doc    要替换的文档 
-     * @param params 参数 
-     */  
-    public void replaceInPara(XWPFDocument doc, Map<String, Object> params) {  
-        Iterator<XWPFParagraph> iterator = doc.getParagraphsIterator();  
-        XWPFParagraph para;  
-        while (iterator.hasNext()) {  
-            para = iterator.next();  
-            this.replaceInPara(para, params);  
-        }  
-    }  
-    XWPFDocument  temp = new XWPFDocument();
-    /** 
-     * 替换段落里面的变量 
-     * 
-     * @param para   要替换的段落 
-     * @param params 参数 
-     */  
-    public void replaceInPara(XWPFParagraph para, Map<String, Object> params) {  
-      String text = para.getParagraphText();
-      System.out.println(text);
-    	List<XWPFRun> runs;  
-        if (this.matcher(para.getParagraphText()).find()) {  
-            runs = para.getRuns();  
-            int start = -1;  
-            int end = -1;  
-            String str = "";  
-            for (int i = 0; i < runs.size(); i++) {  
-                XWPFRun run = runs.get(i);  
-                String runText = run.toString().trim();  
-               if ('$' == runText.charAt(0)&&'{' == runText.charAt(1)) {  
-                    start = i;  
-                }  
-                if ((start != -1)) {  
-                    str += runText;  
-               }  
-                if ('}' == runText.charAt(runText.length() - 1)) {  
-                    if (start != -1) {  
-                        end = i;  
-                        break;  
-                    }  
-                }
-            } 
-           for (int i = start; i <= end; i++) {  
-               para.removeRun(i);  
-               i--;  
-                end--;  
-            }  
-           String s="";
-            for (String key : params.keySet()) {  
-                if (str.trim().equals(key) && !(params.get(key) instanceof InputStream)) {  
-                    para.createRun().setText((String) params.get(key));  
-                    s=key;
-                    break; 
-                }
-                else if(str.equals(key) && params.get(key) instanceof InputStream){//插入图片
-                	try {
-						XWPFRun imageCellRunn = para.createRun();
-						imageCellRunn.addPicture((InputStream)params.get(key), getPicFormat("browser.png"), "browser.png", Units.toEMU(200), Units.toEMU(200));
-						s=key;
-						System.out.println(key+  "  dssssssssssssssssssssssss");
-						break;
-                	} catch (InvalidFormatException e) {
-						e.printStackTrace();
-					}catch (IOException e) {
-						e.printStackTrace();
-					} 
-                }
-            } 
-            if(!"".equals(s))
-            	params.remove(s);
-       }  
-    }  
-    
-    public int getPicFormat(String imgFile){
-    	int format = 0;
-    	 if(imgFile.endsWith(".emf")) format = XWPFDocument.PICTURE_TYPE_EMF;
-         else if(imgFile.endsWith(".wmf")) format = XWPFDocument.PICTURE_TYPE_WMF;
-         else if(imgFile.endsWith(".pict")) format = XWPFDocument.PICTURE_TYPE_PICT;
-         else if(imgFile.endsWith(".jpeg") || imgFile.endsWith(".jpg")) format = XWPFDocument.PICTURE_TYPE_JPEG;
-         else if(imgFile.endsWith(".png")) format = XWPFDocument.PICTURE_TYPE_PNG;
-         else if(imgFile.endsWith(".dib")) format = XWPFDocument.PICTURE_TYPE_DIB;
-         else if(imgFile.endsWith(".gif")) format = XWPFDocument.PICTURE_TYPE_GIF;
-         else if(imgFile.endsWith(".tiff")) format = XWPFDocument.PICTURE_TYPE_TIFF;
-         else if(imgFile.endsWith(".eps")) format = XWPFDocument.PICTURE_TYPE_EPS;
-         else if(imgFile.endsWith(".bmp")) format = XWPFDocument.PICTURE_TYPE_BMP;
-         else if(imgFile.endsWith(".wpg")) format = XWPFDocument.PICTURE_TYPE_WPG;
-        return format;
-    }
-    
-    /** 
-     * 正则匹配字符串 
-     * 
-     * @param str 
-     * @return 
-     */  
-    private Matcher matcher(String str) {  
-        Pattern pattern = Pattern.compile("\\$\\{(.+?)\\}", Pattern.CASE_INSENSITIVE);  
-        Matcher matcher = pattern.matcher(str);  
-        return matcher;  
-    }
-
+	/**
+	 * 答题结果导入
+	 */
 	@Override
 	public R daorudatijiguo(MultipartFile file) {
 		try {
@@ -448,27 +349,27 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	public void shaichajieguodaochu(Integer[] ids, HttpServletResponse response) {
-		for(int i=0;i<ids.length;i++){
-			Map<String, Object> params = createPeramsMap(ids[i]);
-			if(params==null) continue;
-			XWPFDocument doc;  
-		    String fileNameInResource = "普通筛查导出模板.docx";  
-		    InputStream is = getClass().getClassLoader().getResourceAsStream(fileNameInResource);       
-			OutputStream os=null;
-		    try {
-				doc = new XWPFDocument(is);
-	//			this.replaceInPara(doc, params);  
-				this.replaceInTable(doc, params);
-				response.setContentType("application/msword");
-		        response.setHeader("Content-disposition","attachment;filename="+new String(ids[i].toString().getBytes(),"iso-8859-1")+".docx");
-		        os = response.getOutputStream(); 
-		        doc.write(os);  
-		        os.flush();
+		try {
+			for(int i=0;i<ids.length;i++){
+				Map<String, Object> params = createPeramsMap(ids[i]);
+				if(params==null) continue;
+				String fileNameInResource = "普通筛查导出模板.docx";  
+				InputStream is = getClass().getClassLoader().getResourceAsStream(fileNameInResource);       
+				XWPFDocument doc = new XWPFDocument(is);
+				WordUtils.replaceInPara(doc, params);  
+				WordUtils.replaceInTable(doc, params);
+		        doc.write(new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(ids[i].toString().getBytes(),"iso-8859-1")+".docx")));
+			}
+			craeteZipPath(bootdoConfig.getPoiword(),response);
 		    } catch (IOException e) {
 				e.printStackTrace();
 			}finally{
-				 this.close(os);  
-			     this.close(is);  
+				File file=new File(bootdoConfig.getPoiword());
+		        if(file.exists()) {
+		           File[] files = file.listFiles();
+		           for(File f :files)
+		              f.delete();
+		        }
 			}
 		}		
 		
@@ -476,10 +377,10 @@ public class StudentServiceImpl implements StudentService {
 	          
 	       
 	       
-	}
+	
 	
 	/**
-	 * 拼装数据
+	 * 拼装普通筛查数据
 	 */
 	private Map<String,Object> createPeramsMap(Integer id){
 		Map<String, Object> params = new HashMap<String, Object>(); 
@@ -487,10 +388,10 @@ public class StudentServiceImpl implements StudentService {
 		StudentDO studentDO = studentDao.get(id);
 		if(studentDO==null || studentDO.getLastCheckTime()==null) return null;
 		params.put("${school}", studentDO.getSchool());
-		params.put("${grade}",studentDO.getGrade());
-		params.put("${studentClass} ",studentDO.getStudentClass());
+		params.put("${grade}",studentDO.getGrade().toString());
+		params.put("${studentClass}",studentDO.getStudentClass().toString());
 		params.put("${studentName}",studentDO.getStudentName());
-		params.put("${studentSex}", studentDO.getStudentSex());
+		params.put("${studentSex}", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
 		params.put("${lastCheckTime}", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
@@ -498,19 +399,19 @@ public class StudentServiceImpl implements StudentService {
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
-		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd());
-		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs());
-		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd());
-		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs());
+		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd().toString());
+		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs().toString());
+		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd().toString());
+		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
 		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		params.put("${diopterSL}",resultDiopterDO.getDiopterS());
-		params.put("${diopterCL}",resultDiopterDO.getDiopterC());
-		params.put("${diopterAL}",resultDiopterDO.getDiopterA());;
+		params.put("${diopterSL}",resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCL}",resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAL}",resultDiopterDO.getDiopterA().toString());;
 		
 		
 		
@@ -519,72 +420,103 @@ public class StudentServiceImpl implements StudentService {
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		params.put("${diopterSR}",resultDiopterDO.getDiopterS());
-		params.put("${diopterCR}",resultDiopterDO.getDiopterC());
-		params.put("${diopterAR}",resultDiopterDO.getDiopterA());;
+		params.put("${diopterSR}",resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCR}",resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAR}",resultDiopterDO.getDiopterA().toString());;
 		System.out.println("===========================");
 		System.out.println("===========================");
 		return params;
 	}
-	
-	/** 
-     * 替换表格里面的变量 
-     * 
-     * @param doc    要替换的文档 
-     * @param params 参数 
-     */  
-    public void replaceInTable(XWPFDocument doc, Map<String, Object> params) {  
-        Iterator<XWPFTable> iterator = doc.getTablesIterator();  
-        XWPFTable table;  
-        List<XWPFTableRow> rows;  
-        List<XWPFTableCell> cells;  
-        List<XWPFParagraph> paras;  
-        while (iterator.hasNext()) {  
-            table = iterator.next();  
-            rows =  table.getRows();
-            for (int i=0;i<rows.size();i++) {
-            	cells = rows.get(i).getTableCells();  
-	            for (XWPFTableCell cell : cells) {  
-	            	paras = cell.getParagraphs(); 
-	            	for (XWPFParagraph para : paras) {  
-	            		this.replaceInPara(para, params);  
-	            	}  
-	            }
-            
-            }  
-        }  
-    } 
-    
-    
-    /** 
-     * 关闭输入流 
-     * 
-     * @param is 
-     */  
-    public void close(InputStream is) {  
-        if (is != null) {  
-            try {  
-                is.close();  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        }  
-    }  
 
-    /** 
-     * 关闭输出流 
-     * 
-     * @param os 
-     */  
-    public void close(OutputStream os) {  
-        if (os != null) {  
-            try {  
-                os.close();  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
-        }  
-    }  
+    /**
+     *示范校筛查结果导出 
+     */
+	@Override
+	public void shifanshaichajieguodaochu(Integer[] ids, HttpServletResponse response) {
+		try {
+			for(int i=0;i<ids.length;i++){
+				Map<String, Object> params = createPeramsMap12(ids[i]);
+				if(params==null) continue;
+				String fileNameInResource = "示范学校筛查导出模板.docx";  
+				InputStream is = getClass().getClassLoader().getResourceAsStream(fileNameInResource);       
+				XWPFDocument doc = new XWPFDocument(is);
+				WordUtils.replaceInPara(doc, params);  
+				WordUtils.replaceInTable(doc, params);
+		        doc.write(new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(ids[i].toString().getBytes(),"iso-8859-1")+".docx")));
+			}
+			craeteZipPath(bootdoConfig.getPoiword(),response);
+		    } catch (IOException e) {
+				e.printStackTrace();
+			}finally{
+				File file=new File(bootdoConfig.getPoiword());
+		        if(file.exists()) {
+		           File[] files = file.listFiles();
+		           for(File f :files)
+		              f.delete();
+		        }
+			}
+	}  
+	
+	private Map<String,Object> createPeramsMap12(Integer id){
+		Map<String, Object> params = new HashMap<String, Object>(); 
+		//基本信息获取
+		StudentDO studentDO = studentDao.get(id);
+		if(studentDO==null || studentDO.getLastCheckTime()==null) return null;
+		params.put("${school}", studentDO.getSchool());
+		params.put("${grade}",studentDO.getGrade().toString());
+		params.put("${studentClass}",studentDO.getStudentClass().toString());
+		params.put("${studentName}",studentDO.getStudentName());
+		params.put("${studentSex}", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		params.put("${lastCheckTime}", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
+		
+		//视力检查结果获取
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+		if(resultEyesightDOList.size()>0)
+			resultEyesightDO=resultEyesightDOList.get(0);
+		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd().toString());
+		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs().toString());
+		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd().toString());
+		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs().toString());
+		
+		//自动电脑验光结果(左眼) 
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("${diopterSL}",resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCL}",resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAL}",resultDiopterDO.getDiopterA().toString());;
+		
+		
+		
+		//自动电脑验光结果(右眼) 
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("${diopterSR}",resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCR}",resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAR}",resultDiopterDO.getDiopterA().toString());;
+		//眼内压结果拼装
+		List<ResultEyepressureDO> ResultEyepressureDOList = studentDao.getLatestResultEyepressureDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
+		if(ResultEyepressureDOList.size()>0)
+			resultEyepressureDO=ResultEyepressureDOList.get(0);
+		params.put("${eyePressureOd}",resultEyepressureDO.getEyePressureOd().toString());
+		params.put("${eyePressureOs}", resultEyepressureDO.getEyePressureOs().toString());
+		//眼轴长度数据拼装
+		List<ResultEyeaxisDO> resultEyeaxisDOList = studentDao.getLatelestResultEyeaxisDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
+		if(resultEyeaxisDOList.size()>0)
+			resultEyeaxisDO=resultEyeaxisDOList.get(0);
+		params.put("${secondCheckOd}",resultEyeaxisDO.getSecondCheckOd().toString());
+		params.put("${secondCheckOs}", resultEyeaxisDO.getSecondCheckOs().toString());
+		
+		System.out.println("===========================");
+		System.out.println("===========================");
+		return params;
+	}
 }
 
 

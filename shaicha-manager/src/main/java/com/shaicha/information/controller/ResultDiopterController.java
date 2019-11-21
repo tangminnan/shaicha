@@ -64,17 +64,17 @@ public class ResultDiopterController {
 	@RequiresPermissions("information:student:student")
 	public PageUtils getUserDetail(@PathVariable("id") Integer id){
 		//查询列表数据
-		List<ResultDiopterDO> resultDiopterList = new ArrayList<ResultDiopterDO>();
+		List<ResultDiopterDO> resultDiopterDOList=new ArrayList<ResultDiopterDO>();
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("studentId", id);
 		List<ResultOptometryDO> list = resultOptometryService.list(params);
 		for (ResultOptometryDO resultOptometryDO : list) {
 			Integer tOptometryId = resultOptometryDO.gettOptometryId();
-			ResultDiopterDO resultDiopterDO = resultDiopterService.getByToptometryId(tOptometryId);
-			resultDiopterList.add(resultDiopterDO);
+			 resultDiopterDOList = resultDiopterService.getByToptometryId(tOptometryId);
+		
 		}
-		int size = resultDiopterList.size();
-		PageUtils pageUtils = new PageUtils(resultDiopterList, size);
+		int size = resultDiopterDOList.size();
+		PageUtils pageUtils = new PageUtils(resultDiopterDOList, size);
 		return pageUtils;
 	}
 	

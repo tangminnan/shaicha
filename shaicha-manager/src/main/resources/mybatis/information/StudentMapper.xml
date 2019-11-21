@@ -355,14 +355,14 @@
 							checkor_id,
 							life_farvision_od,
 							life_farvision_os,
-							naked_farvision_od,
-							naked_farvision_os,
-							correction_farvision_od,
-							correction_farvision_os,
-							life_nearvision_od,
-							life_nearvision_os,
-							naked_nearvision_od,
-							naked_nearvision_os,
+							ifnull(naked_farvision_od,'') nakedFarvisionOd,
+							ifnull(naked_farvision_os,'') nakedFarvisionOs,
+							ifnull(correction_farvision_od,'') correctionFarvisionOd,
+							ifnull(correction_farvision_os,'') correctionFarvisionOs,
+							ifnull(life_nearvision_od,'') lifeNearvisionOd,
+							ifnull(life_nearvision_os,'') lifeNearvisionOs,
+							ifnull(naked_nearvision_od,'') nakedNearvisionOd,
+							ifnull(naked_nearvision_os,'') nakedNearvisionOs,
 							check_date
 						FROM
 							t_result_eyesight
@@ -374,7 +374,9 @@
 	
 	<select id="getLatestResultDiopterDOListL" resultType="com.shaicha.information.domain.ResultDiopterDO">
 							SELECT
-						*
+						ifnull(diopter_s,'') diopterS,
+  						ifnull(diopter_c,'') diopterC,
+  						ifnull(diopter_a,'') diopterA
 					FROM
 						t_result_diopter d,
 						t_result_optometry o
@@ -385,6 +387,15 @@
 					AND o.check_date = #{lastCheckTime}
 					ORDER BY
 						d.t_diopter_id desc
+	</select>
+	
+	<select id="getLatestResultEyepressureDO" resultType="com.shaicha.information.domain.ResultEyepressureDO">
+		select ifnull(eye_pressure_od,'') eyePressureOd,ifnull(eye_pressure_os,'') eyePressureOs from t_result_eyepressure where student_id=#{studentId} and check_date = #{lastCheckTime}
+	
+	</select>
+	
+	<select id="getLatelestResultEyeaxisDO" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
+		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs from t_result_eyeaxis where student_id=#{studentId} and check_date = #{lastCheckTime}
 	</select>
 
 </mapper>

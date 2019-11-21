@@ -30,5 +30,5 @@ public interface ResultDiopterDao {
 	
 	int batchRemove(Integer[] tDiopterIds);
 	
-	ResultDiopterDO getByToptometryId(Integer tOptometryId);
+	List<ResultDiopterDO> getByToptometryId(Integer tOptometryId);
 }

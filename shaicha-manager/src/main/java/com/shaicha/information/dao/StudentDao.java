@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.AnswerResultDO;
 import com.shaicha.information.domain.ResultDiopterDO;
+import com.shaicha.information.domain.ResultEyeaxisDO;
+import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
 import com.shaicha.information.domain.StudentDO;
 
@@ -51,4 +53,13 @@ public interface StudentDao {
 	 获取电脑验光最新数据
 	 */
 	List<ResultDiopterDO> getLatestResultDiopterDOListL(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime,@Param("ifRL") String ifRL);
+	/**
+	 * 获取最新的眼内压数据
+	 */
+	List<ResultEyepressureDO> getLatestResultEyepressureDO(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime);
+
+	/**
+	 * 获取最新的眼轴长度检测数据
+	 */
+	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime);
 }

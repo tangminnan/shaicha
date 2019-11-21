@@ -242,4 +242,20 @@ public class ResultEyesightDO implements Serializable {
 	public Integer getDeleteFlag() {
 		return deleteFlag;
 	}
+	public ResultEyesightDO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public ResultEyesightDO(String nakedFarvisionOd, String nakedFarvisionOs, String correctionFarvisionOd,
+			String correctionFarvisionOs
+			) {
+		
+		this.nakedFarvisionOd = nakedFarvisionOd;
+		this.nakedFarvisionOs = nakedFarvisionOs;
+		this.correctionFarvisionOd = correctionFarvisionOd;
+		this.correctionFarvisionOs = correctionFarvisionOs;
+		
+	}
+	
+	
 }

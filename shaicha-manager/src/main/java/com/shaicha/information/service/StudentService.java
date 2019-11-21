@@ -51,4 +51,8 @@ public interface StudentService {
 	 * 筛查结果导出
 	 */
 	void shaichajieguodaochu(Integer[] ids, HttpServletResponse response);
+	/**
+	 * 示范校筛查结果导出
+	 */
+	void shifanshaichajieguodaochu(Integer[] ids, HttpServletResponse response);
 }

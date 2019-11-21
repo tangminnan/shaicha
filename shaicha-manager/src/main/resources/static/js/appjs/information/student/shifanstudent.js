@@ -388,3 +388,22 @@ function erweimaxiazai(){
 	
 	window.location.href="/information/student/downloadErweima?ids="+ids
 }
+
+
+/**
+ * 筛查结果导出
+ */
+function shaichajieguodaochu(){
+	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	if (rows.length == 0) {
+		layer.msg("选择要导出结果的学生");
+		return;
+	}
+	var ids=[];
+	$.each(rows, function(i, row) {
+		ids[i] = row['id'];
+	});
+	
+	window.location.href="/information/student/shifanshaichajieguodaochu?ids="+ids
+	
+}

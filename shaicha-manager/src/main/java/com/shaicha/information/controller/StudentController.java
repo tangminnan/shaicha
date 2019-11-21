@@ -240,6 +240,14 @@ public class StudentController {
 	}
 	
 	/**
+	 * 示范校筛查结果导出
+	 */
+	@GetMapping("/shifanshaichajieguodaochu")
+	public void shifanshaichajieguodaochu(Integer[] ids,HttpServletResponse response){
+		studentService.shifanshaichajieguodaochu(ids,response);
+	}
+	
+	/**
 	 * 答题结果
 	 */
 	@GetMapping("/datijieguoR/{identityCard}")

@@ -30,5 +30,5 @@ public interface ResultCornealDao {
 	
 	int batchRemove(Integer[] tCornealIds);
 	
-	ResultCornealDO queryByToptometryTd(Integer tOptometryId);
+	List<ResultCornealDO> queryByToptometryTd(Integer tOptometryId);
 }
