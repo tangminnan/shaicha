@@ -399,19 +399,19 @@ public class StudentServiceImpl implements StudentService {
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
-		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd().toString());
-		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs().toString());
-		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd().toString());
-		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs().toString());
+		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd()==null? "":resultEyesightDO.getNakedFarvisionOd().toString());
+		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
+		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
+		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
 		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		params.put("${diopterSL}",resultDiopterDO.getDiopterS().toString());
-		params.put("${diopterCL}",resultDiopterDO.getDiopterC().toString());
-		params.put("${diopterAL}",resultDiopterDO.getDiopterA().toString());;
+		params.put("${diopterSL}",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCL}",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAL}",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
 		
 		
 		
@@ -420,9 +420,9 @@ public class StudentServiceImpl implements StudentService {
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		params.put("${diopterSR}",resultDiopterDO.getDiopterS().toString());
-		params.put("${diopterCR}",resultDiopterDO.getDiopterC().toString());
-		params.put("${diopterAR}",resultDiopterDO.getDiopterA().toString());;
+		params.put("${diopterSR}",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCR}",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAR}",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());
 		System.out.println("===========================");
 		System.out.println("===========================");
 		return params;
@@ -474,19 +474,19 @@ public class StudentServiceImpl implements StudentService {
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
-		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd().toString());
-		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs().toString());
-		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd().toString());
-		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs().toString());
+		params.put("${nakedFarvisionOd}",resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString());
+		params.put("${nakedFarvisionOs}",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
+		params.put("${correctionFarvisionOd}",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
+		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
 		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		params.put("${diopterSL}",resultDiopterDO.getDiopterS().toString());
-		params.put("${diopterCL}",resultDiopterDO.getDiopterC().toString());
-		params.put("${diopterAL}",resultDiopterDO.getDiopterA().toString());;
+		params.put("${diopterSL}",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCL}",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAL}",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
 		
 		
 		
@@ -495,26 +495,39 @@ public class StudentServiceImpl implements StudentService {
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		params.put("${diopterSR}",resultDiopterDO.getDiopterS().toString());
-		params.put("${diopterCR}",resultDiopterDO.getDiopterC().toString());
-		params.put("${diopterAR}",resultDiopterDO.getDiopterA().toString());;
+		params.put("${diopterSR}",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("${diopterCR}",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("${diopterAR}",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
 		//眼内压结果拼装
 		List<ResultEyepressureDO> ResultEyepressureDOList = studentDao.getLatestResultEyepressureDO(studentDO.getId(),studentDO.getLastCheckTime());
 		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
 		if(ResultEyepressureDOList.size()>0)
 			resultEyepressureDO=ResultEyepressureDOList.get(0);
-		params.put("${eyePressureOd}",resultEyepressureDO.getEyePressureOd().toString());
-		params.put("${eyePressureOs}", resultEyepressureDO.getEyePressureOs().toString());
+		params.put("${eyePressureOd}",resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd().toString());
+		params.put("${eyePressureOs}", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs().toString());
 		//眼轴长度数据拼装
 		List<ResultEyeaxisDO> resultEyeaxisDOList = studentDao.getLatelestResultEyeaxisDO(studentDO.getId(),studentDO.getLastCheckTime());
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
-		params.put("${secondCheckOd}",resultEyeaxisDO.getSecondCheckOd().toString());
-		params.put("${secondCheckOs}", resultEyeaxisDO.getSecondCheckOs().toString());
+		params.put("${secondCheckOd}",resultEyeaxisDO.getSecondCheckOd()==null?"":resultEyeaxisDO.getSecondCheckOd().toString());
+		params.put("${secondCheckOs}", resultEyeaxisDO.getSecondCheckOs()==null?"":resultEyeaxisDO.getSecondCheckOs().toString());
 		
 		System.out.println("===========================");
 		System.out.println("===========================");
+		//临时数据拼装
+		//报告临时数据
+				params.put("${nakedFarvisionOdb}", "12");
+				params.put("${nakedFarvisionOsb}", "11");
+				params.put("${diopterSRb}", "500");
+				params.put("${diopterSLb}", "300");
+				params.put("${correctionFarvisionOdb}", "500");
+				params.put("${correctionFarvisionOsb}", "300");
+				params.put("${eyePressureOdb}", "1");
+				params.put("${secondCheckOsb}", "1");
+				params.put("${beforeAfterOdValueb}", "2");
+				params.put("${beforeAfterOsValueb}", "2");
+			
 		return params;
 	}
 }
