@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -266,6 +267,22 @@ public class StudentController {
 		int total = studentService.countDati(query);
 		PageUtils pageUtils = new PageUtils(studentList, total);
 		return pageUtils;
+	}
+	
+	/**
+	 * 普通筛查导出（freemarker导出模式）
+	 */
+//	@GetMapping("/shaichajieguodaochu")
+	public void exportWordPByFreemarker(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
+		studentService.exportWordPByFreemarker(ids,request,response);
+	}
+	
+	/**
+	 * 示范校筛查结果导出（freemarker导出模式）
+	 */
+//	@GetMapping("/shifanshaichajieguodaochu")
+	public void exportWordPBByFreemarkerSHIfanxiao(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
+		studentService.exportWordPBByFreemarkerSHIfanxiao(ids,request,response);
 	}
 	
 }

@@ -1,13 +1,21 @@
 package com.shaicha.common.utils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
@@ -17,8 +25,18 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.shaicha.common.config.BootdoConfig;
+import com.shaicha.information.service.impl.StudentServiceImpl;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 public class WordUtils {
+	
+	
+	
 
 	/** 
      * 替换段落里面的变量 
@@ -189,4 +207,7 @@ public class WordUtils {
             }  
         }  
     }  
+    
+    
+    
 }

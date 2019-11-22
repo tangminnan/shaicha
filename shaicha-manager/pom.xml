@@ -188,6 +188,14 @@
             <artifactId>activiti-diagram-rest</artifactId>
             <version>${activiti.version}</version>
         </dependency>
+        
+       <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+<dependency>
+    <groupId>org.freemarker</groupId>
+    <artifactId>freemarker</artifactId>
+   
+</dependency>
+       
 
         <!--swagger2-->
         <dependency>

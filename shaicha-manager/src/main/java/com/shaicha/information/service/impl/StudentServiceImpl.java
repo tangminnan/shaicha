@@ -13,6 +13,7 @@ import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.hibernate.validator.internal.util.privilegedactions.GetClassLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,14 +37,27 @@ import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.StudentService;
 import com.shaicha.system.config.ExcelUtils;
 
+import freemarker.core.ParseException;
+import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 
@@ -57,6 +71,7 @@ import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -530,6 +545,218 @@ public class StudentServiceImpl implements StudentService {
 			
 		return params;
 	}
+
+	/**
+	 * 普通筛查导出（freemarker导出模式）
+	 */
+	@Override
+	public void exportWordPByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			for(int i=0;i<ids.length;i++){
+				Map<String, Object> params = createPeramsMapF(ids[i]);
+				if(params==null) continue;
+				download(request, response, "普通筛查导出模板.ftl",ids[i].toString(), params);
+			}	
+			craeteZipPath(bootdoConfig.getPoiword(),response);
+		} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				File file=new File(bootdoConfig.getPoiword());
+		        if(file.exists()) {
+		           File[] files = file.listFiles();
+		           for(File f :files)
+		              f.delete();
+		        }
+			}
+		}		
+		
+		
+	
+	
+	/**
+	 * freemarker导出工具类
+	 */
+	
+	public void download(HttpServletRequest request,HttpServletResponse response,String template,String newWordName,Map dataMap) {
+        Configuration configuration = new Configuration();
+        configuration.setDefaultEncoding("utf-8");                                       
+        configuration.setClassForTemplateLoading(StudentServiceImpl.class, "/");
+        Template t = null;
+        try {
+            //word.xml是要生成Word文件的模板文件
+            t = configuration.getTemplate(template,"utf-8");     
+            Writer out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(newWordName.getBytes(),"iso-8859-1")+".docx"))));                 //还有这里要设置编码
+            t.process(dataMap, out);
+            out.flush();
+            out.close();
+          
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
+
+
+	
+	
+	/**
+	 * freemarker模式拼装普通筛查数据
+	 */
+	private Map<String,Object> createPeramsMapF(Integer id){
+		Map<String, Object> params = new HashMap<String, Object>(); 
+		//基本信息获取
+		StudentDO studentDO = studentDao.get(id);
+		if(studentDO==null || studentDO.getLastCheckTime()==null) return null;
+		params.put("school", studentDO.getSchool());
+		params.put("grade",studentDO.getGrade().toString());
+		params.put("studentClass",studentDO.getStudentClass().toString());
+		params.put("studentName",studentDO.getStudentName());
+		params.put("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		params.put("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
+		
+		//视力检查结果获取
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+		if(resultEyesightDOList.size()>0)
+			resultEyesightDO=resultEyesightDOList.get(0);
+		params.put("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null? "":resultEyesightDO.getNakedFarvisionOd().toString());
+		params.put("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
+		params.put("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
+		params.put("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
+		
+		//自动电脑验光结果(左眼) 
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		
+		
+		
+		//自动电脑验光结果(右眼) 
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());
+		
+		//医生的建议（临时数据）
+		params.put("doctorchubu","注意用眼卫生");
+		params.put("doctortebie","注意用眼卫生，养成良好的用眼习惯");
+		System.out.println("===========================");
+		System.out.println("===========================");
+		return params;
+	}
+
+	/**
+	 * 示范校筛查结果导出（freemarker模式）
+	 */
+	@Override
+	public void exportWordPBByFreemarkerSHIfanxiao(Integer[] ids,HttpServletRequest request,  HttpServletResponse response) {
+		try {
+			for(int i=0;i<ids.length;i++){
+				Map<String, Object> params = createPeramsMap2F(ids[i]);
+				if(params==null) continue;
+				download(request, response, "示范学校筛查导出模板.ftl",ids[i].toString(), params);
+			}	
+			craeteZipPath(bootdoConfig.getPoiword(),response);
+		} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				File file=new File(bootdoConfig.getPoiword());
+		        if(file.exists()) {
+		           File[] files = file.listFiles();
+		           for(File f :files)
+		              f.delete();
+		        }
+			}
+	}
+	
+	/**
+	 * 
+	 freemarker拼装示范校筛查数据
+	 */
+	private Map<String,Object> createPeramsMap2F(Integer id){
+		Map<String, Object> params = new HashMap<String, Object>(); 
+		//基本信息获取
+		StudentDO studentDO = studentDao.get(id);
+		if(studentDO==null || studentDO.getLastCheckTime()==null) return null;
+		params.put("school", studentDO.getSchool());
+		params.put("grade",studentDO.getGrade().toString());
+		params.put("studentClass",studentDO.getStudentClass().toString());
+		params.put("studentName",studentDO.getStudentName());
+		params.put("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		params.put("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
+		
+		//视力检查结果获取
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+		if(resultEyesightDOList.size()>0)
+			resultEyesightDO=resultEyesightDOList.get(0);
+		params.put("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString());
+		params.put("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
+		params.put("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
+		params.put("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
+		
+		//自动电脑验光结果(左眼) 
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		
+		
+		
+		//自动电脑验光结果(右眼) 
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		params.put("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		params.put("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		params.put("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		//眼内压结果拼装
+		List<ResultEyepressureDO> ResultEyepressureDOList = studentDao.getLatestResultEyepressureDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
+		if(ResultEyepressureDOList.size()>0)
+			resultEyepressureDO=ResultEyepressureDOList.get(0);
+		params.put("eyePressureOd",resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd().toString());
+		params.put("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs().toString());
+		//眼轴长度数据拼装
+		List<ResultEyeaxisDO> resultEyeaxisDOList = studentDao.getLatelestResultEyeaxisDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
+		if(resultEyeaxisDOList.size()>0)
+			resultEyeaxisDO=resultEyeaxisDOList.get(0);
+		params.put("secondCheckOd",resultEyeaxisDO.getSecondCheckOd()==null?"":resultEyeaxisDO.getSecondCheckOd().toString());
+		params.put("secondCheckOs", resultEyeaxisDO.getSecondCheckOs()==null?"":resultEyeaxisDO.getSecondCheckOs().toString());
+		
+		System.out.println("===========================");
+		System.out.println("===========================");
+		//临时数据拼装
+		//报告临时数据
+				params.put("nakedFarvisionOdb", "12");
+				params.put("nakedFarvisionOsb", "11");
+				params.put("diopterSRb", "500");
+				params.put("diopterSLb", "300");
+				params.put("correctionFarvisionOdb", "500");
+				params.put("correctionFarvisionOsb", "300");
+				params.put("eyePressureOdb", "1");
+				params.put("secondCheckOsb", "1");
+				params.put("beforeAfterOdValueb", "2");
+				params.put("beforeAfterOsValueb", "2");
+				//医生的建议（临时数据）
+				params.put("doctorchubu","注意用眼卫生");
+				params.put("doctortebie","注意用眼卫生，养成良好的用眼习惯");
+		return params;
+	}
+	
+	
 }
 
 

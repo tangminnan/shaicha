@@ -4,6 +4,7 @@ package com.shaicha.information.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -55,4 +56,15 @@ public interface StudentService {
 	 * 示范校筛查结果导出
 	 */
 	void shifanshaichajieguodaochu(Integer[] ids, HttpServletResponse response);
+	/**
+	 * 普通筛查导出（freemarker模式）
+	 * @param ids
+	 * @param request
+	 * @param response
+	 */
+	void exportWordPByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response);
+	/**
+	 * 示范校筛查结果导出（freemarker模式）
+	 */
+	void exportWordPBByFreemarkerSHIfanxiao(Integer[] ids,HttpServletRequest request,  HttpServletResponse response);
 }
