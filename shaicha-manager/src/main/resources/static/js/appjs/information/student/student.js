@@ -144,7 +144,13 @@ function load() {
 										var p = '<a class="btn btn-primary btn-xs" href="#" title=""  mce_href="#" onclick="datijieguoR(\''
 											+ row.identityCard
 											+ '\')" style="text-decoration: none;">答题结果</a>';
-										return f + g + h;
+										var n = '<a class="btn btn-primary btn-xs" href="#" title="二维码下载"  mce_href="#" onclick="erweimaxiazaibyliulanqi(\''
+											+ row.id
+											+ '\')" style="text-decoration: none;">二维码打印</a>';
+										var q = '<a class="btn btn-primary btn-xs" href="#" title="筛查打印"  mce_href="#" onclick="putongshaichadayin(\''
+											+ row.id
+											+ '\',\''+row.lastCheckTime+'\')" style="text-decoration: none;">筛查打印</a>';
+										return f + g + h + n+q;
 									}
 								} ]
 					});
@@ -392,4 +398,17 @@ function shaichajieguodaochu(){
 	});
 	
 	window.location.href="/information/student/shaichajieguodaochu?ids="+ids
+}
+
+function erweimaxiazaibyliulanqi(id){
+	//window.location.href="/information/student/downLoadErWeiMaByBrower?id="+id
+	window.open("/information/student/downLoadErWeiMaByBrower?id="+id);
+}
+//普通筛查打印
+function putongshaichadayin(id,lastCheckTime){
+	if(lastCheckTime=='null'){
+		alert("没有进行过筛查检查...");
+		return;
+	}
+	window.open("/information/student/putongshaichadayin?id="+id);
 }

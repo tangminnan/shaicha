@@ -1,8 +1,10 @@
 package com.shaicha.information.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +26,9 @@ import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.ResultDiopterDO;
+import com.shaicha.information.domain.ResultEyeaxisDO;
+import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
 import com.shaicha.information.domain.ResultOptometryDO;
 import com.shaicha.information.domain.StudentDO;
@@ -285,4 +290,155 @@ public class StudentController {
 		studentService.exportWordPBByFreemarkerSHIfanxiao(ids,request,response);
 	}
 	
+	/**
+	 * 浏览器打印二维码
+	 */
+	@GetMapping("/downLoadErWeiMaByBrower")
+	public String downLoadErWeiMaByBrower(Integer id,Model model){
+		StudentDO studentDO = Optional.ofNullable(studentService.get(id)).orElseGet(StudentDO::new);
+		model.addAttribute("studentName",studentDO.getStudentName());
+		model.addAttribute("identityCard",studentDO.getIdentityCard());
+		model.addAttribute("studentSex",studentDO.getStudentSex());
+		model.addAttribute("school",studentDO.getSchool());
+		model.addAttribute("grade",studentDO.getGrade());
+		model.addAttribute("studentClass",studentDO.getStudentClass());
+		model.addAttribute("QRCode",studentDO.getQRCode());
+		return "information/student/二维码";
+	}
+	
+	/**
+	 * 普通筛查打印
+	 */
+	
+	
+	@GetMapping("/putongshaichadayin")
+	public String putongshaichadayin(Integer id,Model model){
+		
+		//基本信息获取
+		StudentDO studentDO = studentService.get(id);
+		if(studentDO==null || studentDO.getLastCheckTime()==null)
+			studentDO = new StudentDO();
+		model.addAttribute("school", studentDO.getSchool());
+		model.addAttribute("grade",  studentDO.getGrade());
+		model.addAttribute("studentClass",studentDO.getStudentClass());
+		model.addAttribute("studentName",studentDO.getStudentName());
+		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
+		
+		//视力检查结果获取
+		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+		if(resultEyesightDOList.size()>0)
+			resultEyesightDO=resultEyesightDOList.get(0);
+		model.addAttribute("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null? "":resultEyesightDO.getNakedFarvisionOd().toString());
+		model.addAttribute("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
+		model.addAttribute("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
+		model.addAttribute("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
+		
+		//自动电脑验光结果(左眼) 
+		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		
+		
+		
+		//自动电脑验光结果(右眼) 
+		 resultDiopterDOList =studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());
+		//医生的建议（临时数据）
+		model.addAttribute("doctorchubu","注意用眼卫生");
+		model.addAttribute("doctortebie","注意用眼卫生，养成良好的用眼习惯");
+		System.out.println("===========================");
+		System.out.println("===========================");
+		return "information/student/普通筛查打印";
+	}
+	
+	/**
+	 * 示范校筛查打印
+	 */
+	
+	@GetMapping("/shifanshaichadayin")
+	public String shifanshaichadayin(Integer id,Model model){
+		//基本信息获取
+		StudentDO studentDO = studentService.get(id);
+		if(studentDO==null || studentDO.getLastCheckTime()==null) return null;
+		model.addAttribute("school", studentDO.getSchool());
+		model.addAttribute("grade",studentDO.getGrade().toString());
+		model.addAttribute("studentClass",studentDO.getStudentClass().toString());
+		model.addAttribute("studentName",studentDO.getStudentName());
+		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
+		
+		//视力检查结果获取
+		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+		if(resultEyesightDOList.size()>0)
+			resultEyesightDO=resultEyesightDOList.get(0);
+		model.addAttribute("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString());
+		model.addAttribute("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
+		model.addAttribute("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
+		model.addAttribute("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
+		
+		//自动电脑验光结果(左眼) 
+		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		
+		
+		
+		//自动电脑验光结果(右眼) 
+		 resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDO = new ResultDiopterDO();
+		if(resultDiopterDOList.size()>0)
+			resultDiopterDO=resultDiopterDOList.get(0);
+		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
+		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
+		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		//眼内压结果拼装
+		List<ResultEyepressureDO> ResultEyepressureDOList = studentService.getLatestResultEyepressureDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
+		if(ResultEyepressureDOList.size()>0)
+			resultEyepressureDO=ResultEyepressureDOList.get(0);
+		model.addAttribute("eyePressureOd",resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd().toString());
+		model.addAttribute("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs().toString());
+		//眼轴长度数据拼装
+		List<ResultEyeaxisDO> resultEyeaxisDOList = studentService.getLatelestResultEyeaxisDO(studentDO.getId(),studentDO.getLastCheckTime());
+		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
+		if(resultEyeaxisDOList.size()>0)
+			resultEyeaxisDO=resultEyeaxisDOList.get(0);
+		model.addAttribute("secondCheckOd",resultEyeaxisDO.getSecondCheckOd()==null?"":resultEyeaxisDO.getSecondCheckOd().toString());
+		model.addAttribute("secondCheckOs", resultEyeaxisDO.getSecondCheckOs()==null?"":resultEyeaxisDO.getSecondCheckOs().toString());
+		
+		System.out.println("===========================");
+		System.out.println("===========================");
+		//临时数据拼装
+		//报告临时数据
+		model.addAttribute("nakedFarvisionOdb", "12");
+		model.addAttribute("nakedFarvisionOsb", "11");
+		model.addAttribute("diopterSRb", "500");
+		model.addAttribute("diopterSLb", "300");
+		model.addAttribute("correctionFarvisionOdb", "500");
+		model.addAttribute("correctionFarvisionOsb", "300");
+		model.addAttribute("eyePressureOdb", "1");
+		model.addAttribute("secondCheckOsb", "1");
+		model.addAttribute("beforeAfterOdValueb", "2");
+		model.addAttribute("beforeAfterOsValueb", "2");
+				//医生的建议（临时数据）
+		model.addAttribute("doctorchubu","注意用眼卫生");
+		model.addAttribute("doctortebie","注意用眼卫生，养成良好的用眼习惯");
+		return "information/student/示范校筛查打印";
+	}
 }

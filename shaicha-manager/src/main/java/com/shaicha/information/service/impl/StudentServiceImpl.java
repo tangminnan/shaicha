@@ -755,6 +755,26 @@ public class StudentServiceImpl implements StudentService {
 				params.put("doctortebie","注意用眼卫生，养成良好的用眼习惯");
 		return params;
 	}
+
+	@Override
+	public List<ResultEyesightDO> getLatestResultEyesightDO(Integer id, Date lastCheckTime) {
+		return studentDao.getLatestResultEyesightDO(id,lastCheckTime);
+	}
+
+	@Override
+	public List<ResultDiopterDO> getLatestResultDiopterDOListL(Integer id, Date lastCheckTime, String string) {
+		return studentDao.getLatestResultDiopterDOListL(id,lastCheckTime,string);
+	}
+
+	@Override
+	public List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id, Date lastCheckTime) {
+		return studentDao.getLatestResultEyepressureDO(id,lastCheckTime);
+	}
+
+	@Override
+	public List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id, Date lastCheckTime) {
+		return studentDao.getLatelestResultEyeaxisDO(id,lastCheckTime);
+	}
 	
 	
 }

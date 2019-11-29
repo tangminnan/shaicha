@@ -1,6 +1,7 @@
 package com.shaicha.information.service;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.ResultDiopterDO;
+import com.shaicha.information.domain.ResultEyeaxisDO;
+import com.shaicha.information.domain.ResultEyepressureDO;
+import com.shaicha.information.domain.ResultEyesightDO;
 import com.shaicha.information.domain.StudentDO;
 
 /**
@@ -67,4 +72,12 @@ public interface StudentService {
 	 * 示范校筛查结果导出（freemarker模式）
 	 */
 	void exportWordPBByFreemarkerSHIfanxiao(Integer[] ids,HttpServletRequest request,  HttpServletResponse response);
+
+	List<ResultEyesightDO> getLatestResultEyesightDO(Integer id, Date lastCheckTime);
+
+	List<ResultDiopterDO> getLatestResultDiopterDOListL(Integer id, Date lastCheckTime, String string);
+
+	List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id, Date lastCheckTime);
+
+	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id, Date lastCheckTime);
 }
