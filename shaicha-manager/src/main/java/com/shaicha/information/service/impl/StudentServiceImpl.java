@@ -204,7 +204,7 @@ public class StudentServiceImpl implements StudentService {
 				if(num>0)
 					return R.ok("上传成功,共增加["+num+"]条");
 				else
-					return R.ok();
+					return R.ok("导入用户失败，原因：身份证号为空或已存在");
 			}else{
 			return R.error("请选择导入的文件!");
 			}

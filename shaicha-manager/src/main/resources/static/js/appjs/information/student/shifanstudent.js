@@ -407,9 +407,11 @@ function shaichajieguodaochu(){
 	}
 	var ids=[];
 	$.each(rows, function(i, row) {
-		ids[i] = row['id'];
+		if(row['lastCheckTime']!=null)
+			ids[i] = row['id'];
 	});
 	
+	if(ids.length==0){alert("所选没有进行筛查检查，无法提供下载");return ;}
 	window.location.href="/information/student/shifanshaichajieguodaochu?ids="+ids
 	
 }
