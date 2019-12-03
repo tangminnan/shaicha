@@ -49,7 +49,15 @@ public class ResultOptometryDO implements Serializable {
 	private Double secondCheckLcs;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
-
+	//身份证号
+	private String identityCard;
+	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	/**
 	 * 设置：id
 	 */
@@ -238,7 +246,8 @@ public class ResultOptometryDO implements Serializable {
 	public ResultOptometryDO(Long studentId, Long checkorId, Double firstCheckVd, Double firstCheckPd,
 			Double secondCheckPd, Double firstCheckRps, Double firstCheckLps, Double firstCheckRcs,
 			Double firstCheckLcs, Date checkDate, Double secondCheckVd, Double secondCheckRps, Double secondCheckLps,
-			Double secondCheckRcs, Double secondCheckLcs, Integer deleteFlag) {
+			Double secondCheckRcs, Double secondCheckLcs, Integer deleteFlag,
+			String identityCard) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -256,6 +265,7 @@ public class ResultOptometryDO implements Serializable {
 		this.secondCheckRcs = secondCheckRcs;
 		this.secondCheckLcs = secondCheckLcs;
 		this.deleteFlag = deleteFlag;
+		this.identityCard=identityCard;
 	}
 	
 	

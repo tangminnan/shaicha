@@ -62,4 +62,6 @@ public interface StudentDao {
 	 * 获取最新的眼轴长度检测数据
 	 */
 	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime);
+
+	void saveEyePressure(ResultEyepressureDO eyepressureDO);
 }

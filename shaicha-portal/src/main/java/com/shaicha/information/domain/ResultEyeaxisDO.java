@@ -33,6 +33,7 @@ public class ResultEyeaxisDO implements Serializable {
 	private Double secondCheckOs;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
+	private String identityCard;
 
 	/**
 	 * 设置：id
@@ -135,7 +136,7 @@ public class ResultEyeaxisDO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	public ResultEyeaxisDO(Long studentId, Long checkorId, Double firstCheckOd, Double firstCheckOs, Date checkDate,
-			Double secondCheckOd, Double secondCheckOs, Integer deleteFlag) {
+			Double secondCheckOd, Double secondCheckOs, Integer deleteFlag,String identityCard) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -145,6 +146,7 @@ public class ResultEyeaxisDO implements Serializable {
 		this.secondCheckOd = secondCheckOd;
 		this.secondCheckOs = secondCheckOs;
 		this.deleteFlag = deleteFlag;
+		this.identityCard=identityCard;
 	}
 	
 	

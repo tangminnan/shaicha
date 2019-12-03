@@ -32,6 +32,14 @@ public class ResultCornealDO implements Serializable {
 	//两周内的第几次检查  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查
 	private String firstSecond;
 
+	private String identityCard;
+	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	/**
 	 * 设置：id
 	 */
@@ -127,7 +135,7 @@ public class ResultCornealDO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	public ResultCornealDO(Integer tOptometryId, Double cornealMm, Double cornealD, Integer cornealDeg, String type,
-			String ifrl, String firstSecond) {
+			String ifrl, String firstSecond,String identityCard) {
 		super();
 		this.tOptometryId = tOptometryId;
 		this.cornealMm = cornealMm;
@@ -136,6 +144,7 @@ public class ResultCornealDO implements Serializable {
 		this.type = type;
 		this.ifrl = ifrl;
 		this.firstSecond = firstSecond;
+		this.identityCard=identityCard;
 	}
 	
 	

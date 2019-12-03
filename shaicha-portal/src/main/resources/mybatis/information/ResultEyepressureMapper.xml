@@ -4,7 +4,7 @@
 <mapper namespace="com.shaicha.information.dao.ResultEyepressureDao">
 
 	<select id="getEyepressureDO" resultType="com.shaicha.information.domain.ResultEyepressureDO">
-		select `t_eyepressure_id`,`student_id`,`checkor_id`,`eye_pressure_od`,`eye_pressure_os`,`check_date`,`delete_flag` from t_result_eyepressure where student_id = #{studentId} and check_date=#{lastCheckTime}
+		select `t_eyepressure_id`,`student_id`,`checkor_id`,`eye_pressure_od`,`eye_pressure_os`,`check_date`,`delete_flag` from t_result_eyepressure where identity_card = #{identityCard} and check_date=#{lastCheckTime}
 	</select>
 	<insert id="saveEyepressureDO" parameterType="com.shaicha.information.domain.ResultEyepressureDO" useGeneratedKeys="true" keyProperty="tEyepressureId">
 		insert into t_result_eyepressure
@@ -14,7 +14,8 @@
 			`eye_pressure_od`, 
 			`eye_pressure_os`, 
 			`check_date`, 
-			`delete_flag`
+			`delete_flag`,
+			identity_card
 		)
 		values
 		(
@@ -23,7 +24,9 @@
 			#{eyePressureOd}, 
 			#{eyePressureOs}, 
 			#{checkDate}, 
-			#{deleteFlag}
+			#{deleteFlag},
+			#{identityCard}
+			
 		)
 	</insert>
 	
@@ -37,7 +40,7 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where t_eyepressure_id = #{tEyepressureId}
+		where identity_card = #{identityCard}
 	</update>
 
 </mapper>

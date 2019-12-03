@@ -441,4 +441,6 @@ public class StudentController {
 		model.addAttribute("doctortebie","注意用眼卫生，养成良好的用眼习惯");
 		return "information/student/示范校筛查打印";
 	}
+	
+	
 }

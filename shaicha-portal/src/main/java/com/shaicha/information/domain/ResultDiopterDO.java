@@ -35,6 +35,13 @@ public class ResultDiopterDO implements Serializable {
 	private String ifrl;
 	//两周内的第几次检查  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查
 	private String firstSecond;
+	private String identityCard;
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	/**
 	 * 设置：id
 	 */
@@ -160,7 +167,7 @@ L_DATA=夜间视力检查
 		// TODO Auto-generated constructor stub
 	}
 	public ResultDiopterDO(Integer tOptometryId, Double diopterS, Double diopterC, Double diopterA, Integer believe,
-			Integer num, String type, String ifrl, String firstSecond) {
+			Integer num, String type, String ifrl, String firstSecond,String identityCard) {
 		super();
 		this.tOptometryId = tOptometryId;
 		this.diopterS = diopterS;
@@ -171,6 +178,7 @@ L_DATA=夜间视力检查
 		this.type = type;
 		this.ifrl = ifrl;
 		this.firstSecond = firstSecond;
+		this.identityCard=identityCard;
 	}
 	
 	
