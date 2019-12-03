@@ -45,7 +45,14 @@ public class ResultEyesightDO implements Serializable {
 	private Date checkDate;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
+	private String identityCard;
 
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	/**
 	 * 设置：id
 	 */
@@ -229,7 +236,7 @@ public class ResultEyesightDO implements Serializable {
 	public ResultEyesightDO(Long studentId, Long checkorId, String lifeFarvisionOd, String lifeFarvisionOs,
 			String nakedFarvisionOd, String nakedFarvisionOs, String correctionFarvisionOd,
 			String correctionFarvisionOs, String lifeNearvisionOd, String lifeNearvisionOs, String nakedNearvisionOd,
-			String nakedNearvisionOs, Date checkDate, Integer deleteFlag) {
+			String nakedNearvisionOs, Date checkDate, Integer deleteFlag,String identityCard) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -245,6 +252,7 @@ public class ResultEyesightDO implements Serializable {
 		this.nakedNearvisionOs = nakedNearvisionOs;
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
+		this.identityCard=identityCard;
 	}
 	public ResultEyesightDO() {
 		super();

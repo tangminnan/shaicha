@@ -23,6 +23,8 @@ public class StudentDO implements Serializable {
 	private String studentName;
 	//性别 1：男2：女0：未知
 	private Integer studentSex;
+	//姓名简拼
+	private String nameJianpin;
 	//民族
 	private String nation;
 	//出生年月
@@ -30,14 +32,42 @@ public class StudentDO implements Serializable {
 	private Date birthday;
 	//身份证号
 	private String identityCard;
+	//检查日期
+	private Date lastCheckTime;
 	//学校
 	private String school;
 	//年级
 	private String grade;
 	//班级
 	private String studentClass;
+	//检查地点
+	private String checkLocal;
+	//患者编号
+	private String studentNumber;
 	//联系电话
 	private String phone;
+	
+	
+	
+	
+	public String getNameJianpin() {
+		return nameJianpin;
+	}
+	public void setNameJianpin(String nameJianpin) {
+		this.nameJianpin = nameJianpin;
+	}
+	public String getCheckLocal() {
+		return checkLocal;
+	}
+	public void setCheckLocal(String checkLocal) {
+		this.checkLocal = checkLocal;
+	}
+	public String getStudentNumber() {
+		return studentNumber;
+	}
+	public void setStudentNumber(String studentNumber) {
+		this.studentNumber = studentNumber;
+	}
 	//联系地址
 	private String address;
 	//身高
@@ -50,8 +80,7 @@ public class StudentDO implements Serializable {
 	private Integer status;
 	//二维码url
 	private String QRCode;
-	//更新时间
-	private Date lastCheckTime;
+	
 	//模板类型  XUE_XIAO=学校
 	private String  modelType;
 	//证件类型 SHEN_FENZHENG=身份证

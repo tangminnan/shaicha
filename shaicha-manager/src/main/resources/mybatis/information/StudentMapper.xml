@@ -70,6 +70,7 @@
 		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
 		  		</where>
 	</select>
+	
 	 
 	<insert id="save" parameterType="com.shaicha.information.domain.StudentDO" useGeneratedKeys="true" keyProperty="id">
 		insert into t_student
@@ -94,7 +95,10 @@
   			ideentity_type,
   			school_code,
   			xue_bu,
-  			check_type
+  			check_type,
+  			check_local,
+  			student_number,
+  			name_jianpin
 		)
 		values
 		(
@@ -118,7 +122,10 @@
   			#{ideentityType},
   			#{schoolCode},
   			#{xueBu},
-  			#{checkType}
+  			#{checkType},
+  			#{checkLocal},
+  			#{studentNumber},
+  			#{nameJianpin}
 		)
 	</insert>
 	 
@@ -397,5 +404,28 @@
 	<select id="getLatelestResultEyeaxisDO" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
 		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs from t_result_eyeaxis where student_id=#{studentId} and check_date = #{lastCheckTime}
 	</select>
+	
+	<insert id="saveEyePressure" parameterType="com.shaicha.information.domain.ResultEyepressureDO">
+		insert into t_result_eyepressure
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`eye_pressure_od`, 
+			`eye_pressure_os`, 
+			`check_date`, 
+			`delete_flag`,
+			identity_card
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{eyePressureOd}, 
+			#{eyePressureOs}, 
+			#{checkDate}, 
+			#{deleteFlag},
+			#{identityCard}
+		)
+	</insert>
 
 </mapper>

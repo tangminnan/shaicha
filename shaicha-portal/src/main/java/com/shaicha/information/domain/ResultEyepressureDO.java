@@ -22,14 +22,23 @@ public class ResultEyepressureDO implements Serializable {
 	//眼内压检查者id
 	private Long checkorId;
 	//右眼眼内压
-	private Integer eyePressureOd;
+	private Double eyePressureOd;
 	//左眼眼内压
-	private Integer eyePressureOs;
+	private Double eyePressureOs;
 	//检查日期
 	private Date checkDate;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
+	//身份证号
+	private String identityCard;
+	
 
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	/**
 	 * 设置：id
 	 */
@@ -69,25 +78,25 @@ public class ResultEyepressureDO implements Serializable {
 	/**
 	 * 设置：右眼眼内压
 	 */
-	public void setEyePressureOd(Integer eyePressureOd) {
+	public void setEyePressureOd(Double eyePressureOd) {
 		this.eyePressureOd = eyePressureOd;
 	}
 	/**
 	 * 获取：右眼眼内压
 	 */
-	public Integer getEyePressureOd() {
+	public Double getEyePressureOd() {
 		return eyePressureOd;
 	}
 	/**
 	 * 设置：左眼眼内压
 	 */
-	public void setEyePressureOs(Integer eyePressureOs) {
+	public void setEyePressureOs(Double eyePressureOs) {
 		this.eyePressureOs = eyePressureOs;
 	}
 	/**
 	 * 获取：左眼眼内压
 	 */
-	public Integer getEyePressureOs() {
+	public Double getEyePressureOs() {
 		return eyePressureOs;
 	}
 	/**
@@ -118,8 +127,8 @@ public class ResultEyepressureDO implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ResultEyepressureDO(Long studentId, Long checkorId, Integer eyePressureOd, Integer eyePressureOs,
-			Date checkDate, Integer deleteFlag) {
+	public ResultEyepressureDO(Long studentId, Long checkorId, Double eyePressureOd, Double eyePressureOs,
+			Date checkDate, Integer deleteFlag,String identityCard) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -127,6 +136,7 @@ public class ResultEyepressureDO implements Serializable {
 		this.eyePressureOs = eyePressureOs;
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
+		this.identityCard=identityCard;
 	}
 	
 }

@@ -4,7 +4,7 @@
 <mapper namespace="com.shaicha.information.dao.ResultAdjustingDao">
 
 	<select id="getAdjustingDO" resultType="com.shaicha.information.domain.ResultAdjustingDO">
-		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting where student_id = #{studentId} and check_date=#{lastCheckTime}
+		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting where identity_card = #{identityCard} and check_date=#{lastCheckTime}
 	</select>
 	<insert id="saveAdjustingDO" parameterType="com.shaicha.information.domain.ResultAdjustingDO" useGeneratedKeys="true" keyProperty="tAdjustingId">
 		insert into t_result_adjusting
@@ -18,7 +18,8 @@
 			`jj_os`, 
 			`jj_ou`, 
 			`check_date`, 
-			`delete_flag`
+			`delete_flag`,
+			identity_card
 		)
 		values
 		(
@@ -31,7 +32,8 @@
 			#{jjOs}, 
 			#{jjOu}, 
 			#{checkDate}, 
-			#{deleteFlag}
+			#{deleteFlag},
+			#{identityCard}
 		)
 	</insert>
 	
@@ -49,6 +51,6 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where t_adjusting__id = #{tAdjustingId}
+		where identity_card = #{identityCard}
 	</update>
 </mapper>

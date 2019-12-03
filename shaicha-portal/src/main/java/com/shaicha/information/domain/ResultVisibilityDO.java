@@ -17,6 +17,8 @@ public class ResultVisibilityDO implements Serializable {
 	private Integer tVisibilityId;
 	//学生id
 	private Long studentId;
+	//身份证号
+	private String identityCard;
 	//视功能检查者id
 	private Long checkorId;
 	//立体视value 1=xx弧秒   2=立体盲 3=不配合 4=其他
@@ -52,6 +54,13 @@ public class ResultVisibilityDO implements Serializable {
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
 
+	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	/**
 	 * 设置：id
 	 */
@@ -296,7 +305,8 @@ public class ResultVisibilityDO implements Serializable {
 			String stereoscopicViewingDis, Double adjustmentRangeOd, Double adjustmentRangeOc, Double adjustmentRangeOu,
 			Double gatherNearOd, Double gatherNearOc, Double gatherNearOu, String obliqueValue, Double obliqueDis,
 			Integer beforeAfterOdValue, String beforeAfterOdDis, Integer beforeAfterOsValue, String beforeAfterOsDis,
-			Date checkDate, Integer deleteFlag) {
+			Date checkDate, Integer deleteFlag,
+			String identityCard) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -316,6 +326,7 @@ public class ResultVisibilityDO implements Serializable {
 		this.beforeAfterOsDis = beforeAfterOsDis;
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
+		this.identityCard=identityCard;
 	}
 	
 	

@@ -24,14 +24,16 @@ public class ResultEyepressureDO implements Serializable {
 	//眼内压检查者id
 	private Integer checkorId;
 	//右眼眼内压
-	private Integer eyePressureOd;
+	private Double eyePressureOd;
 	//左眼眼内压
-	private Integer eyePressureOs;
+	private Double eyePressureOs;
 	//检查日期
 	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date checkDate;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
+	//身份证号
+	private String identityCard;
 
 	public Integer gettEyepressureId() {
 		return tEyepressureId;
@@ -78,25 +80,25 @@ public class ResultEyepressureDO implements Serializable {
 	/**
 	 * 设置：右眼眼内压
 	 */
-	public void setEyePressureOd(Integer eyePressureOd) {
+	public void setEyePressureOd(Double eyePressureOd) {
 		this.eyePressureOd = eyePressureOd;
 	}
 	/**
 	 * 获取：右眼眼内压
 	 */
-	public Integer getEyePressureOd() {
+	public Double getEyePressureOd() {
 		return eyePressureOd;
 	}
 	/**
 	 * 设置：左眼眼内压
 	 */
-	public void setEyePressureOs(Integer eyePressureOs) {
+	public void setEyePressureOs(Double eyePressureOs) {
 		this.eyePressureOs = eyePressureOs;
 	}
 	/**
 	 * 获取：左眼眼内压
 	 */
-	public Integer getEyePressureOs() {
+	public Double getEyePressureOs() {
 		return eyePressureOs;
 	}
 	/**
@@ -123,4 +125,11 @@ public class ResultEyepressureDO implements Serializable {
 	public Integer getDeleteFlag() {
 		return deleteFlag;
 	}
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+	
 }

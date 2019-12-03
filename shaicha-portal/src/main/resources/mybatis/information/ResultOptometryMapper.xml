@@ -3,7 +3,7 @@
 
 <mapper namespace="com.shaicha.information.dao.ResultOptometryDao">
 	<select id="getOptometryDO" resultType="com.shaicha.information.domain.ResultOptometryDO">
-		select `t_optometry_id`,`student_id`,`checkor_id`,`first_check_vd`,`first_check_rps`,`first_check_lps`,`first_check_rcs`,`first_check_lcs`,`check_date`,`second_check_vd`,`second_check_rps`,`second_check_lps`,`second_check_rcs`,`second_check_lcs`,`delete_flag` from t_result_optometry where student_id = #{studentId} and check_date=#{lastCheckTime}
+		select `t_optometry_id`,`student_id`,`checkor_id`,`first_check_vd`,`first_check_rps`,`first_check_lps`,`first_check_rcs`,`first_check_lcs`,`check_date`,`second_check_vd`,`second_check_rps`,`second_check_lps`,`second_check_rcs`,`second_check_lcs`,`delete_flag` from t_result_optometry where identity_card = #{identityCard} and check_date=#{lastCheckTime}
 	</select>
 	<insert id="saveOptometryDO" parameterType="com.shaicha.information.domain.ResultOptometryDO" useGeneratedKeys="true" keyProperty="tOptometryId">
 		insert into t_result_optometry
@@ -23,7 +23,8 @@
 			`second_check_lcs`, 
 			`delete_flag`,
 			first_check_pd,
-			second_check_pd
+			second_check_pd,
+			identity_card
 		)
 		values
 		(
@@ -42,7 +43,8 @@
 			#{secondCheckLcs}, 
 			#{deleteFlag},
 			#{firstCheckPd},
-			#{secondCheckPd}
+			#{secondCheckPd},
+			#{identityCard}
 		)
 	</insert>
 	<update id="updateOptometryDO" parameterType="com.shaicha.information.domain.ResultOptometryDO">
@@ -67,6 +69,6 @@
 			<if test="firstCheckPd != null">`first_check_pd` = #{firstCheckPd}, </if>
 			<if test="secondCheckPd != null">`second_check_pd` = #{secondCheckPd}</if>
 		</set>
-		where t_optometry_id = #{tOptometryId}
+		where identity_card = #{identityCard}
 	</update>
 </mapper>

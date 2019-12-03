@@ -19,7 +19,8 @@
 			`corneal_deg`, 
 			`type`, 
 			`ifRL`,
-			first_second
+			first_second,
+			identity_card
 		)
 		values
 		(
@@ -29,7 +30,8 @@
 			#{cornealDeg}, 
 			#{type}, 
 			#{ifrl},
-			#{firstSecond}
+			#{firstSecond},
+			#{identityCard}
 		)
 	</insert>
 	

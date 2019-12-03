@@ -17,7 +17,8 @@
 			`num`, 
 			`type`, 
 			`ifRL`,
-			first_second
+			first_second,
+			identity_card
 		)
 		values
 		(
@@ -29,7 +30,8 @@
 			#{num}, 
 			#{type}, 
 			#{ifrl},
-			#{firstSecond}
+			#{firstSecond},
+			#{identityCard}
 		)
 	</insert>
 	

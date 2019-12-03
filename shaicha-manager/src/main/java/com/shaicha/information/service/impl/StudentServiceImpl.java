@@ -124,6 +124,107 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@ResponseBody
 	public R importMember(String checkType, MultipartFile file) {
+//		System.out.println("==============file================"+file);
+//		int num = 0;
+//		InputStream in=null;
+//		Workbook book=null;
+//		try {
+//			if(file != null){
+//				in = file.getInputStream();
+//				book =ExcelUtils.getBook(in);
+//				Sheet sheet = book.getSheetAt(0);
+//				Row row=null;
+//				String modelType= "",school = "", schoolCode= "";
+//				for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
+//					row = sheet.getRow(rowNum);
+//					if(rowNum==0){
+//						modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
+//						school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
+//						schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
+//					}
+//					if(rowNum>1){
+//						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
+//						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
+//						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
+//						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
+//						String birthday =row.getCell(4).getStringCellValue();//生日
+//						String xueBu = ExcelUtils.getCellFormatValue(row.getCell((short)5));		//学部
+//						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//年级
+//						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)7));	//班级
+//						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)8));		//手机号
+//						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)9));		//民族
+//						StudentDO student = new StudentDO();
+//						student.setCheckType(checkType);
+//						student.setStudentName(name);
+//						student.setPhone(phone);
+//						student.setNation(nation);
+//						student.setSchool(school);
+//						student.setGrade(grade);
+//						student.setStudentClass(studentClass);
+//						student.setStatus(0);
+//						student.setIdeentityType(ideentityType);
+//						student.setXueBu(xueBu);
+//						student.setSchoolCode(schoolCode);
+//						student.setModelType(modelType);
+//						if(sex != null && sex != ""){
+//							if(sex.equals("男")){
+//								student.setStudentSex(1);
+//							}
+//							if(sex.equals("女")){
+//								student.setStudentSex(2);
+//							}
+//						}
+//						if(birthday != null && birthday != ""){
+//							
+//							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
+//						}
+//						student.setAddTime(new Date());
+//						if(identityCard != null && identityCard != ""){
+//							Map<String,Object> map = new HashMap<String,Object>();
+//							map.put("identityCard", identityCard);
+//							List<StudentDO> list = studentDao.list(map);
+//							if(list.size()>0){
+//								continue;
+//							}else{
+//								student.setIdentityCard(identityCard);
+//								String destPath = bootdoConfig.getUploadPath();
+//								String rand = new Random().nextInt(99999999)+".jpg";
+//								//生成二维码
+//								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
+//								student.setQRCode("/files/"+rand);
+//							}
+//						}else{
+//							continue;
+//						}
+//							studentDao.save(student);
+//							num++;
+//					}
+//						
+//				}
+//				if(num>0)
+//					return R.ok("上传成功,共增加["+num+"]条");
+//				else
+//					return R.ok("导入用户失败，原因：身份证号为空或已存在");
+//			}else{
+//			return R.error("请选择导入的文件!");
+//			}
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		finally{
+//			try {
+//				if(book!=null)
+//					book.close();
+//				if(in!=null)
+//					in.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return R.error();
+		
+		
+		
 		System.out.println("==============file================"+file);
 		int num = 0;
 		InputStream in=null;
@@ -134,79 +235,22 @@ public class StudentServiceImpl implements StudentService {
 				book =ExcelUtils.getBook(in);
 				Sheet sheet = book.getSheetAt(0);
 				Row row=null;
-				String modelType= "",school = "", schoolCode= "";
-				for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
+				
+				for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					row = sheet.getRow(rowNum);
-					if(rowNum==0){
-						modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
-						school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
-						schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
-					}
-					if(rowNum>1){
-						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
-						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
-						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
-						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
-						String birthday =row.getCell(4).getStringCellValue();//生日
-						String xueBu = ExcelUtils.getCellFormatValue(row.getCell((short)5));		//学部
-						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//年级
-						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)7));	//班级
-						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)8));		//手机号
-						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)9));		//民族
-						StudentDO student = new StudentDO();
-						student.setCheckType(checkType);
-						student.setStudentName(name);
-						student.setPhone(phone);
-						student.setNation(nation);
-						student.setSchool(school);
-						student.setGrade(grade);
-						student.setStudentClass(studentClass);
-						student.setStatus(0);
-						student.setIdeentityType(ideentityType);
-						student.setXueBu(xueBu);
-						student.setSchoolCode(schoolCode);
-						student.setModelType(modelType);
-						if(sex != null && sex != ""){
-							if(sex.equals("男")){
-								student.setStudentSex(1);
-							}
-							if(sex.equals("女")){
-								student.setStudentSex(2);
-							}
-						}
-						if(birthday != null && birthday != ""){
-							
-							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
-						}
-						student.setAddTime(new Date());
-						if(identityCard != null && identityCard != ""){
-							Map<String,Object> map = new HashMap<String,Object>();
-							map.put("identityCard", identityCard);
-							List<StudentDO> list = studentDao.list(map);
-							if(list.size()>0){
-								continue;
-							}else{
-								student.setIdentityCard(identityCard);
-								String destPath = bootdoConfig.getUploadPath();
-								String rand = new Random().nextInt(99999999)+".jpg";
-								//生成二维码
-								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
-								student.setQRCode("/files/"+rand);
-							}
-						}else{
-							continue;
-						}
-							studentDao.save(student);
-							num++;
-					}
-						
-				}
-				if(num>0)
-					return R.ok("上传成功,共增加["+num+"]条");
-				else
-					return R.ok("导入用户失败，原因：身份证号为空或已存在");
-			}else{
-			return R.error("请选择导入的文件!");
+					//72右 73作  身份张好3
+					ResultEyepressureDO eyepressureDO = new ResultEyepressureDO();		
+					String eyePressureOd = ExcelUtils.getCellFormatValue(row.getCell((short)71));//证件类型
+					String eyePressureOs = ExcelUtils.getCellFormatValue(row.getCell((short)72));	//身份证号	
+					String identityCard =   ExcelUtils.getCellFormatValue(row.getCell((short)2));	//身份证号	
+					if(!"".equals(eyePressureOd))
+						eyepressureDO.setEyePressureOd(Double.parseDouble(eyePressureOd));
+					if(!"".equals(eyePressureOs))
+						eyepressureDO.setEyePressureOs(Double.parseDouble(eyePressureOs));
+					eyepressureDO.setIdentityCard(identityCard);
+					studentDao.saveEyePressure(eyepressureDO);
+				}		
+					return R.ok();	
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -222,6 +266,7 @@ public class StudentServiceImpl implements StudentService {
 			}
 		}
 		return R.error();
+		
 	}
 
 	@Override
