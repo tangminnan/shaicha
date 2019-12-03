@@ -11,6 +11,16 @@
   font-weight: normal;
   font-style: normal;
 }
+
+
+.iconfont {
+    font-family: "FontAwesome" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
@@ -2023,4 +2033,8 @@
 }
 .fa-fonticons:before {
   content: "\f280";
+}
+
+.icon-yonghuguanli1:before {
+    content: "\f0c0";
 }

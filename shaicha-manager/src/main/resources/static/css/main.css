@@ -1,0 +1,198 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: 'Microsoft Yahei', 'Arial';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    color: #333333;
+}
+.first_area {
+   width: 100%;
+   height: 150px;
+   padding: 5px;
+   margin-bottom: 30px;
+   display: flex;       
+}
+
+.first_area .left{
+    margin-right: 10px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px; 
+    width: 25%;
+    flex-shrink: 0;
+    float: left;      
+}
+
+.first_area .left .itemName, .first_area .checkItem .itemName {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ff8454;
+    font-size: 28px;
+    color: #ffffff;
+    position: relative;
+    flex-shrink: 0;
+}
+.first_area .left, .first_area .checkItem {
+    margin-right: 10px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+html, body, div,p,span,ol, ul,li{
+	margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+p {
+
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.first_area .left .itemName i, .first_area .checkItem .itemName i, .first_area .left .itemName span, .first_area .checkItem .itemName span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.first_area .left .itemLs, .first_area .checkItem .itemLs {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.first_area .left .itemLs span:first-child, .first_area .checkItem .itemLs span:first-child {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.first_area .left .itemLs span, .first_area .checkItem .itemLs span {
+    width: 100%;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.first_area .left .itemLs span:nth-child(2), .first_area .checkItem .itemLs span:nth-child(2) {
+    text-align: right;
+    font-size: 28px;
+}
+
+
+.first_area .right {
+    width: 100%;
+    flex-shrink: 1;
+    display: flex;
+}
+
+.right {
+    float: right;
+}
+.first_area .right .checkItem {
+    width: 310px;
+}
+.first_area .right .checkItem:first-child .itemName {
+    background: #fcc94c;
+}
+
+.first_area .left .itemName i, .first_area .checkItem .itemName i, .first_area .left .itemName span, .first_area .checkItem .itemName span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.first_area .right .checkItem .itemName i {
+    font-size: 28px;
+}
+
+[hidden], template {
+    display: none;
+}
+
+:before, :after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.first_area .right .checkItem:nth-child(2) .itemName {
+    background: #53a4ff;
+}
+.first_area .right .checkItem:last-child .itemName {
+    background: #6ed1fd;
+}
+div {
+    display: block;
+}
+.pie_area {
+    width: 100%;
+    min-width: 1300px;
+    display: flex;
+}
+
+.pie_area .image-box {
+    overflow: hidden;
+    flex-shrink: 1;
+    width: 100%;
+}
+
+.pie_area > div {
+    background: #ffffff;
+    border: 1px solid #ccc;
+}
+
+.pie_area .title {
+    background: #cccccc;
+    line-height: 44px;
+    padding-left: 15px;
+}
+.pie_area .image-box ul {
+    flex: 0 0 auto;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+.pie_area .image-box ul li {
+    padding: 5px 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.pie_area .image-box ul li > .char_Parent {
+    background: #ffffff;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px;
+}
+
+.pie_area .image-box ul li > .char_Parent .content_area {
+    font-size: 18px;
+    line-height: 50px;
+    height: 50px;
+}
