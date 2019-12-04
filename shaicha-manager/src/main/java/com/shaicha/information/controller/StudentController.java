@@ -1,5 +1,14 @@
 package com.shaicha.information.controller;
 
+
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +17,20 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.converter.PicturesManager;
+import org.apache.poi.hwpf.converter.WordToHtmlConverter;
+import org.apache.poi.hwpf.usermodel.Picture;
+import org.apache.poi.hwpf.usermodel.PictureType;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -16,11 +38,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.Document;
 
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
@@ -240,7 +262,7 @@ public class StudentController {
 	/**
 	 * 筛查结果导出
 	 */
-	@GetMapping("/shaichajieguodaochu")
+//	@GetMapping("/shaichajieguodaochu")
 	public void shaichajieguodaochu(Integer[] ids,HttpServletResponse response){
 		studentService.shaichajieguodaochu(ids,response);
 	}
@@ -248,7 +270,7 @@ public class StudentController {
 	/**
 	 * 示范校筛查结果导出
 	 */
-	@GetMapping("/shifanshaichajieguodaochu")
+//	@GetMapping("/shifanshaichajieguodaochu")
 	public void shifanshaichajieguodaochu(Integer[] ids,HttpServletResponse response){
 		studentService.shifanshaichajieguodaochu(ids,response);
 	}
@@ -277,7 +299,7 @@ public class StudentController {
 	/**
 	 * 普通筛查导出（freemarker导出模式）
 	 */
-//	@GetMapping("/shaichajieguodaochu")
+	@GetMapping("/shaichajieguodaochu")
 	public void exportWordPByFreemarker(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
 		studentService.exportWordPByFreemarker(ids,request,response);
 	}
@@ -285,7 +307,7 @@ public class StudentController {
 	/**
 	 * 示范校筛查结果导出（freemarker导出模式）
 	 */
-//	@GetMapping("/shifanshaichajieguodaochu")
+	@GetMapping("/shifanshaichajieguodaochu")
 	public void exportWordPBByFreemarkerSHIfanxiao(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
 		studentService.exportWordPBByFreemarkerSHIfanxiao(ids,request,response);
 	}
@@ -443,4 +465,114 @@ public class StudentController {
 	}
 	
 	
+	/*public static void  main(String[] args)
+		    throws IOException {
+		  String htmlName = "示范校筛查打印" + ".html";
+		  String imagePath = "D://" + "image" + File.separator;
+		  // 判断html文件是否存在
+		  File htmlFile = new File("D://"+ htmlName);
+//		  if (htmlFile.exists()) {
+//		    return htmlFile.getAbsolutePath();
+//		  }
+		  // word文件
+		  File wordFile = new File("D://示范学校筛查导出模板.docx");
+		  // 1) 加载word文档生成 XWPFDocument对象
+		  InputStream in = new FileInputStream(wordFile);
+		  XWPFDocument document = new XWPFDocument(in);
+		  // 2) 解析 XHTML配置 (这里设置IURIResolver来设置图片存放的目录)
+		  File imgFolder = new File(imagePath);
+		  XHTMLOptions options = XHTMLOptions.create();
+		  options.setExtractor(new FileImageExtractor(imgFolder));
+		  // html中图片的路径 相对路径
+		  options.URIResolver(new BasicURIResolver("image"));
+		  options.setIgnoreStylesIfUnused(false);
+		  options.setFragment(true);
+		  // 3) 将 XWPFDocument转换成XHTML
+		  // 生成html文件上级文件夹
+		  File folder = new File(htmlPath);
+		  if (!folder.exists()) {
+		    folder.mkdirs();
+		  }
+		  OutputStream out = new FileOutputStream(htmlFile);
+		  XHTMLConverter.getInstance().convert(document, out, options);
+		
+		}*/
+	
+	public static void main(String argv[]) {  
+        try {  
+            convert2Html("D://1.doc","D://1.html");  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+    }  
+  
+    public static void writeFile(String content, String path) {  
+        FileOutputStream fos = null;  
+        BufferedWriter bw = null;  
+        try {  
+            File file = new File(path);  
+            fos = new FileOutputStream(file);  
+            bw = new BufferedWriter(new OutputStreamWriter(fos,"ISO-8859-1"));  
+            bw.write(content);  
+        } catch (FileNotFoundException fnfe) {  
+            fnfe.printStackTrace();  
+        } catch (IOException ioe) {  
+            ioe.printStackTrace();  
+        } finally {  
+            try {  
+                if (bw != null)  
+                    bw.close();  
+                if (fos != null)  
+                    fos.close();  
+            } catch (IOException ie) {  
+            }  
+        }  
+    }  
+  
+    public static void convert2Html(String fileName, String outPutFile)  
+            throws TransformerException, IOException,  
+            ParserConfigurationException {  
+        HWPFDocument wordDocument = new HWPFDocument(new FileInputStream(fileName));//WordToHtmlUtils.loadDoc(new FileInputStream(inputFile));  
+        WordToHtmlConverter wordToHtmlConverter = new WordToHtmlConverter(  
+                DocumentBuilderFactory.newInstance().newDocumentBuilder()  
+                        .newDocument());  
+         wordToHtmlConverter.setPicturesManager( new PicturesManager()  
+         {  
+             public String savePicture( byte[] content,  
+                     PictureType pictureType, String suggestedName,  
+                     float widthInches, float heightInches )  
+             {  
+                 return "test/"+suggestedName;  
+             }  
+         } );  
+        wordToHtmlConverter.processDocument(wordDocument);  
+        //save pictures  
+        List pics=wordDocument.getPicturesTable().getAllPictures();  
+        if(pics!=null){  
+            for(int i=0;i<pics.size();i++){  
+                Picture pic = (Picture)pics.get(i);  
+                System.out.println();  
+                try {  
+                    pic.writeImageContent(new FileOutputStream("D:/test/"  
+                            + pic.suggestFullFileName()));  
+                } catch (FileNotFoundException e) {  
+                    e.printStackTrace();  
+                }    
+            }  
+        }  
+        Document htmlDocument = wordToHtmlConverter.getDocument();  
+        ByteArrayOutputStream out = new ByteArrayOutputStream();  
+        DOMSource domSource = new DOMSource(htmlDocument);  
+        StreamResult streamResult = new StreamResult(out);  
+  
+        TransformerFactory tf = TransformerFactory.newInstance();  
+        Transformer serializer = tf.newTransformer();  
+        serializer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");  
+        serializer.setOutputProperty(OutputKeys.INDENT, "yes");  
+        serializer.setOutputProperty(OutputKeys.METHOD, "html");  
+        serializer.transform(domSource, streamResult);  
+        out.close();  
+        writeFile(new String(out.toByteArray()), outPutFile);  
+    }  
+		
 }

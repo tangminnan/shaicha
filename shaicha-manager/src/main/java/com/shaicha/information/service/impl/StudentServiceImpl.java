@@ -699,8 +699,8 @@ public class StudentServiceImpl implements StudentService {
 			resultEyesightDO=resultEyesightDOList.get(0);
 		params.put("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString());
 		params.put("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
-		params.put("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
-		params.put("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
+//		params.put("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
+//		params.put("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
 		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
@@ -740,19 +740,21 @@ public class StudentServiceImpl implements StudentService {
 		System.out.println("===========================");
 		//临时数据拼装
 		//报告临时数据
-				params.put("nakedFarvisionOdb", "12");
-				params.put("nakedFarvisionOsb", "11");
-				params.put("diopterSRb", "500");
+				params.put("cornealMmr1R", "12");
+				params.put("cornealMmr1L", "11");
+				params.put("cornealDr1R", "500");
 				params.put("diopterSLb", "300");
-				params.put("correctionFarvisionOdb", "500");
-				params.put("correctionFarvisionOsb", "300");
-				params.put("eyePressureOdb", "1");
+				params.put("cornealDr1L", "500");
+				params.put("cornealMmr2R", "300");
+				params.put("cornealMmr2L", "1");
 				params.put("secondCheckOsb", "1");
-				params.put("beforeAfterOdValueb", "2");
-				params.put("beforeAfterOsValueb", "2");
+				params.put("cornealDr2R", "2");
+				params.put("cornealDr2L", "2");
+				params.put("glassvisionOd", 11);
+				params.put("glassvisionOs", 12);
 				//医生的建议（临时数据）
 				params.put("doctorchubu","注意用眼卫生");
-				params.put("doctortebie","注意用眼卫生，养成良好的用眼习惯");
+				
 		return params;
 	}
 
