@@ -55,14 +55,14 @@ public class ResultVisibilityController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/getUserDetail/{id}")
+	@GetMapping("/getUserDetail/{identityCard}")
 	@RequiresPermissions("information:student:student")
-	public PageUtils getUserDetail(@PathVariable("id") Integer id){
+	public PageUtils getUserDetail(@PathVariable("identityCard") String id,@RequestParam Map<String, Object> params){
 		//查询列表数据
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("studentId", id);
-		List<ResultVisibilityDO> resultVisibilityList = resultVisibilityService.list(params);
-		int total = resultVisibilityService.count(params);
+		Query query = new Query(params);
+		query.put("identityCard", id);
+		List<ResultVisibilityDO> resultVisibilityList = resultVisibilityService.list(query);
+		int total = resultVisibilityService.count(query);
 		PageUtils pageUtils = new PageUtils(resultVisibilityList, total);
 		return pageUtils;
 	}

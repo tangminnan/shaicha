@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultVisibilityDO">
-		select `t_visibility_id`,`student_id`,`checkor_id`,`stereoscopic_viewing_value`,`stereoscopic_viewing_dis`,`adjustment_range_od`,`adjustment_range_oc`,`adjustment_range_ou`,`gather_near_od`,`gather_near_oc`,`gather_near_ou`,`oblique_value`,`oblique_dis`,`before_after_od_value`,`before_after_od_dis`,`before_after_os_value`,`before_after_os_dis`,`check_date`,`delete_flag` from t_result_visibility
+		select `t_visibility_id`,`student_id`,`checkor_id`,`stereoscopic_viewing_value`,`stereoscopic_viewing_dis`,`adjustment_range_od`,`adjustment_range_oc`,`adjustment_range_ou`,`gather_near_od`,`gather_near_oc`,`gather_near_ou`,`oblique_value`,`oblique_dis`,`before_after_od_value`,`before_after_od_dis`,`before_after_os_value`,`before_after_os_dis`,`check_date`,`delete_flag`,`identity_card` from t_result_visibility
         <where>  
 		  		  <if test="tVisibilityId != null and tVisibilityId != ''"> and t_visibility_id = #{tVisibilityId} </if>
 		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
@@ -29,6 +29,10 @@
 		  		  <if test="beforeAfterOsDis != null and beforeAfterOsDis != ''"> and before_after_os_dis = #{beforeAfterOsDis} </if>
 		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		
+		  		  <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -65,6 +69,7 @@
 		  		  <if test="beforeAfterOsDis != null and beforeAfterOsDis != ''"> and before_after_os_dis = #{beforeAfterOsDis} </if>
 		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
 		  		</where>
 	</select>
 	 

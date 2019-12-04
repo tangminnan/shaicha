@@ -38,6 +38,25 @@ public class ResultEyeaxisDO implements Serializable {
 	private Integer deleteFlag;
 	//身份证号
 	private String identityCard;
+	private Date endTime;
+	private Date startTime;
+	
+	
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+
+
 	
 
 	public String getIdentityCard() {

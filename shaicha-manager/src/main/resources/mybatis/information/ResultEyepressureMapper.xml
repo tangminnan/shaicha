@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultEyepressureDO">
-		select `t_eyepressure_id`,`student_id`,`checkor_id`,`eye_pressure_od`,`eye_pressure_os`,`check_date`,`delete_flag` from t_result_eyepressure
+		select `t_eyepressure_id`,`student_id`,`checkor_id`,`eye_pressure_od`,`eye_pressure_os`,`check_date`,`delete_flag`,`identity_card` from t_result_eyepressure
         <where>  
 		  		  <if test="tEyepressureId != null and tEyepressureId != ''"> and t_eyepressure_id = #{tEyepressureId} </if>
 		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
@@ -17,6 +17,10 @@
 		  		  <if test="eyePressureOs != null and eyePressureOs != ''"> and eye_pressure_os = #{eyePressureOs} </if>
 		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  
+		  		  <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -41,6 +45,7 @@
 		  		  <if test="eyePressureOs != null and eyePressureOs != ''"> and eye_pressure_os = #{eyePressureOs} </if>
 		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
 		  		</where>
 	</select>
 	 

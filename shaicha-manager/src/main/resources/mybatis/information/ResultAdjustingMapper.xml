@@ -8,7 +8,8 @@
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultAdjustingDO">
-		select `t_adjusting_id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting
+		select `t_adjusting_id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag`,`identity_card` from t_result_adjusting
+
         <where>  
 		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting_id = #{tAdjustingId} </if>
 		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
@@ -21,6 +22,10 @@
 		  		  <if test="jjOu != null and jjOu != ''"> and jj_ou = #{jjOu} </if>
 		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  
+		  		  <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -49,6 +54,7 @@
 		  		  <if test="jjOu != null and jjOu != ''"> and jj_ou = #{jjOu} </if>
 		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
 		  		</where>
 	</select>
 	 
