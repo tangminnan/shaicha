@@ -3,7 +3,26 @@
 
 <mapper namespace="com.shaicha.information.dao.ResultEyesightDao">
 	<select id="getEyesightDO" resultType="com.shaicha.information.domain.ResultEyesightDO">
-			select `t_eyesight_id`,`student_id`,`checkor_id`,`life_farvision_od`,`life_farvision_os`,`naked_farvision_od`,`naked_farvision_os`,`correction_farvision_od`,`correction_farvision_os`,`life_nearvision_od`,`life_nearvision_os`,`naked_nearvision_od`,`naked_nearvision_os`,`check_date`,`delete_flag` from t_result_eyesight where identity_card = #{identityCard} and check_date=#{lastCheckTime}
+								SELECT
+						`t_eyesight_id`,
+						`student_id`,
+						`checkor_id`,
+						`life_farvision_od`,
+						`life_farvision_os`,
+						`naked_farvision_od`,
+						`naked_farvision_os`,
+						`correction_farvision_od`,
+						`correction_farvision_os`,
+						`life_nearvision_od`,
+						`life_nearvision_os`,
+						`naked_nearvision_od`,
+						`naked_nearvision_os`,
+						`check_date`,
+						`delete_flag`
+					FROM
+						t_result_eyesight
+					WHERE
+						student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveEyesightDO" parameterType="com.shaicha.information.domain.ResultEyesightDO" useGeneratedKeys="true" keyProperty="tEyesightId">
@@ -63,7 +82,7 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where identity_card = #{identityCard}
+		where student_id = #{studentId}
 	</update>
 	
 </mapper>

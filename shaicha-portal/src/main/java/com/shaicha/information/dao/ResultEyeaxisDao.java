@@ -18,7 +18,7 @@ import com.shaicha.information.domain.ResultEyeaxisDO;
 @Mapper
 public interface ResultEyeaxisDao {
 	void saveEyeaxisDO(ResultEyeaxisDO resultEyeaxisDO);
-	ResultEyeaxisDO getEyeaxisDO(@Param("studentId") Long studentId,@Param("lastCheckTime") Date lastCheckTime);
+	List<ResultEyeaxisDO> getEyeaxisDO(Long studentId);
 
 	void updateEyeaxisDO(ResultEyeaxisDO resultEyeaxisDO);
 }

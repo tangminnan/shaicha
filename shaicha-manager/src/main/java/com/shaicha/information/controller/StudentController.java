@@ -326,7 +326,7 @@ public class StudentController {
 		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
-		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
@@ -336,7 +336,7 @@ public class StudentController {
 		model.addAttribute("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
-		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -347,7 +347,7 @@ public class StudentController {
 		
 		
 		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList =studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDOList =studentService.getLatestResultDiopterDOListL(studentDO.getId(),"R");
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -379,7 +379,7 @@ public class StudentController {
 		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
-		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
@@ -389,7 +389,7 @@ public class StudentController {
 		model.addAttribute("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
-		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -400,7 +400,7 @@ public class StudentController {
 		
 		
 		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"R");
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -408,14 +408,14 @@ public class StudentController {
 		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
 		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
 		//眼内压结果拼装
-		List<ResultEyepressureDO> ResultEyepressureDOList = studentService.getLatestResultEyepressureDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyepressureDO> ResultEyepressureDOList = studentService.getLatestResultEyepressureDO(studentDO.getId());
 		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
 		if(ResultEyepressureDOList.size()>0)
 			resultEyepressureDO=ResultEyepressureDOList.get(0);
 		model.addAttribute("eyePressureOd",resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd().toString());
 		model.addAttribute("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs().toString());
 		//眼轴长度数据拼装
-		List<ResultEyeaxisDO> resultEyeaxisDOList = studentService.getLatelestResultEyeaxisDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyeaxisDO> resultEyeaxisDOList = studentService.getLatelestResultEyeaxisDO(studentDO.getId());
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);

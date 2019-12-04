@@ -49,10 +49,15 @@ public class ResultEyesightDO implements Serializable {
 	private String checkDate1;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
-	private String identityCard;
 	private Date endTime;
 	private Date startTime;
-	
+	//戴镜视力右
+	private String glassvisionOd;
+	//身份证号
+	private String identityCard;
+					   
+		//戴镜视力左
+	private String glassvisionOs;
 	
 	public Date getEndTime() {
 		return endTime;
@@ -67,12 +72,7 @@ public class ResultEyesightDO implements Serializable {
 		this.startTime = startTime;
 	}
 	
-	public String getIdentityCard() {
-		return identityCard;
-	}
-	public void setIdentityCard(String identityCard) {
-		this.identityCard = identityCard;
-	}
+
 
 	public String getCheckDate1() {
 		return checkDate1;
@@ -279,6 +279,24 @@ public class ResultEyesightDO implements Serializable {
 		this.correctionFarvisionOd = correctionFarvisionOd;
 		this.correctionFarvisionOs = correctionFarvisionOs;
 		
+	}
+	public String getGlassvisionOd() {
+		return glassvisionOd;
+	}
+	public void setGlassvisionOd(String glassvisionOd) {
+		this.glassvisionOd = glassvisionOd;
+	}
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+	public String getGlassvisionOs() {
+		return glassvisionOs;
+	}
+	public void setGlassvisionOs(String glassvisionOs) {
+		this.glassvisionOs = glassvisionOs;
 	}
 	
 	

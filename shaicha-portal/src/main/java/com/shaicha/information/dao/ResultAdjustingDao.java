@@ -1,5 +1,6 @@
 package com.shaicha.information.dao;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,7 +17,7 @@ import com.shaicha.information.domain.ResultAdjustingDO;
 public interface ResultAdjustingDao {
 
 	void saveAdjustingDO(ResultAdjustingDO resultAdjustingDO);
-	ResultAdjustingDO getAdjustingDO(@Param("studentId") Long studentId, @Param("lastCheckTime")Date lastCheckTime);
+	List<ResultAdjustingDO> getAdjustingDO(Long studentId);
 
 	void updateAdjustingDO(ResultAdjustingDO resultAdjustingDO);
 }

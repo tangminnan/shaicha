@@ -4,7 +4,20 @@
 <mapper namespace="com.shaicha.information.dao.ResultEyeaxisDao">
 
 	<select id="getEyeaxisDO" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
-			select `t_eyeaxis_id`,`student_id`,`checkor_id`,`first_check_od`,`first_check_os`,`check_date`,`second_check_od`,`second_check_os`,`delete_flag` from t_result_eyeaxis  where identity_card = #{identityCard} and check_date=#{lastCheckTime}
+								SELECT
+						`t_eyeaxis_id`,
+						`student_id`,
+						`checkor_id`,
+						`first_check_od`,
+						`first_check_os`,
+						`check_date`,
+						`second_check_od`,
+						`second_check_os`,
+						`delete_flag`
+					FROM
+						t_result_eyeaxis
+					WHERE
+						student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	<insert id="saveEyeaxisDO" parameterType="com.shaicha.information.domain.ResultEyeaxisDO" useGeneratedKeys="true" keyProperty="tEyeaxisId">
 		insert into t_result_eyeaxis
@@ -45,6 +58,6 @@
 			<if test="secondCheckOs != null">`second_check_os` = #{secondCheckOs}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where identity_card = #{identityCard}
+		where student_id = #{studentId}
 	</update>
 </mapper>

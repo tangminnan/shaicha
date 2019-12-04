@@ -73,11 +73,11 @@ public interface StudentService {
 	 */
 	void exportWordPBByFreemarkerSHIfanxiao(Integer[] ids,HttpServletRequest request,  HttpServletResponse response);
 
-	List<ResultEyesightDO> getLatestResultEyesightDO(Integer id, Date lastCheckTime);
+	List<ResultEyesightDO> getLatestResultEyesightDO(Integer id);
 
-	List<ResultDiopterDO> getLatestResultDiopterDOListL(Integer id, Date lastCheckTime, String string);
+	List<ResultDiopterDO> getLatestResultDiopterDOListL(Integer id,String string);
 
-	List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id, Date lastCheckTime);
+	List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id);
 
-	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id, Date lastCheckTime);
+	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id);
 }

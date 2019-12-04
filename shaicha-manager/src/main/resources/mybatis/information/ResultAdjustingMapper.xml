@@ -9,6 +9,7 @@
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultAdjustingDO">
 		select `t_adjusting_id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag`,`identity_card` from t_result_adjusting
+
         <where>  
 		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting_id = #{tAdjustingId} </if>
 		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>

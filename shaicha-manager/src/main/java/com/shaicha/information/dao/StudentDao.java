@@ -48,20 +48,26 @@ public interface StudentDao {
 	/**
 		导出最新的检测视力
 	 */
-	List<ResultEyesightDO> getLatestResultEyesightDO(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime);
+	List<ResultEyesightDO> getLatestResultEyesightDO(Integer studentId);
 	/**
 	 获取电脑验光最新数据
 	 */
-	List<ResultDiopterDO> getLatestResultDiopterDOListL(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime,@Param("ifRL") String ifRL);
+	List<ResultDiopterDO> getLatestResultDiopterDOListL(@Param("studentId") Integer studentId,@Param("ifRL") String ifRL);
 	/**
 	 * 获取最新的眼内压数据
 	 */
-	List<ResultEyepressureDO> getLatestResultEyepressureDO(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime);
+	List<ResultEyepressureDO> getLatestResultEyepressureDO(@Param("studentId") Integer studentId);
 
 	/**
 	 * 获取最新的眼轴长度检测数据
 	 */
-	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(@Param("studentId") Integer studentId,@Param("lastCheckTime") Date lastCheckTime);
-
+	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(@Param("studentId") Integer studentId);
+////////////////////////////////////////////////////////////
 	void saveEyePressure(ResultEyepressureDO eyepressureDO);
+
+	void saveResultEyesightDO(ResultEyesightDO resultEyesightDO);
+
+	void ResultEyeaxisDO(ResultEyeaxisDO resultEyeaxisDO);
+
+	void saveResultDiopterDO(ResultDiopterDO resultDiopterDO);
 }

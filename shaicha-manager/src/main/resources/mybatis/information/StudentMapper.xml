@@ -375,34 +375,40 @@
 							t_result_eyesight
 						WHERE
 							student_id = #{studentId}
-							AND check_date=#{lastCheckTime}
+							order by check_date desc limit 1
 					
 	</select>
 	
 	<select id="getLatestResultDiopterDOListL" resultType="com.shaicha.information.domain.ResultDiopterDO">
-							SELECT
-						ifnull(diopter_s,'') diopterS,
-  						ifnull(diopter_c,'') diopterC,
-  						ifnull(diopter_a,'') diopterA
-					FROM
-						t_result_diopter d,
-						t_result_optometry o
-					WHERE
-						d.t_optometry_id = o.t_optometry_id
-					AND d.ifRL = #{ifRL}
-					AND o.student_id = #{studentId}
-					AND o.check_date = #{lastCheckTime}
-					ORDER BY
-						d.t_diopter_id desc
+										SELECT
+							ifnull(diopter_s, '') diopterS,
+							ifnull(diopter_c, '') diopterC,
+							ifnull(diopter_a, '') diopterA
+						FROM
+							t_result_diopter d,
+							(
+								SELECT
+									`t_optometry_id`,
+									`student_id`
+								FROM
+									t_result_optometry
+								WHERE
+									student_id = #{studentId} order by check_date desc limit 1
+							) o
+						WHERE
+							d.t_optometry_id = o.t_optometry_id
+						AND d.ifRL = #{ifRL}
+						ORDER BY
+							d.t_diopter_id DESC
 	</select>
 	
 	<select id="getLatestResultEyepressureDO" resultType="com.shaicha.information.domain.ResultEyepressureDO">
-		select ifnull(eye_pressure_od,'') eyePressureOd,ifnull(eye_pressure_os,'') eyePressureOs from t_result_eyepressure where student_id=#{studentId} and check_date = #{lastCheckTime}
+		select ifnull(eye_pressure_od,'') eyePressureOd,ifnull(eye_pressure_os,'') eyePressureOs from t_result_eyepressure where student_id=#{studentId} order by  check_date desc limit 1
 	
 	</select>
 	
 	<select id="getLatelestResultEyeaxisDO" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
-		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs from t_result_eyeaxis where student_id=#{studentId} and check_date = #{lastCheckTime}
+		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs from t_result_eyeaxis where student_id=#{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveEyePressure" parameterType="com.shaicha.information.domain.ResultEyepressureDO">
@@ -425,6 +431,109 @@
 			#{checkDate}, 
 			#{deleteFlag},
 			#{identityCard}
+		)
+	</insert>
+	
+	<insert id="saveResultEyesightDO" parameterType="com.shaicha.information.domain.ResultEyesightDO">
+		insert into t_result_eyesight
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`life_farvision_od`, 
+			`life_farvision_os`, 
+			`naked_farvision_od`, 
+			`naked_farvision_os`, 
+			`correction_farvision_od`, 
+			`correction_farvision_os`, 
+			`life_nearvision_od`, 
+			`life_nearvision_os`, 
+			`naked_nearvision_od`, 
+			`naked_nearvision_os`, 
+			`check_date`, 
+			`delete_flag`,
+			identity_card,
+			glassvision_od,
+			glassvision_os
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{lifeFarvisionOd}, 
+			#{lifeFarvisionOs}, 
+			#{nakedFarvisionOd}, 
+			#{nakedFarvisionOs}, 
+			#{correctionFarvisionOd}, 
+			#{correctionFarvisionOs}, 
+			#{lifeNearvisionOd}, 
+			#{lifeNearvisionOs}, 
+			#{nakedNearvisionOd}, 
+			#{nakedNearvisionOs}, 
+			#{checkDate}, 
+			#{deleteFlag},
+			#{identityCard},
+			#{glassvisionOd},
+			#{glassvisionOs}
+		)
+	</insert>
+	
+	<insert id="ResultEyeaxisDO" parameterType="com.shaicha.information.domain.ResultEyeaxisDO">
+		insert into t_result_eyeaxis
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`first_check_od`, 
+			`first_check_os`, 
+			`check_date`, 
+			`second_check_od`, 
+			`second_check_os`, 
+			`delete_flag`,
+			identity_card
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{firstCheckOd}, 
+			#{firstCheckOs}, 
+			#{checkDate}, 
+			#{secondCheckOd}, 
+			#{secondCheckOs}, 
+			#{deleteFlag},
+			#{identityCard}
+		)
+	
+	
+	</insert>
+	
+	<insert id="saveResultDiopterDO" parameterType="com.shaicha.information.domain.ResultDiopterDO">
+		insert into t_result_diopter
+		(
+			`t_optometry_id`, 
+			`diopter_s`, 
+			`diopter_c`, 
+			`diopter_a`, 
+			`believe`, 
+			`num`, 
+			`type`, 
+			`ifRL`,
+			first_second,
+			identity_card,
+			check_date
+		)
+		values
+		(
+			#{tOptometryId}, 
+			#{diopterS}, 
+			#{diopterC}, 
+			#{diopterA}, 
+			#{believe}, 
+			#{num}, 
+			#{type}, 
+			#{ifrl},
+			#{firstSecond},
+			#{identityCard},
+			#{checkDate}
 		)
 	</insert>
 

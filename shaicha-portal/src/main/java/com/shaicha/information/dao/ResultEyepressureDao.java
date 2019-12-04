@@ -1,6 +1,7 @@
 package com.shaicha.information.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,7 +17,7 @@ import com.shaicha.information.domain.ResultEyepressureDO;
 @Mapper
 public interface ResultEyepressureDao {
 	void saveEyepressureDO(ResultEyepressureDO resultEyepressureDO);
-	ResultEyepressureDO getEyepressureDO(@Param("studentId") Long studentId,@Param("lastCheckTime") Date lastCheckTime);
+	List<ResultEyepressureDO> getEyepressureDO(Long studentId);
 
 	void updateEyepressureDO(ResultEyepressureDO resultEyepressureDO);
 }
