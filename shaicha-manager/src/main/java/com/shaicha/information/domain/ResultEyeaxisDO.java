@@ -36,7 +36,16 @@ public class ResultEyeaxisDO implements Serializable {
 	private Double secondCheckOs;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
+	//身份证号
+	private String identityCard;
+	
 
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	public Integer gettEyeaxisId() {
 		return tEyeaxisId;
 	}

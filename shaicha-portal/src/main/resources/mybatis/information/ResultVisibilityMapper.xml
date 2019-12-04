@@ -3,7 +3,30 @@
 
 <mapper namespace="com.shaicha.information.dao.ResultVisibilityDao">
 	<select id="getVisibilityDO" resultType="com.shaicha.information.domain.ResultVisibilityDO">
-		select `t_visibility_id`,`student_id`,`checkor_id`,`stereoscopic_viewing_value`,`stereoscopic_viewing_dis`,`adjustment_range_od`,`adjustment_range_oc`,`adjustment_range_ou`,`gather_near_od`,`gather_near_oc`,`gather_near_ou`,`oblique_value`,`oblique_dis`,`before_after_od_value`,`before_after_od_dis`,`before_after_os_value`,`before_after_os_dis`,`check_date`,`delete_flag` from t_result_visibility where identity_card = #{identityCard} and check_date=#{lastCheckTime}
+						SELECT
+	`t_visibility_id`,
+	`student_id`,
+	`checkor_id`,
+	`stereoscopic_viewing_value`,
+	`stereoscopic_viewing_dis`,
+	`adjustment_range_od`,
+	`adjustment_range_oc`,
+	`adjustment_range_ou`,
+	`gather_near_od`,
+	`gather_near_oc`,
+	`gather_near_ou`,
+	`oblique_value`,
+	`oblique_dis`,
+	`before_after_od_value`,
+	`before_after_od_dis`,
+	`before_after_os_value`,
+	`before_after_os_dis`,
+	`check_date`,
+	`delete_flag`
+FROM
+	t_result_visibility
+WHERE
+	student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveVisibilityDO" parameterType="com.shaicha.information.domain.ResultVisibilityDO" useGeneratedKeys="true" keyProperty="tVisibilityId">
@@ -75,7 +98,7 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where identity_card = #{identityCard}
+		where student_id = #{studentId}
 	</update>
 	
 </mapper>

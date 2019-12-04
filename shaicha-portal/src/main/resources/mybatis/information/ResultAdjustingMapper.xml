@@ -4,7 +4,22 @@
 <mapper namespace="com.shaicha.information.dao.ResultAdjustingDao">
 
 	<select id="getAdjustingDO" resultType="com.shaicha.information.domain.ResultAdjustingDO">
-		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting where identity_card = #{identityCard} and check_date=#{lastCheckTime}
+							SELECT
+				`t_adjusting_id`,
+				`student_id`,
+				`checkor_id`,
+				`adjusting_od`,
+				`adjusting_os`,
+				`adjusting_ou`,
+				`jj_od`,
+				`jj_os`,
+				`jj_ou`,
+				`check_date`,
+				`delete_flag`
+			FROM
+				t_result_adjusting
+			WHERE
+				student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	<insert id="saveAdjustingDO" parameterType="com.shaicha.information.domain.ResultAdjustingDO" useGeneratedKeys="true" keyProperty="tAdjustingId">
 		insert into t_result_adjusting
@@ -51,6 +66,6 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where identity_card = #{identityCard}
+		where student_id = #{studentId}
 	</update>
 </mapper>

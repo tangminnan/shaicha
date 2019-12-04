@@ -17,7 +17,7 @@ import com.shaicha.information.domain.ResultVisibilityDO;
 @Mapper
 public interface ResultVisibilityDao {
 	void saveVisibilityDO(ResultVisibilityDO resultVisibilityDO);
-	ResultVisibilityDO getVisibilityDO(@Param("studentId") Long studentId,@Param("lastCheckTime") Date lastCheckTime);
+	List<ResultVisibilityDO> getVisibilityDO(Long studentId);
 
 	void updateVisibilityDO(ResultVisibilityDO resultVisibilityDO);
 }

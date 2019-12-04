@@ -4,13 +4,13 @@
 <mapper namespace="com.shaicha.information.dao.ResultAdjustingDao">
 
 	<select id="get" resultType="com.shaicha.information.domain.ResultAdjustingDO">
-		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting where t_adjusting__id = #{value}
+		select `t_adjusting_id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting where t_adjusting__id = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultAdjustingDO">
-		select `t_adjusting__id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting
+		select `t_adjusting_id`,`student_id`,`checkor_id`,`adjusting_od`,`adjusting_os`,`adjusting_ou`,`jj_od`,`jj_os`,`jj_ou`,`check_date`,`delete_flag` from t_result_adjusting
         <where>  
-		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting__id = #{tAdjustingId} </if>
+		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting_id = #{tAdjustingId} </if>
 		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
 		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
 		  		  <if test="adjustingOd != null and adjustingOd != ''"> and adjusting_od = #{adjustingOd} </if>
@@ -27,7 +27,7 @@
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by t_adjusting__id desc
+                order by t_adjusting_id desc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -38,7 +38,7 @@
  	<select id="count" resultType="int">
 		select count(*) from t_result_adjusting
 		 <where>  
-		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting__id = #{tAdjustingId} </if>
+		  		  <if test="tAdjustingId != null and tAdjustingId != ''"> and t_adjusting_id = #{tAdjustingId} </if>
 		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
 		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
 		  		  <if test="adjustingOd != null and adjustingOd != ''"> and adjusting_od = #{adjustingOd} </if>
@@ -95,15 +95,15 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where t_adjusting__id = #{tAdjustingId}
+		where t_adjusting_id = #{tAdjustingId}
 	</update>
 	
 	<delete id="remove">
-		delete from t_result_adjusting where t_adjusting__id = #{value}
+		delete from t_result_adjusting where t_adjusting_id = #{value}
 	</delete>
 	
 	<delete id="batchRemove">
-		delete from t_result_adjusting where t_adjusting__id in 
+		delete from t_result_adjusting where t_adjusting_id in 
 		<foreach item="tAdjustingId" collection="array" open="(" separator="," close=")">
 			#{tAdjustingId}
 		</foreach>

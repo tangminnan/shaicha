@@ -35,7 +35,9 @@ public class ResultDiopterDO implements Serializable {
 	private String ifrl;
 	//两周内的第几次检查  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查'
 	private String firstSecond;
-
+	//身份证号
+	private String identityCard;
+	private Date checkDate;
 	
 	public Integer gettDiopterId() {
 		return tDiopterId;
@@ -115,6 +117,13 @@ public class ResultDiopterDO implements Serializable {
 	public Double getDiopterA() {
 		return diopterA;
 	}
+	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	/**
 	 * 设置：可信度
 	 */
@@ -169,4 +178,12 @@ L_DATA=夜间视力检查
 	public String getIfrl() {
 		return ifrl;
 	}
+	public Date getCheckDate() {
+		return checkDate;
+	}
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
+	
+	
 }

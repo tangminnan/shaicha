@@ -46,7 +46,11 @@ public class ResultEyesightDO implements Serializable {
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
 	private String identityCard;
-
+	//戴镜视力右
+	private String glassvisionOd;
+				   
+	//戴镜视力左
+	private String glassvisionOs;
 	public String getIdentityCard() {
 		return identityCard;
 	}
@@ -232,6 +236,20 @@ public class ResultEyesightDO implements Serializable {
 	 */
 	public Integer getDeleteFlag() {
 		return deleteFlag;
+	}
+	
+	
+	public String getGlassvisionOd() {
+		return glassvisionOd;
+	}
+	public void setGlassvisionOd(String glassvisionOd) {
+		this.glassvisionOd = glassvisionOd;
+	}
+	public String getGlassvisionOs() {
+		return glassvisionOs;
+	}
+	public void setGlassvisionOs(String glassvisionOs) {
+		this.glassvisionOs = glassvisionOs;
 	}
 	public ResultEyesightDO(Long studentId, Long checkorId, String lifeFarvisionOd, String lifeFarvisionOs,
 			String nakedFarvisionOd, String nakedFarvisionOs, String correctionFarvisionOd,

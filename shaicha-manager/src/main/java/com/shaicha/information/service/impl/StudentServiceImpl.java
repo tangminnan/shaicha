@@ -124,107 +124,6 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@ResponseBody
 	public R importMember(String checkType, MultipartFile file) {
-//		System.out.println("==============file================"+file);
-//		int num = 0;
-//		InputStream in=null;
-//		Workbook book=null;
-//		try {
-//			if(file != null){
-//				in = file.getInputStream();
-//				book =ExcelUtils.getBook(in);
-//				Sheet sheet = book.getSheetAt(0);
-//				Row row=null;
-//				String modelType= "",school = "", schoolCode= "";
-//				for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
-//					row = sheet.getRow(rowNum);
-//					if(rowNum==0){
-//						modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
-//						school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
-//						schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
-//					}
-//					if(rowNum>1){
-//						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
-//						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
-//						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
-//						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
-//						String birthday =row.getCell(4).getStringCellValue();//生日
-//						String xueBu = ExcelUtils.getCellFormatValue(row.getCell((short)5));		//学部
-//						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//年级
-//						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)7));	//班级
-//						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)8));		//手机号
-//						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)9));		//民族
-//						StudentDO student = new StudentDO();
-//						student.setCheckType(checkType);
-//						student.setStudentName(name);
-//						student.setPhone(phone);
-//						student.setNation(nation);
-//						student.setSchool(school);
-//						student.setGrade(grade);
-//						student.setStudentClass(studentClass);
-//						student.setStatus(0);
-//						student.setIdeentityType(ideentityType);
-//						student.setXueBu(xueBu);
-//						student.setSchoolCode(schoolCode);
-//						student.setModelType(modelType);
-//						if(sex != null && sex != ""){
-//							if(sex.equals("男")){
-//								student.setStudentSex(1);
-//							}
-//							if(sex.equals("女")){
-//								student.setStudentSex(2);
-//							}
-//						}
-//						if(birthday != null && birthday != ""){
-//							
-//							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
-//						}
-//						student.setAddTime(new Date());
-//						if(identityCard != null && identityCard != ""){
-//							Map<String,Object> map = new HashMap<String,Object>();
-//							map.put("identityCard", identityCard);
-//							List<StudentDO> list = studentDao.list(map);
-//							if(list.size()>0){
-//								continue;
-//							}else{
-//								student.setIdentityCard(identityCard);
-//								String destPath = bootdoConfig.getUploadPath();
-//								String rand = new Random().nextInt(99999999)+".jpg";
-//								//生成二维码
-//								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
-//								student.setQRCode("/files/"+rand);
-//							}
-//						}else{
-//							continue;
-//						}
-//							studentDao.save(student);
-//							num++;
-//					}
-//						
-//				}
-//				if(num>0)
-//					return R.ok("上传成功,共增加["+num+"]条");
-//				else
-//					return R.ok("导入用户失败，原因：身份证号为空或已存在");
-//			}else{
-//			return R.error("请选择导入的文件!");
-//			}
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		finally{
-//			try {
-//				if(book!=null)
-//					book.close();
-//				if(in!=null)
-//					in.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return R.error();
-		
-		
-		
 		System.out.println("==============file================"+file);
 		int num = 0;
 		InputStream in=null;
@@ -235,22 +134,79 @@ public class StudentServiceImpl implements StudentService {
 				book =ExcelUtils.getBook(in);
 				Sheet sheet = book.getSheetAt(0);
 				Row row=null;
-				
-				for (int rowNum = 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
+				String modelType= "",school = "", schoolCode= "";
+				for (int rowNum = 0; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					row = sheet.getRow(rowNum);
-					//72右 73作  身份张好3
-					ResultEyepressureDO eyepressureDO = new ResultEyepressureDO();		
-					String eyePressureOd = ExcelUtils.getCellFormatValue(row.getCell((short)71));//证件类型
-					String eyePressureOs = ExcelUtils.getCellFormatValue(row.getCell((short)72));	//身份证号	
-					String identityCard =   ExcelUtils.getCellFormatValue(row.getCell((short)2));	//身份证号	
-					if(!"".equals(eyePressureOd))
-						eyepressureDO.setEyePressureOd(Double.parseDouble(eyePressureOd));
-					if(!"".equals(eyePressureOs))
-						eyepressureDO.setEyePressureOs(Double.parseDouble(eyePressureOs));
-					eyepressureDO.setIdentityCard(identityCard);
-					studentDao.saveEyePressure(eyepressureDO);
-				}		
-					return R.ok();	
+					if(rowNum==0){
+						modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
+						school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
+						schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
+					}
+					if(rowNum>1){
+						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
+						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
+						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
+						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
+						String birthday =row.getCell(4).getStringCellValue();//生日
+						String xueBu = ExcelUtils.getCellFormatValue(row.getCell((short)5));		//学部
+						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//年级
+						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)7));	//班级
+						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)8));		//手机号
+						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)9));		//民族
+						StudentDO student = new StudentDO();
+						student.setCheckType(checkType);
+						student.setStudentName(name);
+						student.setPhone(phone);
+						student.setNation(nation);
+						student.setSchool(school);
+						student.setGrade(grade);
+						student.setStudentClass(studentClass);
+						student.setStatus(0);
+						student.setIdeentityType(ideentityType);
+						student.setXueBu(xueBu);
+						student.setSchoolCode(schoolCode);
+						student.setModelType(modelType);
+						if(sex != null && sex != ""){
+							if(sex.equals("男")){
+								student.setStudentSex(1);
+							}
+							if(sex.equals("女")){
+								student.setStudentSex(2);
+							}
+						}
+						if(birthday != null && birthday != ""){
+							
+							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
+						}
+						student.setAddTime(new Date());
+						if(identityCard != null && identityCard != ""){
+							Map<String,Object> map = new HashMap<String,Object>();
+							map.put("identityCard", identityCard);
+							List<StudentDO> list = studentDao.list(map);
+							if(list.size()>0){
+								continue;
+							}else{
+								student.setIdentityCard(identityCard);
+								String destPath = bootdoConfig.getUploadPath();
+								String rand = new Random().nextInt(99999999)+".jpg";
+								//生成二维码
+								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
+								student.setQRCode("/files/"+rand);
+							}
+						}else{
+							continue;
+						}
+							studentDao.save(student);
+							num++;
+					}
+						
+				}
+				if(num>0)
+					return R.ok("上传成功,共增加["+num+"]条");
+				else
+					return R.ok("导入用户失败，原因：身份证号为空或已存在");
+			}else{
+			return R.error("请选择导入的文件!");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -265,8 +221,7 @@ public class StudentServiceImpl implements StudentService {
 				e.printStackTrace();
 			}
 		}
-		return R.error();
-		
+		return R.error();	
 	}
 
 	@Override
@@ -455,7 +410,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("${lastCheckTime}", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
-		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
@@ -465,7 +420,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
-		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -476,7 +431,7 @@ public class StudentServiceImpl implements StudentService {
 		
 		
 		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"R");
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -530,7 +485,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("${lastCheckTime}", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
-		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
@@ -540,7 +495,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("${correctionFarvisionOs}",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
-		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -551,7 +506,7 @@ public class StudentServiceImpl implements StudentService {
 		
 		
 		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"R");
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -559,14 +514,14 @@ public class StudentServiceImpl implements StudentService {
 		params.put("${diopterCR}",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
 		params.put("${diopterAR}",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
 		//眼内压结果拼装
-		List<ResultEyepressureDO> ResultEyepressureDOList = studentDao.getLatestResultEyepressureDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyepressureDO> ResultEyepressureDOList = studentDao.getLatestResultEyepressureDO(studentDO.getId());
 		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
 		if(ResultEyepressureDOList.size()>0)
 			resultEyepressureDO=ResultEyepressureDOList.get(0);
 		params.put("${eyePressureOd}",resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd().toString());
 		params.put("${eyePressureOs}", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs().toString());
 		//眼轴长度数据拼装
-		List<ResultEyeaxisDO> resultEyeaxisDOList = studentDao.getLatelestResultEyeaxisDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyeaxisDO> resultEyeaxisDOList = studentDao.getLatelestResultEyeaxisDO(studentDO.getId());
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
@@ -660,7 +615,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
-		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
@@ -670,7 +625,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
-		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -681,7 +636,7 @@ public class StudentServiceImpl implements StudentService {
 		
 		
 		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"R");
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -738,7 +693,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
-		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0)
 			resultEyesightDO=resultEyesightDOList.get(0);
@@ -748,7 +703,7 @@ public class StudentServiceImpl implements StudentService {
 		params.put("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
 		//自动电脑验光结果(左眼) 
-		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"L");
+		List<ResultDiopterDO> resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -759,7 +714,7 @@ public class StudentServiceImpl implements StudentService {
 		
 		
 		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),studentDO.getLastCheckTime(),"R");
+		 resultDiopterDOList = studentDao.getLatestResultDiopterDOListL(studentDO.getId(),"R");
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
@@ -767,14 +722,14 @@ public class StudentServiceImpl implements StudentService {
 		params.put("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
 		params.put("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
 		//眼内压结果拼装
-		List<ResultEyepressureDO> ResultEyepressureDOList = studentDao.getLatestResultEyepressureDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyepressureDO> ResultEyepressureDOList = studentDao.getLatestResultEyepressureDO(studentDO.getId());
 		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
 		if(ResultEyepressureDOList.size()>0)
 			resultEyepressureDO=ResultEyepressureDOList.get(0);
 		params.put("eyePressureOd",resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd().toString());
 		params.put("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs().toString());
 		//眼轴长度数据拼装
-		List<ResultEyeaxisDO> resultEyeaxisDOList = studentDao.getLatelestResultEyeaxisDO(studentDO.getId(),studentDO.getLastCheckTime());
+		List<ResultEyeaxisDO> resultEyeaxisDOList = studentDao.getLatelestResultEyeaxisDO(studentDO.getId());
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
@@ -802,23 +757,23 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<ResultEyesightDO> getLatestResultEyesightDO(Integer id, Date lastCheckTime) {
-		return studentDao.getLatestResultEyesightDO(id,lastCheckTime);
+	public List<ResultEyesightDO> getLatestResultEyesightDO(Integer id) {
+		return studentDao.getLatestResultEyesightDO(id);
 	}
 
 	@Override
-	public List<ResultDiopterDO> getLatestResultDiopterDOListL(Integer id, Date lastCheckTime, String string) {
-		return studentDao.getLatestResultDiopterDOListL(id,lastCheckTime,string);
+	public List<ResultDiopterDO> getLatestResultDiopterDOListL(Integer id, String string) {
+		return studentDao.getLatestResultDiopterDOListL(id,string);
 	}
 
 	@Override
-	public List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id, Date lastCheckTime) {
-		return studentDao.getLatestResultEyepressureDO(id,lastCheckTime);
+	public List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id) {
+		return studentDao.getLatestResultEyepressureDO(id);
 	}
 
 	@Override
-	public List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id, Date lastCheckTime) {
-		return studentDao.getLatelestResultEyeaxisDO(id,lastCheckTime);
+	public List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id) {
+		return studentDao.getLatelestResultEyeaxisDO(id);
 	}
 	
 	

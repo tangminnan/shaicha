@@ -4,6 +4,7 @@ package com.shaicha.information.dao;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,7 +21,7 @@ import com.shaicha.information.domain.ResultOptometryDO;
 public interface ResultOptometryDao {
 
 	void saveOptometryDO(ResultOptometryDO resultOptometryDO);
-	ResultOptometryDO getOptometryDO(@Param("studentId") Long studentId, @Param("lastCheckTime") Date lastCheckTime);
+	List<ResultOptometryDO> getOptometryDO(Long studentId);
 
 	void updateOptometryDO(ResultOptometryDO resultOptometryDO);
 }
