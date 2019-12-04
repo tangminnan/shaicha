@@ -56,14 +56,14 @@ public class ResultAdjustingController {
 	
 	
 	@ResponseBody
-	@GetMapping("/getUserDetail/{id}")
+	@GetMapping("/getUserDetail/{identityCard}")
 	@RequiresPermissions("information:student:student")
-	public PageUtils getUserDetail(@PathVariable("id") Integer id){
+	public PageUtils getUserDetail(@PathVariable("identityCard") String id,@RequestParam Map<String, Object> params){
 		//查询列表数据
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("studentId", id);
-		List<ResultAdjustingDO> resultAdjustingList = resultAdjustingService.list(params);
-		int total = resultAdjustingService.count(params);
+		Query query = new Query(params);
+		query.put("identityCard", id);
+		List<ResultAdjustingDO> resultAdjustingList = resultAdjustingService.list(query);
+		int total = resultAdjustingService.count(query);
 		PageUtils pageUtils = new PageUtils(resultAdjustingList, total);
 		return pageUtils;
 	}

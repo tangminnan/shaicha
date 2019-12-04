@@ -49,6 +49,30 @@ public class ResultEyesightDO implements Serializable {
 	private String checkDate1;
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
+	private String identityCard;
+	private Date endTime;
+	private Date startTime;
+	
+	
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 
 	public String getCheckDate1() {
 		return checkDate1;

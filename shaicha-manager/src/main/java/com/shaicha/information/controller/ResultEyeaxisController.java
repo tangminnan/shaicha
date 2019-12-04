@@ -55,14 +55,14 @@ public class ResultEyeaxisController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/getUserDetail/{id}")
+	@GetMapping("/getUserDetail/{identityCard}")
 	@RequiresPermissions("information:student:student")
-	public PageUtils getUserDetail(@PathVariable("id") Integer id){
+	public PageUtils getUserDetail(@PathVariable("identityCard") String id,@RequestParam Map<String, Object> params){
 		//查询列表数据
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("studentId", id);
-		List<ResultEyeaxisDO> resultEyeaxisList = resultEyeaxisService.list(params);
-		int total = resultEyeaxisService.count(params);
+		Query query = new Query(params);
+		query.put("identityCard", id);
+		List<ResultEyeaxisDO> resultEyeaxisList = resultEyeaxisService.list(query);
+		int total = resultEyeaxisService.count(query);
 		PageUtils pageUtils = new PageUtils(resultEyeaxisList, total);
 		return pageUtils;
 	}

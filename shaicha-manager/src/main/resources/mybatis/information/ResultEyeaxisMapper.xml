@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
-		select `t_eyeaxis_id`,`student_id`,`checkor_id`,`first_check_od`,`first_check_os`,`check_date`,`second_check_od`,`second_check_os`,`delete_flag` from t_result_eyeaxis
+		select `t_eyeaxis_id`,`student_id`,`checkor_id`,`first_check_od`,`first_check_os`,`check_date`,`second_check_od`,`second_check_os`,`delete_flag`,`identity_card` from t_result_eyeaxis
         <where>  
 		  		  <if test="tEyeaxisId != null and tEyeaxisId != ''"> and t_eyeaxis_id = #{tEyeaxisId} </if>
 		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
@@ -19,6 +19,10 @@
 		  		  <if test="secondCheckOd != null and secondCheckOd != ''"> and second_check_od = #{secondCheckOd} </if>
 		  		  <if test="secondCheckOs != null and secondCheckOs != ''"> and second_check_os = #{secondCheckOs} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  
+		  		  <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -45,6 +49,7 @@
 		  		  <if test="secondCheckOd != null and secondCheckOd != ''"> and second_check_od = #{secondCheckOd} </if>
 		  		  <if test="secondCheckOs != null and secondCheckOs != ''"> and second_check_os = #{secondCheckOs} </if>
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
 		  		</where>
 	</select>
 	 

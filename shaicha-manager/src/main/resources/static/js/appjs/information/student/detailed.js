@@ -1,5 +1,5 @@
 var id = $("#id").val();
-
+var identityCard = $("#identityCard").val();
 $(function() {
 	load();
 });
@@ -10,7 +10,7 @@ function load() {
 	.bootstrapTable(
 			{
 				method : 'get', // 服务器数据的请求方式 get or post
-				url : "/information/resultEyesight/getUserDetail/"+id, // 服务器数据的加载地址
+				url : "/information/resultEyesight/getUserDetail/"+identityCard, // 服务器数据的加载地址
 			//	showRefresh : true,
 			//	showToggle : true,
 			//	showColumns : true,
@@ -34,7 +34,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						checkDate:$("#checkDate").val()
+						//checkDate:$("#checkDate").val()
+						startTime:$('#startTime').val(),
+						endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -133,7 +135,7 @@ function load() {
 	.bootstrapTable(
 			{
 				method : 'get', // 服务器数据的请求方式 get or post
-				url : "/information/resultEyeaxis/getUserDetail/"+id, // 服务器数据的加载地址
+				url : "/information/resultEyeaxis/getUserDetail/"+identityCard, // 服务器数据的加载地址
 			//	showRefresh : true,
 			//	showToggle : true,
 			//	showColumns : true,
@@ -157,7 +159,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						checkDate:$("#checkDate").val()
+						//checkDate:$("#checkDate").val()
+						startTime:$('#startTime').val(),
+						endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -233,7 +237,7 @@ function load() {
 	.bootstrapTable(
 			{
 				method : 'get', // 服务器数据的请求方式 get or post
-				url : "/information/resultEyepressure/getUserDetail/"+id, // 服务器数据的加载地址
+				url : "/information/resultEyepressure/getUserDetail/"+identityCard, // 服务器数据的加载地址
 			//	showRefresh : true,
 			//	showToggle : true,
 			//	showColumns : true,
@@ -257,7 +261,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						checkDate:$("#checkDate").val()
+						//checkDate:$("#checkDate").val()
+						startTime:$('#startTime').val(),
+						endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -324,7 +330,7 @@ function load() {
 	.bootstrapTable(
 			{
 				method : 'get', // 服务器数据的请求方式 get or post
-				url : "/information/resultVisibility/getUserDetail/"+id, // 服务器数据的加载地址
+				url : "/information/resultVisibility/getUserDetail/"+identityCard, // 服务器数据的加载地址
 			//	showRefresh : true,
 			//	showToggle : true,
 			//	showColumns : true,
@@ -348,7 +354,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						checkDate:$("#checkDate").val()
+						//checkDate:$("#checkDate").val()
+						startTime:$('#startTime').val(),
+						endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -493,7 +501,7 @@ function load() {
 	.bootstrapTable(
 			{
 				method : 'get', // 服务器数据的请求方式 get or post
-				url : "/information/resultAdjusting/getUserDetail/"+id, // 服务器数据的加载地址
+				url : "/information/resultAdjusting/getUserDetail/"+identityCard, // 服务器数据的加载地址
 			//	showRefresh : true,
 			//	showToggle : true,
 			//	showColumns : true,
@@ -517,7 +525,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						checkDate:$("#checkDate").val()
+						//checkDate:$("#checkDate").val()
+						startTime:$('#startTime').val(),
+						endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
