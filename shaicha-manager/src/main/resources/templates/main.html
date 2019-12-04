@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/font-awesome.css">
+   
 </head>
 <body>
 
-<div class="panel panel-default">
+<div class="panel panel-default" style="background-color: #EEEEEE; top: 1px;">
     <div class="panel-heading"> <h3>&nbsp;&nbsp;&nbsp;欢迎登录儿童近视防控数据平台管理系统</h3></div>
     
     <div class="first_area">
@@ -21,7 +22,7 @@
     		</p>
     		<p class="itemLs">
     			<span>受检者总数</span>
-    			<span class="total">564564人</span>
+    			<span class="total">100人</span>
     		</p>
     	</div>
     	<div class="right">
@@ -30,8 +31,8 @@
     				<i class="iconfont icon-yonghuguanli1"></i>
     			</p>
     			<p class="itemLs">
-	    			<span>受检者总数</span>
-	    			<span>564564人</span>
+	    			<span>示范校筛查系统</span>
+	    			<span>50人</span>
     			</p>
     		</div>
     		<div class="checkItem">
@@ -39,8 +40,8 @@
     				<i class="iconfont icon-yonghuguanli1"></i>
     			</p>
     			<p class="itemLs">
-	    			<span>受检者总数</span>
-	    			<span>564564人</span>
+	    			<span>普通筛查系统</span>
+	    			<span>50人</span>
     			</p>
     		</div>
     		<!-- <div class="checkItem">
@@ -66,57 +67,57 @@
     							<span>视力低下率</span>
     						</div>
     					</div>
-    					<div class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
+    					<div id="pie_charts" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
     			<li>
     				<div class="char_Parent">
     					<div class="content_area">
     						<div class="radius_area">
-    							<span>视力低下率</span>
+    							<span>近视患病率</span>
     						</div>
     					</div>
-    					<div class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
+    					<div id="pie_charts2" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
     			<li>
     				<div class="char_Parent">
     					<div class="content_area">
     						<div class="radius_area">
-    							<span>视力低下率</span>
+    							<span>远视患病率</span>
     						</div>
     					</div>
-    					<div class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
+    					<div id="pie_charts3" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
     			<li>
     				<div class="char_Parent">
     					<div class="content_area">
     						<div class="radius_area">
-    							<span>视力低下率</span>
+    							<span>屈光参差患病率</span>
     						</div>
     					</div>
-    					<div class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
+    					<div id="pie_charts4" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
     			<li>
     				<div class="char_Parent">
     					<div class="content_area">
     						<div class="radius_area">
-    							<span>视力低下率</span>
+    							<span>正视眼率</span>
     						</div>
     					</div>
-    					<div class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
+    					<div id="pie_charts5" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
     			<li>
     				<div class="char_Parent">
     					<div class="content_area">
     						<div class="radius_area">
-    							<span>视力低下率</span>
+    							<span>高眼压率</span>
     						</div>
     					</div>
-    					<div class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
+    					<div id="pie_charts6" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
     		</ul>
@@ -146,5 +147,193 @@
         </ul>
     </div>  -->
 </div>
+<script src="/js/plugins/echarts/echarts.js"></script>
+<script type="text/javascript">
+	
+	// 基于准备好的dom，初始化echarts实例
+	var myChart = echarts.init(document.getElementById('pie_charts'));
+	var myChart2 = echarts.init(document.getElementById('pie_charts2'));
+	var myChart3 = echarts.init(document.getElementById('pie_charts3'));
+	var myChart4 = echarts.init(document.getElementById('pie_charts4'));
+	var myChart5 = echarts.init(document.getElementById('pie_charts5'));
+	var myChart6 = echarts.init(document.getElementById('pie_charts6'));
+	 // 指定图表的配置项和数据
+    var option = {
+    		 title: {
+    	       // text: '正常',
+    	        subtext: '50%',
+    	        textStyle:{
+    	            fontSize:16,
+    	            color: '#666666'
+    	        },
+    	        subtextStyle: {
+    	            fontSize: 16,
+    	            color: '#666666'
+    	        },
+    	        textAlign:"center",
+    	        x: '50%',
+    	        y: '38%',
+    	        
+    	    }, 
+    		tooltip: {
+    	        trigger: 'item',
+    	        formatter: "{b}: {c} <br/> ({d}%)"
+    	    },
+    	    legend: {
+    	       // orient: 'vertical',
+    	        bottom: "2%",
+    	        data:['患病','正常']
+    	    },
+    	    
+    	    series: [
+					/* {
+					    name:'访问来源',
+					    type:'pie',
+					    selectedMode: 'single',
+					    center: ['50%', '45%'],
+					    radius: [0, '0%'],
+					    hoverAnimation:false,
+					    label: {
+					        normal: {
+					        	 //show: false,
+					        	 position: 'inner',
+					        	 textStyle: {
+			    	                 fontSize: 14,
+			    	                 color: '#fff'	
+			    	             },
+					        },
+					        emphasis: {
+	    	                    show: false,
+	    	                    
+	    	                }
+					        
+					    },
+					    labelLine: {
+					        normal: {
+					            show: false
+					        }
+					    },
+					    data:[
+					        {value:615, name:'正常'},
+					        {value:335, name:'患病'}
+					    ]
+					}, */
+    	        {
+    	            name:'访问来源',
+    	            type:'pie',
+    	            center: ['50%', '45%'],
+    	            radius: ['50%', '60%'],
+    	            avoidLabelOverlap: false,
+    	            label: {
+    	                normal: {
+    	                    show: false,
+    	                    position: 'center',
+    	                    formatter: "{c}%",
+    	                    textStyle: {
+    	                    	fontSize: 30,
+
+    	                    },
+    	                },
+    	                emphasis: {
+    	                    show: false,
+    	                    /* textStyle: {
+    	                        fontSize: '30',
+    	                        fontWeight: 'bold'
+    	                    } */
+    	                }
+    	            },
+    	            labelLine: {
+    	                normal: {
+    	                    show: false
+    	                }
+    	            },
+    	            data:[
+							{value:615, name:'正常'},
+							{value:335, name:'患病'}
+    	              ]
+    	        },
+    	            
+    	        
+    	    ] 
+	 }
+	 
+	 // 指定图表的配置项和数据
+    var option2 = {
+    		 title: {
+    	       // text: '正常',
+    	        subtext: '50%',
+    	        textStyle:{
+    	            fontSize:16,
+    	            color: '#666666'
+    	        },
+    	        subtextStyle: {
+    	            fontSize: 16,
+    	            color: '#666666'
+    	        },
+    	        textAlign:"center",
+    	        x: '50%',
+    	        y: '38%',
+    	        
+    	    }, 
+    		tooltip: {
+    	        trigger: 'item',
+    	        formatter: "{b}: {c} <br/> ({d}%)"
+    	    },
+    	    legend: {
+    	       // orient: 'vertical',
+    	        bottom: "2%",
+    	        data:['低度','中度','高度','正常']
+    	    },
+    	    
+    	    series: [
+    	        {
+    	            name:'访问来源',
+    	            type:'pie',
+    	            center: ['50%', '45%'],
+    	            radius: ['50%', '60%'],
+    	            avoidLabelOverlap: false,
+    	            label: {
+    	                normal: {
+    	                    show: false,
+    	                    position: 'center',
+    	                    formatter: "{c}%",
+    	                    textStyle: {
+    	                    	fontSize: 30,
+
+    	                    },
+    	                },
+    	                emphasis: {
+    	                    show: false,
+    	                    /* textStyle: {
+    	                        fontSize: '30',
+    	                        fontWeight: 'bold'
+    	                    } */
+    	                }
+    	            },
+    	            labelLine: {
+    	                normal: {
+    	                    show: false
+    	                }
+    	            },
+    	            data:[
+							{value:615, name:'低度'},
+							{value:335, name:'中度'},
+							{value:615, name:'高度'},
+							{value:335, name:'正常'}
+    	              ]
+    	        },
+    	            
+    	        
+    	    ] 
+	 }
+	 
+    myChart.setOption(option);
+    myChart2.setOption(option2);
+    myChart3.setOption(option);
+    myChart4.setOption(option);
+    myChart5.setOption(option);
+    myChart6.setOption(option);
+</script>
+
 </body>
 </html>
