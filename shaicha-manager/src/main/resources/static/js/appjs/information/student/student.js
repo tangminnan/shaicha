@@ -138,6 +138,8 @@ function load() {
 										var g = '<a class="btn btn-primary btn-xs" href="#" title="详情"  mce_href="#" onclick="detail(\''
 												+ row.id
 												+ '\')" style="text-decoration: none;">详情</a>';
+										
+										
 										var h = '<a class="btn btn-primary btn-xs" href="#" title="电脑验光数据"  mce_href="#" onclick="optometry(\''
 												+ row.id
 												+ '\')" style="text-decoration: none;">验光数据</a>';

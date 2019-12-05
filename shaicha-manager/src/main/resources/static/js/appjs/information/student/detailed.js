@@ -34,9 +34,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						//checkDate:$("#checkDate").val()
-						startTime:$('#startTime').val(),
-						endTime:$('#endTime').val()
+						checkDate:$("#checkDate").val()
+//						startTime:$('#startTime').val(),
+//						endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -55,14 +55,7 @@ function load() {
 							field : 'tEyesightId', 
 							title : 'id' 
 						},*/
-														{
-							field : 'studentId', 
-							title : '学生id' 
-						},
-														{
-							field : 'checkorId', 
-							title : '视力检查者id' 
-						},
+														
 														{
 							field : 'lifeFarvisionOd', 
 							title : '右眼生活远视力' 
@@ -159,9 +152,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						//checkDate:$("#checkDate").val()
-						startTime:$('#startTime').val(),
-						endTime:$('#endTime').val()
+						checkDate:$("#checkDate").val()
+						//startTime:$('#startTime').val(),
+						//endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -180,14 +173,14 @@ function load() {
 							field : 'tEyeaxisId', 
 							title : 'id' 
 						},*/
-														{
+														/*{
 							field : 'studentId', 
 							title : '学生id' 
 						},
 														{
 							field : 'checkorId', 
 							title : '视力检查者id' 
-						},
+						},*/
 														{
 							field : 'firstCheckOd', 
 							title : '右眼第一次检查结果' 
@@ -261,9 +254,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						//checkDate:$("#checkDate").val()
-						startTime:$('#startTime').val(),
-						endTime:$('#endTime').val()
+						checkDate:$("#checkDate").val()
+						//startTime:$('#startTime').val(),
+						//endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -282,14 +275,14 @@ function load() {
 							field : 'tEyepressureId', 
 							title : 'id' 
 						},*/
-														{
+														/*{
 							field : 'studentId', 
 							title : '学生id' 
 						},
 														{
 							field : 'checkorId', 
 							title : '眼内压检查者id' 
-						},
+						},*/
 														{
 							field : 'eyePressureOd', 
 							title : '右眼眼内压' 
@@ -354,9 +347,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						//checkDate:$("#checkDate").val()
-						startTime:$('#startTime').val(),
-						endTime:$('#endTime').val()
+						checkDate:$("#checkDate").val()
+						//startTime:$('#startTime').val(),
+						//endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -375,14 +368,14 @@ function load() {
 							field : 'tVisibilityId', 
 							title : 'id' 
 						},*/
-														{
+														/*{
 							field : 'studentId', 
 							title : '学生id' 
 						},
 														{
 							field : 'checkorId', 
 							title : '视功能检查者id' 
-						},
+						},*/
 														{
 							field : 'stereoscopicViewingValue', 
 							title : '立体视',
@@ -525,9 +518,9 @@ function load() {
 						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 						limit: params.limit,
 						offset:params.offset,
-						//checkDate:$("#checkDate").val()
-						startTime:$('#startTime').val(),
-						endTime:$('#endTime').val()
+						checkDate:$("#checkDate").val()
+						//startTime:$('#startTime').val(),
+						//endTime:$('#endTime').val()
 			           // name:$('#searchName').val(),
 			           // username:$('#searchName').val()
 					};
@@ -546,14 +539,14 @@ function load() {
 							field : 'tAdjustingId', 
 							title : 'id' 
 						},*/
-														{
+														/*{
 							field : 'studentId', 
 							title : '学生id' 
 						},
 														{
 							field : 'checkorId', 
 							title : '调节灵敏度检查者id' 
-						},
+						},*/
 														{
 							field : 'adjustingOd', 
 							title : '右眼调节灵敏度' 
@@ -631,6 +624,144 @@ function load() {
 							}
 						}*/ ]
 			});
+	
+	
+	/*$('#exampleTable6')
+	.bootstrapTable(
+			{
+				method : 'get', // 服务器数据的请求方式 get or post
+				url : "/information/resultCorneal/getUserDetail/"+id, // 服务器数据的加载地址
+			//	showRefresh : true,
+			//	showToggle : true,
+			//	showColumns : true,
+				iconSize : 'outline',
+				toolbar : '#exampleToolbar',
+				striped : true, // 设置为true会有隔行变色效果
+				dataType : "json", // 服务器返回的数据类型
+				pagination : true, // 设置为true会在底部显示分页条
+				// queryParamsType : "limit",
+				// //设置为limit则会发送符合RESTFull格式的参数
+				singleSelect : false, // 设置为true将禁止多选
+				// contentType : "application/x-www-form-urlencoded",
+				// //发送到服务器的数据编码类型
+				pageSize : 10, // 如果设置了分页，每页数据条数
+				pageNumber : 1, // 如果设置了分布，首页页码
+				//search : true, // 是否显示搜索框
+				showColumns : false, // 是否显示内容下拉框（选择显示的列）
+				sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
+				queryParams : function(params) {
+					return {
+						//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+						limit: params.limit,
+						offset:params.offset,
+						tOptometryId : $('#tOptometryId').val()
+			           // name:$('#searchName').val(),
+			           // username:$('#searchName').val()
+					};
+				},
+				// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
+				// queryParamsType = 'limit' ,返回参数必须包含
+				// limit, offset, search, sort, order 否则, 需要包含:
+				// pageSize, pageNumber, searchText, sortName,
+				// sortOrder.
+				// 返回false将会终止请求
+				columns : [
+					
+{
+	field : 'cornealMm', 
+	title : '左眼球镜' 
+},
+								{
+	field : 'cornealD', 
+	title : '右眼球镜' 
+},
+								{
+	field : 'cornealDeg', 
+	title : '左眼轴向' 
+},
+{
+	field : 'cornealMm', 
+	title : '右眼轴向' 
+},
+								{
+	field : 'cornealD', 
+	title : '左眼柱镜' 
+},
+								{
+	field : 'cornealDeg', 
+	title : '右眼柱镜'
+},
+														{
+							field : 'cornealMm', 
+							title : '右眼曲率' 
+						},
+						{
+							field : 'cornealMm', 
+							title : '左眼曲率' 
+						},
+														{
+							field : 'cornealD', 
+							title : '右眼屈光度' 
+						},
+						{
+							field : 'cornealD', 
+							title : '左眼屈光度' 
+						},
+														{
+							field : 'cornealDeg', 
+							title : '右眼角膜柱镜轴向' 
+						},
+						{
+							field : 'cornealDeg', 
+							title : '左眼角膜柱镜轴向' 
+						},
+						
+														{
+							field : 'type', 
+							title : 'type' 
+							//	R1=最大曲率值  R2=最小曲率值  AVG=平均取滤纸 CYL=曲率差值
+						},
+														{
+							field : 'ifrl', 
+							title : '左右眼',
+							formatter(value, row, index){
+								if(value == 'L')
+									return "左眼"
+								else if(value == 'R') 
+									return "右眼"
+							}
+							
+						},
+														{
+							field : 'firstSecond', 
+							title : '两周内的第几次检查',
+							//  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查
+							formatter(value, row, index){
+								if(value == 'FIRST_CHECK')
+									return "第一次检查"
+								else if(value == 'SECOND_CHECK') 
+									return "第二次检查"
+							}
+						},
+														{
+							title : '操作',
+							field : 'id',
+							align : 'center',
+							formatter : function(value, row, index) {
+								var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
+										+ row.tCornealId
+										+ '\')"><i class="fa fa-edit"></i></a> ';
+								var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+										+ row.tCornealId
+										+ '\')"><i class="fa fa-remove"></i></a> ';
+								var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+										+ row.tCornealId
+										+ '\')"><i class="fa fa-key"></i></a> ';
+								return e + d ;
+							}
+						} ]
+			});*/
+	
 	
 	
 }

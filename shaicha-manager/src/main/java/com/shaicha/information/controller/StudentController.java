@@ -460,6 +460,14 @@ public class StudentController {
 		return "information/student/示范校筛查打印";
 	}
 	
+	/**
+	 * 查看筛查详情
+	 */
+	@GetMapping("/shifanshaichadetail")
+	public String shifanshaichadetail(String identityCard,Model model){
+		model.addAttribute("identityCard",identityCard);
+		return "information/student/shifanshaichadetail";
+	}
 	
 	/*public static void  main(String[] args)
 		    throws IOException {

@@ -21,8 +21,8 @@
 		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
 		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
 		  		  
-		  		  <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
-		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if>
+		  		  <!-- <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if> -->
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">

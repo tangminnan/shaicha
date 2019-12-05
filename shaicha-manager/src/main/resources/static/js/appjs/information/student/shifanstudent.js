@@ -147,9 +147,13 @@ function load() {
 										var f = '<a class="btn btn-success btn-xs" href="#" title="二维码"  mce_href="#" onclick="code(\''
 												+ row.id
 												+ '\')" style="text-decoration: none;">二维码</a>';
-										var g = '<a class="btn btn-primary btn-xs" href="#" title="详情"  mce_href="#" onclick="detail(\''
+										/*var g = '<a class="btn btn-primary btn-xs" href="#" title="详情"  mce_href="#" onclick="detail(\''
 												+ row.id
-												+ '\')" style="text-decoration: none;">详情</a>';
+												+ '\')" style="text-decoration: none;">详情</a>';*/
+										var g = '<a class="btn btn-primary btn-xs" href="#" title="详情"  mce_href="#" onclick="checkdetail(\''
+										+ row.identityCard
+										+ '\')" style="text-decoration: none;">详情</a>';
+										
 										var h = '<a class="btn btn-primary btn-xs" href="#" title="电脑验光数据"  mce_href="#" onclick="optometry(\''
 												+ row.id
 												+ '\')" style="text-decoration: none;">验光数据</a>';
@@ -427,4 +431,8 @@ function shifanshaichadayin(id,lastCheckTime){
 		return ;
 	}
 	window.open("/information/student/shifanshaichadayin?id="+id);
+}
+
+function checkdetail(identityCard){
+	window.location.href="/information/student/shifanshaichadetail?identityCard="+identityCard;
 }
