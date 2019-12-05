@@ -17,6 +17,8 @@
 						 `second_check_lps`,
 						 `second_check_rcs`,
 						 `second_check_lcs`,
+						 first_check_pd,
+						 second_check_pd,
 						 `delete_flag`
 						FROM
 							t_result_optometry

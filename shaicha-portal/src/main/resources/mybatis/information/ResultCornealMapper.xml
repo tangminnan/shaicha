@@ -4,7 +4,7 @@
 <mapper namespace="com.shaicha.information.dao.ResultCornealDao">
 
 	<select id="getByOptometryId" resultType="com.shaicha.information.domain.ResultCornealDO">
-		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL` from t_result_corneal where t_optometry_id = #{tOptometryId} 
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal where t_optometry_id = #{tOptometryId} 
 	</select>
 	<delete id="removeAll">
 		delete from t_result_corneal where t_optometry_id=#{value}
