@@ -36,6 +36,15 @@ public class ResultDiopterDO implements Serializable {
 	//两周内的第几次检查  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查
 	private String firstSecond;
 	private String identityCard;
+	//检查日期
+	private Date checkDate;
+	
+	public Date getCheckDate() {
+		return checkDate;
+	}
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
 	public String getIdentityCard() {
 		return identityCard;
 	}

@@ -20,7 +20,8 @@
 			`type`, 
 			`ifRL`,
 			first_second,
-			identity_card
+			identity_card,
+			check_date
 		)
 		values
 		(
@@ -31,7 +32,8 @@
 			#{type}, 
 			#{ifrl},
 			#{firstSecond},
-			#{identityCard}
+			#{identityCard},
+			#{checkDate}
 		)
 	</insert>
 	

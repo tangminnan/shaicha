@@ -201,8 +201,8 @@ public class ResultServiceImpl implements ResultService{
 		  );
 		
 		else
-			addUpdate(studentId, resultOptometryDO);
-    	JSONArray jsonArray =jsonObject.getJSONArray("diopter");
+		tOptometryId = 	addUpdate(studentId, resultOptometryDO);
+    	JSONArray jsonArray =obj.getJSONArray("diopter");
     	if(jsonArray!=null){
     		List<ResultDiopterDO> diopterDOs = new ArrayList<ResultDiopterDO>();
     		for(int j=0;j<jsonArray.size();j++){
@@ -215,8 +215,10 @@ public class ResultServiceImpl implements ResultService{
     			String type=jb.getString("type");
     			String ifrl=jb.getString("ifrl");
     			String firstSecond = jb.getString("firstSecond");
-    			ResultDiopterDO resultDiopterDO=new ResultDiopterDO(resultOptometryDO.getTOptometryId(), diopterS, diopterC, diopterA, believe, num, type, ifrl, firstSecond,identityCard);
+    			ResultDiopterDO resultDiopterDO=new ResultDiopterDO(tOptometryId, diopterS, diopterC, diopterA, believe, num, type, ifrl, firstSecond,identityCard);
+    			System.out.println(resultDiopterDO);
     			resultDiopterDO.setTOptometryId(tOptometryId);
+    			resultDiopterDO.setCheckDate(date);
     			if( 
     					diopterS==0.0 && 
     					diopterC==0.0 && 
@@ -233,7 +235,7 @@ public class ResultServiceImpl implements ResultService{
     		if(diopterDOs.size()>0)
     			addUpdate(studentId, diopterDOs);
     	}
-    	jsonArray =jsonObject.getJSONArray("corneal");
+    	jsonArray =obj.getJSONArray("corneal");
     	if(jsonArray!=null){
     		List<ResultCornealDO> cornealDOs = new ArrayList<ResultCornealDO>();
     		for(int j=0;j<jsonArray.size();j++){
@@ -244,8 +246,10 @@ public class ResultServiceImpl implements ResultService{
     			String type=jb.getString("type");
     			String ifrl=jb.getString("ifrl");
     			String firstSecond = jb.getString("firstSecond");
-    			ResultCornealDO resultCornealDO = new ResultCornealDO(resultOptometryDO.getTOptometryId(), cornealMm, cornealD, cornealDeg, type, ifrl, firstSecond,identityCard);
+    			ResultCornealDO resultCornealDO = new ResultCornealDO(tOptometryId, cornealMm, cornealD, cornealDeg, type, ifrl, firstSecond,identityCard);
     			resultCornealDO.setTOptometryId(tOptometryId);
+    			resultCornealDO.setCheckDate(date);
+    			System.out.println(resultCornealDO);
     			if(
     					cornealMm==0.0&&
     					cornealD==0.0&&
@@ -300,6 +304,7 @@ public class ResultServiceImpl implements ResultService{
 				eyesightDao.saveEyesightDO(resultEyesightDO);
 			else{
 				if(checkIfSaveResult(checkDate)){
+					resultEyesightDO.setTEyesightId(resultEyesightDOList.get(0).getTEyesightId());
 					eyesightDao.updateEyesightDO(resultEyesightDO);
 				}
 				else
@@ -331,6 +336,7 @@ public class ResultServiceImpl implements ResultService{
 				eyeaxisDao.saveEyeaxisDO(resultEyeaxisDO);
 			else{
 				if(checkIfSaveResult(checkDate)){
+					resultEyeaxisDO.setTEyeaxisId(resultEyeaxisDOList.get(0).getTEyeaxisId());
 					eyeaxisDao.updateEyeaxisDO(resultEyeaxisDO);
 				}
 				else
@@ -349,6 +355,7 @@ public class ResultServiceImpl implements ResultService{
 				eyepressureDao.saveEyepressureDO(resultEyepressureDO);
 			else{
 				if(checkIfSaveResult(checkDate)){
+					resultEyepressureDO.setTEyepressureId(resultEyepressureDOList.get(0).getTEyepressureId());
 					eyepressureDao.updateEyepressureDO(resultEyepressureDO);
 				}
 				else
@@ -367,6 +374,7 @@ public class ResultServiceImpl implements ResultService{
 				adjustingDao.saveAdjustingDO(resultAdjustingDO);
 			else{
 				if(checkIfSaveResult(checkDate)){
+					resultAdjustingDO.setTAdjustingId(resultAdjustingDOList.get(0).getTAdjustingId());
 					adjustingDao.updateAdjustingDO(resultAdjustingDO);
 				}
 				else
@@ -385,6 +393,7 @@ public class ResultServiceImpl implements ResultService{
 				visibilityDao.saveVisibilityDO(resultVisibilityDO);
 			else{
 				if(checkIfSaveResult(checkDate)){
+					resultVisibilityDO.setTVisibilityId(resultVisibilityDOList.get(0).getTVisibilityId());
 					visibilityDao.updateVisibilityDO(resultVisibilityDO);
 				}
 				else
@@ -416,7 +425,9 @@ public class ResultServiceImpl implements ResultService{
 				optometryDao.saveOptometryDO(resultOptometryDO);
 			else{
 				if(checkIfSaveResult(checkDate)){
+					resultOptometryDO.setTOptometryId(resultOptometryDOList.get(0).getTOptometryId());
 					optometryDao.updateOptometryDO(resultOptometryDO);
+					
 				}
 				else
 					optometryDao.saveOptometryDO(resultOptometryDO);

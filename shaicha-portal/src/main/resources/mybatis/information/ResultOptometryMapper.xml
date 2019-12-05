@@ -83,10 +83,10 @@
 			<if test="secondCheckRcs != null">`second_check_rcs` = #{secondCheckRcs}, </if>
 			<if test="secondCheckLcs != null">`second_check_lcs` = #{secondCheckLcs}, </if>
 			
-			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag},</if>
 			<if test="firstCheckPd != null">`first_check_pd` = #{firstCheckPd}, </if>
 			<if test="secondCheckPd != null">`second_check_pd` = #{secondCheckPd}</if>
 		</set>
-		where student_id = #{studentId}
+		where t_optometry_id = #{tOptometryId}
 	</update>
 </mapper>

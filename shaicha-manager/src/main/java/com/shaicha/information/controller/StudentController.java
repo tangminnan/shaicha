@@ -26,11 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.converter.PicturesManager;
-import org.apache.poi.hwpf.converter.WordToHtmlConverter;
-import org.apache.poi.hwpf.usermodel.Picture;
-import org.apache.poi.hwpf.usermodel.PictureType;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -498,7 +494,7 @@ public class StudentController {
 		
 		}*/
 	
-	public static void main(String argv[]) {  
+/*	public static void main(String argv[]) {  
         try {  
             convert2Html("D://1.doc","D://1.html");  
         } catch (Exception e) {  
@@ -527,9 +523,9 @@ public class StudentController {
             } catch (IOException ie) {  
             }  
         }  
-    }  
+    }  */
   
-    public static void convert2Html(String fileName, String outPutFile)  
+   /* public static void convert2Html(String fileName, String outPutFile)  
             throws TransformerException, IOException,  
             ParserConfigurationException {  
         HWPFDocument wordDocument = new HWPFDocument(new FileInputStream(fileName));//WordToHtmlUtils.loadDoc(new FileInputStream(inputFile));  
@@ -573,6 +569,6 @@ public class StudentController {
         serializer.transform(domSource, streamResult);  
         out.close();  
         writeFile(new String(out.toByteArray()), outPutFile);  
-    }  
+    }  */
 		
 }

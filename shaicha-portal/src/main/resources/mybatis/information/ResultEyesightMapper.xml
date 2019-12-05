@@ -82,7 +82,7 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where student_id = #{studentId}
+		where t_eyesight_id = #{tEyesightId}
 	</update>
 	
 </mapper>

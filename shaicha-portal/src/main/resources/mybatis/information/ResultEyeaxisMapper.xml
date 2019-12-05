@@ -58,6 +58,6 @@
 			<if test="secondCheckOs != null">`second_check_os` = #{secondCheckOs}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where student_id = #{studentId}
+		where t_eyeaxis_id = #{tEyeaxisId}
 	</update>
 </mapper>

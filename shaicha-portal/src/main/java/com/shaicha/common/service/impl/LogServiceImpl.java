@@ -20,7 +20,8 @@ public class LogServiceImpl implements LogService {
 	@Async
 	@Override
 	public void save(LogDO logDO) {
-		 logMapper.save(logDO);
+		System.out.println(logDO);
+//		 logMapper.save(logDO);
 	}
 
 	@Override

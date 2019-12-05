@@ -4,7 +4,7 @@
 <mapper namespace="com.shaicha.information.dao.ResultEyepressureDao">
 
 	<select id="getEyepressureDO" resultType="com.shaicha.information.domain.ResultEyepressureDO">
-						ELECT
+						SELECT
 					`t_eyepressure_id`,
 					`student_id`,
 					`checkor_id`,
@@ -51,7 +51,7 @@
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
 		</set>
-		where student_id = #{studentId}
+		where t_eyepressure_id = #{tEyepressureId}
 	</update>
 
 </mapper>

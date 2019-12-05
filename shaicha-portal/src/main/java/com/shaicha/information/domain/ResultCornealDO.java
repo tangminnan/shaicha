@@ -46,6 +46,15 @@ public class ResultCornealDO implements Serializable {
 	public void setTCornealId(Integer tCornealId) {
 		this.tCornealId = tCornealId;
 	}
+	//检查日期
+	private Date checkDate;
+	
+	public Date getCheckDate() {
+		return checkDate;
+	}
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
 	/**
 	 * 获取：id
 	 */
