@@ -2,11 +2,15 @@ package com.shaicha.information.service.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -463,12 +467,75 @@ public class ResultServiceImpl implements ResultService{
 	public void addUpdatec(Long studentId,List<ResultCornealDO> cornealDOs){		
 		if(cornealDOs.size()>0){
 			cornealDao.removeAll(cornealDOs.get(0).getTOptometryId());
-			for(ResultCornealDO resultCornealDO:cornealDOs){
-				cornealDao.saveCornealDO(resultCornealDO);
-			}
+			 Date date = cornealDOs.get(0).getCheckDate();
+			 Integer id = cornealDOs.get(0).getTOptometryId();
+			 String identityCard =   cornealDOs.get(0).getIdentityCard();
+			 ResultCornealDO resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","R1",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","R2",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","AVG",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","CYL",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","R1",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","R2",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","AVG",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","CYL",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 
+			 
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","R1",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","R2",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","AVG",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","CYL",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","R1",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","R2",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","AVG",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
+			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","CYL",date,id,identityCard);
+			 cornealDao.saveCornealDO(resultCornealDO);
 		}
 	}
 	
+	/**  
+	
+	*/  
+	private ResultCornealDO countResultCornealDO(List<ResultCornealDO> cornealDOs, String firstSecond, String ifrl,
+			String type,Date date ,Integer id,String identityCard) {
+		double cornealMm= cornealDOs.stream().filter(cornealDO -> cornealDO.getFirstSecond().equals(firstSecond))
+				   .filter(cornealDOL -> cornealDOL.equals(ifrl)).filter(cornealDOLR -> cornealDOLR.equals(type))
+				   .collect(Collectors.averagingDouble(ResultCornealDO::getCornealMm));
+		double cornealD= cornealDOs.stream().filter(cornealDO -> cornealDO.getFirstSecond().equals(firstSecond))
+		   		.filter(cornealDOL -> cornealDOL.equals(ifrl)).filter(cornealDOLR -> cornealDOLR.equals(type))
+		   		.collect(Collectors.averagingDouble(ResultCornealDO::getCornealD));
+
+		double cornealDeg=  cornealDOs.stream().filter(cornealDO -> cornealDO.getFirstSecond().equals(firstSecond))
+				.filter(cornealDOL -> cornealDOL.equals(ifrl)).filter(cornealDOLR -> cornealDOLR.equals(type))
+				.collect(Collectors.averagingInt(ResultCornealDO::getCornealDeg));
+		
+		ResultCornealDO resultCornealDO = new ResultCornealDO();
+		resultCornealDO.setCornealMm(cornealMm);
+		resultCornealDO.setCornealD(cornealD);
+		resultCornealDO.setCornealDeg((int)cornealDeg);
+		resultCornealDO.setCheckDate(date);
+		resultCornealDO.setTOptometryId(id);
+		resultCornealDO.setIfrl(ifrl);
+		resultCornealDO.setFirstSecond(firstSecond);
+		resultCornealDO.setType(type);
+		resultCornealDO.setIdentityCard(identityCard);
+		return resultCornealDO;
+	}
+
 	@Override
 	public Map<String, Object> getStudentInfo(String identityCard) {
 		Map<String,Object> resultMap  =new HashMap<String,Object>();
