@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -156,7 +157,9 @@ public class StudentController {
 	String optometry(@PathVariable("id") Integer id,Model model){
 		Map<String,Object> map = new HashMap<String,Object>();
 		StudentDO student = studentService.get(id);
+		map.put("studentId", id);
 		List<ResultOptometryDO> list = resultOptometryService.list(map);
+		list = list.stream().map(a -> {a.gettOptometryId();a.getCheckDate();return a;}).distinct().collect(Collectors.toList());
 		model.addAttribute("list", list);
 		model.addAttribute("student", student);
 	    return "information/student/optometry";

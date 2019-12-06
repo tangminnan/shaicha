@@ -30,11 +30,9 @@
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
-                order by ${sort} ${order}
+                order by check_date desc
             </when>
-			<otherwise>
-                order by t_optometry_id desc
-			</otherwise>
+			
         </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}

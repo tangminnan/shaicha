@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="getByToptometryId" resultType="com.shaicha.information.domain.ResultDiopterDO">
-		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,`ifRL`,first_second from t_result_diopter where t_optometry_id = #{value}
+		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,check_date,`ifRL`,first_second from t_result_diopter where t_optometry_id = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultDiopterDO">
