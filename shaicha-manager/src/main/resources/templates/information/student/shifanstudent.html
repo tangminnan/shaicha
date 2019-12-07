@@ -31,6 +31,9 @@
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
 									   筛查结果导出
 								</button>
+								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="jyjshaichabaogao()">
+									   教育局筛查报告
+								</button>
 							</div>
 						</div>
 						<div class="columns pull-right">
@@ -57,13 +60,23 @@
                         		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
                     		</select>
 						</div>
+						<div class="columns pull-right col-md-2 nopadding ">
+									<input id="startDate" name="startDate" class="form-control" placeholder="导出开始时间：" type="text">
+								</div>
+								<div class="columns pull-right col-md-2 nopadding">
+									<input id="endDate" name="endDate" class="form-control" placeholder="导出结束时间：" type="text">
+								</div>
 					</div>
-					<table id="exampleTable" data-mobile-responsive="true">
+					<!-- <table id="exampleTable" data-mobile-responsive="true"> -->
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script src="/js/plugins/echarts/echarts.js"></script>
+	<div id="genianlingduanjinshilvfazhanqushi"  style="width: 600px;height: 300px;-webkit-tap-highlight-color: transparent; ></div>
+	<div id="nannvshengjinshilvfazhanqushi"></div>
+	<div id="nannvshengjinshilvfazhanqushi"></div>
 	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
 		<div>
 			<script type="text/javascript">
@@ -89,6 +102,16 @@
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
+	<script type="text/javascript">
+	laydate.render({
+		elem: '#startDate',
+		type: 'date'
+	});
+	laydate.render({
+		elem: '#endDate',
+		type: 'date'
+	});
+	</script>
 	<script type="text/javascript" src="/js/appjs/information/student/shifanstudent.js"></script>
 </body>
 </html>

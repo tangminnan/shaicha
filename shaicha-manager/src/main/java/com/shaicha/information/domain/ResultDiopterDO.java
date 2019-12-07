@@ -184,6 +184,4 @@ L_DATA=夜间视力检查
 	public void setCheckDate(Date checkDate) {
 		this.checkDate = checkDate;
 	}
-	
-	
 }

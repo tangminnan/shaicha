@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.ResultCornealDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
@@ -56,11 +57,11 @@ public interface StudentService {
 	/**
 	 * 筛查结果导出
 	 */
-	void shaichajieguodaochu(Integer[] ids, HttpServletResponse response);
+	/*void shaichajieguodaochu(Integer[] ids, HttpServletResponse response);*/
 	/**
 	 * 示范校筛查结果导出
 	 */
-	void shifanshaichajieguodaochu(Integer[] ids, HttpServletResponse response);
+	/*void shifanshaichajieguodaochu(Integer[] ids, HttpServletResponse response);*/
 	/**
 	 * 普通筛查导出（freemarker模式）
 	 * @param ids
@@ -80,4 +81,8 @@ public interface StudentService {
 	List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id);
 
 	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id);
+
+	List<ResultCornealDO> getResultCornealDOList(Integer id, String string, String string2);
+
+	Map<String, Object> getJInShiLv(Date startDate, Date endDate);
 }

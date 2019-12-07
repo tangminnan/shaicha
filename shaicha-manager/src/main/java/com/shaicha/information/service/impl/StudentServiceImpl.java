@@ -29,6 +29,7 @@ import com.shaicha.common.utils.R;
 import com.shaicha.common.utils.WordUtils;
 import com.shaicha.information.dao.StudentDao;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.ResultCornealDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
@@ -67,7 +68,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -362,7 +365,7 @@ public class StudentServiceImpl implements StudentService {
 	/**
 	 * 筛查结果导出
 	 */
-	@Override
+	/*@Override
 	public void shaichajieguodaochu(Integer[] ids, HttpServletResponse response) {
 		try {
 			for(int i=0;i<ids.length;i++){
@@ -386,7 +389,7 @@ public class StudentServiceImpl implements StudentService {
 		              f.delete();
 		        }
 			}
-		}		
+		}		*/
 		
 		  
 	          
@@ -397,7 +400,7 @@ public class StudentServiceImpl implements StudentService {
 	/**
 	 * 拼装普通筛查数据
 	 */
-	private Map<String,Object> createPeramsMap(Integer id){
+	/*private Map<String,Object> createPeramsMap(Integer id){
 		Map<String, Object> params = new HashMap<String, Object>(); 
 		//基本信息获取
 		StudentDO studentDO = studentDao.get(id);
@@ -441,12 +444,12 @@ public class StudentServiceImpl implements StudentService {
 		System.out.println("===========================");
 		System.out.println("===========================");
 		return params;
-	}
+	}*/
 
     /**
      *示范校筛查结果导出 
      */
-	@Override
+	/*@Override
 	public void shifanshaichajieguodaochu(Integer[] ids, HttpServletResponse response) {
 		try {
 			for(int i=0;i<ids.length;i++){
@@ -470,9 +473,9 @@ public class StudentServiceImpl implements StudentService {
 		              f.delete();
 		        }
 			}
-	}  
+	}  */
 	
-	private Map<String,Object> createPeramsMap12(Integer id){
+	/*private Map<String,Object> createPeramsMap12(Integer id){
 		Map<String, Object> params = new HashMap<String, Object>(); 
 		//基本信息获取
 		StudentDO studentDO = studentDao.get(id);
@@ -545,7 +548,7 @@ public class StudentServiceImpl implements StudentService {
 			
 		return params;
 	}
-
+*/
 	/**
 	 * 普通筛查导出（freemarker导出模式）
 	 */
@@ -699,6 +702,8 @@ public class StudentServiceImpl implements StudentService {
 			resultEyesightDO=resultEyesightDOList.get(0);
 		params.put("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString());
 		params.put("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
+		params.put("glassvisionOd", 11);
+		params.put("glassvisionOs", 12);
 //		params.put("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
 //		params.put("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
 		
@@ -738,20 +743,34 @@ public class StudentServiceImpl implements StudentService {
 		
 		System.out.println("===========================");
 		System.out.println("===========================");
-		//临时数据拼装
-		//报告临时数据
-				params.put("cornealMmr1R", "12");
-				params.put("cornealMmr1L", "11");
-				params.put("cornealDr1R", "500");
-				params.put("diopterSLb", "300");
-				params.put("cornealDr1L", "500");
-				params.put("cornealMmr2R", "300");
-				params.put("cornealMmr2L", "1");
-				params.put("secondCheckOsb", "1");
-				params.put("cornealDr2R", "2");
-				params.put("cornealDr2L", "2");
-				params.put("glassvisionOd", 11);
-				params.put("glassvisionOs", 12);
+	
+		//角膜验光拼装
+				ResultCornealDO resultCornealDO = new ResultCornealDO();
+				List<ResultCornealDO> resultCornealDOList = studentDao.getResultCornealDOList(studentDO.getId(),"R","R1");
+				if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+				params.put("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+				params.put("cornealDr1R", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+				resultCornealDO = new ResultCornealDO();
+				resultCornealDOList = studentDao.getResultCornealDOList(studentDO.getId(),"R","R2");
+				if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+				params.put("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+				params.put("cornealDr2R", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+				
+				resultCornealDO = new ResultCornealDO();
+			    resultCornealDOList = studentDao.getResultCornealDOList(studentDO.getId(),"L","R1");
+			    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+			    params.put("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+			    params.put("cornealDr1L", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+				
+				
+			    
+			    resultCornealDO = new ResultCornealDO();
+			    resultCornealDOList = studentDao.getResultCornealDOList(studentDO.getId(),"L","R2");
+			    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+
+			    params.put("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+			    params.put("cornealDr2L", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+				
 				//医生的建议（临时数据）
 				params.put("doctorchubu","注意用眼卫生");
 				
@@ -777,7 +796,26 @@ public class StudentServiceImpl implements StudentService {
 	public List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id) {
 		return studentDao.getLatelestResultEyeaxisDO(id);
 	}
+
+	@Override
+	public List<ResultCornealDO> getResultCornealDOList(Integer studentId, String ifrl, String type) {
+		return studentDao.getResultCornealDOList(studentId, ifrl, type);
+	}
+
+	@Override
+	public Map<String, Object> getJInShiLv(Date startDate, Date endDate) {
+		//裸眼视力小于5.0 = 近视
+		List<ResultEyesightDO> resultDiopterDOList = studentDao.getJInShiLv(startDate,endDate);
+		Map<Date,List<ResultEyesightDO>> map = resultDiopterDOList.stream().filter(resultDiopterDO -> Double.parseDouble(resultDiopterDO.getNakedFarvisionOd())<5.0 ||
+																	                                  Double.parseDouble(resultDiopterDO.getNakedFarvisionOs())<5.0)
+																		  
+																				.collect(Collectors.groupingBy(ResultEyesightDO::getCheckDate));
+		
+		Map<Date,List<Long>> jinshiMap = new HashMap<Date,List<Long>>();
 	
+		
+		return null;
+	}
 	
 }
 

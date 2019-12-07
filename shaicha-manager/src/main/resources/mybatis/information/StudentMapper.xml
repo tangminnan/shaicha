@@ -397,7 +397,7 @@
 							) o
 						WHERE
 							d.t_optometry_id = o.t_optometry_id
-						AND d.ifRL = #{ifRL}
+						AND d.ifRL = #{ifRL} AND type="AVG"
 						ORDER BY
 							d.t_diopter_id DESC
 	</select>
@@ -536,5 +536,45 @@
 			#{checkDate}
 		)
 	</insert>
+	
+	<select id="getResultCornealDOList" resultType="com.shaicha.information.domain.ResultCornealDO">
+							SELECT
+						ifnull(corneal_mm, '') cornealMm,
+						ifnull(corneal_d, '') cornealD,
+						ifnull(corneal_deg, '') cornealDeg
+					FROM
+						t_result_corneal d,
+						(
+							SELECT
+								`t_optometry_id`,
+								`student_id`
+							FROM
+								t_result_optometry
+							WHERE
+								student_id = #{studentId} order by check_date desc limit 1
+						) o
+					WHERE
+						d.t_optometry_id = o.t_optometry_id
+					AND d.ifRL = #{ifrl} AND d.type=#{type}
+					ORDER BY
+						d.t_corneal_id DESC
+	</select>
 
+
+<select id="getJInShiLv" resultType="com.shaicha.information.domain.ResultEyesightDO">
+											SELECT
+					d.naked_farvision_od,
+					d.naked_farvision_os,
+					d.identity_card,
+					d.check_date,
+					t.school,
+					t.grade,
+					t.student_sex,
+					t.xue_bu
+				FROM
+					t_result_eyesight d,
+					t_student t
+				WHERE
+					d.identity_card = t.identity_card
+</select>
 </mapper>

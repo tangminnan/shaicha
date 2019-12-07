@@ -46,21 +46,6 @@ function load() {
 				// sortOrder.
 				// 返回false将会终止请求
 				columns : [
-					/*	{
-							checkbox : true
-						},
-														{
-							field : 'tOptometryId', 
-							title : 'id' 
-						},*/
-														/*{
-							field : 'studentId', 
-							title : '学生id' 
-						},
-														{
-							field : 'checkorId', 
-							title : '第一次电脑验光检查者id' 
-						},*/
 														{
 							field : 'firstCheckVd', 
 							title : '第一次验光VD' 
@@ -81,29 +66,25 @@ function load() {
 							field : 'firstCheckLcs', 
 							title : '第一次检查左眼cs' 
 						},
-														/*{
-							field : 'checkDate', 
-							title : '电脑验光日期' 
-						},*/
 														{
 							field : 'secondCheckVd', 
 							title : '第二次验光VD' 
 						},
 														{
 							field : 'secondCheckRps', 
-							title : '第一次检查右眼ps' 
+							title : '第二次检查右眼ps' 
 						},
 														{
 							field : 'secondCheckLps', 
-							title : '第一次检查左眼ps' 
+							title : '第二次检查左眼ps' 
 						},
 														{
 							field : 'secondCheckRcs', 
-							title : '第一次检查右眼cs' 
+							title : '第二次检查右眼cs' 
 						},
 														{
 							field : 'secondCheckLcs', 
-							title : '第一次检查左眼cs' 
+							title : '第二次检查左眼cs' 
 						},
 						/*								{
 							field : 'deleteFlag', 
@@ -329,6 +310,8 @@ function load() {
 							formatter(value, row, index){
 								if(value == 'AVG')
 									return "<  >";
+								if(value=='L_DATA')
+									return "L.DATA";
 								if(value != 'AVG') 
 									return ""
 							}

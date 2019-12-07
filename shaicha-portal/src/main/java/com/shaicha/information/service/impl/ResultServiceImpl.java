@@ -467,7 +467,8 @@ public class ResultServiceImpl implements ResultService{
 	public void addUpdatec(Long studentId,List<ResultCornealDO> cornealDOs){		
 		if(cornealDOs.size()>0){
 			cornealDao.removeAll(cornealDOs.get(0).getTOptometryId());
-			 Date date = cornealDOs.get(0).getCheckDate();
+			
+			/* Date date = cornealDOs.get(0).getCheckDate();
 			 Integer id = cornealDOs.get(0).getTOptometryId();
 			 String identityCard =   cornealDOs.get(0).getIdentityCard();
 			 ResultCornealDO resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","R1",date,id,identityCard);
@@ -503,14 +504,14 @@ public class ResultServiceImpl implements ResultService{
 			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","AVG",date,id,identityCard);
 			 cornealDao.saveCornealDO(resultCornealDO);
 			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","CYL",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
+			 cornealDao.saveCornealDO(resultCornealDO);*/
 		}
 	}
 	
 	/**  
 	
 	*/  
-	private ResultCornealDO countResultCornealDO(List<ResultCornealDO> cornealDOs, String firstSecond, String ifrl,
+	/*private ResultCornealDO countResultCornealDO(List<ResultCornealDO> cornealDOs, String firstSecond, String ifrl,
 			String type,Date date ,Integer id,String identityCard) {
 		double cornealMm= cornealDOs.stream().filter(cornealDO -> cornealDO.getFirstSecond().equals(firstSecond))
 				   .filter(cornealDOL -> cornealDOL.equals(ifrl)).filter(cornealDOLR -> cornealDOLR.equals(type))
@@ -534,7 +535,7 @@ public class ResultServiceImpl implements ResultService{
 		resultCornealDO.setType(type);
 		resultCornealDO.setIdentityCard(identityCard);
 		return resultCornealDO;
-	}
+	}*/
 
 	@Override
 	public Map<String, Object> getStudentInfo(String identityCard) {
