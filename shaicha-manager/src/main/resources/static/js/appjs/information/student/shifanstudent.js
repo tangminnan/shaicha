@@ -504,6 +504,7 @@ function jyjshaichabaogao(){
 				    	legend.data.push(key);
 						var obj =  {
 					            name:key,
+					            smooth:true,
 					            type:'line',
 					            stack: '总量',
 					            data:data[key]
@@ -518,5 +519,39 @@ function jyjshaichabaogao(){
 		});
 
 	   myChart.setOption(option);
+	   
+	   $.ajax({
+			cache : true,
+			async:false,
+			type : "GET",
+			url : "/information/student/getJInShiLvSex",
+			data : {startDate:startDate,endDate:endDate},
+			async : false,
+			error : function(request) {
+				parent.layer.alert("Connection error");
+			},
+			success : function(data) {
+				if(data!=null){
+					
+				   var legend = {'data':[]};
+				   var series=[];
+				    for(var key in data){
+				    	legend.data.push(key);
+						var obj =  {
+					            name:key,
+					            smooth:true,
+					            type:'line',
+					            stack: '总量',
+					            data:data[key]
+					        }
+						series.push(obj);
+					}
+				    
+				    option.legend=legend;
+				    option.series=series;
+				}
+			}
+		});
+
 	  
 }
