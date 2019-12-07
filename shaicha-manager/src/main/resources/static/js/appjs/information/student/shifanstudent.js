@@ -446,14 +446,11 @@ function jyjshaichabaogao(){
 	var myChart =  echarts.init(document.getElementById('genianlingduanjinshilvfazhanqushi'));
 	
 	option = {
-		    title: {
-		        text: '折线图堆叠'
-		    },
 		    tooltip: {
 		        trigger: 'axis'
 		    },
 		    legend: {
-		        data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+		        data:[]
 		    },
 		    grid: {
 		        left: '3%',
@@ -472,40 +469,15 @@ function jyjshaichabaogao(){
 		        data: ['幼儿园','小学','初中','高中']
 		    },
 		    yAxis: {
-		        type: 'value'
+		        type: 'value',
+		        axisLabel: {  
+                    show: true,  
+                    interval: '0.1',  
+                    formatter: '{value} %' 
+                    },  
+                show: true  
 		    },
-		    series: [
-		        {
-		            name:'邮件营销',
-		            type:'line',
-		            stack: '总量',
-		            data:[120, 132, 101, 134, 90, 230, 210]
-		        },
-		        {
-		            name:'联盟广告',
-		            type:'line',
-		            stack: '总量',
-		            data:[220, 182, 191, 234, 290, 330, 310]
-		        },
-		        {
-		            name:'视频广告',
-		            type:'line',
-		            stack: '总量',
-		            data:[150, 232, 201, 154, 190, 330, 410]
-		        },
-		        {
-		            name:'直接访问',
-		            type:'line',
-		            stack: '总量',
-		            data:[320, 332, 301, 334, 390, 330, 320]
-		        },
-		        {
-		            name:'搜索引擎',
-		            type:'line',
-		            stack: '总量',
-		            data:[820, 932, 901, 934, 1290, 1330, 1320]
-		        }
-		    ]
+		    series: []
 		};
 	
 	   var startDate=$("#startDate").val();
@@ -516,14 +488,32 @@ function jyjshaichabaogao(){
 	   $.ajax({
 			cache : true,
 			async:false,
-			type : "POST",
+			type : "GET",
 			url : "/information/student/getJInShiLv",
-			data : {startDate:startDate,endDate:endDate,flag:0},
+			data : {startDate:startDate,endDate:endDate},
 			async : false,
 			error : function(request) {
 				parent.layer.alert("Connection error");
 			},
 			success : function(data) {
+				if(data!=null){
+					
+				   var legend = {'data':[]};
+				   var series=[];
+				    for(var key in data){
+				    	legend.data.push(key);
+						var obj =  {
+					            name:key,
+					            type:'line',
+					            stack: '总量',
+					            data:data[key]
+					        }
+						series.push(obj);
+					}
+				    
+				    option.legend=legend;
+				    option.series=series;
+				}
 			}
 		});
 

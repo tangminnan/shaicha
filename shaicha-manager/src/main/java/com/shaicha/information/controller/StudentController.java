@@ -497,6 +497,7 @@ public class StudentController {
 	 * 计算近视率	
 	 */
 	
+	@ResponseBody
 	@GetMapping("/getJInShiLv")
 	public Map<String,Object> getJInShiLv(Date startDate,Date endDate){
 		

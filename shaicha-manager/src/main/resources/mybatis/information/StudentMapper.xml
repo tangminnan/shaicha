@@ -575,6 +575,7 @@
 					t_result_eyesight d,
 					t_student t
 				WHERE
-					d.identity_card = t.identity_card
+					#{startDate}&lt;=check_date
+					and #{endDate}&gt;=check_date
 </select>
 </mapper>
