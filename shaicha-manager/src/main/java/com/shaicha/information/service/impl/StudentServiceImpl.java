@@ -807,12 +807,6 @@ public class StudentServiceImpl implements StudentService {
 																	                                  Double.parseDouble(resultDiopterDO.getNakedFarvisionOs())<5.0)
 																		  
 																				.collect(Collectors.groupingBy(ResultEyesightDO::getCheckDate));
-		for(Entry<Date, List<ResultEyesightDO>>  r :map.entrySet()){
-			
-		}
-		
-		Map<Date,List<Long>> jinshiMap = new HashMap<Date,List<Long>>();
-	
 		
 		return null;
 	}
