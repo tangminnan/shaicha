@@ -220,6 +220,8 @@ public class ResultServiceImpl implements ResultService{
     			String ifrl=jb.getString("ifrl");
     			String firstSecond = jb.getString("firstSecond");
     			ResultDiopterDO resultDiopterDO=new ResultDiopterDO(tOptometryId, diopterS, diopterC, diopterA, believe, num, type, ifrl, firstSecond,identityCard);
+    			//计算等效球镜
+    			resultDiopterDO.setDengxiaoqiujing(diopterS+1.0/2*diopterC);
     			System.out.println(resultDiopterDO);
     			resultDiopterDO.setTOptometryId(tOptometryId);
     			resultDiopterDO.setCheckDate(date);
@@ -288,18 +290,6 @@ public class ResultServiceImpl implements ResultService{
 	}
 
 	public void addUpdate(Long studentId,ResultEyesightDO resultEyesightDO){
-		/*Date lastCheckTime=checkIfSaveResult(studentId);
-		if(lastCheckTime==null){
-			eyesightDao.saveEyesightDO(resultEyesightDO);
-		}else{
-			List<ResultEyesightDO> resultEyesightDO1=eyesightDao.getEyesightDO(studentId,lastCheckTime);
-			if(resultEyesightDO1.size()>0){
-				resultEyesightDO.setTEyesightId(resultEyesightDO1.get(0).getTEyesightId());
-				eyesightDao.updateEyesightDO(resultEyesightDO);
-			}
-			else
-				eyesightDao.saveEyesightDO(resultEyesightDO);
-		}*/
 		
 		List<ResultEyesightDO> resultEyesightDOList=eyesightDao.getEyesightDO(studentId);
 		if(resultEyesightDOList.size()>0){
@@ -320,18 +310,6 @@ public class ResultServiceImpl implements ResultService{
 		}
 	}
 	public void addUpdate(Long studentId,ResultEyeaxisDO resultEyeaxisDO){
-		/*Date lastCheckTime=checkIfSaveResult(studentId);
-		if(lastCheckTime==null){
-			eyeaxisDao.saveEyeaxisDO(resultEyeaxisDO);
-		}else{
-			List<ResultEyeaxisDO> resultEyeaxisDO1=eyeaxisDao.getEyeaxisDO(studentId, lastCheckTime);
-			if(resultEyeaxisDO1.size()>0){
-				resultEyeaxisDO.setTEyeaxisId(resultEyeaxisDO1.get(0).getTEyeaxisId());
-				eyeaxisDao.updateEyeaxisDO(resultEyeaxisDO);
-			}
-			else
-				eyeaxisDao.saveEyeaxisDO(resultEyeaxisDO);
-		}*/
 		
 		List<ResultEyeaxisDO> resultEyeaxisDOList=eyeaxisDao.getEyeaxisDO(studentId);
 		if(resultEyeaxisDOList.size()>0){
@@ -409,19 +387,6 @@ public class ResultServiceImpl implements ResultService{
 		}
 	}
 	public Integer addUpdate(Long studentId,ResultOptometryDO resultOptometryDO){
-//		Date lastCheckTime=checkIfSaveResult(studentId);
-//		if(lastCheckTime==null){
-//			optometryDao.saveOptometryDO(resultOptometryDO);
-//		}else{
-//			List<ResultOptometryDO> resultOptometryDO1=optometryDao.getOptometryDO(studentId, lastCheckTime);
-//			if(resultOptometryDO1.size()>0){
-//				resultOptometryDO.setTOptometryId(resultOptometryDO1.get(0).getTOptometryId());
-//				optometryDao.updateOptometryDO(resultOptometryDO1.get(0));
-//			}
-//			else
-//				optometryDao.saveOptometryDO(resultOptometryDO);
-//		}
-		
 		List<ResultOptometryDO> resultOptometryDOList=optometryDao.getOptometryDO(studentId);
 		if(resultOptometryDOList.size()>0){
 			Date checkDate  = resultOptometryDOList.get(0).getCheckDate();
@@ -443,19 +408,7 @@ public class ResultServiceImpl implements ResultService{
 		return resultOptometryDO.getTOptometryId();
 	}
 	public void addUpdate(Long studentId,List<ResultDiopterDO> diopterDOs){
-		/*if(diopterDOs.size()>0){
-			Date lastCheckTime=checkIfSaveResult(studentId);
-			if(lastCheckTime==null){
-				for(ResultDiopterDO resultDiopterDO:diopterDOs){
-					diopterDao.saveDiopterDO(resultDiopterDO);
-				}
-			}else{
-				diopterDao.removeAll(diopterDOs.get(0).getTOptometryId());
-				for(ResultDiopterDO resultDiopterDO:diopterDOs){
-					diopterDao.saveDiopterDO(resultDiopterDO);
-				}
-			}
-		}*/
+		
 		
 		if(diopterDOs.size()>0){
 			diopterDao.removeAll(diopterDOs.get(0).getTOptometryId());
@@ -467,75 +420,13 @@ public class ResultServiceImpl implements ResultService{
 	public void addUpdatec(Long studentId,List<ResultCornealDO> cornealDOs){		
 		if(cornealDOs.size()>0){
 			cornealDao.removeAll(cornealDOs.get(0).getTOptometryId());
+			for(ResultCornealDO cornealDO:cornealDOs){
+				cornealDao.saveCornealDO(cornealDO);
+			}
 			
-			/* Date date = cornealDOs.get(0).getCheckDate();
-			 Integer id = cornealDOs.get(0).getTOptometryId();
-			 String identityCard =   cornealDOs.get(0).getIdentityCard();
-			 ResultCornealDO resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","R1",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","R2",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","AVG",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","L","CYL",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","R1",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","R2",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","AVG",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"FIRST_CHECK","R","CYL",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 
-			 
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","R1",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","R2",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","AVG",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","L","CYL",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","R1",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","R2",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","AVG",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);
-			 resultCornealDO = countResultCornealDO(cornealDOs,"SECOND_CHECK","R","CYL",date,id,identityCard);
-			 cornealDao.saveCornealDO(resultCornealDO);*/
 		}
 	}
 	
-	/**  
-	
-	*/  
-	/*private ResultCornealDO countResultCornealDO(List<ResultCornealDO> cornealDOs, String firstSecond, String ifrl,
-			String type,Date date ,Integer id,String identityCard) {
-		double cornealMm= cornealDOs.stream().filter(cornealDO -> cornealDO.getFirstSecond().equals(firstSecond))
-				   .filter(cornealDOL -> cornealDOL.equals(ifrl)).filter(cornealDOLR -> cornealDOLR.equals(type))
-				   .collect(Collectors.averagingDouble(ResultCornealDO::getCornealMm));
-		double cornealD= cornealDOs.stream().filter(cornealDO -> cornealDO.getFirstSecond().equals(firstSecond))
-		   		.filter(cornealDOL -> cornealDOL.equals(ifrl)).filter(cornealDOLR -> cornealDOLR.equals(type))
-		   		.collect(Collectors.averagingDouble(ResultCornealDO::getCornealD));
-
-		double cornealDeg=  cornealDOs.stream().filter(cornealDO -> cornealDO.getFirstSecond().equals(firstSecond))
-				.filter(cornealDOL -> cornealDOL.equals(ifrl)).filter(cornealDOLR -> cornealDOLR.equals(type))
-				.collect(Collectors.averagingInt(ResultCornealDO::getCornealDeg));
-		
-		ResultCornealDO resultCornealDO = new ResultCornealDO();
-		resultCornealDO.setCornealMm(cornealMm);
-		resultCornealDO.setCornealD(cornealD);
-		resultCornealDO.setCornealDeg((int)cornealDeg);
-		resultCornealDO.setCheckDate(date);
-		resultCornealDO.setTOptometryId(id);
-		resultCornealDO.setIfrl(ifrl);
-		resultCornealDO.setFirstSecond(firstSecond);
-		resultCornealDO.setType(type);
-		resultCornealDO.setIdentityCard(identityCard);
-		return resultCornealDO;
-	}*/
 
 	@Override
 	public Map<String, Object> getStudentInfo(String identityCard) {
@@ -558,71 +449,71 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public Map<String, Object> getStudentInfo(Long id) {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		StudentDO  studentDO = studentDao.get(id);
-		if(studentDO!=null){
-			Date lastCheckTime=studentDO.getLastCheckTime();
-			if(lastCheckTime!=null){
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime(lastCheckTime);
-				calendar.add(Calendar.DAY_OF_YEAR,13);
-				if(calendar.getTime().compareTo(new Date())<0){
-					resultMap.put("code",-1);
-					resultMap.put("msg","开始新一轮检查...");
-				}
-				else{//获取上一次的检查数据
-					List<ResultDiopterDO> diopterDOs = new ArrayList<ResultDiopterDO>();
-					List<ResultCornealDO> cornealDOs = new ArrayList<ResultCornealDO>();
-					List<ResultEyesightDO> resultEyesightDOList=	eyesightDao.getEyesightDO(id);
-					ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-					if(resultEyesightDOList.size()>0) resultEyesightDO=resultEyesightDOList.get(0);
-					
-					
-					
-					
-					
-					
-					List<ResultEyeaxisDO> resultEyeaxisDOList=  eyeaxisDao.getEyeaxisDO(id);
-					ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-					if(resultEyeaxisDOList.size()>0) resultEyeaxisDO=resultEyeaxisDOList.get(0);
-					
-					List<ResultEyepressureDO> resultEyepressureDOList=eyepressureDao.getEyepressureDO(id);
-					ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-					if(resultEyepressureDOList.size()>0) resultEyepressureDO=resultEyepressureDOList.get(0);
-					
-					List<ResultAdjustingDO> resultAdjustingDOList=adjustingDao.getAdjustingDO(id);
-					ResultAdjustingDO resultAdjustingDO = new ResultAdjustingDO();
-					if(resultAdjustingDOList.size()>0) resultAdjustingDO=resultAdjustingDOList.get(0);
-					
-					List<ResultVisibilityDO> resultVisibilityDOList=visibilityDao.getVisibilityDO(id);
-					ResultVisibilityDO resultVisibilityDO = new ResultVisibilityDO();
-					if(resultVisibilityDOList.size()>0) resultVisibilityDO = resultVisibilityDOList.get(0);
-					
-					List<ResultOptometryDO> resultOptometryDOList=optometryDao.getOptometryDO(id);
-					ResultOptometryDO resultOptometryDO = new ResultOptometryDO();
-					if(resultOptometryDOList.size()>0) resultOptometryDO=resultOptometryDOList.get(0);
-					if(resultOptometryDO!=null){
-						diopterDOs = diopterDao.getByOptometryId(resultOptometryDO.getTOptometryId());
-						cornealDOs=cornealDao.getByOptometryId(resultOptometryDO.getTOptometryId());
-					}
-					resultMap.put("resultEyesightDO", resultEyesightDO);
-					resultMap.put("resultEyeaxisDO", resultEyeaxisDO);
-					resultMap.put("resultEyepressureDO", resultEyepressureDO);
-					
-					resultMap.put("resultAdjustingDO", resultAdjustingDO);
-					resultMap.put("resultVisibilityDO", resultVisibilityDO);
-					resultMap.put("resultOptometryDO", resultOptometryDO);
-					
-					resultMap.put("diopterDOs", diopterDOs);
-					resultMap.put("cornealDOs", cornealDOs);
-					resultMap.put("code",0);
-					resultMap.put("msg","数据获取成功...");
-				}
-			}
-			else{
-				resultMap.put("code",-1);
-				resultMap.put("msg","开始新一轮检查...");
-			}
+		List<ResultDiopterDO> diopterDOs = new ArrayList<ResultDiopterDO>();
+		List<ResultCornealDO> cornealDOs = new ArrayList<ResultCornealDO>();
+	
+		List<ResultEyesightDO> resultEyesightDOList=	eyesightDao.getEyesightDO(id);
+		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+		if(resultEyesightDOList.size()>0){
+			Date date = resultEyesightDOList.get(0).getCheckDate();
+			if(checkIfSaveResult(date))
+				resultEyesightDO=resultEyesightDOList.get(0);
 		}
+		
+		List<ResultEyeaxisDO> resultEyeaxisDOList=  eyeaxisDao.getEyeaxisDO(id);
+		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
+		if(resultEyeaxisDOList.size()>0){
+			Date date  = resultEyeaxisDOList.get(0).getCheckDate();
+			if(checkIfSaveResult(date))
+				resultEyeaxisDO=resultEyeaxisDOList.get(0);
+		}	
+		
+		List<ResultEyepressureDO> resultEyepressureDOList=eyepressureDao.getEyepressureDO(id);
+		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
+		if(resultEyepressureDOList.size()>0){
+			Date date = resultEyepressureDOList.get(0).getCheckDate();
+			if(checkIfSaveResult(date))
+				resultEyepressureDO=resultEyepressureDOList.get(0);
+		}
+					
+		List<ResultAdjustingDO> resultAdjustingDOList=adjustingDao.getAdjustingDO(id);
+		ResultAdjustingDO resultAdjustingDO = new ResultAdjustingDO();
+		if(resultAdjustingDOList.size()>0){
+			Date date =resultAdjustingDOList.get(0).getCheckDate();
+			if(checkIfSaveResult(date))
+				resultAdjustingDO=resultAdjustingDOList.get(0);
+		}			
+		List<ResultVisibilityDO> resultVisibilityDOList=visibilityDao.getVisibilityDO(id);
+		ResultVisibilityDO resultVisibilityDO = new ResultVisibilityDO();
+		if(resultVisibilityDOList.size()>0){
+			Date date = resultVisibilityDOList.get(0).getCheckDate();
+			if(checkIfSaveResult(date))
+				resultVisibilityDO=resultVisibilityDOList.get(0);
+		}			
+		List<ResultOptometryDO> resultOptometryDOList=optometryDao.getOptometryDO(id);
+		ResultOptometryDO resultOptometryDO = new ResultOptometryDO();
+		if(resultOptometryDOList.size()>0){
+			Date date =resultOptometryDOList.get(0).getCheckDate();
+			if(checkIfSaveResult(date))
+				resultOptometryDO=resultOptometryDOList.get(0);
+		}
+		if(resultOptometryDO!=null){
+			diopterDOs = diopterDao.getByOptometryId(resultOptometryDO.getTOptometryId());
+			cornealDOs=cornealDao.getByOptometryId(resultOptometryDO.getTOptometryId());
+		}
+		resultMap.put("resultEyesightDO", resultEyesightDO);
+		resultMap.put("resultEyeaxisDO", resultEyeaxisDO);
+		resultMap.put("resultEyepressureDO", resultEyepressureDO);
+					
+		resultMap.put("resultAdjustingDO", resultAdjustingDO);
+		resultMap.put("resultVisibilityDO", resultVisibilityDO);
+		resultMap.put("resultOptometryDO", resultOptometryDO);
+					
+		resultMap.put("diopterDOs", diopterDOs);
+		resultMap.put("cornealDOs", cornealDOs);
+		resultMap.put("code",0);
+		resultMap.put("msg","数据获取成功...");
+
 		return resultMap;
 	}	
 }

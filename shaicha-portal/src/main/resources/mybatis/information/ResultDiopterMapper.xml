@@ -19,7 +19,8 @@
 			`ifRL`,
 			first_second,
 			identity_card,
-			check_date
+			check_date,
+			dengxiaoqiujing
 		)
 		values
 		(
@@ -33,7 +34,8 @@
 			#{ifrl},
 			#{firstSecond},
 			#{identityCard},
-			#{checkDate}
+			#{checkDate},
+			#{dengxiaoqiujing}
 		)
 	</insert>
 	

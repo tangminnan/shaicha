@@ -22,7 +22,7 @@
     		</p>
     		<p class="itemLs">
     			<span>受检者总数</span>
-    			<span class="total">100人</span>
+    			<span class="total">1764人</span>
     		</p>
     	</div>
     	<div class="right">
@@ -32,7 +32,7 @@
     			</p>
     			<p class="itemLs">
 	    			<span>示范校筛查系统</span>
-	    			<span>50人</span>
+	    			<span>1714人</span>
     			</p>
     		</div>
     		<div class="checkItem">
@@ -161,7 +161,7 @@
     var option = {
     		 title: {
     	       // text: '正常',
-    	        subtext: '50%',
+    	        subtext: '46.17%',
     	        textStyle:{
     	            fontSize:16,
     	            color: '#666666'
@@ -186,38 +186,6 @@
     	    },
     	    
     	    series: [
-					/* {
-					    name:'访问来源',
-					    type:'pie',
-					    selectedMode: 'single',
-					    center: ['50%', '45%'],
-					    radius: [0, '0%'],
-					    hoverAnimation:false,
-					    label: {
-					        normal: {
-					        	 //show: false,
-					        	 position: 'inner',
-					        	 textStyle: {
-			    	                 fontSize: 14,
-			    	                 color: '#fff'	
-			    	             },
-					        },
-					        emphasis: {
-	    	                    show: false,
-	    	                    
-	    	                }
-					        
-					    },
-					    labelLine: {
-					        normal: {
-					            show: false
-					        }
-					    },
-					    data:[
-					        {value:615, name:'正常'},
-					        {value:335, name:'患病'}
-					    ]
-					}, */
     	        {
     	            name:'访问来源',
     	            type:'pie',
@@ -248,8 +216,8 @@
     	                }
     	            },
     	            data:[
-							{value:615, name:'正常'},
-							{value:335, name:'患病'}
+							{value:210262, name:'正常'},
+							{value:180363, name:'患病'}
     	              ]
     	        },
     	            
@@ -257,11 +225,280 @@
     	    ] 
 	 }
 	 
+    var option1 = {
+   		 title: {
+   	       // text: '正常',
+   	        subtext: '5.12%',
+   	        textStyle:{
+   	            fontSize:16,
+   	            color: '#666666'
+   	        },
+   	        subtextStyle: {
+   	            fontSize: 16,
+   	            color: '#666666'
+   	        },
+   	        textAlign:"center",
+   	        x: '50%',
+   	        y: '38%',
+   	        
+   	    }, 
+   		tooltip: {
+   	        trigger: 'item',
+   	        formatter: "{b}: {c} <br/> ({d}%)"
+   	    },
+   	    legend: {
+   	       // orient: 'vertical',
+   	        bottom: "2%",
+   	        data:['患病','正常']
+   	    },
+   	    
+   	    series: [
+   	        {
+   	            name:'访问来源',
+   	            type:'pie',
+   	            center: ['50%', '45%'],
+   	            radius: ['50%', '60%'],
+   	            avoidLabelOverlap: false,
+   	            label: {
+   	                normal: {
+   	                    show: false,
+   	                    position: 'center',
+   	                    formatter: "{c}%",
+   	                    textStyle: {
+   	                    	fontSize: 30,
+
+   	                    },
+   	                },
+   	                emphasis: {
+   	                    show: false,
+   	                    /* textStyle: {
+   	                        fontSize: '30',
+   	                        fontWeight: 'bold'
+   	                    } */
+   	                }
+   	            },
+   	            labelLine: {
+   	                normal: {
+   	                    show: false
+   	                }
+   	            },
+   	            data:[
+							{value:210262, name:'正常'},
+							{value:11895, name:'患病'}
+   	              ]
+   	        },
+   	            
+   	        
+   	    ] 
+	 }
+	 
+	 
+    var option2 = {
+   		 title: {
+   	       // text: '正常',
+   	        subtext: '5.35%',
+   	        textStyle:{
+   	            fontSize:16,
+   	            color: '#666666'
+   	        },
+   	        subtextStyle: {
+   	            fontSize: 16,
+   	            color: '#666666'
+   	        },
+   	        textAlign:"center",
+   	        x: '50%',
+   	        y: '38%',
+   	        
+   	    }, 
+   		tooltip: {
+   	        trigger: 'item',
+   	        formatter: "{b}: {c} <br/> ({d}%)"
+   	    },
+   	    legend: {
+   	       // orient: 'vertical',
+   	        bottom: "2%",
+   	        data:['患病','正常']
+   	    },
+   	    
+   	    series: [
+   	        {
+   	            name:'访问来源',
+   	            type:'pie',
+   	            center: ['50%', '45%'],
+   	            radius: ['50%', '60%'],
+   	            avoidLabelOverlap: false,
+   	            label: {
+   	                normal: {
+   	                    show: false,
+   	                    position: 'center',
+   	                    formatter: "{c}%",
+   	                    textStyle: {
+   	                    	fontSize: 30,
+
+   	                    },
+   	                },
+   	                emphasis: {
+   	                    show: false,
+   	                    /* textStyle: {
+   	                        fontSize: '30',
+   	                        fontWeight: 'bold'
+   	                    } */
+   	                }
+   	            },
+   	            labelLine: {
+   	                normal: {
+   	                    show: false
+   	                }
+   	            },
+   	            data:[
+							{value:210262, name:'正常'},
+							{value:15094, name:'患病'}
+   	              ]
+   	        },
+   	            
+   	        
+   	    ] 
+	 }
+	 
+    var option3 = {
+   		 title: {
+   	       // text: '正常',
+   	        subtext: '5.12%',
+   	        textStyle:{
+   	            fontSize:16,
+   	            color: '#666666'
+   	        },
+   	        subtextStyle: {
+   	            fontSize: 16,
+   	            color: '#666666'
+   	        },
+   	        textAlign:"center",
+   	        x: '50%',
+   	        y: '38%',
+   	        
+   	    }, 
+   		tooltip: {
+   	        trigger: 'item',
+   	        formatter: "{b}: {c} <br/> ({d}%)"
+   	    },
+   	    legend: {
+   	       // orient: 'vertical',
+   	        bottom: "2%",
+   	        data:['患病','正常']
+   	    },
+   	    
+   	    series: [
+   	        {
+   	            name:'访问来源',
+   	            type:'pie',
+   	            center: ['50%', '45%'],
+   	            radius: ['50%', '60%'],
+   	            avoidLabelOverlap: false,
+   	            label: {
+   	                normal: {
+   	                    show: false,
+   	                    position: 'center',
+   	                    formatter: "{c}%",
+   	                    textStyle: {
+   	                    	fontSize: 30,
+
+   	                    },
+   	                },
+   	                emphasis: {
+   	                    show: false,
+   	                    /* textStyle: {
+   	                        fontSize: '30',
+   	                        fontWeight: 'bold'
+   	                    } */
+   	                }
+   	            },
+   	            labelLine: {
+   	                normal: {
+   	                    show: false
+   	                }
+   	            },
+   	            data:[
+							{value:210262, name:'正常'},
+							{value:43674, name:'患病'}
+   	              ]
+   	        },
+   	            
+   	        
+   	    ] 
+	 }
+	 
+    var option4 = {
+   		 title: {
+   	       // text: '正常',
+   	        subtext: '11.22%',
+   	        textStyle:{
+   	            fontSize:16,
+   	            color: '#666666'
+   	        },
+   	        subtextStyle: {
+   	            fontSize: 16,
+   	            color: '#666666'
+   	        },
+   	        textAlign:"center",
+   	        x: '50%',
+   	        y: '38%',
+   	        
+   	    }, 
+   		tooltip: {
+   	        trigger: 'item',
+   	        formatter: "{b}: {c} <br/> ({d}%)"
+   	    },
+   	    legend: {
+   	       // orient: 'vertical',
+   	        bottom: "2%",
+   	        data:['患病','正常']
+   	    },
+   	    
+   	    series: [
+   	        {
+   	            name:'访问来源',
+   	            type:'pie',
+   	            center: ['50%', '45%'],
+   	            radius: ['50%', '60%'],
+   	            avoidLabelOverlap: false,
+   	            label: {
+   	                normal: {
+   	                    show: false,
+   	                    position: 'center',
+   	                    formatter: "{c}%",
+   	                    textStyle: {
+   	                    	fontSize: 30,
+
+   	                    },
+   	                },
+   	                emphasis: {
+   	                    show: false,
+   	                    /* textStyle: {
+   	                        fontSize: '30',
+   	                        fontWeight: 'bold'
+   	                    } */
+   	                }
+   	            },
+   	            labelLine: {
+   	                normal: {
+   	                    show: false
+   	                }
+   	            },
+   	            data:[
+							{value:20804, name:'正常'},
+							{value:2618, name:'患病'}
+   	              ]
+   	        },
+   	            
+   	        
+   	    ] 
+	 }
+	 
 	 // 指定图表的配置项和数据
     var option2 = {
     		 title: {
     	       // text: '正常',
-    	        subtext: '50%',
+    	        subtext: '18.8%',
     	        textStyle:{
     	            fontSize:16,
     	            color: '#666666'
@@ -316,10 +553,10 @@
     	                }
     	            },
     	            data:[
-							{value:615, name:'低度'},
-							{value:335, name:'中度'},
-							{value:615, name:'高度'},
-							{value:335, name:'正常'}
+							{value:200, name:'低度'},
+							{value:100, name:'中度'},
+							{value:15, name:'高度'},
+							{value:850, name:'正常'}
     	              ]
     	        },
     	            
@@ -329,10 +566,10 @@
 	 
     myChart.setOption(option);
     myChart2.setOption(option2);
-    myChart3.setOption(option);
-    myChart4.setOption(option);
-    myChart5.setOption(option);
-    myChart6.setOption(option);
+    myChart3.setOption(option1);
+    myChart4.setOption(option2);
+    myChart5.setOption(option3);
+    myChart6.setOption(option4);
 </script>
 
 </body>

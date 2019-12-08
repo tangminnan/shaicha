@@ -67,6 +67,8 @@ public class ResultEyesightDO implements Serializable {
 					   
 		//戴镜视力左
 	private String glassvisionOs;
+	//等效球镜
+	private Double dengxiaoqiujing;
 	
 	public Date getEndTime() {
 		return endTime;
@@ -330,6 +332,12 @@ public class ResultEyesightDO implements Serializable {
 	}
 	public void setXueBu(String xueBu) {
 		this.xueBu = xueBu;
+	}
+	public Double getDengxiaoqiujing() {
+		return dengxiaoqiujing;
+	}
+	public void setDengxiaoqiujing(Double dengxiaoqiujing) {
+		this.dengxiaoqiujing = dengxiaoqiujing;
 	}
 	
 	

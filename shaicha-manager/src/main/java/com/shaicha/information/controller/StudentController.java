@@ -28,7 +28,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -408,14 +408,23 @@ public class StudentController {
 		//视力检查结果获取
 		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-		if(resultEyesightDOList.size()>0)
+		String nakedFarvisionOd="";
+		String nakedFarvisionOs="";
+		String lifeFarvisionOd="";
+		String lifeFarvisionOs="";
+		if(resultEyesightDOList.size()>0){
 			resultEyesightDO=resultEyesightDOList.get(0);
-		model.addAttribute("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString());
-		model.addAttribute("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
-		model.addAttribute("glassvisionOd",11);
-		model.addAttribute("glassvisionOs",11);
-		
+			nakedFarvisionOd=resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString();
+			nakedFarvisionOs=resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString();
+			lifeFarvisionOd=resultEyesightDO.getLifeFarvisionOd()==null?"":resultEyesightDO.getLifeFarvisionOd().toString();
+			lifeFarvisionOs=resultEyesightDO.getLifeFarvisionOs()==null?"":resultEyesightDO.getLifeFarvisionOs().toString();
+		}
+		model.addAttribute("nakedFarvisionOd",nakedFarvisionOd);
+		model.addAttribute("nakedFarvisionOs",nakedFarvisionOs);
+		model.addAttribute("glassvisionOd",lifeFarvisionOd);
+		model.addAttribute("glassvisionOs",lifeFarvisionOs);
 		//自动电脑验光结果(左眼) 
+		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
@@ -423,7 +432,7 @@ public class StudentController {
 		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
 		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
 		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
-		
+		dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
 		
 		
 		//自动电脑验光结果(右眼) 
@@ -434,6 +443,8 @@ public class StudentController {
 		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
 		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
 		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+		
 		//眼内压结果拼装
 		List<ResultEyepressureDO> ResultEyepressureDOList = studentService.getLatestResultEyepressureDO(studentDO.getId());
 		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
@@ -477,9 +488,36 @@ public class StudentController {
 
 	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
 	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
-				//医生的建议（临时数据）
-		model.addAttribute("doctorchubu","注意用眼卫生");
-		
+		//医生的建议（临时数据）
+	   double od=0.0,os=0.0;
+	   if(!StringUtils.isBlank(nakedFarvisionOd)){
+	    	od=Double.parseDouble(nakedFarvisionOd);
+	    }
+	    if(!StringUtils.isBlank(nakedFarvisionOs)){
+	    	os=Double.parseDouble(nakedFarvisionOs);
+	    }
+	    od=od<os?od:os;
+	    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
+	    if(od>=5.0 && dengxiaoqiujingL>0.75){
+	    	model.addAttribute("doctorchubu","视力目前正常,  请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
+	    	model.addAttribute("yujing","");
+	    }
+		if(od>=5.0 && dengxiaoqiujingL>-0.5 && dengxiaoqiujingL<0.75){
+			model.addAttribute("doctorchubu","视力目前正常,请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
+	    	model.addAttribute("yujing","近视临床前期");
+		}
+		if(od>=0.5 && dengxiaoqiujingL<-0.5){
+			model.addAttribute("doctorchubu","视力目前正常,视力目前正常，但有发生近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
+	    	model.addAttribute("yujing","假性近视");
+		}
+		if(od<5.0 &&dengxiaoqiujingL>-0.5){
+			model.addAttribute("doctorchubu","无原镜：视力异常。建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
+	    	model.addAttribute("yujing","");
+		}
+		if(od<5.0 && dengxiaoqiujingL<-0.5){
+			model.addAttribute("doctorchubu","无原镜：视力下降，近视。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
+	    	model.addAttribute("yujing","");
+		}
 		return "information/student/示范校筛查打印";
 	}
 	
@@ -507,7 +545,13 @@ public class StudentController {
 	/**
 	 * 男生女生近期近视率
 	 */
+	@GetMapping("/getJInShiLvSex")
+	@ResponseBody
 	public Map<String,Object> getJInShiLvSex(Date startDate,Date endDate){
 		return  studentService.getJInShiLvSex( startDate,endDate);	
 	}
+	
+	
+	
+	
 }

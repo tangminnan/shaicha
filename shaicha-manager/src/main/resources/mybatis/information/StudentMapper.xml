@@ -383,7 +383,8 @@
 										SELECT
 							ifnull(diopter_s, '') diopterS,
 							ifnull(diopter_c, '') diopterC,
-							ifnull(diopter_a, '') diopterA
+							ifnull(diopter_a, '') diopterA,
+							ifnull(dengxiaoqiujing,'') dengxiaoqiujing
 						FROM
 							t_result_diopter d,
 							(
@@ -563,19 +564,27 @@
 
 <select id="getJInShiLv" resultType="com.shaicha.information.domain.ResultEyesightDO">
 											SELECT
-					d.naked_farvision_od,
-					d.naked_farvision_os,
-					d.identity_card,
-					d.check_date,
-					t.school,
-					t.grade,
-					t.student_sex,
-					t.xue_bu
-				FROM
-					t_result_eyesight d,
-					t_student t
-				WHERE
-					#{startDate}&lt;=check_date
-					and #{endDate}&gt;=check_date
+						d.naked_farvision_od,
+						d.naked_farvision_os,
+						d.identity_card,
+						d.check_date,
+						t.school,
+						t.grade,
+						t.student_sex,
+						t.xue_bu
+					FROM
+						t_result_eyesight d,
+						t_student t
+					WHERE
+					
+					 d.identity_card = t.identity_card 
+					 AND #{startDate}&lt;=d.check_date
+					AND #{endDate}&gt;=d.check_date
+</select>
+
+<select id="getResultDiopterDO" resultType="com.shaicha.information.domain.ResultDiopterDO">
+	select dengxiaoqiujing,ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG'   AND #{startDate}&lt;=check_date
+					AND #{endDate}&gt;=check_date
+
 </select>
 </mapper>

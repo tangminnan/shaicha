@@ -1,5 +1,6 @@
 package com.shaicha.information.service.impl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -31,6 +32,7 @@ import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
+import com.shaicha.information.domain.ShiliJinShi;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.StudentService;
 import com.shaicha.system.config.ExcelUtils;
@@ -60,6 +62,8 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 
 import java.util.HashMap;
@@ -857,51 +861,229 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Map<String, Object> getJInShiLvSex(Date startDate, Date endDate) {
 		//裸眼视力小于5.0 = 近视
-		 
-				List<ResultEyesightDO> resultEyesightDOList = studentDao.getJInShiLv(startDate,endDate);
-				Map<Integer,List<ResultEyesightDO>> mapc = resultEyesightDOList.stream()
+		 List<ResultEyesightDO> resultEyesightDOList = studentDao.getJInShiLv(startDate,endDate);
+		 Map<Integer,List<ResultEyesightDO>> mapc = resultEyesightDOList.stream()
 						  													.collect(Collectors.groupingBy(ResultEyesightDO::getStudentSex));																							
-				List<Integer> intList = resultEyesightDOList.stream().mapToInt(ResultEyesightDO::getStudentSex).boxed().distinct().collect(Collectors.toList());
+		 List<Date> dateList = resultEyesightDOList.stream().map(ResultEyesightDO::getCheckDate).distinct().sorted().collect(Collectors.toList());
 				
-				
-				Map<Integer,List<Long>> cMap = new HashMap<Integer,List<Long>>();
-				for(Entry<Integer,List<ResultEyesightDO>> entry :mapc.entrySet()){
-					List<ResultEyesightDO> list = entry.getValue();
-					
-					cMap.put(entry.getKey(), l);
-				}
-				Map<Integer,List<ResultEyesightDO>> map = resultEyesightDOList.stream()
+		Map<Integer,List<Long>> cMap = new HashMap<Integer,List<Long>>();
+		for(Entry<Integer,List<ResultEyesightDO>> entry :mapc.entrySet()){
+			List<ResultEyesightDO> list = entry.getValue();
+			List<Long> l=  new ArrayList<Long>();
+			for(Date date :dateList){
+				l.add(list.stream().filter(r ->r.getCheckDate().getTime()== date.getTime()).count());
+			}		
+			cMap.put(entry.getKey(), l);
+		}
+		Map<Integer,List<ResultEyesightDO>> map = resultEyesightDOList.stream()
 																		  .filter(resultDiopterDO ->resultDiopterDO.getNakedFarvisionOd().equals("")||
 																				  resultDiopterDO.getNakedFarvisionOs().equals("")||
 																		  		  Double.parseDouble(resultDiopterDO.getNakedFarvisionOd())<5.0 ||
 																			      Double.parseDouble(resultDiopterDO.getNakedFarvisionOs())<5.0)
 																		  	.collect(Collectors.groupingBy(ResultEyesightDO::getStudentSex));																							
 																				  
-				Map<Date,List<Long>> jinMap = new HashMap<Date,List<Long>>();
-				for(Entry<Date,List<ResultEyesightDO>> entry :map.entrySet()){
-					List<ResultEyesightDO> list = entry.getValue();
-					List<Long> l = Arrays.asList(
-							list.stream().filter(r -> r.getStudentSex()==1).count(),
-							list.stream().filter(r -> r.getStudentSex()==2).count()
-							);
-					jinMap.put(entry.getKey(), l);
-				}
-				
-				Set<Date> set  = cMap.keySet();
-				Map<String,Object> resultMap = new HashMap<String,Object>();
-				for(Date d :set){
-					List<Long> lj = jinMap.get(d);
-					List<Long> lc = cMap.get(d);
-					List<Float> l = new ArrayList<Float>();
-					for(int i=0;i<lj.size();i++){
-						l.add(lc.get(i)==0? 0f:(float)lj.get(i)*100/lc.get(i));
-					}
-					resultMap.put(new SimpleDateFormat("yyyy-MM-dd").format(d), l);
-				}
-				
-				return resultMap;
+		Map<Integer,List<Long>> jinMap = new HashMap<Integer,List<Long>>();
+		for(Entry<Integer,List<ResultEyesightDO>> entry :map.entrySet()){
+			List<ResultEyesightDO> list = entry.getValue();
+			List<Long> l = new ArrayList<Long>();
+			for(Date date :dateList){
+				l.add(list.stream().filter(r ->r.getCheckDate().getTime()== date.getTime()).count());
+			}
+			jinMap.put(entry.getKey(), l);
+		}
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		
+		//统计男性的近视率
+		List<Long> lj = jinMap.get(1);
+		List<Long> lc = cMap.get(1);
+		List<Float> l = new ArrayList<Float>();
+		for(int i=0;i<lj.size();i++){
+			l.add(lc.get(i)==0? 0f:(float)lj.get(i)*100/lc.get(i));
+		}
+		resultMap.put("男", l);
+		//统计女性近视率、
+		lj = jinMap.get(2);
+		lc = cMap.get(2);
+		l = new ArrayList<Float>();
+		for(int i=0;i<lj.size();i++){
+			l.add(lc.get(i)==0? 0f:(float)lj.get(i)*100/lc.get(i));
+		}
+		resultMap.put("女", l);
+		List<String> tt =  dateList.stream().map(d ->new SimpleDateFormat("yyyy-MM-dd").format(d)).collect(Collectors.toList());
+		resultMap.put("time", tt);
+		return resultMap;
 	}
 	
+	/**
+	 * 生成给教育局的报告（数据拼装）
+	 */
+	
+	/*public Map<String,Object> createDataToJiAOYuJu(Date startDate,Date endDate){
+		Map<String,Object> freeMap = new HashMap<String,Object>();
+		
+		 List<ResultEyesightDO> resultEyesightDOList = studentDao.getJInShiLv(startDate,endDate);
+		 List<ResultDiopterDO> resultDiopterDOList = studentDao.getResultDiopterDO(startDate,endDate);
+		 //近视视力统计
+		 Map<String, List<ResultEyesightDO>> jinshitongjiMap = resultEyesightDOList.stream().collect(Collectors.groupingBy(ResultEyesightDO::getSchool));
+		 List<ShiliJinShi> shiliJinShiList = new ArrayList<ShiliJinShi>();
+		 for(Entry<String,List<ResultEyesightDO>> entry :jinshitongjiMap.entrySet()){
+			 String school = entry.getKey();
+			 List<ResultEyesightDO> reiList = entry.getValue();
+			
+				 Long jslcqianqiNumber=0L,//近视临床前期人数
+				 	  jxjsNumber=0L,//假性近视人数;
+				 	  didujinshiNumber=0L,//低度近视人数
+				 	  zhongdujinshiNumber=0L,//中度近视人数
+				 	  gaodujinshiNumber=0L,//高度近视人数
+				 	  jinshizongjiNumber=0L;//近视总人数
+				String xuebu= "";
+			 for(ResultEyesightDO r:reiList){
+				 xuebu=r.getXueBu();
+				 if(!StringUtils.isBlank(r.getNakedFarvisionOd()) && Double.parseDouble(r.getNakedFarvisionOd())>=5.0){
+					Double d=     resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("R")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
+					if(d>0.5 &&d<=0.75){//近视临床前期（判断右眼）
+						jslcqianqiNumber++;
+					}
+					if(d<0.5){//假性近视（判断右眼）
+						jxjsNumber++;
+					}
+				 }
+				else if(!StringUtils.isBlank(r.getNakedFarvisionOs()) &&  Double.parseDouble(r.getNakedFarvisionOs())>=5.0){
+					 Double d=     resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("L")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
+					if(d>0.5 &&d<=0.75){//近视临床前期（判断左眼）
+						jslcqianqiNumber++;
+					}
+					if(d<0.5){//假性近视（判断左眼）
+						jxjsNumber++;
+					}
+				 }
+				if(!StringUtils.isBlank(r.getNakedFarvisionOd()) && Double.parseDouble(r.getNakedFarvisionOd())<5.0){
+					 Double d=     resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("R")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
+					 if(d>6){//右眼高度近视
+						 gaodujinshiNumber++;
+					 }
+					 if(d>=3.25 && d<=6.0){//右眼中度近视
+						 zhongdujinshiNumber++;
+					 }
+					 if(d>0.5 &&d<=3.0){//右眼低度近视
+						 didujinshiNumber++;
+					 }
+				}
+				else if(!StringUtils.isBlank(r.getNakedFarvisionOs()) && Double.parseDouble(r.getNakedFarvisionOs())<5.0){
+					 Double d=  resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("L")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
+					 if(d>6){//左眼高度近视
+						 gaodujinshiNumber++;
+					 }
+					 if(d>=3.25 && d<=6.0){//左眼中度近视
+						 zhongdujinshiNumber++;
+					 }
+					 if(d>0.5 &&d<=3.0){//左眼低度近视
+						 didujinshiNumber++;
+					 }
+				}
+				jinshizongjiNumber=didujinshiNumber+zhongdujinshiNumber+gaodujinshiNumber;//高度近视人数
+				
+				
+			 }
+			 ShiliJinShi shiliJinShi = new ShiliJinShi();
+			 shiliJinShi.setSchoole(school);
+			 shiliJinShi.setXuebu(xuebu);
+			 shiliJinShi.setCheckNumbers((long)reiList.size());
+			 shiliJinShi.setJxjsNumber(jxjsNumber);
+			 shiliJinShi.setJxjszhanbi((double)jxjsNumber/reiList.size());
+			 shiliJinShi.setJslcqianqiNumber(jslcqianqiNumber);
+			 shiliJinShi.setJslcgqianqizhanbi((double)jslcqianqiNumber/reiList.size());
+			 shiliJinShi.setZhongdujinshiNumber(zhongdujinshiNumber);
+			 shiliJinShi.setZhongdujinshizhanbi((double)zhongdujinshiNumber/reiList.size());
+			 shiliJinShi.setGaodujinshiNumber(gaodujinshiNumber);
+			 shiliJinShi.setGaodujinshizhanbi((double)gaodujinshiNumber/reiList.size());
+			 shiliJinShi.setJinshizongjiNumber(jinshizongjiNumber);
+			 shiliJinShi.setJinshizongzhanbi((double)jinshizongjiNumber/reiList.size());
+			 shiliJinShi.setDidujinshiNumber(didujinshiNumber);
+			 shiliJinShi.setDidujinshizhanbi((double)didujinshiNumber/reiList.size());
+			 
+			 shiliJinShi.setA(String.valueOf(shiliJinShi.getSchoole()));
+			 shiliJinShi.setB(String.valueOf(shiliJinShi.getXuebu()));
+			 shiliJinShi.setC(String.valueOf(shiliJinShi.getCheckNumbers()));
+			 
+			 shiliJinShi.setD(String.valueOf(shiliJinShi.getJslcqianqiNumber()));
+			 shiliJinShi.setE(String.valueOf(shiliJinShi.getJslcgqianqizhanbi()));
+			 
+			 shiliJinShi.setF(String.valueOf(shiliJinShi.getJxjsNumber()));
+			 shiliJinShi.setG(String.valueOf(shiliJinShi.getJxjszhanbi()));
+			 
+			 shiliJinShi.setH(String.valueOf(shiliJinShi.getDidujinshiNumber()));
+			 shiliJinShi.setI(String.valueOf(shiliJinShi.getDidujinshizhanbi()));
+			 
+			 shiliJinShi.setJ(String.valueOf(shiliJinShi.getZhongdujinshiNumber()));
+			 shiliJinShi.setK(String.valueOf(shiliJinShi.getZhongdujinshizhanbi()));
+			 
+			 shiliJinShi.setL(String.valueOf(shiliJinShi.getGaodujinshiNumber()));
+			 shiliJinShi.setM(String.valueOf(shiliJinShi.getGaodujinshizhanbi()));
+			 
+			 
+			 shiliJinShi.setN(String.valueOf(shiliJinShi.getJinshizongjiNumber()));
+			 shiliJinShi.setO(String.valueOf(shiliJinShi.getJinshizongzhanbi()));
+			 shiliJinShiList.add(shiliJinShi);
+			 freeMap.put("shiliJinShi", shiliJinShiList);
+			 //计算近视总计
+			 Long totalcheckNumbers = shiliJinShiList.stream().map(ShiliJinShi::getCheckNumbers).count();//总的检查人数
+			 Long totalJslcqiNumbers = shiliJinShiList.stream().map(ShiliJinShi::getJslcqianqiNumber).count();//总的近视临床前期人数
+			 Long totalJxjsNumbers = shiliJinShiList.stream().map(ShiliJinShi::getJxjsNumber).count();//总的假性近视人数
+			 Long totalDidujsNumbers = shiliJinShiList.stream().map(ShiliJinShi::getDidujinshiNumber).count();//总的低度近视人数
+			 Long totalZhjsNumbers = shiliJinShiList.stream().map(ShiliJinShi::getZhongdujinshiNumber).count();//总的中度近视人数
+			 Long totalGaodujsNumbers =  shiliJinShiList.stream().map(ShiliJinShi::getGaodujinshiNumber).count();//总的高度近视人数
+			 Long totaljsNumbers = 	shiliJinShiList.stream().map(ShiliJinShi::getJinshizongjiNumber).count();//总的近视人数;	 
+			 Double totallczb = (double)totalJslcqiNumbers/totalcheckNumbers;//总的近视临床占比
+			 Double totaljxzb = (double)totalJxjsNumbers/totalcheckNumbers;//总的假性近视人数占比
+			 Double totalDiduzb=  (double)totalDidujsNumbers/totalcheckNumbers;//总的低度近视占比
+			 Double totalzdzb  = (double)totalZhjsNumbers/totalcheckNumbers;//总的中度近视占比
+			 Double totalgaoduzb = (double)totalGaodujsNumbers/totalcheckNumbers;//总的高度近视占比
+			 Double totaljszb=(double)totaljsNumbers/totalcheckNumbers;//总的近视占比
+			 freeMap.put("C", totalcheckNumbers);
+			 freeMap.put("D", totalJslcqiNumbers);
+			 freeMap.put("E", totallczb);
+			 freeMap.put("F", totalJxjsNumbers);
+			 freeMap.put("G", totaljxzb);
+			 freeMap.put("H", totalDidujsNumbers);
+			 freeMap.put("I", totalDiduzb);
+			 freeMap.put("J", totalZhjsNumbers);
+			 freeMap.put("K", totalzdzb);
+			 freeMap.put("L", totalGaodujsNumbers);
+			 freeMap.put("M", totalgaoduzb);
+			 freeMap.put("N",totaljsNumbers );
+			 freeMap.put("O", totaljszb);
+		 }
+		//不良视力统计
+		 for(Entry<String,List<ResultEyesightDO>> entry :jinshitongjiMap.entrySet()){
+			 String school = entry.getKey();
+			 List<ResultEyesightDO> reiList = entry.getValue();
+			
+				 Long qdshilibuliang=0L,//轻度视力不良
+				 	  zdshilibuliang=0L,//中度视力不良
+				 	  weishilibuliang=0L,//重度视力不良
+				 	  buliangtotal=0L;//不良总计
+				 	 
+				String xuebu= "";
+			 for(ResultEyesightDO r:reiList){
+				 xuebu=r.getXueBu();
+				 Double od = 0.0;//右眼视力
+				 Double os = 0.0;//左眼视力
+				 if(!StringUtils.isBlank(r.getNakedFarvisionOd())){
+					 od =  Double.parseDouble(r.getNakedFarvisionOd());
+				 }
+				 if(!StringUtils.isBlank(r.getNakedFarvisionOs())){
+					os = Double.parseDouble(r.getNakedFarvisionOs());
+				 }
+				od=od<os?od:os;
+				if(od>=4.8&&od<4.9) qdshilibuliang++;
+				if(od>=4.6&&od<=4.8) zdshilibuliang++;
+			//	if(od<=4.5)
+		 }
+		 return null;
+		
+	}
+	}*/
 }
 
 

@@ -66,10 +66,10 @@ function load() {
 							field : 'firstCheckLcs', 
 							title : '第一次检查左眼cs' 
 						},
-														{
-							field : 'secondCheckVd', 
-							title : '第二次验光VD' 
-						},
+						{
+							field : 'firstCheckPd', 
+							title : '第一次验光PD' 
+						},							
 														{
 							field : 'secondCheckRps', 
 							title : '第二次检查右眼ps' 
@@ -90,9 +90,10 @@ function load() {
 							field : 'deleteFlag', 
 							title : '状态0：正常1：禁止' 
 						},*/
-														{
-							field : 'firstCheckPd', 
-							title : '第一次验光PD' 
+														
+						{
+							field : 'secondCheckVd', 
+							title : '第二次验光VD' 
 						},
 														{
 							field : 'secondCheckPd', 

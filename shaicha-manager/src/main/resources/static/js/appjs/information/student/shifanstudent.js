@@ -55,10 +55,10 @@ function load() {
 									field : 'id', 
 									title : 'id' 
 								},
-								{
+								/*{
 									field : 'ideentityType', 
 									title : '证件类型' 
-								},
+								},*/
 								{
 									field : 'identityCard', 
 									title : '证件号码' 
@@ -97,10 +97,10 @@ function load() {
 									field : 'school', 
 									title : '学校' 
 								},
-								{
+								/*{
 									field : 'schoolCode', 
 									title : '学校编码' 
-								},
+								},*/
 																{
 									field : 'grade', 
 									title : '年级' 
@@ -444,7 +444,7 @@ function jyjshaichabaogao(){
    
 	
 	var myChart =  echarts.init(document.getElementById('genianlingduanjinshilvfazhanqushi'));
-	
+	var myChart1 =  echarts.init(document.getElementById('nannvshengjinshilvfazhanqushi'));  
 	option = {
 		    tooltip: {
 		        trigger: 'axis'
@@ -470,12 +470,13 @@ function jyjshaichabaogao(){
 		    },
 		    yAxis: {
 		        type: 'value',
+		      
 		        axisLabel: {  
                     show: true,  
-                    interval: '0.1',  
+                  
                     formatter: '{value} %' 
                     },  
-                show: true  
+                show: true
 		    },
 		    series: []
 		};
@@ -497,16 +498,17 @@ function jyjshaichabaogao(){
 			},
 			success : function(data) {
 				if(data!=null){
-					
-				   var legend = {'data':[]};
+					console.info("----------");
+					console.info(data);
+				   var legend = {'data':[],bottom:'-1.5%'};
 				   var series=[];
 				    for(var key in data){
 				    	legend.data.push(key);
 						var obj =  {
+								
 					            name:key,
 					            smooth:true,
 					            type:'line',
-					            stack: '总量',
 					            data:data[key]
 					        }
 						series.push(obj);
@@ -514,6 +516,7 @@ function jyjshaichabaogao(){
 				    
 				    option.legend=legend;
 				    option.series=series;
+				    console.info(option.series);
 				}
 			}
 		});
@@ -531,27 +534,32 @@ function jyjshaichabaogao(){
 				parent.layer.alert("Connection error");
 			},
 			success : function(data) {
+				console.info(data);
 				if(data!=null){
 					
-				   var legend = {'data':[]};
+				   var legend = {'data':[],bottom:'-1%'};
 				   var series=[];
+				   var xAxis={'data':data.time};
 				    for(var key in data){
-				    	legend.data.push(key);
-						var obj =  {
+				    	if(key!='time'){
+				    		legend.data.push(key);
+				    		var obj =  {
 					            name:key,
 					            smooth:true,
 					            type:'line',
-					            stack: '总量',
+					          
 					            data:data[key]
 					        }
-						series.push(obj);
+				    		series.push(obj);
+				    	}
 					}
 				    
 				    option.legend=legend;
 				    option.series=series;
+				    option.xAxis=xAxis;
 				}
 			}
 		});
-
+	   myChart1.setOption(option);
 	  
 }

@@ -41,6 +41,7 @@ public class ResultEyesightDO implements Serializable {
 	private String nakedNearvisionOd;
 	//左眼裸眼近视力
 	private String nakedNearvisionOs;
+	
 	//检查日期
 	private Date checkDate;
 	//状态0：正常1：禁止

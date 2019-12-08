@@ -75,4 +75,6 @@ public interface StudentDao {
 	List<ResultCornealDO> getResultCornealDOList(@Param("studentId") Integer studentId,@Param("ifrl") String ifrl,@Param("type") String type);
 
 	List<ResultEyesightDO> getJInShiLv(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
+
+	List<ResultDiopterDO> getResultDiopterDO(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 }
