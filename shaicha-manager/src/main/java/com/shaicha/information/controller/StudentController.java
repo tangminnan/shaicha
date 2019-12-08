@@ -497,11 +497,17 @@ public class StudentController {
 	 * 计算近视率	
 	 */
 	
+	@ResponseBody
 	@GetMapping("/getJInShiLv")
 	public Map<String,Object> getJInShiLv(Date startDate,Date endDate){
 		
-		return  studentService.getJInShiLv(startDate,endDate);
-		
-		
+		return  studentService.getJInShiLv(startDate,endDate);		
+	}
+	
+	/**
+	 * 男生女生近期近视率
+	 */
+	public Map<String,Object> getJInShiLvSex(Date startDate,Date endDate){
+		return  studentService.getJInShiLvSex( startDate,endDate);	
 	}
 }

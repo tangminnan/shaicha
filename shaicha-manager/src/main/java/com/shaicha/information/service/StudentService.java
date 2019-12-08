@@ -85,4 +85,6 @@ public interface StudentService {
 	List<ResultCornealDO> getResultCornealDOList(Integer id, String string, String string2);
 
 	Map<String, Object> getJInShiLv(Date startDate, Date endDate);
+
+	Map<String, Object> getJInShiLvSex(Date startDate, Date endDate);
 }

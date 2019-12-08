@@ -58,15 +58,17 @@ import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
-
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -802,13 +804,102 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Map<String, Object> getJInShiLv(Date startDate, Date endDate) {
 		//裸眼视力小于5.0 = 近视
-		List<ResultEyesightDO> resultDiopterDOList = studentDao.getJInShiLv(startDate,endDate);
-		Map<Date,List<ResultEyesightDO>> map = resultDiopterDOList.stream().filter(resultDiopterDO -> Double.parseDouble(resultDiopterDO.getNakedFarvisionOd())<5.0 ||
-																	                                  Double.parseDouble(resultDiopterDO.getNakedFarvisionOs())<5.0)
-																		  
-																				.collect(Collectors.groupingBy(ResultEyesightDO::getCheckDate));
+		 
+		List<ResultEyesightDO> resultEyesightDOList = studentDao.getJInShiLv(startDate,endDate);
+		Map<Date,List<ResultEyesightDO>> mapc = resultEyesightDOList.stream()
+				  													.collect(Collectors.groupingBy(ResultEyesightDO::getCheckDate));																							
 		
-		return null;
+		Map<Date,List<Long>> cMap = new HashMap<Date,List<Long>>();
+		for(Entry<Date,List<ResultEyesightDO>> entry :mapc.entrySet()){
+			List<ResultEyesightDO> list = entry.getValue();
+			List<Long> l = Arrays.asList(
+					list.stream().filter(r -> r.getXueBu().equals("幼儿园")).count(),
+					list.stream().filter(r -> r.getXueBu().equals("小学")).count(),
+					list.stream().filter(r -> r.getXueBu().equals("初中")).count(),
+					list.stream().filter(r -> r.getXueBu().equals("高中")).count()
+					);
+			cMap.put(entry.getKey(), l);
+		}
+		Map<Date,List<ResultEyesightDO>> map = resultEyesightDOList.stream()
+																  .filter(resultDiopterDO ->resultDiopterDO.getNakedFarvisionOd().equals("")||
+																		  resultDiopterDO.getNakedFarvisionOs().equals("")||
+																  		  Double.parseDouble(resultDiopterDO.getNakedFarvisionOd())<5.0 ||
+																	      Double.parseDouble(resultDiopterDO.getNakedFarvisionOs())<5.0)
+																  	.collect(Collectors.groupingBy(ResultEyesightDO::getCheckDate));																							
+																		  
+		Map<Date,List<Long>> jinMap = new HashMap<Date,List<Long>>();
+		for(Entry<Date,List<ResultEyesightDO>> entry :map.entrySet()){
+			List<ResultEyesightDO> list = entry.getValue();
+			List<Long> l = Arrays.asList(
+					list.stream().filter(r -> r.getXueBu().equals("幼儿园")).count(),
+					list.stream().filter(r -> r.getXueBu().equals("小学")).count(),
+					list.stream().filter(r -> r.getXueBu().equals("初中")).count(),
+					list.stream().filter(r -> r.getXueBu().equals("高中")).count()
+					);
+			jinMap.put(entry.getKey(), l);
+		}
+		
+		Set<Date> set  = cMap.keySet();
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		for(Date d :set){
+			List<Long> lj = jinMap.get(d);
+			List<Long> lc = cMap.get(d);
+			List<Float> l = new ArrayList<Float>();
+			for(int i=0;i<lj.size();i++){
+				l.add(lc.get(i)==0? 0f:(float)lj.get(i)*100/lc.get(i));
+			}
+			resultMap.put(new SimpleDateFormat("yyyy-MM-dd").format(d), l);
+		}
+		
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> getJInShiLvSex(Date startDate, Date endDate) {
+		//裸眼视力小于5.0 = 近视
+		 
+				List<ResultEyesightDO> resultEyesightDOList = studentDao.getJInShiLv(startDate,endDate);
+				Map<Integer,List<ResultEyesightDO>> mapc = resultEyesightDOList.stream()
+						  													.collect(Collectors.groupingBy(ResultEyesightDO::getStudentSex));																							
+				List<Integer> intList = resultEyesightDOList.stream().mapToInt(ResultEyesightDO::getStudentSex).boxed().distinct().collect(Collectors.toList());
+				
+				
+				Map<Integer,List<Long>> cMap = new HashMap<Integer,List<Long>>();
+				for(Entry<Integer,List<ResultEyesightDO>> entry :mapc.entrySet()){
+					List<ResultEyesightDO> list = entry.getValue();
+					
+					cMap.put(entry.getKey(), l);
+				}
+				Map<Integer,List<ResultEyesightDO>> map = resultEyesightDOList.stream()
+																		  .filter(resultDiopterDO ->resultDiopterDO.getNakedFarvisionOd().equals("")||
+																				  resultDiopterDO.getNakedFarvisionOs().equals("")||
+																		  		  Double.parseDouble(resultDiopterDO.getNakedFarvisionOd())<5.0 ||
+																			      Double.parseDouble(resultDiopterDO.getNakedFarvisionOs())<5.0)
+																		  	.collect(Collectors.groupingBy(ResultEyesightDO::getStudentSex));																							
+																				  
+				Map<Date,List<Long>> jinMap = new HashMap<Date,List<Long>>();
+				for(Entry<Date,List<ResultEyesightDO>> entry :map.entrySet()){
+					List<ResultEyesightDO> list = entry.getValue();
+					List<Long> l = Arrays.asList(
+							list.stream().filter(r -> r.getStudentSex()==1).count(),
+							list.stream().filter(r -> r.getStudentSex()==2).count()
+							);
+					jinMap.put(entry.getKey(), l);
+				}
+				
+				Set<Date> set  = cMap.keySet();
+				Map<String,Object> resultMap = new HashMap<String,Object>();
+				for(Date d :set){
+					List<Long> lj = jinMap.get(d);
+					List<Long> lc = cMap.get(d);
+					List<Float> l = new ArrayList<Float>();
+					for(int i=0;i<lj.size();i++){
+						l.add(lc.get(i)==0? 0f:(float)lj.get(i)*100/lc.get(i));
+					}
+					resultMap.put(new SimpleDateFormat("yyyy-MM-dd").format(d), l);
+				}
+				
+				return resultMap;
 	}
 	
 }
