@@ -19,9 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
-
 import com.shaicha.common.config.BootdoConfig;
 import com.shaicha.common.utils.QRCodeUtil;
 
@@ -810,6 +807,9 @@ public class StudentServiceImpl implements StudentService {
 																	                                  Double.parseDouble(resultDiopterDO.getNakedFarvisionOs())<5.0)
 																		  
 																				.collect(Collectors.groupingBy(ResultEyesightDO::getCheckDate));
+		for(Entry<Date, List<ResultEyesightDO>>  r :map.entrySet()){
+			
+		}
 		
 		Map<Date,List<Long>> jinshiMap = new HashMap<Date,List<Long>>();
 	
