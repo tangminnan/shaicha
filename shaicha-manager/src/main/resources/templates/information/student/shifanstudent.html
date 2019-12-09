@@ -31,7 +31,7 @@
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
 									   筛查结果导出
 								</button>
-								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="jyjshaichabaogao()">
+								 <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="jyjshaichabaogao()">
 									   教育局筛查报告
 								</button>
 							</div>
@@ -58,6 +58,37 @@
 							<select class="form-control" name="school" id="school" >
                         		<option value="">学校</option>
                         		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
+                    		</select>
+						</div>
+						 		
+							<div class="columns pull-right col-md-2 nopadding">
+									<select class="form-control" name="studentClass" id="studentClass" >
+                        			<option value="">班级</option>
+                        			<option value="1">1</option>
+                        			<option value="2">2</option>
+                        			<option value="3">3</option>
+                        			<option value="4">4</option>
+                        			<option value="5">5</option>
+                        			<option value="6">6</option>
+                        			<option value="7">7</option>
+                        			<option value="8">8</option>
+                        			<option value="9">9</option>
+                        			<option value="10">10</option>
+                        			<option value="11">11</option>
+                    			</select>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select class="form-control" name="grade" id="grade" >
+                        		<option value="">年级</option>
+                        		<option value="小班">小班</option>
+                        		<option value="中班">中班</option>
+                        		<option value="大班">大班</option>
+                        		<option value="1年级">一年级</option>
+                        		<option value="2年级">二年级</option>
+                        		<option value="3年级">三年级</option>
+                        		<option value="4年级">四年级</option>
+                        		<option value="5年级">五年级</option>
+                        		<option value="6年级">六年级</option>
                     		</select>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding ">

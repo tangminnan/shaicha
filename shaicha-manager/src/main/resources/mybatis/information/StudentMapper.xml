@@ -409,7 +409,8 @@
 	</select>
 	
 	<select id="getLatelestResultEyeaxisDO" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
-		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs from t_result_eyeaxis where student_id=#{studentId} order by check_date desc limit 1
+		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs,ifnull(first_check_od,'') firstCheckOd,ifnull(first_check_os,'') firstCheckOs 
+		from t_result_eyeaxis where student_id=#{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveEyePressure" parameterType="com.shaicha.information.domain.ResultEyepressureDO">

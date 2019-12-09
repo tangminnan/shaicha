@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -410,19 +411,19 @@ public class StudentController {
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		String nakedFarvisionOd="";
 		String nakedFarvisionOs="";
-		String lifeFarvisionOd="";
-		String lifeFarvisionOs="";
+		String correctionFarvisionOd="";
+		String correctionFarvisionOs="";
 		if(resultEyesightDOList.size()>0){
 			resultEyesightDO=resultEyesightDOList.get(0);
 			nakedFarvisionOd=resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString();
 			nakedFarvisionOs=resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString();
-			lifeFarvisionOd=resultEyesightDO.getLifeFarvisionOd()==null?"":resultEyesightDO.getLifeFarvisionOd().toString();
-			lifeFarvisionOs=resultEyesightDO.getLifeFarvisionOs()==null?"":resultEyesightDO.getLifeFarvisionOs().toString();
+			correctionFarvisionOd=resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString();
+			correctionFarvisionOs=resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString();
 		}
 		model.addAttribute("nakedFarvisionOd",nakedFarvisionOd);
 		model.addAttribute("nakedFarvisionOs",nakedFarvisionOs);
-		model.addAttribute("glassvisionOd",lifeFarvisionOd);
-		model.addAttribute("glassvisionOs",lifeFarvisionOs);
+		model.addAttribute("glassvisionOd",correctionFarvisionOd);
+		model.addAttribute("glassvisionOs",correctionFarvisionOs);
 		//自动电脑验光结果(左眼) 
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
@@ -457,8 +458,8 @@ public class StudentController {
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
-		model.addAttribute("secondCheckOd",resultEyeaxisDO.getSecondCheckOd()==null?"":resultEyeaxisDO.getSecondCheckOd().toString());
-		model.addAttribute("secondCheckOs", resultEyeaxisDO.getSecondCheckOs()==null?"":resultEyeaxisDO.getSecondCheckOs().toString());
+		model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd().toString());
+		model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs().toString());
 		
 		System.out.println("===========================");
 		System.out.println("===========================");
@@ -498,25 +499,47 @@ public class StudentController {
 	    }
 	    od=od<os?od:os;
 	    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
+	    double yuanjingshili=0;//原镜视力
+	    if(!StringUtils.isBlank(correctionFarvisionOd) || !StringUtils.isBlank(correctionFarvisionOs)){
+	    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
+	    	yuanjingshili=Double.parseDouble(correctionFarvisionOd);
+	    }
 	    if(od>=5.0 && dengxiaoqiujingL>0.75){
-	    	model.addAttribute("doctorchubu","视力目前正常,  请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
+	    	model.addAttribute("doctorchubu","请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
 	    	model.addAttribute("yujing","");
 	    }
-		if(od>=5.0 && dengxiaoqiujingL>-0.5 && dengxiaoqiujingL<0.75){
-			model.addAttribute("doctorchubu","视力目前正常,请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
+		if(od>=5.0 && dengxiaoqiujingL>=-0.5 && dengxiaoqiujingL<=0.75){
+			model.addAttribute("doctorchubu","请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
 	    	model.addAttribute("yujing","近视临床前期");
 		}
-		if(od>=0.5 && dengxiaoqiujingL<-0.5){
-			model.addAttribute("doctorchubu","视力目前正常,视力目前正常，但有发生近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
+		if(od>=5.0 && dengxiaoqiujingL<-0.5){
+			model.addAttribute("doctorchubu","视力目前正常，但有发生近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
 	    	model.addAttribute("yujing","假性近视");
 		}
-		if(od<5.0 &&dengxiaoqiujingL>-0.5){
-			model.addAttribute("doctorchubu","无原镜：视力异常。建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
+		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili==0){
+			model.addAttribute("doctorchubu","建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
 	    	model.addAttribute("yujing","");
 		}
-		if(od<5.0 && dengxiaoqiujingL<-0.5){
-			model.addAttribute("doctorchubu","无原镜：视力下降，近视。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==0){
+			model.addAttribute("doctorchubu","建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
+	    	model.addAttribute("yujing","近视");
+		}
+	
+		if(od<5.0 && dengxiaoqiujingL>=-0.5 && yuanjingshili==1.0){
+			model.addAttribute("doctorchubu","请继续佩戴原来的眼镜，遵医嘱定期复查。");
 	    	model.addAttribute("yujing","");
+		}
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==1.0){
+			model.addAttribute("doctorchubu","请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的发生；采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
+	    	model.addAttribute("yujing","近视");
+		}
+		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili<1.0){
+			model.addAttribute("doctorchubu","请遵医嘱及时定期复查。");
+	    	model.addAttribute("yujing","");
+		}
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili<1.0){
+			model.addAttribute("doctorchubu","请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
+	    	model.addAttribute("yujing","近视增长");
 		}
 		return "information/student/示范校筛查打印";
 	}
@@ -551,7 +574,14 @@ public class StudentController {
 		return  studentService.getJInShiLvSex( startDate,endDate);	
 	}
 	
+	/**
+	 * 教育局
+	 * @throws ParseException 
+	 */
 	
-	
+	@GetMapping("/getee")
+	public Map<String,Object>  getee() throws ParseException{
+		return studentService.createDataToJiAOYuJu(new SimpleDateFormat("yyyy-MM-dd").parse("2019-09-01"),new Date());
+	}
 	
 }

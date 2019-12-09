@@ -36,7 +36,9 @@ function load() {
 								studentName:$("#studentName").val(),
 								phone:$("#phone").val(),
 								school:$("#school option:selected").val(),
-								studentSex:$("#studentSex option:selected").val()
+								studentSex:$("#studentSex option:selected").val(),
+								grade:$("#grade").val(),
+								studentClass:$("#studentClass").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -80,10 +82,10 @@ function load() {
 									   	}
 									}
 								},
-								{
+								/*{
 									field : 'birthday', 
 									title : '出生日期' 
-								},
+								},*/
 																{
 									field : 'nation', 
 									title : '民族' 

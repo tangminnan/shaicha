@@ -87,4 +87,6 @@ public interface StudentService {
 	Map<String, Object> getJInShiLv(Date startDate, Date endDate);
 
 	Map<String, Object> getJInShiLvSex(Date startDate, Date endDate);
+
+	Map<String,Object>  createDataToJiAOYuJu(Date parse, Date date);
 }
