@@ -505,11 +505,11 @@ public class StudentController {
 	    	yuanjingshili=Double.parseDouble(correctionFarvisionOd);
 	    }
 	    if(od>=5.0 && dengxiaoqiujingL>0.75){
-	    	model.addAttribute("doctorchubu","请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
+	    	model.addAttribute("doctorchubu","视力目前正常 。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
 	    	model.addAttribute("yujing","");
 	    }
 		if(od>=5.0 && dengxiaoqiujingL>=-0.5 && dengxiaoqiujingL<=0.75){
-			model.addAttribute("doctorchubu","请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
+			model.addAttribute("doctorchubu","视力目前正常。 请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
 	    	model.addAttribute("yujing","近视临床前期");
 		}
 		if(od>=5.0 && dengxiaoqiujingL<-0.5){
@@ -517,28 +517,28 @@ public class StudentController {
 	    	model.addAttribute("yujing","假性近视");
 		}
 		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili==0){
-			model.addAttribute("doctorchubu","建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
+			model.addAttribute("doctorchubu","视力异常。建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
 	    	model.addAttribute("yujing","");
 		}
 		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==0){
-			model.addAttribute("doctorchubu","建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
+			model.addAttribute("doctorchubu","视力下降。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
 	    	model.addAttribute("yujing","近视");
 		}
 	
-		if(od<5.0 && dengxiaoqiujingL>=-0.5 && yuanjingshili==1.0){
-			model.addAttribute("doctorchubu","请继续佩戴原来的眼镜，遵医嘱定期复查。");
+		if(od<5.0 && dengxiaoqiujingL>=-0.5 && yuanjingshili==5.0){
+			model.addAttribute("doctorchubu","戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。");
 	    	model.addAttribute("yujing","");
 		}
-		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==1.0){
-			model.addAttribute("doctorchubu","请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的发生；采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==5.0){
+			model.addAttribute("doctorchubu","戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的发生；采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
 	    	model.addAttribute("yujing","近视");
 		}
-		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili<1.0){
-			model.addAttribute("doctorchubu","请遵医嘱及时定期复查。");
+		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili<5.0){
+			model.addAttribute("doctorchubu","戴原镜视力异常。 请遵医嘱及时定期复查。");
 	    	model.addAttribute("yujing","");
 		}
-		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili<1.0){
-			model.addAttribute("doctorchubu","请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili<5.0){
+			model.addAttribute("doctorchubu","戴原镜视力异常。 请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
 	    	model.addAttribute("yujing","近视增长");
 		}
 		return "information/student/示范校筛查打印";
