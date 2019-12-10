@@ -896,7 +896,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		for(int i= 1 ; i<=classCountyi.size() ;i++){
 			Map<String,Object> classyi = new HashMap<String,Object>();
 			classyi.put("class", i);
-			Integer jcyi = jianchaban(school,checkDate,String.valueOf(i), "一年级");
+			Integer jcyi = jianchaban(school,checkDate,String.valueOf(i), "1年级");
 			Integer jsyi = jinshi(school,checkDate,null,null,String.valueOf(i));
 			classyi.put("classNum", jcyi);
 			classyi.put("classMyopiaNum", jsyi);
@@ -913,7 +913,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		for(int i= 1 ; i<=classCounter.size() ;i++){
 			Map<String,Object> classer = new HashMap<String,Object>();
 			classer.put("class", i);
-			Integer jcer = jianchaban(school,checkDate,String.valueOf(i), "二年级");
+			Integer jcer = jianchaban(school,checkDate,String.valueOf(i), "2年级");
 			Integer jser = jinshi(school,checkDate,null,null,String.valueOf(i));
 			classer.put("classNum", jcer);
 			classer.put("classMyopiaNum", jser);
@@ -930,7 +930,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		for(int i= 1 ; i<=classCountsan.size() ;i++){
 			Map<String,Object> classsan = new HashMap<String,Object>();
 			classsan.put("class", i);
-			Integer jcsan = jianchaban(school,checkDate,String.valueOf(i), "三年级");
+			Integer jcsan = jianchaban(school,checkDate,String.valueOf(i), "3年级");
 			Integer jssan = jinshi(school,checkDate,null,null,String.valueOf(i));
 			classsan.put("classNum", jcsan);
 			classsan.put("classMyopiaNum", jssan);
@@ -938,13 +938,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 			list3.add(classsan);
 		}
 		//params.put("thirdClass", list3);
-		Integer jcsan = 0;
-		Integer jssan = 0;
-		Integer jcsan2 = 0;
-		Integer jssan2 = 0;
+		
 		params.put("class1", 1);
-		jcsan = jianchaban(school,checkDate,String.valueOf(1), "三年级");
-		jssan = jinshi(school,checkDate,null,null,String.valueOf(1));
+		Integer jcsan = jianchaban(school,checkDate,String.valueOf(1), "3年级");
+		Integer jssan = jinshi(school,checkDate,null,null,String.valueOf(1));
 		if(jcsan == -1){
 			params.put("thirdClassNum1", 0);
 			params.put("thirdClassMyopiaRate1", "0%");
@@ -955,8 +952,8 @@ public class StudentReportServiceImpl implements StudentReportService{
 		params.put("thirdClassMyopiaNum1", jssan);
 		
 		params.put("class2", 2);
-		jcsan2 = jianchaban(school,checkDate,String.valueOf(2), "三年级");
-		jssan2 = jinshi(school,checkDate,null,null,String.valueOf(2));
+		Integer jcsan2 = jianchaban(school,checkDate,String.valueOf(2), "3年级");
+		Integer jssan2 = jinshi(school,checkDate,null,null,String.valueOf(2));
 		if(jcsan2 == -1){
 			params.put("thirdClassNum2", 0);
 			params.put("thirdClassMyopiaRate2", "0%");
@@ -976,7 +973,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		for(int i= 1 ; i<=classCountsi.size() ;i++){
 			Map<String,Object> classsi = new HashMap<String,Object>();
 			classsi.put("class", i);
-			Integer jcsi = jianchaban(school,checkDate,String.valueOf(i), "四年级");
+			Integer jcsi = jianchaban(school,checkDate,String.valueOf(i), "4年级");
 			Integer jssi = jinshi(school,checkDate,null,null,String.valueOf(i));
 			classsi.put("classNum", jcsi);
 			classsi.put("classMyopiaNum", jssi);
@@ -993,7 +990,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		for(int i= 1 ; i<=classCountwu.size() ;i++){
 			Map<String,Object> classwu = new HashMap<String,Object>();
 			classwu.put("class", i);
-			Integer jcwu = jianchaban(school,checkDate,String.valueOf(i), "五年级");
+			Integer jcwu = jianchaban(school,checkDate,String.valueOf(i), "5年级");
 			Integer jswu = jinshi(school,checkDate,null,null,String.valueOf(i));
 			classwu.put("classNum", jcwu);
 			classwu.put("classMyopiaNum", jswu);
@@ -1010,7 +1007,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		for(int i= 1 ; i<=classCountliu.size() ;i++){
 			Map<String,Object> classliu = new HashMap<String,Object>();
 			classliu.put("class", i);
-			Integer jcliu = jianchaban(school,checkDate,String.valueOf(i), "六年级");
+			Integer jcliu = jianchaban(school,checkDate,String.valueOf(i), "6年级");
 			Integer jsliu = jinshi(school,checkDate,null,null,String.valueOf(i));
 			classliu.put("classNum", jcliu);
 			classliu.put("classMyopiaNum", jsliu);
