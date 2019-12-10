@@ -126,7 +126,7 @@ public class StudentReportController {
 			mappp.add(1.0);
 			map.put("code", mappp);
 		String schoolNum = request.getParameter("schoolNum");
-		Map<String, List<Double>> overYearMyopia = studentReportService.overYearMyopia(school);
+		/*Map<String, List<Double>> overYearMyopia = studentReportService.overYearMyopia(school);
 		Map<String, List<Double>> gradeMyopia = studentReportService.gradeMyopia(school,checkDate);
 		Map<String, List<Double>> overYearGradeMyopia = studentReportService.overYearGradeMyopia(school);
 		Map<String, List<Double>> studentSexMyopia = studentReportService.studentSexMyopia(school,checkDate);
@@ -149,7 +149,7 @@ public class StudentReportController {
 		map.put("studentSexNvMyopia", overYearSexNv.get("studentSexMyopia"));
 		
 		map.put("overYearSexNan", overYearGradeSex.get("overYearSexNan"));
-		map.put("overYearSexNv", overYearGradeSex.get("overYearSexNv"));
+		map.put("overYearSexNv", overYearGradeSex.get("overYearSexNv"));*/
 		}
 		return map;
 		

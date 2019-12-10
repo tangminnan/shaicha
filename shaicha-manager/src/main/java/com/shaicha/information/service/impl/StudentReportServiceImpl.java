@@ -649,7 +649,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		String school = request.getParameter("school");
 		String checkDate = request.getParameter("checkDate");
 		Integer schoolNum = Integer.parseInt(request.getParameter("schoolNum"));
-		String overYear=request.getParameter("overYear");
+		/*String overYear=request.getParameter("overYear");
 		try {
 			String string = savePictoServer(overYear,"D:/word/img/");
 			String imageStr = getImageStr(string);
@@ -711,7 +711,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	
 		params.put("schoolName", school);
 		params.put("newDate", sdf.format(new Date()));

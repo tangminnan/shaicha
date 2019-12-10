@@ -30,7 +30,7 @@ function save() {
 					alert("该学校在该检查时间没有数据");
 				}else{
 					
-				// 基于准备好的dom，初始化echarts实例
+				/*// 基于准备好的dom，初始化echarts实例
 				var overYear = echarts.init(document.getElementById('overYear'));
 			 	var option = {
 			 			 xAxis: {
@@ -335,7 +335,7 @@ function save() {
 						console.info(studentSexMyopia.getDataURL()); 
 						console.info(overYearSexNan.getDataURL()); 
 						console.info(overYearSexNv.getDataURL()); 
-						console.info(overYearGradeSex.getDataURL());
+						console.info(overYearGradeSex.getDataURL());*/
 						
 			 			$.ajax({
 			 				type : 'POST',
@@ -343,13 +343,13 @@ function save() {
 			 					"school" : $("#school").val(),
 			 					"checkDate" :$("#checkDate").val(),
 			 					"schoolNum":$("#schoolNum").val(),
-			 					"overYear" : overYear.getDataURL(),
+			 					/*"overYear" : overYear.getDataURL(),
 			 					"gradeMyopia" : gradeMyopia.getDataURL(),
 			 					"overYearGradeMyopia" : overYearGradeMyopia.getDataURL(),
 			 					"studentSexMyopia" : studentSexMyopia.getDataURL(),
 			 					"overYearSexNan" : overYearSexNan.getDataURL(),
 			 					"overYearSexNv" : overYearSexNv.getDataURL(),
-			 					"overYearGradeSex" : overYearGradeSex.getDataURL(),
+			 					"overYearGradeSex" : overYearGradeSex.getDataURL(),*/
 			 				},
 			 				url : '/studentReport/baogaoxuexiao',
 			 				success : function(result) {
