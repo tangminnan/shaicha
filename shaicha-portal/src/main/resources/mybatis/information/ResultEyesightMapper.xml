@@ -17,6 +17,8 @@
 						`life_nearvision_os`,
 						`naked_nearvision_od`,
 						`naked_nearvision_os`,
+						glassvision_os,
+						glassvision_od,
 						`check_date`,
 						`delete_flag`
 					FROM

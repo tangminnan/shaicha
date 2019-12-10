@@ -162,6 +162,14 @@ public class StudentReportController {
 		studentReportService.baogaoxuexiao(request, response);
 			
 	}
+	
+	@GetMapping("/studentReport/jiaoyuju")
+	public String jiaoyuju(Model model){
+		List<StudentDO> schoolName = studentService.querySchoolName();
+		List<ResultDiopterDO> jianchashijian = resultDiopterService.jianchashijian();
+		model.addAttribute("schoolName", schoolName);
+		return "information/student/jiaoyuju";
+	}
 
 	
 }

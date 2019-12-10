@@ -37,9 +37,10 @@ public class ResultDiopterDO implements Serializable {
 	private String firstSecond;
 	//身份证号
 	private String identityCard;
+	//等效球镜
+	private Double dengxiaoqiujing;
 	private Date checkDate;
 	private String checkDate1;
-	private Double dengxiaoqiujing;
 	
 	
 	public String getCheckDate1() {
@@ -47,12 +48,6 @@ public class ResultDiopterDO implements Serializable {
 	}
 	public void setCheckDate1(String checkDate1) {
 		this.checkDate1 = checkDate1;
-	}
-	public Double getDengxiaoqiujing() {
-		return dengxiaoqiujing;
-	}
-	public void setDengxiaoqiujing(Double dengxiaoqiujing) {
-		this.dengxiaoqiujing = dengxiaoqiujing;
 	}
 	public Integer gettDiopterId() {
 		return tDiopterId;
@@ -199,6 +194,11 @@ L_DATA=夜间视力检查
 	public void setCheckDate(Date checkDate) {
 		this.checkDate = checkDate;
 	}
-	
+	public Double getDengxiaoqiujing() {
+		return dengxiaoqiujing;
+	}
+	public void setDengxiaoqiujing(Double dengxiaoqiujing) {
+		this.dengxiaoqiujing = dengxiaoqiujing;
+	}
 	
 }

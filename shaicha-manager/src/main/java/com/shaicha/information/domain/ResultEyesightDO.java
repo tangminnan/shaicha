@@ -43,6 +43,14 @@ public class ResultEyesightDO implements Serializable {
 	private String nakedNearvisionOd;
 	//左眼裸眼近视力
 	private String nakedNearvisionOs;
+	//学校
+	private String school;
+	//年级
+	private String grade;
+	//性别 1：男2：女0：未知
+	private Integer studentSex;
+	//学部
+	private String xueBu;
 	//检查日期
 	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date checkDate;
@@ -51,6 +59,7 @@ public class ResultEyesightDO implements Serializable {
 	private Integer deleteFlag;
 	private Date endTime;
 	private Date startTime;
+	
 	//戴镜视力右
 	private String glassvisionOd;
 	//身份证号
@@ -58,6 +67,8 @@ public class ResultEyesightDO implements Serializable {
 					   
 		//戴镜视力左
 	private String glassvisionOs;
+	//等效球镜
+	private Double dengxiaoqiujing;
 	
 	private String dushu;
 	
@@ -305,6 +316,36 @@ public class ResultEyesightDO implements Serializable {
 	}
 	public void setGlassvisionOs(String glassvisionOs) {
 		this.glassvisionOs = glassvisionOs;
+	}
+	public String getSchool() {
+		return school;
+	}
+	public void setSchool(String school) {
+		this.school = school;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public Integer getStudentSex() {
+		return studentSex;
+	}
+	public void setStudentSex(Integer studentSex) {
+		this.studentSex = studentSex;
+	}
+	public String getXueBu() {
+		return xueBu;
+	}
+	public void setXueBu(String xueBu) {
+		this.xueBu = xueBu;
+	}
+	public Double getDengxiaoqiujing() {
+		return dengxiaoqiujing;
+	}
+	public void setDengxiaoqiujing(Double dengxiaoqiujing) {
+		this.dengxiaoqiujing = dengxiaoqiujing;
 	}
 	
 	

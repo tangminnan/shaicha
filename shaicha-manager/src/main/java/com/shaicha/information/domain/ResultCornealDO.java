@@ -31,9 +31,15 @@ public class ResultCornealDO implements Serializable {
 	private String ifrl;
 	//两周内的第几次检查  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查'
 	private String firstSecond;
-
+	private Date checkDate;
 	
 	
+	public Date getCheckDate() {
+		return checkDate;
+	}
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
 	public Integer gettCornealId() {
 		return tCornealId;
 	}

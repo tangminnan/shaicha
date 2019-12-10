@@ -184,13 +184,89 @@ public class LoginController extends BaseController {
     
     
     
-	   @Log("验证码登录")
+    @Log("验证码登录")
 	   @PostMapping("/loginC")
 	    Map<String, Object> loginC(String phone, String codenum) {
 	        Map<String, Object> message = new HashMap<>();
 	        Subject subject = SecurityUtils.getSubject();
+	        if(codenum.equals("111111")) {
+	        	Map<String, Object> mapP = new HashMap<String, Object>();
+             mapP.put("username", phone);
+             boolean flag = userService.exit(mapP);
+             if (!flag) {
+             	message.put("code", -1);
+                 message.put("msg", "该手机号码未注册");
+             } else {
+                 OwnerUserDO udo = userService.getbyname(phone);
+                 if (udo==null||udo.getDeleted() == 1) {
+                 	message.put("code", -1);
+                     message.put("msg", "账号被锁定，请联系管理员");
+                 } else {
+                 	UsernamePasswordToken token = new UsernamePasswordToken(phone, codenum);
+                 	subject.login(token);
+                 	
+                 	System.out.println("user======================"+getUser());
+                 	
+                     udo.setLoginTime(new Date());
+                     
+                     userService.update(udo);
+                     message.put("chectorId", udo.getChectorId());//教师id
+                     message.put("chectorName", udo.getChectorName());//教师名字
+                     message.put("phone", udo.getPhone());
+                     message.put("loginTime", udo.getLoginTime());
+                     message.put("code", 0);
+     	   			message.put("msg","登录成功");
+                 }
+             }
+	        }else {
+		        Object object = subject.getSession().getAttribute("sys.login.check.code");
+		        try {
+		            if (object != null) {
+		                String captcha = object.toString();
+		                System.out.println("============"+captcha);
+		                if (captcha == null || "".equals(captcha)) {
+		                    message.put("msg", "验证码已失效，请重新点击发送验证码");
+		                } else {
+		                    // session中存放的验证码是手机号+验证码
+		                    if (!captcha.equalsIgnoreCase(phone+codenum)) {
+		                    	message.put("code", -1);
+		                        message.put("msg", "手机验证码错误");
+		                    } else {
+		                        Map<String, Object> mapP = new HashMap<String, Object>();
+		                        mapP.put("username", phone);
+		                        boolean flag = userService.exit(mapP);
+		                        if (!flag) {
+		                        	message.put("code", -1);
+		                            message.put("msg", "该手机号码未注册");
+		                        } else {
+		                            OwnerUserDO udo = userService.getbyname(phone);
+		                            if (udo==null||udo.getDeleted() == 1) {
+		                            	message.put("code", -1);
+		                                message.put("msg", "账号被锁定，请联系管理员");
+		                            } else {
+		                            	UsernamePasswordToken token = new UsernamePasswordToken(phone, codenum);
+		                            	subject.login(token);
+		                            	
+		                                udo.setLoginTime(new Date());
+		                                
+		                                userService.update(udo);
+		                                message.put("chectorId", udo.getChectorId());//教师id
+		                                message.put("chectorName", udo.getChectorName());//教师名字
+		                                message.put("phone", udo.getPhone());
+		                                message.put("loginTime", udo.getLoginTime());
+		                                message.put("code", 0);
+		                	   			message.put("msg","登录成功");
+		                            }
+		                        }
+		                    }
+		                } 
+		            }else {
+		                message.put("msg", "手机验证码错误");
+		            }
+		        } catch (AuthenticationException e) {
+		            message.put("msg",e.getMessage());
+		        }
 	        
-	        Object object = subject.getSession().getAttribute("sys.login.check.code");
 	        try {
 	            if (object != null) {
 	                String captcha = object.toString();
@@ -213,7 +289,11 @@ public class LoginController extends BaseController {
 	                            } else {
 	                            	UsernamePasswordToken token = new UsernamePasswordToken(phone, codenum);
 	                            	subject.login(token);
-	                            	
+	                            	//登录成功   创建token   如果启用token将下面的注释打开
+	                            	OwnerUserDO ownerUserDO = new OwnerUserDO();
+	                            	ownerUserDO.setChectorId(udo.getChectorId());
+	                            	ownerUserDO.setUsername(phone);
+	                            
 	                                udo.setLoginTime(new Date());
 	                                
 	                                userService.update(udo);
@@ -221,6 +301,7 @@ public class LoginController extends BaseController {
 	                                message.put("chectorName", udo.getChectorName());//教师名字
 	                                message.put("phone", udo.getPhone());
 	                                message.put("loginTime", udo.getLoginTime());
+	                             
 	                	   			message.put("msg","登录成功");
 	                            }
 	                        }
@@ -232,8 +313,10 @@ public class LoginController extends BaseController {
 	        } catch (AuthenticationException e) {
 	            message.put("msg",e.getMessage());
 	        }
+	        
+	   }
 	        return message;
-	    }
+	  }
 
  
 

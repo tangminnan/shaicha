@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.ResultCornealDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
@@ -87,4 +88,10 @@ public interface StudentDao {
 	
 	List<StudentDO> getCheckNianjiNum(@Param("school") String school,@Param("grade") String grade,@Param("checkDate") String checkDate);
 
+
+	List<ResultCornealDO> getResultCornealDOList(@Param("studentId") Integer studentId,@Param("ifrl") String ifrl,@Param("type") String type);
+
+	List<ResultEyesightDO> getJInShiLv(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
+
+	List<ResultDiopterDO> getResultDiopterDO(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 }

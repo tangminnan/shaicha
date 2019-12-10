@@ -9,11 +9,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +29,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -44,6 +47,7 @@ import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.ResultCornealDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
@@ -156,7 +160,9 @@ public class StudentController {
 	String optometry(@PathVariable("id") Integer id,Model model){
 		Map<String,Object> map = new HashMap<String,Object>();
 		StudentDO student = studentService.get(id);
+		map.put("studentId", id);
 		List<ResultOptometryDO> list = resultOptometryService.list(map);
+		list = list.stream().map(a -> {a.gettOptometryId();a.getCheckDate();return a;}).distinct().collect(Collectors.toList());
 		model.addAttribute("list", list);
 		model.addAttribute("student", student);
 	    return "information/student/optometry";
@@ -255,21 +261,25 @@ public class StudentController {
 		studentService.downloadErweima(ids,response);
 		System.out.println(ids);
 	}
+	
+	
+	
+	
 	/**
 	 * 筛查结果导出
 	 */
 //	@GetMapping("/shaichajieguodaochu")
-	public void shaichajieguodaochu(Integer[] ids,HttpServletResponse response){
-		studentService.shaichajieguodaochu(ids,response);
-	}
+//	public void shaichajieguodaochu(Integer[] ids,HttpServletResponse response){
+//		studentService.shaichajieguodaochu(ids,response);
+//	}
 	
 	/**
 	 * 示范校筛查结果导出
 	 */
 //	@GetMapping("/shifanshaichajieguodaochu")
-	public void shifanshaichajieguodaochu(Integer[] ids,HttpServletResponse response){
-		studentService.shifanshaichajieguodaochu(ids,response);
-	}
+//	public void shifanshaichajieguodaochu(Integer[] ids,HttpServletResponse response){
+//		studentService.shifanshaichajieguodaochu(ids,response);
+//	}
 	
 	/**
 	 * 答题结果
@@ -399,14 +409,23 @@ public class StudentController {
 		//视力检查结果获取
 		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-		if(resultEyesightDOList.size()>0)
+		String nakedFarvisionOd="";
+		String nakedFarvisionOs="";
+		String correctionFarvisionOd="";
+		String correctionFarvisionOs="";
+		if(resultEyesightDOList.size()>0){
 			resultEyesightDO=resultEyesightDOList.get(0);
-		model.addAttribute("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString());
-		model.addAttribute("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
-		model.addAttribute("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
-		model.addAttribute("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
-		
+			nakedFarvisionOd=resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString();
+			nakedFarvisionOs=resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString();
+			correctionFarvisionOd=resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString();
+			correctionFarvisionOs=resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString();
+		}
+		model.addAttribute("nakedFarvisionOd",nakedFarvisionOd);
+		model.addAttribute("nakedFarvisionOs",nakedFarvisionOs);
+		model.addAttribute("glassvisionOd",correctionFarvisionOd);
+		model.addAttribute("glassvisionOs",correctionFarvisionOs);
 		//自动电脑验光结果(左眼) 
+		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
@@ -414,7 +433,7 @@ public class StudentController {
 		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
 		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
 		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
-		
+		dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
 		
 		
 		//自动电脑验光结果(右眼) 
@@ -425,6 +444,8 @@ public class StudentController {
 		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
 		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
 		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+		
 		//眼内压结果拼装
 		List<ResultEyepressureDO> ResultEyepressureDOList = studentService.getLatestResultEyepressureDO(studentDO.getId());
 		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
@@ -437,26 +458,89 @@ public class StudentController {
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
-		model.addAttribute("secondCheckOd",resultEyeaxisDO.getSecondCheckOd()==null?"":resultEyeaxisDO.getSecondCheckOd().toString());
-		model.addAttribute("secondCheckOs", resultEyeaxisDO.getSecondCheckOs()==null?"":resultEyeaxisDO.getSecondCheckOs().toString());
+		model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd().toString());
+		model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs().toString());
 		
 		System.out.println("===========================");
 		System.out.println("===========================");
-		//临时数据拼装
-		//报告临时数据
-		model.addAttribute("nakedFarvisionOdb", "12");
-		model.addAttribute("nakedFarvisionOsb", "11");
-		model.addAttribute("diopterSRb", "500");
-		model.addAttribute("diopterSLb", "300");
-		model.addAttribute("correctionFarvisionOdb", "500");
-		model.addAttribute("correctionFarvisionOsb", "300");
-		model.addAttribute("eyePressureOdb", "1");
-		model.addAttribute("secondCheckOsb", "1");
-		model.addAttribute("beforeAfterOdValueb", "2");
-		model.addAttribute("beforeAfterOsValueb", "2");
-				//医生的建议（临时数据）
-		model.addAttribute("doctorchubu","注意用眼卫生");
-		model.addAttribute("doctortebie","注意用眼卫生，养成良好的用眼习惯");
+		//角膜验光拼装
+		ResultCornealDO resultCornealDO = new ResultCornealDO();
+		List<ResultCornealDO> resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"R","R1");
+		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+		model.addAttribute("cornealDr1R", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+		resultCornealDO = new ResultCornealDO();
+		resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"R","R2");
+		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+		model.addAttribute("cornealDr2R", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+		
+		resultCornealDO = new ResultCornealDO();
+	    resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"L","R1");
+	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+		
+		
+	    
+	    resultCornealDO = new ResultCornealDO();
+	    resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"L","R2");
+	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+
+	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
+	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+		//医生的建议（临时数据）
+	   double od=0.0,os=0.0;
+	   if(!StringUtils.isBlank(nakedFarvisionOd)){
+	    	od=Double.parseDouble(nakedFarvisionOd);
+	    }
+	    if(!StringUtils.isBlank(nakedFarvisionOs)){
+	    	os=Double.parseDouble(nakedFarvisionOs);
+	    }
+	    od=od<os?od:os;
+	    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
+	    double yuanjingshili=0;//原镜视力
+	    if(!StringUtils.isBlank(correctionFarvisionOd) || !StringUtils.isBlank(correctionFarvisionOs)){
+	    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
+	    	yuanjingshili=Double.parseDouble(correctionFarvisionOd);
+	    }
+	    if(od>=5.0 && dengxiaoqiujingL>0.75){
+	    	model.addAttribute("doctorchubu","请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
+	    	model.addAttribute("yujing","");
+	    }
+		if(od>=5.0 && dengxiaoqiujingL>=-0.5 && dengxiaoqiujingL<=0.75){
+			model.addAttribute("doctorchubu","请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
+	    	model.addAttribute("yujing","近视临床前期");
+		}
+		if(od>=5.0 && dengxiaoqiujingL<-0.5){
+			model.addAttribute("doctorchubu","视力目前正常，但有发生近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
+	    	model.addAttribute("yujing","假性近视");
+		}
+		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili==0){
+			model.addAttribute("doctorchubu","建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
+	    	model.addAttribute("yujing","");
+		}
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==0){
+			model.addAttribute("doctorchubu","建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
+	    	model.addAttribute("yujing","近视");
+		}
+	
+		if(od<5.0 && dengxiaoqiujingL>=-0.5 && yuanjingshili==1.0){
+			model.addAttribute("doctorchubu","请继续佩戴原来的眼镜，遵医嘱定期复查。");
+	    	model.addAttribute("yujing","");
+		}
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==1.0){
+			model.addAttribute("doctorchubu","请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的发生；采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
+	    	model.addAttribute("yujing","近视");
+		}
+		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili<1.0){
+			model.addAttribute("doctorchubu","请遵医嘱及时定期复查。");
+	    	model.addAttribute("yujing","");
+		}
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili<1.0){
+			model.addAttribute("doctorchubu","请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
+	    	model.addAttribute("yujing","近视增长");
+		}
 		return "information/student/示范校筛查打印";
 	}
 	
@@ -469,114 +553,35 @@ public class StudentController {
 		return "information/student/shifanshaichadetail";
 	}
 	
-	/*public static void  main(String[] args)
-		    throws IOException {
-		  String htmlName = "示范校筛查打印" + ".html";
-		  String imagePath = "D://" + "image" + File.separator;
-		  // 判断html文件是否存在
-		  File htmlFile = new File("D://"+ htmlName);
-//		  if (htmlFile.exists()) {
-//		    return htmlFile.getAbsolutePath();
-//		  }
-		  // word文件
-		  File wordFile = new File("D://示范学校筛查导出模板.docx");
-		  // 1) 加载word文档生成 XWPFDocument对象
-		  InputStream in = new FileInputStream(wordFile);
-		  XWPFDocument document = new XWPFDocument(in);
-		  // 2) 解析 XHTML配置 (这里设置IURIResolver来设置图片存放的目录)
-		  File imgFolder = new File(imagePath);
-		  XHTMLOptions options = XHTMLOptions.create();
-		  options.setExtractor(new FileImageExtractor(imgFolder));
-		  // html中图片的路径 相对路径
-		  options.URIResolver(new BasicURIResolver("image"));
-		  options.setIgnoreStylesIfUnused(false);
-		  options.setFragment(true);
-		  // 3) 将 XWPFDocument转换成XHTML
-		  // 生成html文件上级文件夹
-		  File folder = new File(htmlPath);
-		  if (!folder.exists()) {
-		    folder.mkdirs();
-		  }
-		  OutputStream out = new FileOutputStream(htmlFile);
-		  XHTMLConverter.getInstance().convert(document, out, options);
-		
-		}*/
 	
-/*	public static void main(String argv[]) {  
-        try {  
-            convert2Html("D://1.doc","D://1.html");  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  
-    }  
-  
-    public static void writeFile(String content, String path) {  
-        FileOutputStream fos = null;  
-        BufferedWriter bw = null;  
-        try {  
-            File file = new File(path);  
-            fos = new FileOutputStream(file);  
-            bw = new BufferedWriter(new OutputStreamWriter(fos,"ISO-8859-1"));  
-            bw.write(content);  
-        } catch (FileNotFoundException fnfe) {  
-            fnfe.printStackTrace();  
-        } catch (IOException ioe) {  
-            ioe.printStackTrace();  
-        } finally {  
-            try {  
-                if (bw != null)  
-                    bw.close();  
-                if (fos != null)  
-                    fos.close();  
-            } catch (IOException ie) {  
-            }  
-        }  
-    }  */
-  
-   /* public static void convert2Html(String fileName, String outPutFile)  
-            throws TransformerException, IOException,  
-            ParserConfigurationException {  
-        HWPFDocument wordDocument = new HWPFDocument(new FileInputStream(fileName));//WordToHtmlUtils.loadDoc(new FileInputStream(inputFile));  
-        WordToHtmlConverter wordToHtmlConverter = new WordToHtmlConverter(  
-                DocumentBuilderFactory.newInstance().newDocumentBuilder()  
-                        .newDocument());  
-         wordToHtmlConverter.setPicturesManager( new PicturesManager()  
-         {  
-             public String savePicture( byte[] content,  
-                     PictureType pictureType, String suggestedName,  
-                     float widthInches, float heightInches )  
-             {  
-                 return "test/"+suggestedName;  
-             }  
-         } );  
-        wordToHtmlConverter.processDocument(wordDocument);  
-        //save pictures  
-        List pics=wordDocument.getPicturesTable().getAllPictures();  
-        if(pics!=null){  
-            for(int i=0;i<pics.size();i++){  
-                Picture pic = (Picture)pics.get(i);  
-                System.out.println();  
-                try {  
-                    pic.writeImageContent(new FileOutputStream("D:/test/"  
-                            + pic.suggestFullFileName()));  
-                } catch (FileNotFoundException e) {  
-                    e.printStackTrace();  
-                }    
-            }  
-        }  
-        Document htmlDocument = wordToHtmlConverter.getDocument();  
-        ByteArrayOutputStream out = new ByteArrayOutputStream();  
-        DOMSource domSource = new DOMSource(htmlDocument);  
-        StreamResult streamResult = new StreamResult(out);  
-  
-        TransformerFactory tf = TransformerFactory.newInstance();  
-        Transformer serializer = tf.newTransformer();  
-        serializer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1");  
-        serializer.setOutputProperty(OutputKeys.INDENT, "yes");  
-        serializer.setOutputProperty(OutputKeys.METHOD, "html");  
-        serializer.transform(domSource, streamResult);  
-        out.close();  
-        writeFile(new String(out.toByteArray()), outPutFile);  
-    }  */
+	/**
+	 * 计算近视率	
+	 */
+	
+	@ResponseBody
+	@GetMapping("/getJInShiLv")
+	public Map<String,Object> getJInShiLv(Date startDate,Date endDate){
 		
+		return  studentService.getJInShiLv(startDate,endDate);		
+	}
+	
+	/**
+	 * 男生女生近期近视率
+	 */
+	@GetMapping("/getJInShiLvSex")
+	@ResponseBody
+	public Map<String,Object> getJInShiLvSex(Date startDate,Date endDate){
+		return  studentService.getJInShiLvSex( startDate,endDate);	
+	}
+	
+	/**
+	 * 教育局
+	 * @throws ParseException 
+	 */
+	
+	@GetMapping("/getee")
+	public Map<String,Object>  getee() throws ParseException{
+		return studentService.createDataToJiAOYuJu(new SimpleDateFormat("yyyy-MM-dd").parse("2019-09-01"),new Date());
+	}
+	
 }

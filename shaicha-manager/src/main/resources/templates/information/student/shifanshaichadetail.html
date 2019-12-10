@@ -15,6 +15,10 @@
 					<div class="fixed-table-toolbar">
 						
 						<div class="columns pull-right">
+							
+							<button class="btn btn-primary" onclick="window.history.go(-1);">返回</button>
+						</div>
+						<div class="columns pull-right">
 							<input id="identityCard" th:value="${identityCard}" type="hidden">
 							<button class="btn btn-success" onclick="jiazai()">查询</button>
 						</div>
@@ -33,7 +37,7 @@
 						<li><a class="btn btn-primary btn-xs" href="#yanneiyadetail" mce_href="#" style="text-decoration: none;">眼内压</a></li>
 						<li><a class="btn btn-primary btn-xs" href="#yanqianhoujie" mce_href="#" style="text-decoration: none;">眼前后节</a></li>
 						<li><a class="btn btn-primary btn-xs" href="#tiaojiedetail" mce_href="#" style="text-decoration: none;">调节灵敏度</a></li>
-						<li><a class="btn btn-primary btn-xs" href="#yanguangdetail" mce_href="#" style="text-decoration: none;">验光详情</a></li>
+						<!-- <li><a class="btn btn-primary btn-xs" href="#yanguangdetail" mce_href="#" style="text-decoration: none;">验光详情</a></li> -->
 					</ul>
  
 					<div class="tab-content">
@@ -57,9 +61,9 @@
   							<table id="exampleTable5" data-mobile-responsive="true"></table>
   						</div>
   						
-  						<div class="tab-pane" id="yanguangdetail">
+  						<!-- <div class="tab-pane" id="yanguangdetail">
   							<table id="exampleTable6" data-mobile-responsive="true"></table>
-  						</div>
+  						</div> -->
 					</div>
 	
 	</div>

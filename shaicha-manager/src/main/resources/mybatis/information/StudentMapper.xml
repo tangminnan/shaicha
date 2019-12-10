@@ -383,7 +383,8 @@
 										SELECT
 							ifnull(diopter_s, '') diopterS,
 							ifnull(diopter_c, '') diopterC,
-							ifnull(diopter_a, '') diopterA
+							ifnull(diopter_a, '') diopterA,
+							ifnull(dengxiaoqiujing,'') dengxiaoqiujing
 						FROM
 							t_result_diopter d,
 							(
@@ -397,7 +398,7 @@
 							) o
 						WHERE
 							d.t_optometry_id = o.t_optometry_id
-						AND d.ifRL = #{ifRL}
+						AND d.ifRL = #{ifRL} AND type="AVG"
 						ORDER BY
 							d.t_diopter_id DESC
 	</select>
@@ -408,7 +409,8 @@
 	</select>
 	
 	<select id="getLatelestResultEyeaxisDO" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
-		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs from t_result_eyeaxis where student_id=#{studentId} order by check_date desc limit 1
+		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs,ifnull(first_check_od,'') firstCheckOd,ifnull(first_check_os,'') firstCheckOs 
+		from t_result_eyeaxis where student_id=#{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveEyePressure" parameterType="com.shaicha.information.domain.ResultEyepressureDO">
@@ -536,7 +538,55 @@
 			#{checkDate}
 		)
 	</insert>
+	
+	<select id="getResultCornealDOList" resultType="com.shaicha.information.domain.ResultCornealDO">
+							SELECT
+						ifnull(corneal_mm, '') cornealMm,
+						ifnull(corneal_d, '') cornealD,
+						ifnull(corneal_deg, '') cornealDeg
+					FROM
+						t_result_corneal d,
+						(
+							SELECT
+								`t_optometry_id`,
+								`student_id`
+							FROM
+								t_result_optometry
+							WHERE
+								student_id = #{studentId} order by check_date desc limit 1
+						) o
+					WHERE
+						d.t_optometry_id = o.t_optometry_id
+					AND d.ifRL = #{ifrl} AND d.type=#{type}
+					ORDER BY
+						d.t_corneal_id DESC
+	</select>
 
+
+<select id="getJInShiLv" resultType="com.shaicha.information.domain.ResultEyesightDO">
+											SELECT
+						d.naked_farvision_od,
+						d.naked_farvision_os,
+						d.identity_card,
+						d.check_date,
+						t.school,
+						t.grade,
+						t.student_sex,
+						t.xue_bu
+					FROM
+						t_result_eyesight d,
+						t_student t
+					WHERE
+					
+					 d.identity_card = t.identity_card 
+					 AND #{startDate}&lt;=d.check_date
+					AND #{endDate}&gt;=d.check_date
+</select>
+
+<select id="getResultDiopterDO" resultType="com.shaicha.information.domain.ResultDiopterDO">
+	select dengxiaoqiujing,ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG'   AND #{startDate}&lt;=check_date
+					AND #{endDate}&gt;=check_date
+</select>
 	<select id="querySchoolName" resultType="com.shaicha.information.domain.StudentDO">
 		select id, school from t_student group by school
 	</select>

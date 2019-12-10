@@ -34,6 +34,9 @@
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="baogaoxuexiao()">
 									   检测报告(学校)
 								</button>
+								 <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="jyjshaichabaogao()">
+									   教育局筛查报告
+								</button>
 							</div>
 						</div>
 						<div class="columns pull-right">
@@ -60,13 +63,54 @@
                         		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
                     		</select>
 						</div>
+						 		
+							<div class="columns pull-right col-md-2 nopadding">
+									<select class="form-control" name="studentClass" id="studentClass" >
+                        			<option value="">班级</option>
+                        			<option value="1">1</option>
+                        			<option value="2">2</option>
+                        			<option value="3">3</option>
+                        			<option value="4">4</option>
+                        			<option value="5">5</option>
+                        			<option value="6">6</option>
+                        			<option value="7">7</option>
+                        			<option value="8">8</option>
+                        			<option value="9">9</option>
+                        			<option value="10">10</option>
+                        			<option value="11">11</option>
+                    			</select>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select class="form-control" name="grade" id="grade" >
+                        		<option value="">年级</option>
+                        		<option value="小班">小班</option>
+                        		<option value="中班">中班</option>
+                        		<option value="大班">大班</option>
+                        		<option value="1年级">一年级</option>
+                        		<option value="2年级">二年级</option>
+                        		<option value="3年级">三年级</option>
+                        		<option value="4年级">四年级</option>
+                        		<option value="5年级">五年级</option>
+                        		<option value="6年级">六年级</option>
+                    		</select>
+						</div>
+						<!-- <div class="columns pull-right col-md-2 nopadding ">
+									<input id="startDate" name="startDate" class="form-control" placeholder="导出开始时间：" type="text">
+								</div>
+								<div class="columns pull-right col-md-2 nopadding">
+									<input id="endDate" name="endDate" class="form-control" placeholder="导出结束时间：" type="text">
+								</div> -->
 					</div>
-					<table id="exampleTable" data-mobile-responsive="true">
+				 <table id="exampleTable" data-mobile-responsive="true"> 
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script src="/js/plugins/echarts/echarts.js"></script>
+	<!--  <div id="genianlingduanjinshilvfazhanqushi"  style="width: 600px;height: 400px;-webkit-tap-highlight-color: transparent;" ></div>
+	<div id="nannvshengjinshilvfazhanqushi" style="width: 600px;height: 400px;-webkit-tap-highlight-color: transparent;" ></div>
+	<div id="nannvshengjinshilvfazhanqushi"></div> -->
 	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
 		<div>
 			<script type="text/javascript">
@@ -94,5 +138,15 @@
 		
 	<div th:include="include :: footer"></div>	
 	<script type="text/javascript" src="/js/appjs/information/student/shifanstudent.js"></script>	
+	<script type="text/javascript">
+	laydate.render({
+		elem: '#startDate',
+		type: 'date'
+	});
+	laydate.render({
+		elem: '#endDate',
+		type: 'date'
+	});
+	</script>
 </body>
 </html>

@@ -18,15 +18,15 @@ function load() {
 				toolbar : '#exampleToolbar',
 				striped : true, // 设置为true会有隔行变色效果
 				dataType : "json", // 服务器返回的数据类型
-				pagination : true, // 设置为true会在底部显示分页条
+	//			pagination : true, // 设置为true会在底部显示分页条
 				// queryParamsType : "limit",
 				// //设置为limit则会发送符合RESTFull格式的参数
 				singleSelect : false, // 设置为true将禁止多选
 				// contentType : "application/x-www-form-urlencoded",
 				// //发送到服务器的数据编码类型
-				pageSize : 10, // 如果设置了分页，每页数据条数
+				/*pageSize : 10, // 如果设置了分页，每页数据条数
 				pageNumber : 1, // 如果设置了分布，首页页码
-				//search : true, // 是否显示搜索框
+*/				//search : true, // 是否显示搜索框
 				showColumns : false, // 是否显示内容下拉框（选择显示的列）
 				sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
 				queryParams : function(params) {
@@ -46,21 +46,6 @@ function load() {
 				// sortOrder.
 				// 返回false将会终止请求
 				columns : [
-					/*	{
-							checkbox : true
-						},
-														{
-							field : 'tOptometryId', 
-							title : 'id' 
-						},*/
-														{
-							field : 'studentId', 
-							title : '学生id' 
-						},
-														{
-							field : 'checkorId', 
-							title : '第一次电脑验光检查者id' 
-						},
 														{
 							field : 'firstCheckVd', 
 							title : '第一次验光VD' 
@@ -81,37 +66,34 @@ function load() {
 							field : 'firstCheckLcs', 
 							title : '第一次检查左眼cs' 
 						},
-														{
-							field : 'checkDate', 
-							title : '电脑验光日期' 
-						},
-														{
-							field : 'secondCheckVd', 
-							title : '第二次验光VD' 
-						},
+						{
+							field : 'firstCheckPd', 
+							title : '第一次验光PD' 
+						},							
 														{
 							field : 'secondCheckRps', 
-							title : '第一次检查右眼ps' 
+							title : '第二次检查右眼ps' 
 						},
 														{
 							field : 'secondCheckLps', 
-							title : '第一次检查左眼ps' 
+							title : '第二次检查左眼ps' 
 						},
 														{
 							field : 'secondCheckRcs', 
-							title : '第一次检查右眼cs' 
+							title : '第二次检查右眼cs' 
 						},
 														{
 							field : 'secondCheckLcs', 
-							title : '第一次检查左眼cs' 
+							title : '第二次检查左眼cs' 
 						},
 						/*								{
 							field : 'deleteFlag', 
 							title : '状态0：正常1：禁止' 
 						},*/
-														{
-							field : 'firstCheckPd', 
-							title : '第一次验光PD' 
+														
+						{
+							field : 'secondCheckVd', 
+							title : '第二次验光VD' 
 						},
 														{
 							field : 'secondCheckPd', 
@@ -149,7 +131,7 @@ function load() {
 				toolbar : '#exampleToolbar',
 				striped : true, // 设置为true会有隔行变色效果
 				dataType : "json", // 服务器返回的数据类型
-				pagination : true, // 设置为true会在底部显示分页条
+			//	pagination : true, // 设置为true会在底部显示分页条
 				// queryParamsType : "limit",
 				// //设置为limit则会发送符合RESTFull格式的参数
 				singleSelect : false, // 设置为true将禁止多选
@@ -184,9 +166,14 @@ function load() {
 							field : 'tCornealId', 
 							title : 'id' 
 						},*/
-														{
+														/*{
 							field : 'tOptometryId', 
 							title : 'id' 
+						},*/
+						{
+							field : 'type', 
+							title : '' 
+							//	R1=最大曲率值  R2=最小曲率值  AVG=平均取滤纸 CYL=曲率差值
 						},
 														{
 							field : 'cornealMm', 
@@ -200,14 +187,10 @@ function load() {
 							field : 'cornealDeg', 
 							title : '右眼角膜柱镜轴向' 
 						},
-														{
-							field : 'type', 
-							title : 'type' 
-							//	R1=最大曲率值  R2=最小曲率值  AVG=平均取滤纸 CYL=曲率差值
-						},
+														
 														{
 							field : 'ifrl', 
-							title : '左右眼',
+							title : '左/右眼',
 							formatter(value, row, index){
 								if(value == 'L')
 									return "左眼"
@@ -216,9 +199,13 @@ function load() {
 							}
 							
 						},
+						{
+							field : 'checkDate', 
+							title : '检查时间',	
+						},
 														{
 							field : 'firstSecond', 
-							title : '两周内的第几次检查',
+							title : '',
 							//  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查
 							formatter(value, row, index){
 								if(value == 'FIRST_CHECK')
@@ -259,7 +246,7 @@ function load() {
 				toolbar : '#exampleToolbar',
 				striped : true, // 设置为true会有隔行变色效果
 				dataType : "json", // 服务器返回的数据类型
-				pagination : true, // 设置为true会在底部显示分页条
+				//pagination : true, // 设置为true会在底部显示分页条
 				// queryParamsType : "limit",
 				// //设置为limit则会发送符合RESTFull格式的参数
 				singleSelect : false, // 设置为true将禁止多选
@@ -294,37 +281,45 @@ function load() {
 							field : 'tDiopterId', 
 							title : 'id' 
 						},*/
-														{
+														/*{
 							field : 'tOptometryId', 
 							title : 'id' 
-						},
+						},*/
 														{
 							field : 'diopterS', 
-							title : '右眼球镜（近、远视度数）' 
+							title : '球镜' 
 						},
 														{
 							field : 'diopterC', 
-							title : '右眼柱镜（散光度数）' 
+							title : '柱镜' 
 						},
 														{
 							field : 'diopterA', 
-							title : '右眼轴位（散光轴位）' 
+							title : '轴位' 
 						},
-														{
+														/*{
 							field : 'believe', 
 							title : '可信度' 
-						},
+						},*/
 						/*								{
 							field : 'num', 
 							title : 'SCA多次普通顺序 1 2  3...' 
 						},*/
 														{
 							field : 'type', 
-							title : '保存的数据类型 (PU_TONG=多次批量检查SCAAVG =SCA的平均值L_DATA=夜间视力检查)' 
+							title : '(AVG)',
+							formatter(value, row, index){
+								if(value == 'AVG')
+									return "<  >";
+								if(value=='L_DATA')
+									return "L.DATA";
+								if(value != 'AVG') 
+									return ""
+							}
 						},
 														{
 							field : 'ifrl', 
-							title : '左右眼',
+							title : '左/右眼',
 							formatter(value, row, index){
 								if(value == 'L')
 									return "左眼"
@@ -332,9 +327,13 @@ function load() {
 									return "右眼"
 							}
 						},
+						{
+							field : 'checkDate', 
+							title : '检查时间',	
+						},
 														{
 							field : 'firstSecond', 
-							title : '两周内的第几次检查',
+							title : '',
 							//  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查
 							formatter(value, row, index){
 								if(value == 'FIRST_CHECK')

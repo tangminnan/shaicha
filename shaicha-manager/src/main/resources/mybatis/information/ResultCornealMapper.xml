@@ -8,11 +8,11 @@
 	</select>
 	
 	<select id="queryByToptometryTd" resultType="com.shaicha.information.domain.ResultCornealDO">
-		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal where t_optometry_id = #{value}
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,check_date,first_second from t_result_corneal where t_optometry_id = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ResultCornealDO">
-		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second,check_date from t_result_corneal
         <where>  
 		  		  <if test="tCornealId != null and tCornealId != ''"> and t_corneal_id = #{tCornealId} </if>
 		  		  <if test="tOptometryId != null and tOptometryId != ''"> and t_optometry_id = #{tOptometryId} </if>

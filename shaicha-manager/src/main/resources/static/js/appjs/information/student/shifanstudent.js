@@ -36,7 +36,9 @@ function load() {
 								studentName:$("#studentName").val(),
 								phone:$("#phone").val(),
 								school:$("#school option:selected").val(),
-								studentSex:$("#studentSex option:selected").val()
+								studentSex:$("#studentSex option:selected").val(),
+								grade:$("#grade").val(),
+								studentClass:$("#studentClass").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -55,10 +57,10 @@ function load() {
 									field : 'id', 
 									title : 'id' 
 								},
-								{
+								/*{
 									field : 'ideentityType', 
 									title : '证件类型' 
-								},
+								},*/
 								{
 									field : 'identityCard', 
 									title : '证件号码' 
@@ -80,10 +82,10 @@ function load() {
 									   	}
 									}
 								},
-								{
+								/*{
 									field : 'birthday', 
 									title : '出生日期' 
-								},
+								},*/
 																{
 									field : 'nation', 
 									title : '民族' 
@@ -97,10 +99,10 @@ function load() {
 									field : 'school', 
 									title : '学校' 
 								},
-								{
+								/*{
 									field : 'schoolCode', 
 									title : '学校编码' 
-								},
+								},*/
 																{
 									field : 'grade', 
 									title : '年级' 
@@ -448,4 +450,138 @@ function baogaoxuexiao(){
 		content : '/studentReport/xuexiao' // iframe的url
 	});
 	layer.full(page);	
+}
+/**
+ * 教育局的筛查报告
+ */
+function jyjshaichabaogao(){
+	var page = layer.open({
+		type : 2,
+		title : '报告',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '300px' ],
+		content : '/studentReport/jiaoyuju' // iframe的url
+	});
+	layer.full(page);	
+	
+	/*var myChart =  echarts.init(document.getElementById('genianlingduanjinshilvfazhanqushi'));
+	var myChart1 =  echarts.init(document.getElementById('nannvshengjinshilvfazhanqushi'));  
+	option = {
+		    tooltip: {
+		        trigger: 'axis'
+		    },
+		    legend: {
+		        data:[]
+		    },
+		    grid: {
+		        left: '3%',
+		        right: '4%',
+		        bottom: '3%',
+		        containLabel: true
+		    },
+		    toolbox: {
+		        feature: {
+		            saveAsImage: {}
+		        }
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: ['幼儿园','小学','初中','高中']
+		    },
+		    yAxis: {
+		        type: 'value',
+		      
+		        axisLabel: {  
+                    show: true,  
+                  
+                    formatter: '{value} %' 
+                    },  
+                show: true
+		    },
+		    series: []
+		};
+	
+	   var startDate=$("#startDate").val();
+	   if(startDate==''){alert("开始日期不可为空");return;}
+	   var endDate = $("#endDate").val();
+	   if(endDate==''){alert("结束日期不可为空");return;}
+	   
+	   $.ajax({
+			cache : true,
+			async:false,
+			type : "GET",
+			url : "/information/student/getJInShiLv",
+			data : {startDate:startDate,endDate:endDate},
+			async : false,
+			error : function(request) {
+				parent.layer.alert("Connection error");
+			},
+			success : function(data) {
+				if(data!=null){
+					console.info("----------");
+					console.info(data);
+				   var legend = {'data':[],bottom:'-1.5%'};
+				   var series=[];
+				    for(var key in data){
+				    	legend.data.push(key);
+						var obj =  {
+								
+					            name:key,
+					            smooth:true,
+					            type:'line',
+					            data:data[key]
+					        }
+						series.push(obj);
+					}
+				    
+				    option.legend=legend;
+				    option.series=series;
+				    console.info(option.series);
+				}
+			}
+		});
+
+	   myChart.setOption(option);
+	   
+	   $.ajax({
+			cache : true,
+			async:false,
+			type : "GET",
+			url : "/information/student/getJInShiLvSex",
+			data : {startDate:startDate,endDate:endDate},
+			async : false,
+			error : function(request) {
+				parent.layer.alert("Connection error");
+			},
+			success : function(data) {
+				console.info(data);
+				if(data!=null){
+					
+				   var legend = {'data':[],bottom:'-1%'};
+				   var series=[];
+				   var xAxis={'data':data.time};
+				    for(var key in data){
+				    	if(key!='time'){
+				    		legend.data.push(key);
+				    		var obj =  {
+					            name:key,
+					            smooth:true,
+					            type:'line',
+					          
+					            data:data[key]
+					        }
+				    		series.push(obj);
+				    	}
+					}
+				    
+				    option.legend=legend;
+				    option.series=series;
+				    option.xAxis=xAxis;
+				}
+			}
+		});
+	   myChart1.setOption(option);*/
+	  
 }

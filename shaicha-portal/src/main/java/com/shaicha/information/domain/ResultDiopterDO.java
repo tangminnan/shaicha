@@ -38,6 +38,8 @@ public class ResultDiopterDO implements Serializable {
 	private String identityCard;
 	//检查日期
 	private Date checkDate;
+	//等效球镜
+	private Double dengxiaoqiujing;
 	
 	public Date getCheckDate() {
 		return checkDate;
@@ -174,6 +176,13 @@ L_DATA=夜间视力检查
 	public ResultDiopterDO() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Double getDengxiaoqiujing() {
+		return dengxiaoqiujing;
+	}
+	public void setDengxiaoqiujing(Double dengxiaoqiujing) {
+		this.dengxiaoqiujing = dengxiaoqiujing;
 	}
 	public ResultDiopterDO(Integer tOptometryId, Double diopterS, Double diopterC, Double diopterA, Integer believe,
 			Integer num, String type, String ifrl, String firstSecond,String identityCard) {
