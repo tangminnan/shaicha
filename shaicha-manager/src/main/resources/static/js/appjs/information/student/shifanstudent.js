@@ -436,3 +436,16 @@ function shifanshaichadayin(id,lastCheckTime){
 function checkdetail(identityCard){
 	window.location.href="/information/student/shifanshaichadetail?identityCard="+identityCard;
 }
+
+function baogaoxuexiao(){
+	
+	var page = layer.open({
+		type : 2,
+		title : '报告',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '300px' ],
+		content : '/studentReport/xuexiao' // iframe的url
+	});
+	layer.full(page);	
+}

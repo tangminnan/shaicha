@@ -777,6 +777,11 @@ public class StudentServiceImpl implements StudentService {
 	public List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id) {
 		return studentDao.getLatelestResultEyeaxisDO(id);
 	}
+
+	@Override
+	public List<StudentDO> querySchoolName() {
+		return studentDao.querySchoolName();
+	}
 	
 	
 }

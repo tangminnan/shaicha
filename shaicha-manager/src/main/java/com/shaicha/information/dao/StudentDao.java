@@ -70,4 +70,21 @@ public interface StudentDao {
 	void ResultEyeaxisDO(ResultEyeaxisDO resultEyeaxisDO);
 
 	void saveResultDiopterDO(ResultDiopterDO resultDiopterDO);
+	
+	List<StudentDO> querySchoolName();
+	
+	List<StudentDO> queryCheckNum(String school);
+	
+	List<StudentDO> queryGradeNum(String grade);
+	
+	List<StudentDO> getCheckUserNum(Map<String,Object> map);
+	
+	List<StudentDO> queryGradeClassCount(Map<String,Object> map);
+	
+	List<StudentDO> getGradeClassCheck(Map<String,Object> map);
+	
+	List<StudentDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("checkDate") String checkDate,@Param("studentClass") String studentClass);
+	
+	List<StudentDO> getCheckNianjiNum(@Param("school") String school,@Param("grade") String grade,@Param("checkDate") String checkDate);
+
 }

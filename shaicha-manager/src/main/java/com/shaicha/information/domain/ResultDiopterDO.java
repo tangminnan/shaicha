@@ -38,7 +38,22 @@ public class ResultDiopterDO implements Serializable {
 	//身份证号
 	private String identityCard;
 	private Date checkDate;
+	private String checkDate1;
+	private Double dengxiaoqiujing;
 	
+	
+	public String getCheckDate1() {
+		return checkDate1;
+	}
+	public void setCheckDate1(String checkDate1) {
+		this.checkDate1 = checkDate1;
+	}
+	public Double getDengxiaoqiujing() {
+		return dengxiaoqiujing;
+	}
+	public void setDengxiaoqiujing(Double dengxiaoqiujing) {
+		this.dengxiaoqiujing = dengxiaoqiujing;
+	}
 	public Integer gettDiopterId() {
 		return tDiopterId;
 	}

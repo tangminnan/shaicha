@@ -103,5 +103,10 @@
 			#{tEyeaxisId}
 		</foreach>
 	</delete>
+	
+	<select id="getEyeaxis" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
+		select first_check_od,first_check_os from t_result_eyeaxis
+		where identity_card = #{identityCard} and check_date = #{checkDate} 
+	</select>
 
 </mapper>

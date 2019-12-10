@@ -59,6 +59,14 @@ public class ResultEyesightDO implements Serializable {
 		//戴镜视力左
 	private String glassvisionOs;
 	
+	private String dushu;
+	
+	public String getDushu() {
+		return dushu;
+	}
+	public void setDushu(String dushu) {
+		this.dushu = dushu;
+	}
 	public Date getEndTime() {
 		return endTime;
 	}

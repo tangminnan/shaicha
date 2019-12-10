@@ -80,4 +80,6 @@ public interface StudentService {
 	List<ResultEyepressureDO> getLatestResultEyepressureDO(Integer id);
 
 	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id);
+	
+	List<StudentDO> querySchoolName();
 }

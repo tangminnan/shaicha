@@ -1,9 +1,11 @@
 package com.shaicha.information.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultDiopterDO;
 
@@ -31,4 +33,20 @@ public interface ResultDiopterDao {
 	int batchRemove(Integer[] tDiopterIds);
 	
 	List<ResultDiopterDO> getByToptometryId(Integer tOptometryId);
+	
+//	List<ResultDiopterDO> overYearMyopia(@Param("checkDate") Date checkDate,@Param("identityCard") String identityCard);
+	List<ResultDiopterDO> overYearMyopia(@Param("checkDate") String checkDate,@Param("school") String school);
+	
+	List<ResultDiopterDO> gradeMyopia(Map<String,Object> map);
+	
+	List<ResultDiopterDO> studentSexMyopia(Map<String,Object> map);
+	
+	ResultDiopterDO maxCheckDate();
+	
+	List<ResultDiopterDO> getStudentMyopia(Map<String,Object> map);
+	
+	List<ResultDiopterDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("checkDate") String checkDate);
+	
+	List<ResultDiopterDO> jianchashijian();
+
 }

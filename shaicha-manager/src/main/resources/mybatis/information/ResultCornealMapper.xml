@@ -97,5 +97,11 @@
 			#{tCornealId}
 		</foreach>
 	</delete>
+	
+	<select id="getCornealMm" resultType="com.shaicha.information.domain.ResultCornealDO">
+		select corneal_mm from t_result_corneal where first_second = 'FIRST_CHECK' 
+		and ifRL = #{ifRL} and identity_card = #{identityCard} and type = #{type} 
+		and check_date = #{checkDate} 
+	</select>
 
 </mapper>

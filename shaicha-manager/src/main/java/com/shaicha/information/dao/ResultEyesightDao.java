@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultEyesightDO;
 
@@ -29,4 +30,12 @@ public interface ResultEyesightDao {
 	int remove(Integer t_eyesight_id);
 	
 	int batchRemove(Integer[] tEyesightIds);
+	
+	List<ResultEyesightDO> queryLuoYanShiLi(Map<String,Object> map);
+	
+	List<ResultEyesightDO> liNian(Map<String,Object> map);
+	
+	List<ResultEyesightDO> jinShi(Map<String,Object> map);
+	
+	List<ResultEyesightDO> getLifeShili(@Param("identityCard") String identityCard,@Param("checkDate") String checkDate);
 }

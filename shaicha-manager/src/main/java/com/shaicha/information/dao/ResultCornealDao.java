@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultCornealDO;
 
@@ -31,4 +32,7 @@ public interface ResultCornealDao {
 	int batchRemove(Integer[] tCornealIds);
 	
 	List<ResultCornealDO> queryByToptometryTd(Integer tOptometryId);
+	
+	List<ResultCornealDO> getCornealMm(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard
+			,@Param("type") String type,@Param("checkDate") String checkDate);
 }

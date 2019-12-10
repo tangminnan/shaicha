@@ -133,5 +133,41 @@
 			#{tEyesightId}
 		</foreach>
 	</delete>
+	
+	<select id="queryLuoYanShiLi" resultType="com.shaicha.information.domain.ResultEyesightDO">
+		select *, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
+			where tre.identity_card = ts.identity_card 
+			and ts.school = #{school}
+			<if test="checkDate != null and checkDate != ''"> and tre.check_date = #{checkDate} </if>
+			<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
+	</select>
+	
+	<select id="liNian" resultType="com.shaicha.information.domain.ResultEyesightDO">
+		select *, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
+			where tre.identity_card = ts.identity_card 
+			and ts.school = #{school}
+			<if test="checkDate != null and checkDate != ''"> and date_format(tre.check_date,'%Y') = #{checkDate} </if>
+			<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
+			<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
+	</select>
+	
+	<select id="jinShi" resultType="com.shaicha.information.domain.ResultEyesightDO">
+		select *, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
+			where tre.identity_card = ts.identity_card 
+			and ts.school = #{school}
+			<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
+			<if test="checkDate != null and checkDate != ''"> and date_format(tre.check_date,'%Y-%m-%d') = #{checkDate} </if>
+			<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
+			<if test="studentClass != null and studentClass != ''"> and ts.student_class = #{studentClass} </if>
+			<if test="identityCard != null and identityCard != ''"> and tre.identity_card = #{identityCard} </if>
+		
+	</select>
+	
+	<select id="getLifeShili" resultType="com.shaicha.information.domain.ResultEyesightDO">
+		select `correction_farvision_od`,`correction_farvision_os`,`naked_farvision_od`,`naked_farvision_os`
+		 from t_result_eyesight where identity_card = #{identityCard}
+		and check_date = #{checkDate} 
+	</select>
+	
 
 </mapper>

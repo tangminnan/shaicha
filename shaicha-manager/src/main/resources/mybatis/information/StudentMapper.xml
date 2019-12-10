@@ -537,4 +537,53 @@
 		)
 	</insert>
 
+	<select id="querySchoolName" resultType="com.shaicha.information.domain.StudentDO">
+		select id, school from t_student group by school
+	</select>
+	
+	<select id="queryCheckNum" resultType="com.shaicha.information.domain.StudentDO">
+		select id, school,student_name from t_student where school = #{school} group by student_name
+	</select>
+	
+	<select id="queryGradeNum" resultType="com.shaicha.information.domain.StudentDO">
+		select id, school,student_name from t_student where grade = #{grade} group by student_name
+	</select>
+	
+	<select id="getCheckUserNum" resultType="com.shaicha.information.domain.StudentDO">
+		select ts.id, ts.school,ts.student_name from t_student ts,t_result_diopter trd
+		where trd.identity_card = ts.identity_card and ts.school = #{school}
+		and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
+		<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
+		  group by ts.identity_card
+	</select>
+	
+	<select id="getGradeClassCheck" resultType="com.shaicha.information.domain.StudentDO">
+		select ts.id, ts.school,ts.student_name from t_student ts,t_result_diopter trd
+		where trd.identity_card = ts.identity_card and ts.school = #{school}
+		and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		and ts.student_class = #{studentClass}
+		and ts.grade = #{grade}
+		  group by ts.identity_card
+	</select>
+	
+	<select id="queryGradeClassCount" resultType="com.shaicha.information.domain.StudentDO">
+		select id ,student_class,school,student_name from t_student
+		 where school = #{school} and grade = #{grade} GROUP BY student_class
+	</select>
+	
+	<select id="getCheckNianjiNum" resultType="com.shaicha.information.domain.StudentDO">
+		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex from t_result_diopter trd , t_student ts 
+		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		GROUP BY ts.student_class
+	</select>
+	
+	<select id="queryStudentGrade" resultType="com.shaicha.information.domain.StudentDO">
+		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,trd.identity_card from t_result_diopter trd , t_student ts 
+		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		and ts.student_class = #{studentClass}
+		GROUP BY trd.identity_card
+	</select>
+
+	
 </mapper>

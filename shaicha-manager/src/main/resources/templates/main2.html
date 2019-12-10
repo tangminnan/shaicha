@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head th:include="include :: header"></head>
+    <title>欢迎页</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+   
+</head>
+<body>
+
+<div class="panel panel-default" style="background-color: #EEEEEE; top: 1px;">
+    <!-- <div class="panel-heading"> <h3>&nbsp;&nbsp;&nbsp;欢迎登录儿童近视防控数据平台管理系统</h3></div> -->
+    
+    <div id="overYear" style="width: 600px;height:400px;float: left; display: none;"></div>
+    
+ 	<div id="gradeMyopia" style="width: 600px;height:400px;float: left;display: none;"></div>
+ 	
+ 	<div id="overYearGradeMyopia" style="width: 600px;height:400px;float: left;display: none;"></div>
+    
+    <div id="studentSexMyopia" style="width: 600px;height:400px;float: left;display: none;"></div>
+    
+    <div id="overYearSexNan" style="width: 600px;height:400px;float: left;display: none;"></div>
+    
+    <div id="overYearSexNv" style="width: 600px;height:400px;float: left;display: none;"></div>
+    
+    <div id="overYearGradeSex" style="width: 600px;height:400px;float: left;display: none;"></div>
+
+ 
+</div>
+<div th:include="include::footer"></div>
+<script src="/js/plugins/echarts/echarts.js"></script>
+<script type="text/javascript">
+	
+	// 基于准备好的dom，初始化echarts实例
+	var overYear = echarts.init(document.getElementById('overYear'));
+
+	$.ajax({
+ 		async : true,
+ 		type: 'get',
+ 		url: '/overYear',//请求数据的地址
+ 		dataType: "json",  
+ 		success: function (result) {
+ 			var option = {
+ 					 xAxis: {
+ 						 type: 'category',
+ 			             data: ["2017","2018","2019"]
+ 			         },
+ 			         yAxis: {
+ 			             type: 'value'
+ 			         },
+ 			         series: [{
+ 			        	itemStyle: {
+                            normal: {
+                               // color: '#6cb041',
+                                lineStyle:{
+                                    width:5//设置线条粗细
+                                }
+                            }
+                         },
+ 			             data: result.overYearMyopia,
+ 			             type: 'line'
+ 			         }] 
+ 			         
+ 			}
+	        
+ 			overYear.setOption(option);
+ 			
+ 		}
+	})	
+	
+	var gradeMyopia = echarts.init(document.getElementById('gradeMyopia'));	
+	
+	$.ajax({
+ 		async : true,
+ 		type: 'get',
+ 		url: '/gradeMyopia',//请求数据的地址
+ 		dataType: "json",  
+ 		success: function (result) {
+ 			//console.info(result.gradeMyopia);
+ 			var option = {
+ 				    color: ['#3398DB'],
+ 				    legend: {
+ 			            data:['系列一'],
+ 			            bottom : "2%",
+ 			        },
+ 				    xAxis : [
+ 				        {
+ 				            type : 'category',
+ 				            data : ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
+ 				            axisTick: {
+ 				                alignWithLabel: true
+ 				            }
+ 				        }
+ 				    ],
+ 				    yAxis : [
+ 				        {
+ 				            type : 'value'
+ 				        }
+ 				    ],
+ 				    series : [{
+ 				           // name:'系列一',
+ 				            type:'bar',
+ 				            barWidth: '30%',
+ 				            data:result.gradeMyopia
+ 				        }]
+ 				}
+ 			
+ 			gradeMyopia.setOption(option);
+ 		}
+	})
+	
+	var overYearGradeMyopia = echarts.init(document.getElementById('overYearGradeMyopia'));	
+	
+	
+	$.ajax({
+ 		async : true,
+ 		type: 'get',
+ 		url: '/overYearGradeMyopia',//请求数据的地址
+ 		dataType: "json",  
+ 		success: function (result) {
+ 			console.info(result.seventeen);
+ 			console.info(result.eighteen);
+ 			console.info(result.nineteen);
+ 			var option = {
+ 				    legend: { 
+ 				    	data : ['2017', '2018', '2019'],
+ 				    	bottom : "1%"
+ 				    	},
+ 				    //tooltip: {},
+ 				    xAxis: {
+ 				    	type: 'category',
+ 				    	data: ['一年级','二年级','三年级','四年级','五年级','六年级'],
+ 				    	},
+ 				    yAxis: {type: 'value'},
+ 				    series: [
+ 				             {
+ 				                 name:'2017',
+ 				                 type:'bar',
+ 				                 data:result.seventeen
+ 				             },
+ 				             {
+ 				                 name:'2018',
+ 				                 type:'bar',
+ 				                 data:result.eighteen
+ 				             },
+ 				             {
+ 				                 name:'2019',
+ 				                 type:'bar',
+ 				                 data:result.nineteen
+ 				             },
+
+ 				    ]
+ 				};
+ 			
+ 			overYearGradeMyopia.setOption(option);
+ 			
+ 		}
+	})
+	
+	var studentSexMyopia = echarts.init(document.getElementById('studentSexMyopia'));	
+	$.ajax({
+ 		async : true,
+ 		type: 'get',
+ 		url: '/studentSexMyopia',//请求数据的地址
+ 		dataType: "json",  
+ 		success: function (result) {
+ 			console.info(result);
+ 			var option = {
+ 				    color: ['#3398DB'],
+ 				    legend: {
+ 			            data:['男生','女生'],
+ 			            bottom : "2%",
+ 			        },
+ 				    xAxis : [
+ 				        {
+ 				            type : 'category',
+ 				            data : ['男生','女生'],
+ 				            axisTick: {
+ 				                alignWithLabel: true
+ 				            }
+ 				        }
+ 				    ],
+ 				    yAxis : [
+ 				        {
+ 				            type : 'value'
+ 				        }
+ 				    ],
+ 				    series : [{
+ 				    	   // name:'男生',
+ 				            type:'bar',
+ 				            barWidth: '50%',
+ 				            data:result.studentSexMyopia
+ 				        }]
+ 				}
+ 			
+ 			studentSexMyopia.setOption(option);
+ 		}
+	})
+	
+		// 基于准备好的dom，初始化echarts实例
+	var overYearSexNan = echarts.init(document.getElementById('overYearSexNan'));
+
+	$.ajax({
+ 		async : true,
+ 		type: 'get',
+ 		url: '/overYearSexNan',//请求数据的地址
+ 		dataType: "json",  
+ 		success: function (result) {
+ 			var option = {
+ 					 xAxis: {
+ 						 type: 'category',
+ 			             data: ["2017","2018","2019"]
+ 			         },
+ 			         yAxis: {
+ 			             type: 'value'
+ 			         },
+ 			         series: [{
+ 			        	itemStyle: {
+                            normal: {
+                               // color: '#6cb041',
+                                lineStyle:{
+                                    width:5//设置线条粗细
+                                }
+                            }
+                         },
+ 			             data: result.studentSexMyopia,
+ 			             type: 'line'
+ 			         }] 
+ 			         
+ 			}
+	        
+ 			overYearSexNan.setOption(option);
+ 			
+ 		}
+	})
+	
+		// 基于准备好的dom，初始化echarts实例
+	var overYearSexNv = echarts.init(document.getElementById('overYearSexNv'));
+
+	$.ajax({
+ 		async : true,
+ 		type: 'get',
+ 		url: '/overYearSexNv',//请求数据的地址
+ 		dataType: "json",  
+ 		success: function (result) {
+ 			var option = {
+ 					 xAxis: {
+ 						 type: 'category',
+ 			             data: ["2017","2018","2019"]
+ 			         },
+ 			         yAxis: {
+ 			             type: 'value'
+ 			         },
+ 			         series: [{
+ 			        	itemStyle: {
+                            normal: {
+                               // color: '#6cb041',
+                                lineStyle:{
+                                    width:5//设置线条粗细
+                                }
+                            }
+                         },
+ 			             data: result.studentSexMyopia,
+ 			             type: 'line'
+ 			         }] 
+ 			         
+ 			}
+	        
+ 			overYearSexNv.setOption(option);
+ 			
+ 		}
+	})
+	
+	var overYearGradeSex = echarts.init(document.getElementById('overYearGradeSex'));	
+	
+	
+	$.ajax({
+ 		async : true,
+ 		type: 'get',
+ 		url: '/overYearGradeSex',//请求数据的地址
+ 		dataType: "json",  
+ 		success: function (result) {
+ 			var option = {
+ 				    legend: { 
+ 				    	data : ['男生', '女生'],
+ 				    	bottom : "1%"
+ 				    	},
+ 				    //tooltip: {},
+ 				    xAxis: {
+ 				    	type: 'category',
+ 				    	data: ['一年级','二年级','三年级','四年级','五年级','六年级'],
+ 				    	},
+ 				    yAxis: {type: 'value'},
+ 				    series: [
+ 				             {
+ 				                 name:'男生',
+ 				                 type:'bar',
+ 				                 data:result.overYearSexNan
+ 				             },
+ 				             {
+ 				                 name:'女生',
+ 				                 type:'bar',
+ 				                 data:result.overYearSexNv
+ 				             }
+ 				    ]
+ 				};
+ 			
+ 			overYearGradeSex.setOption(option);
+ 			
+ 		}
+	})
+	
+	 setTimeout(function(){ 
+		console.info(overYear.getDataURL()); 
+		console.info(gradeMyopia.getDataURL()); 
+		console.info(overYearGradeMyopia.getDataURL()); 
+		console.info(studentSexMyopia.getDataURL()); 
+		console.info(overYearSexNan.getDataURL()); 
+		console.info(overYearSexNv.getDataURL()); 
+		console.info(overYearGradeSex.getDataURL()); 
+		}, 5000);
+</script>
+
+</body>
+</html>

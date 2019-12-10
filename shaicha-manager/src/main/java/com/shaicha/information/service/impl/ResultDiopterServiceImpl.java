@@ -56,5 +56,11 @@ public class ResultDiopterServiceImpl implements ResultDiopterService {
 	public List<ResultDiopterDO> getByToptometryId(Integer tOptometryId) {
 		return resultDiopterDao.getByToptometryId(tOptometryId);
 	}
+
+	@Override
+	public List<ResultDiopterDO> jianchashijian() {
+		// TODO Auto-generated method stub
+		return resultDiopterDao.jianchashijian();
+	}
 	
 }

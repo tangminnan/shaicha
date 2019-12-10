@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultEyeaxisDO;
 
@@ -29,4 +30,6 @@ public interface ResultEyeaxisDao {
 	int remove(Integer t_eyeaxis_id);
 	
 	int batchRemove(Integer[] tEyeaxisIds);
+	
+	List<ResultEyeaxisDO> getEyeaxis(@Param("identityCard")String identityCard,@Param("checkDate") String checkDate);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultEyepressureDO;
 
@@ -29,4 +30,6 @@ public interface ResultEyepressureDao {
 	int remove(Integer t_eyepressure_id);
 	
 	int batchRemove(Integer[] tEyepressureIds);
+	
+	List<ResultEyepressureDO> getEyepressure(@Param("identityCard")String identityCard, @Param("checkDate") String checkDate);
 }
