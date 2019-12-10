@@ -337,27 +337,29 @@ function save() {
 						console.info(overYearSexNv.getDataURL()); 
 						console.info(overYearGradeSex.getDataURL());*/
 						
-			 			$.ajax({
+			 			/*$.ajax({
 			 				type : 'POST',
 			 				data : {
 			 					"school" : $("#school").val(),
 			 					"checkDate" :$("#checkDate").val(),
 			 					"schoolNum":$("#schoolNum").val(),
-			 					/*"overYear" : overYear.getDataURL(),
+			 					"overYear" : overYear.getDataURL(),
 			 					"gradeMyopia" : gradeMyopia.getDataURL(),
 			 					"overYearGradeMyopia" : overYearGradeMyopia.getDataURL(),
 			 					"studentSexMyopia" : studentSexMyopia.getDataURL(),
 			 					"overYearSexNan" : overYearSexNan.getDataURL(),
 			 					"overYearSexNv" : overYearSexNv.getDataURL(),
-			 					"overYearGradeSex" : overYearGradeSex.getDataURL(),*/
+			 					"overYearGradeSex" : overYearGradeSex.getDataURL(),
 			 				},
 			 				url : '/studentReport/baogaoxuexiao',
 			 				success : function(result) {
-			 					parent.layer.alert("保存成功至D:/baogao/");
+			 					
 			 					
 			 				}
-			 			})
-			 			
+			 			})*/
+			 			window.location.href="/studentReport/baogaoxuexiao?school="+$("#school").val()
+			 																		+"&checkDate="+$("#checkDate").val()
+			 																		+"&schoolNum="+$("#schoolNum").val();
 			 			/*parent.reLoad();
 						var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 						parent.layer.close(index);*/

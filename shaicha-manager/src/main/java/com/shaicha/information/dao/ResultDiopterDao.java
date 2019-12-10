@@ -48,5 +48,7 @@ public interface ResultDiopterDao {
 	List<ResultDiopterDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("checkDate") String checkDate);
 	
 	List<ResultDiopterDO> jianchashijian();
+	
+	List<ResultDiopterDO> queryTimeBetween(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 
 }

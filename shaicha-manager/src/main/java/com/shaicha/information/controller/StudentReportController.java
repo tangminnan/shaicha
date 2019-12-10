@@ -1,6 +1,8 @@
 package com.shaicha.information.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -156,8 +158,7 @@ public class StudentReportController {
 		
 	}
 	
-	@ResponseBody
-	@PostMapping("/studentReport/baogaoxuexiao")
+	@GetMapping("/studentReport/baogaoxuexiao")
 	public void baogaoxuexiao(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		studentReportService.baogaoxuexiao(request, response);
 			
@@ -170,6 +171,36 @@ public class StudentReportController {
 		model.addAttribute("schoolName", schoolName);
 		return "information/student/jiaoyuju";
 	}
-
+	@ResponseBody
+	@PostMapping("/studentReport/baogaojyjimg")
+	public Map<String, List<Double>> baogaojyjimg(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		Map<String, List<Double>> map = new HashMap<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		List<Double> mappp = new ArrayList<Double>();
+		try {
+			List<ResultDiopterDO> timeBetween = resultDiopterService.queryTimeBetween(sdf.parse(startDate), sdf.parse(endDate));
+			if(timeBetween.size()<=0){
+				mappp = new ArrayList<Double>();
+				mappp.add(-1.0);
+				map.put("code", mappp);
+			}else{
+				mappp = new ArrayList<Double>();
+				mappp.add(1.0);
+				map.put("code", mappp);
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		return map;
+	}
 	
+	@GetMapping("/studentReport/baogaojiaoyuju")
+	public void baogaojiaoyuju(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		studentReportService.baogaojiaoyuju(request, response);
+			
+	}
 }

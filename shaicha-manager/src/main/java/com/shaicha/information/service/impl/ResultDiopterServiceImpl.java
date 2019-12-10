@@ -7,6 +7,7 @@ import com.shaicha.information.dao.ResultDiopterDao;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.service.ResultDiopterService;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +62,12 @@ public class ResultDiopterServiceImpl implements ResultDiopterService {
 	public List<ResultDiopterDO> jianchashijian() {
 		// TODO Auto-generated method stub
 		return resultDiopterDao.jianchashijian();
+	}
+
+	@Override
+	public List<ResultDiopterDO> queryTimeBetween(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return resultDiopterDao.queryTimeBetween(startDate, endDate);
 	}
 	
 }

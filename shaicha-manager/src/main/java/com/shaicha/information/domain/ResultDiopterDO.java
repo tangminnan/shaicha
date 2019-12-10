@@ -41,8 +41,21 @@ public class ResultDiopterDO implements Serializable {
 	private Double dengxiaoqiujing;
 	private Date checkDate;
 	private String checkDate1;
+	private String endTime;
+	private String startTime;
 	
-	
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
 	public String getCheckDate1() {
 		return checkDate1;
 	}

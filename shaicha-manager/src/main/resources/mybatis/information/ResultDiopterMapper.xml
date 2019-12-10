@@ -163,5 +163,10 @@
 		select date_format(check_date,'%Y-%m-%d') checkDate1 from t_result_diopter where check_date is not null GROUP BY check_date
 	</select>
 	
+	<select id="queryTimeBetween" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		select `diopter_s`,`diopter_c`,`diopter_a` from t_result_diopter where type = 'AVG'
+		AND #{startDate}&lt;=check_date
+		AND #{endDate}&gt;=check_date
+	</select>
 
 </mapper>

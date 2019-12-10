@@ -27,4 +27,6 @@ public interface StudentReportService {
 	Map<String,List<Double>> overYearGradeSex(String school,String checkDate);
 
 	void baogaoxuexiao(HttpServletRequest request, HttpServletResponse response);
+	
+	void baogaojiaoyuju(HttpServletRequest request, HttpServletResponse response);
 }

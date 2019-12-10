@@ -1,7 +1,10 @@
 package com.shaicha.information.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultDiopterDO;
 
@@ -31,4 +34,6 @@ public interface ResultDiopterService {
 	List<ResultDiopterDO> getByToptometryId(Integer tOptometryId);
 	
 	List<ResultDiopterDO> jianchashijian();
+	
+	List<ResultDiopterDO> queryTimeBetween(Date startDate,Date endDate);
 }

@@ -529,96 +529,74 @@ public class StudentReportServiceImpl implements StudentReportService{
 		return overYearGradeSex;
 	}
 	
+	public void createDoc(Map<String, Object> dataMap, String fileName, String template) {
+        Configuration configuration = new Configuration();
+        configuration.setDefaultEncoding("utf-8");                                       
+        configuration.setClassForTemplateLoading(StudentReportServiceImpl.class, "/");
+        Template t = null;
+		//File outFile = new File(realPath + fileName);
+		Writer out = null;
+        try {
+            //word.xml是要生成Word文件的模板文件
+            t = configuration.getTemplate(template,"utf-8"); 
+            out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(fileName.getBytes(),"iso-8859-1"))+".docx")));                 //还有这里要设置编码
+            t.process(dataMap, out);
+            out.flush();
+            out.close();
+          
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
 	
 	/**
 	 * freemarker导出工具类
 	 */
 	
-	public void download(HttpServletRequest request,HttpServletResponse response,String template,String newWordName,Map dataMap) {
-        Configuration configuration = new Configuration();
-        configuration.setDefaultEncoding("utf-8");                                       
-        configuration.setClassForTemplateLoading(StudentServiceImpl.class, "/");  
-        File dir=new File("D:/baogao/");
-        if(!dir.exists()){
-        	dir.mkdirs();
-	    }
-        File outFile = new File("D:/baogao/"+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".doc");//输出路径
-        Template t=null;  
-        Writer out = null;
-        try {
-            t = configuration.getTemplate("给学校报告检测.ftl", "utf-8"); //文件名，获取模板
-            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));  
-            t.process(dataMap, out);
-        } catch (Exception e) {
-            e.printStackTrace();  
-        } finally {
-            try {
-                out.close();
-            } catch (IOException  e1) {
-                e1.printStackTrace(); 
-            }
-        }
-
-       /* File file = null;  
-        InputStream fin = null;  
-        ServletOutputStream out = null;
-        try {
-        	Template t =configuration.getTemplate(template);
-            //word.xml是要生成Word文件的模板文件
-        	file = createDoc(dataMap,t,newWordName);   
-            fin = new FileInputStream(file);  
-            response.setCharacterEncoding("utf-8"); 
-    		response.setContentType("application/msword"); 
-    		response.setHeader("Content-Disposition", "attachment;filename="+new String(newWordName.getBytes(),"iso-8859-1")+".docx");
-    		out = response.getOutputStream();
-    		byte[] buffer = new byte[512];
-    		int bytesToRead = -1;
-    		while((bytesToRead = fin.read(buffer)) != -1) {
-    		 out.write(buffer, 0, bytesToRead);
-    		}
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-			if (fin != null){
+	public void download(HttpServletRequest request,HttpServletResponse response, String fileUrl, String fileName) {
+		java.io.BufferedInputStream bis = null;
+		java.io.BufferedOutputStream bos = null;
+		try{
+			fileUrl = fileUrl + fileName;
+			response.setContentType("multipart/form-data");
+			response.setCharacterEncoding("utf-8");
+			response.setHeader("Content-disposition", "attachment; filename=" + java.net.URLEncoder.encode(fileName, "UTF-8"));
+			bis = new java.io.BufferedInputStream(new java.io.FileInputStream((fileUrl)));
+			bos = new java.io.BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[2048];
+			int bytesRead;
+			int i = 0;
+	
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+				i++;
+			}
+			bos.flush();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (bis != null) {
 				try {
-					fin.close();
+					bis.close();
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				bis = null;
 			}
-			if (out != null){
-					try {
-						out.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			if (bos != null) {
+				try {
+					bos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			if (file != null)
-				file.delete();
-		}*/
+				bos = null;
+			}
+		}
 
     }
-/*	private static File createDoc(Map dataMap, Template template,String newWordName) {
-		File f = null;
-		try {
-			f = new File(new String(newWordName.getBytes(),"iso-8859-1")+".docx");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Template t = template;
-		try {
-			Writer w = new OutputStreamWriter(new FileOutputStream(f), "utf-8");
-			t.process(dataMap, w);
-			 w.close();
-			} catch (Exception ex){
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
-			} 
-		return f;
-	}*/
 
 
 	/**
@@ -628,15 +606,21 @@ public class StudentReportServiceImpl implements StudentReportService{
 	public void baogaoxuexiao(HttpServletRequest request,  HttpServletResponse response) {
 		String school = request.getParameter("school");
 		try {
-			
 				Map<String, Object> params = xuexiaobaogao(request, response);
-
-				download(request, response, "给学校报告检测.ftl",school, params);
+				createDoc(params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给学校报告检测.ftl");
+				download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".docx");
 			
 			//craeteZipPath(bootdoConfig.getPoiword(),response);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}finally {
+			File file=new File(bootdoConfig.getPoiword());
+	        if(file.exists()) {
+	           File[] files = file.listFiles();
+	           for(File f :files)
+	              f.delete();
+	        }
+	     }  
 	}
 
 
@@ -719,8 +703,12 @@ public class StudentReportServiceImpl implements StudentReportService{
 		//基本情况
 		//List<StudentDO> checkNum = studentDao.queryCheckNum(school);
 		Integer jiancha = jiancha(school,checkDate,null,null);
+		if(jiancha == -1){
+			params.put("checkNum", 0);
+		}else{
+			params.put("checkNum", jiancha);
+		}
 		params.put("schoolNum", schoolNum);
-		params.put("checkNum", jiancha);
 		params.put("checkRate", Double.parseDouble(df.format(jiancha/schoolNum*100))+"%");
 		
 		
@@ -744,8 +732,12 @@ public class StudentReportServiceImpl implements StudentReportService{
 		}
 		if(third.size()>0){
 			Integer jiancha4 = jiancha(school,checkDate,null,"3年级");
+			if(jiancha4 == -1){
+				params.put("thirdGradeCheckNum", 0);
+			}else{
+				params.put("thirdGradeCheckNum", jiancha4);
+			}
 			params.put("thirdGradeNum", third.size());
-			params.put("thirdGradeCheckNum", jiancha4);
 			params.put("thirdGradeCheckRate", Double.parseDouble(df.format(jiancha4/third.size()*100)));
 		}
 		if(fourth.size()>0){
@@ -793,15 +785,15 @@ public class StudentReportServiceImpl implements StudentReportService{
 		
 		Integer nanjiancha = jiancha(school,checkDate,1,null);
 		Integer nanjinshi = jinshi(school,checkDate,1,null,null);
-		params.put("checkNanNum", nanjiancha);
-		params.put("myopiaNanNum", nanjinshi);
-		params.put("myopiaNanRate", Double.parseDouble(df.format(nanjinshi/nanjiancha*100))+"%");
+		//params.put("checkNanNum", nanjiancha);
+		//params.put("myopiaNanNum", nanjinshi);
+		//params.put("myopiaNanRate", Double.parseDouble(df.format(nanjinshi/nanjiancha*100))+"%");
 		
 		Integer nvjiancha = jiancha(school,checkDate,2,null);
 		Integer nvjinshi = jinshi(school,checkDate,2,null,null);
-		params.put("checkNvNum", nvjiancha);
-		params.put("myopiaNvNum", nvjinshi);
-		params.put("myopiaNvRate", Double.parseDouble(df.format(nvjinshi/nvjiancha*100))+"%");
+		//params.put("checkNvNum", nvjiancha);
+		//params.put("myopiaNvNum", nvjinshi);
+		//params.put("myopiaNvRate", Double.parseDouble(df.format(nvjinshi/nvjiancha*100))+"%");
 		
 		Integer nanjianchanianyi = jiancha(school,checkDate,1,"1年级");
 		Integer nanjinshinianyi = jinshi(school,checkDate,1,"1年级",null);
@@ -817,9 +809,19 @@ public class StudentReportServiceImpl implements StudentReportService{
 		
 		Integer nanjianchaniansan = jiancha(school,checkDate,1,"3年级");
 		Integer nanjinshiniansan = jinshi(school,checkDate,1,"3年级",null);
-		params.put("thirdCheckNanNum", nanjianchaniansan);
+		if(nanjianchaniansan == -1){
+			params.put("thirdCheckNanNum", 0);
+			params.put("checkNanNum", 0);
+		}else{
+			params.put("thirdCheckNanNum", nanjianchaniansan);
+			params.put("checkNanNum", nanjianchaniansan);
+		}
 		params.put("thirdMyopiaNanNum", nanjinshiniansan);
 		params.put("thirdMyopiaNanRate", Double.parseDouble(df.format(nanjinshiniansan/nanjianchaniansan*100))+"%");
+		
+		params.put("myopiaNanNum", nanjinshiniansan);
+		params.put("myopiaNanRate", Double.parseDouble(df.format(nanjinshiniansan/nanjianchaniansan*100))+"%");
+		
 		
 		Integer nanjianchaniansi = jiancha(school,checkDate,1,"4年级");
 		Integer nanjinshiniansi = jinshi(school,checkDate,1,"4年级",null);
@@ -853,9 +855,20 @@ public class StudentReportServiceImpl implements StudentReportService{
 		
 		Integer nvjianchaniansan = jiancha(school,checkDate,2,"3年级");
 		Integer nvjinshiniansan = jinshi(school,checkDate,2,"3年级",null);
-		params.put("thirdCheckNvNum", nvjianchaniansan);
+		if(nvjianchaniansan == -1){
+			params.put("thirdCheckNvNum", 0);
+			params.put("checkNvNum", 0);
+		}else{
+			params.put("thirdCheckNvNum", nvjianchaniansan);
+			params.put("checkNvNum", nvjianchaniansan);
+		}
+		
 		params.put("thirdMyopiaNvNum", nvjinshiniansan);
 		params.put("thirdMyopiaNvRate", Double.parseDouble(df.format(nvjinshiniansan/nvjianchaniansan*100))+"%");
+		
+		params.put("myopiaNvNum", nvjinshiniansan);
+		params.put("myopiaNvRate", Double.parseDouble(df.format(nvjinshiniansan/nvjianchaniansan*100))+"%");
+		
 		
 		Integer nvjianchaniansi = jiancha(school,checkDate,2,"4年级");
 		Integer nvjinshiniansi = jinshi(school,checkDate,2,"4年级",null);
@@ -926,22 +939,32 @@ public class StudentReportServiceImpl implements StudentReportService{
 		}
 		//params.put("thirdClass", list3);
 		Integer jcsan = 0;
-		Integer jssan = 1;
+		Integer jssan = 0;
 		Integer jcsan2 = 0;
-		Integer jssan2 = 1;
+		Integer jssan2 = 0;
 		params.put("class1", 1);
 		jcsan = jianchaban(school,checkDate,String.valueOf(1), "三年级");
 		jssan = jinshi(school,checkDate,null,null,String.valueOf(1));
-		params.put("thirdClassNum1", jcsan);
+		if(jcsan == -1){
+			params.put("thirdClassNum1", 0);
+			params.put("thirdClassMyopiaRate1", "0%");
+		}else{
+			params.put("thirdClassNum1", jcsan);
+			params.put("thirdClassMyopiaRate1", Double.parseDouble(df.format(jssan/jcsan*100))+"%");
+		}
 		params.put("thirdClassMyopiaNum1", jssan);
-		params.put("thirdClassMyopiaRate1", Double.parseDouble(df.format(jssan/jcsan*100))+"%");
 		
 		params.put("class2", 2);
 		jcsan2 = jianchaban(school,checkDate,String.valueOf(2), "三年级");
 		jssan2 = jinshi(school,checkDate,null,null,String.valueOf(2));
-		params.put("thirdClassNum2", jcsan2);
+		if(jcsan2 == -1){
+			params.put("thirdClassNum2", 0);
+			params.put("thirdClassMyopiaRate2", "0%");
+		}else{
+			params.put("thirdClassNum2", jcsan2);
+			params.put("thirdClassMyopiaRate2", Double.parseDouble(df.format(jssan2/jcsan2*100))+"%");
+		}
 		params.put("thirdClassMyopiaNum2", jssan2);
-		params.put("thirdClassMyopiaRate2", Double.parseDouble(df.format(jssan2/jcsan2*100))+"%");
 		
 		
 		
@@ -1110,7 +1133,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Double zhongdusaR = 0.0 ;
 		Double zzhongdusaR = 0.0 ;
 		Double buliangsaR = 0.0 ;
-		if(shiLie.size()>0){
+		if(shiLis.size()>0){
 			for (ResultEyesightDO resultEyesightDO : shiLis) {
 				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
 					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
@@ -1169,7 +1192,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Double zhongdusiR = 0.0 ;
 		Double zzhongdusiR = 0.0 ;
 		Double buliangsiR = 0.0 ;
-		if(shiLie.size()>0){
+		if(shiLii.size()>0){
 			for (ResultEyesightDO resultEyesightDO : shiLii) {
 				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
 					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
@@ -2411,7 +2434,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 //        response.reset();
         response.setHeader("Content-disposition", "attachment; filename="+new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".zip");  
         response.setContentType("application/zip");  
-        zipOutputStream = new ZipOutputStream(output,Charset.forName("utf-8"));  
+        zipOutputStream = new ZipOutputStream(output,Charset.forName("UTF-8"));  
         File[] files = new File(path).listFiles();  
         FileInputStream fileInputStream = null;  
         byte[] buf = new byte[1024];  
@@ -2438,7 +2461,7 @@ public class StudentReportServiceImpl implements StudentReportService{
         if(zipOutputStream !=null){  
             zipOutputStream.close();  
         }  
-    }
+    } 
 	
 	public Integer jinshi(String school,
 			@RequestParam(value= "checkDate",required=false) String checkDate,
@@ -2485,7 +2508,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		mapP.put("grade", grade);
 		List<StudentDO> checkUserNum = studentDao.getCheckUserNum(mapP);
 		if(checkUserNum.size()<=0){
-			return 1;
+			return -1;
 		}else{
 			return checkUserNum.size();
 		}
@@ -2503,7 +2526,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		mapP.put("grade", grade);
 		List<StudentDO> checkUserNum = studentDao.getGradeClassCheck(mapP);
 		if(checkUserNum.size()<=0){
-			return 1;
+			return -1;
 		}else{
 			return checkUserNum.size();
 		}
@@ -2554,6 +2577,166 @@ public class StudentReportServiceImpl implements StudentReportService{
 	         BASE64Encoder encoder = new BASE64Encoder();  
 	         return encoder.encode(data);  
 	     }
+
+	   
+	   /**
+		 * 
+		 */
+		@Override
+		public void baogaojiaoyuju(HttpServletRequest request,  HttpServletResponse response) {
+			String school = request.getParameter("school");
+			try {
+				
+					Map<String, Object> params = jiaoyujubaogao(request, response);
+					createDoc(params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给教育局报告检测.ftl");
+					download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".docx");
+				//craeteZipPath(bootdoConfig.getPoiword(),response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	   
+	public Map<String, Object> jiaoyujubaogao(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> params = new HashMap<String, Object>(); 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		DecimalFormat df = new DecimalFormat(".0");
+		ResultDiopterDO checkDate = resultDiopterDao.maxCheckDate();
+		Date date = checkDate.getCheckDate();
+		System.out.println(sdf.format(date));
+		Map<String,Object> dushus = new HashMap<String,Object>();
+		dushus.put("school", "济南市外海实验学校");
+		dushus.put("grade", "3年级");
+		dushus.put("checkDate", sdf.format(date));
+		List<ResultEyesightDO> shiLis = resultEyesightDao.queryLuoYanShiLi(dushus);
+		Map<String,Object> grades = new HashMap<String,Object>();
+		int checksa = shiLis.size();
+		int qingdusa = 0;
+		int zhongdusa = 0;
+		int zzhongdusa = 0;
+		int buliangsa = 0;
+		Double qingdusaR = 0.0 ;
+		Double zhongdusaR = 0.0 ;
+		Double zzhongdusaR = 0.0 ;
+		Double buliangsaR = 0.0 ;
+		if(shiLis.size()>0){
+			for (ResultEyesightDO resultEyesightDO : shiLis) {
+				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
+					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
+						qingdusa++;
+					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
+						zhongdusa++;
+					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
+						zzhongdusa++;
+					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
+						buliangsa++;
+					}
+				}
+			}
+			qingdusaR = Double.parseDouble(df.format(qingdusa/checksa*100));
+			zhongdusaR = Double.parseDouble(df.format(zhongdusa/checksa*100));
+			zzhongdusaR = Double.parseDouble(df.format(zzhongdusa/checksa*100));
+			buliangsaR =  Double.parseDouble(df.format(buliangsa/checksa*100));
+
+		}
+		
+				params.put("school", "济南市外海实验学校");
+				params.put("A", checksa);
+				params.put("O", qingdusa);
+				params.put("P", qingdusaR);
+				params.put("Q", zhongdusa);
+				params.put("R", zhongdusaR);
+				params.put("S", zzhongdusa);
+				params.put("T", zzhongdusaR);
+				params.put("U", buliangsa);
+				params.put("V", buliangsaR);
+								
+				Map<String,Object> jia3 = new HashMap<String,Object>();
+				Integer linchuangy3 = 0;
+				Integer jiajinshiy3 = 0;
+				Integer diy3 =0;
+				Integer zhongy3 = 0;
+				Integer gaoy3 = 0;
+				double linchuangr3 = 0;
+				double jiajinshir3 = 0;
+				double dir3 =0;
+				double zhongr3 = 0;
+				double gaor3 =0;
+				int jiay3 = shiLis.size();
+				if(shiLis.size()>0){
+					linchuangy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","first");
+					jiajinshiy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","second");
+					diy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","third");
+					zhongy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","fourth");
+					gaoy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","fifth");
+					linchuangr3 = Double.parseDouble(df.format(linchuangy3/jiay3*100));
+					jiajinshir3 = Double.parseDouble(df.format(jiajinshiy3/jiay3*100));
+					dir3 = Double.parseDouble(df.format(diy3/jiay3*100));
+					zhongr3 = Double.parseDouble(df.format(zhongy3/jiay3*100));
+					gaor3 = Double.parseDouble(df.format(gaoy3/jiay3*100));
+				}
+				Integer jinzongy3 = linchuangy3+jiajinshiy3+diy3+zhongy3+gaoy3;
+				double jinzongr3 = linchuangr3+jiajinshir3+dir3+zhongr3+gaor3;
+				
+				params.put("B", linchuangy3);
+				params.put("C", linchuangr3);
+				params.put("D", jiajinshiy3);
+				params.put("E", jiajinshir3);
+				params.put("F", diy3);
+				params.put("G", dir3);
+				params.put("H", zhongy3);
+				params.put("I", zhongr3);
+				params.put("G", gaoy3);
+				params.put("K", gaor3);
+				params.put("L", jinzongy3);
+				params.put("M", jinzongr3);
+				
+				params.put("yx", checksa);
+				params.put("sx", checksa);
+				
+				params.put("lq", linchuangy3);
+				params.put("lqb", linchuangr3);
+				params.put("ja", jiajinshiy3);
+				params.put("jab", jiajinshir3);
+				params.put("dd", dir3);
+				params.put("zd", zhongr3);
+				params.put("gd", gaoy3);
+				params.put("sc", jinzongy3);
+				params.put("scb", jinzongr3);
+				
+				params.put("qbl", qingdusa);
+				params.put("qblb", qingdusaR);
+				params.put("zbl", zhongdusa);
+				params.put("zblb", zhongdusaR);
+				params.put("gbl", zzhongdusa);
+				params.put("gblb", zzhongdusaR);
+				params.put("bl", buliangsa);
+				params.put("blb", buliangsaR);
+				
+				Integer nanjianchaniansan = jiancha("济南市外海实验学校",sdf.format(date),1,"3年级");
+				Integer nanjinshiniansan = jinshi("济南市外海实验学校",sdf.format(date),1,"3年级",null);
+				if(nanjianchaniansan == -1){
+					params.put("nz", 0);
+				}else{
+					params.put("nz", nanjianchaniansan);
+				}
+				params.put("nj", nanjinshiniansan);
+				params.put("njb", Double.parseDouble(df.format(nanjinshiniansan/nanjianchaniansan*100)));
+				
+				
+				Integer nvjianchaniansan = jiancha("济南市外海实验学校",sdf.format(date),2,"3年级");
+				Integer nvjinshiniansan = jinshi("济南市外海实验学校",sdf.format(date),2,"3年级",null);
+				if(nvjianchaniansan == -1){
+					params.put("wz", 0);
+				}else{
+					params.put("wz", nvjianchaniansan);
+				}
+				params.put("wj", nvjinshiniansan);
+				params.put("wjb", Double.parseDouble(df.format(nvjinshiniansan/nvjianchaniansan*100)));
+				
+		return params;			
+								
+	}
 
 	
 }
