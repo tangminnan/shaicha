@@ -350,7 +350,7 @@ public class StudentController {
 		model.addAttribute("grade",  studentDO.getGrade());
 		model.addAttribute("studentClass",studentDO.getStudentClass());
 		model.addAttribute("studentName",studentDO.getStudentName());
-		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "男":"女");
 		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
@@ -403,7 +403,7 @@ public class StudentController {
 		model.addAttribute("grade",studentDO.getGrade().toString());
 		model.addAttribute("studentClass",studentDO.getStudentClass().toString());
 		model.addAttribute("studentName",studentDO.getStudentName());
-		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "男":"女");
 		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		
 		//视力检查结果获取
@@ -500,10 +500,13 @@ public class StudentController {
 	    od=od<os?od:os;
 	    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
 	    double yuanjingshili=0;//原镜视力
+	    String ss="ss";
 	    if(!StringUtils.isBlank(correctionFarvisionOd) || !StringUtils.isBlank(correctionFarvisionOs)){
 	    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
 	    	yuanjingshili=Double.parseDouble(correctionFarvisionOd);
 	    }
+	    if(yuanjingshili==0)
+	    	ss="wuyuanjing";
 	    if(od>=5.0 && dengxiaoqiujingL>0.75){
 	    	model.addAttribute("doctorchubu","视力目前正常 。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
 	    	model.addAttribute("yujing","无");
@@ -516,11 +519,11 @@ public class StudentController {
 			model.addAttribute("doctorchubu","视力目前正常，假性近视，但有发生近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
 	    	model.addAttribute("yujing","假性近视");
 		}
-		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili==0){
+		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili==0 && ss.equals("wuyuanjing")){
 			model.addAttribute("doctorchubu","视力异常。建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
 	    	model.addAttribute("yujing","无");
 		}
-		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==0){
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili==0 && ss.equals("wuyuanjing")){
 			model.addAttribute("doctorchubu","视力下降，近视。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
 	    	model.addAttribute("yujing","近视");
 		}
@@ -533,11 +536,11 @@ public class StudentController {
 			model.addAttribute("doctorchubu","戴原镜视力正常，近视。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的发生；采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
 	    	model.addAttribute("yujing","近视");
 		}
-		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili<5.0){
+		if(od<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshili<5.0 && ss.equals("ss")){
 			model.addAttribute("doctorchubu","戴原镜视力异常。 请遵医嘱及时定期复查。");
 	    	model.addAttribute("yujing","无");
 		}
-		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili<5.0){
+		if(od<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshili<5.0 && ss.equals("ss")){
 			model.addAttribute("doctorchubu","戴原镜视力异常，近视增长。 请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
 	    	model.addAttribute("yujing","近视增长");
 		}
@@ -581,7 +584,9 @@ public class StudentController {
 	
 	@GetMapping("/getee")
 	public Map<String,Object>  getee() throws ParseException{
-		return studentService.createDataToJiAOYuJu(new SimpleDateFormat("yyyy-MM-dd").parse("2019-09-01"),new Date());
+		Map<String,Object> map =  studentService.createDataToJiAOYuJu(new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-10"),new Date());
+		System.out.println(map);
+		return map;
 	}
 	
 }

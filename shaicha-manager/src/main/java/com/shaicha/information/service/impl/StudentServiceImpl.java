@@ -1010,54 +1010,39 @@ public class StudentServiceImpl implements StudentService {
 			 for(ResultEyesightDO r:reiList){
 				 xuebu=r.getXueBu();
 				 Double luoyanshilii=0.0;
+				 Double dengxiaoqiujing=0.0;
 				 String nakedFarvisionOd=r.getNakedFarvisionOd();
 				 String nakedFarvisionOs=r.getNakedFarvisionOs();
 				 nakedFarvisionOd=nakedFarvisionOd.compareTo(nakedFarvisionOs)>0?nakedFarvisionOs:nakedFarvisionOd;
 				 if(!StringUtils.isBlank(nakedFarvisionOd))
 					 luoyanshilii=Double.parseDouble(nakedFarvisionOd);
+				
+				 String idCard = r.getIdentityCard();
+				 Double dengxiaoqiujingR = resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("R") && i.getType().equals("AVG")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
+				 Double dengxiaoqiujingL = resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("L") && i.getType().equals("AVG")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
+				 dengxiaoqiujing = dengxiaoqiujingR>dengxiaoqiujingL?dengxiaoqiujingL:dengxiaoqiujingR;
 				 
-				 if(!StringUtils.isBlank(r.getNakedFarvisionOd()) && Double.parseDouble(r.getNakedFarvisionOd())>=5.0){
-					Double d=     resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("R")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
-					if(d>0.5 &&d<=0.75){//近视临床前期（判断右眼）
+				 
+					if(luoyanshilii>=5.0 && dengxiaoqiujing>=-0.5 && dengxiaoqiujing<0.75){//近视临床前期（判断右眼）
 						jslcqianqiNumber++;
 					}
-					if(d<0.5){//假性近视（判断右眼）
+					if(luoyanshilii>=5.0 && dengxiaoqiujing<-0.5){//假性近视（判断右眼）
 						jxjsNumber++;
 					}
-				 }
-				else if(!StringUtils.isBlank(r.getNakedFarvisionOs()) &&  Double.parseDouble(r.getNakedFarvisionOs())>=5.0){
-					 Double d=     resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("L")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
-					if(d>0.5 &&d<=0.75){//近视临床前期（判断左眼）
-						jslcqianqiNumber++;
+				 
+					if(luoyanshilii<5.0 &&dengxiaoqiujing>-6){//近视临床前期（判断左眼）
+						gaodujinshiNumber++;
 					}
-					if(d<0.5){//假性近视（判断左眼）
-						jxjsNumber++;
-					}
-				 }
-				if(!StringUtils.isBlank(r.getNakedFarvisionOd()) && Double.parseDouble(r.getNakedFarvisionOd())<5.0){
-					 Double d=     resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("R")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
-					 if(d>6){//右眼高度近视
-						 gaodujinshiNumber++;
-					 }
-					 if(d>=3.25 && d<=6.0){//右眼中度近视
+					
+					 if(luoyanshilii<5.0 &&  dengxiaoqiujing>-6 && dengxiaoqiujing<-3.25){//右眼中度近视
 						 zhongdujinshiNumber++;
 					 }
-					 if(d>0.5 &&d<=3.0){//右眼低度近视
+					 if(luoyanshilii<5.0 && dengxiaoqiujing>-3 && dengxiaoqiujing<-0.5){//右眼低度近视
 						 didujinshiNumber++;
 					 }
-				}
-				else if(!StringUtils.isBlank(r.getNakedFarvisionOs()) && Double.parseDouble(r.getNakedFarvisionOs())<5.0){
-					 Double d=  resultDiopterDOList.stream().filter(i ->i.getIdentityCard().equals(r.getIdentityCard()) && i.getIfrl().equals("L")).mapToDouble(ResultDiopterDO::getDengxiaoqiujing).sum();
-					 if(d>6){//左眼高度近视
-						 gaodujinshiNumber++;
-					 }
-					 if(d>=3.25 && d<=6.0){//左眼中度近视
-						 zhongdujinshiNumber++;
-					 }
-					 if(d>0.5 &&d<=3.0){//左眼低度近视
-						 didujinshiNumber++;
-					 }
-				}
+				
+					
+				
 				
 				
 			 }
