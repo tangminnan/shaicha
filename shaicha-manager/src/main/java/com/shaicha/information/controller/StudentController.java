@@ -468,18 +468,18 @@ public class StudentController {
 		List<ResultCornealDO> resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-		model.addAttribute("cornealDr1R", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealDO();
 		resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"R","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-		model.addAttribute("cornealDr2R", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
 		
 		resultCornealDO = new ResultCornealDO();
 	    resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"L","R1");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
 		
 		
 	    
@@ -488,7 +488,7 @@ public class StudentController {
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
 	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealD()==null?"0.0":resultCornealDO.getCornealD());
+	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
 		//医生的建议（临时数据）
 	   double od=0.0,os=0.0;
 	   if(!StringUtils.isBlank(nakedFarvisionOd)){
