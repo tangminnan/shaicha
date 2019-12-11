@@ -18841,7 +18841,13 @@ ALI0ahsiQIAAAQIECBAgQOD/BxBvWhbgDnjXAAAAAElFTkSuQmCC
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${snj.studentSex}</w:t>
+									<#if snj.studentSex == 1>
+									<w:t>男</w:t>
+									<#elseif snj.studentSex == 2>
+									<w:t>女</w:t>
+									<#else>
+									<w:t>未知</w:t>
+									</#if>
 								</w:r>
 								<w:r>
 									<w:rPr>
