@@ -6,7 +6,7 @@
     <groupId>com.shaicha</groupId>
     <artifactId>shaicha-manager</artifactId>
     <version>1.6.9</version>
-    <packaging>jar</packaging>	 
+    <packaging>war</packaging>	 
 	 
     <name>shaicha-manager</name>
     <description>Demo project for Spring Boot</description>
