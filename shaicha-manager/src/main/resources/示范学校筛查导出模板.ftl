@@ -3658,7 +3658,7 @@
                   <w:b/>
                   <w:sz w:val="24"/>
                 </w:rPr>
-                <w:t>诊断与建议</w:t>
+                <w:t>诊断与预警提示</w:t>
               </w:r>
               <w:r>
                 <w:rPr>
@@ -3729,16 +3729,7 @@
                 </w:rPr>
                 <w:t>${doctorchubu}</w:t>
               </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rFonts w:hint="fareast"/>
-                  <w:color w:val="FF0000"/>
-                  <w:sz w:val="22"/>
-                  <w:sz-cs w:val="22"/>
-                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                </w:rPr>
-                <w:t></w:t>
-              </w:r>
+            
             </w:p>
             <w:p>
               <w:pPr>
@@ -3809,137 +3800,7 @@
             </w:p>
           </w:tc>
         </w:tr>
-        <w:tr>
-          <w:tblPrEx>
-            <w:tblBorders>
-              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-            </w:tblBorders>
-            <w:tblCellMar>
-              <w:top w:w="0" w:type="dxa"/>
-              <w:left w:w="108" w:type="dxa"/>
-              <w:bottom w:w="0" w:type="dxa"/>
-              <w:right w:w="108" w:type="dxa"/>
-            </w:tblCellMar>
-          </w:tblPrEx>
-          <w:trPr/>
-          <w:tc>
-            <w:tcPr>
-              <w:tcW w:w="9854" w:type="dxa"/>
-              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-              <w:noWrap w:val="0"/>
-              <w:vAlign w:val="top"/>
-            </w:tcPr>
-            <w:p>
-              <w:pPr>
-                <w:tabs>
-                  <w:tab w:val="center" w:pos="4153"/>
-                </w:tabs>
-                <w:ind w:right="440"/>
-                <w:rPr>
-                  <w:rFonts w:hint="fareast"/>
-                  <w:color w:val="FF0000"/>
-                  <w:sz w:val="22"/>
-                  <w:sz-cs w:val="22"/>
-                </w:rPr>
-              </w:pPr>
-              <w:r>
-                <w:rPr>
-                  <w:rFonts w:hint="fareast"/>
-                  <w:b/>
-                  <w:sz w:val="24"/>
-                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                </w:rPr>
-                <w:t>防控与预警</w:t>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rFonts w:hint="fareast"/>
-                  <w:b/>
-                  <w:sz w:val="24"/>
-                </w:rPr>
-                <w:t>：</w:t>
-              </w:r>
-            </w:p>
-          </w:tc>
-        </w:tr>
-        <w:tr>
-          <w:tblPrEx>
-            <w:tblBorders>
-              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
-            </w:tblBorders>
-            <w:tblCellMar>
-              <w:top w:w="0" w:type="dxa"/>
-              <w:left w:w="108" w:type="dxa"/>
-              <w:bottom w:w="0" w:type="dxa"/>
-              <w:right w:w="108" w:type="dxa"/>
-            </w:tblCellMar>
-          </w:tblPrEx>
-          <w:trPr>
-            <w:trHeight w:val="807" w:h-rule="atLeast"/>
-          </w:trPr>
-          <w:tc>
-            <w:tcPr>
-              <w:tcW w:w="9854" w:type="dxa"/>
-              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-              <w:noWrap w:val="0"/>
-              <w:vAlign w:val="top"/>
-            </w:tcPr>
-            <w:p>
-              <w:pPr>
-                <w:tabs>
-                  <w:tab w:val="center" w:pos="4153"/>
-                </w:tabs>
-                <w:ind w:right="440"/>
-                <w:rPr>
-                  <w:rFonts w:fareast="宋体" w:hint="default"/>
-                  <w:color w:val="FF0000"/>
-                  <w:sz w:val="22"/>
-                  <w:sz-cs w:val="22"/>
-                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                </w:rPr>
-              </w:pPr>
-              <w:r>
-                <w:rPr>
-                  <w:rFonts w:hint="fareast"/>
-                  <w:color w:val="FF0000"/>
-                  <w:sz w:val="22"/>
-                  <w:sz-cs w:val="22"/>
-                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                </w:rPr>
-                <w:t></w:t>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rFonts w:ascii="Courier New" w:h-ansi="Courier New" w:hint="fareast"/>
-                  <w:color w:val="FF0000"/>
-                  <w:sz w:val="20"/>
-                  <w:highlight w:val="white"/>
-                </w:rPr>
-                <w:t>${yujing}</w:t>
-              </w:r>
-              <w:r>
-                <w:rPr>
-                  <w:rFonts w:hint="fareast"/>
-                  <w:color w:val="FF0000"/>
-                  <w:sz w:val="22"/>
-                  <w:sz-cs w:val="22"/>
-                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                </w:rPr>
-                <w:t></w:t>
-              </w:r>
-            </w:p>
-          </w:tc>
-        </w:tr>
+       
       </w:tbl>
       <w:p>
         <w:pPr>
