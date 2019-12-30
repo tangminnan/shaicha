@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.LinShiUrlDao">
+
+
+	<select id="list" resultType="com.shaicha.information.domain.LinShiUrlDO">
+		select id,name,img_url,add_time,type from t_linshi_url
+		<where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="imgUrl != null and imgUrl != ''"> and img_url = #{imgUrl} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		 </where>
+	</select>
+	
+ 
+	<insert id="save" parameterType="com.shaicha.information.domain.LinShiUrlDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_linshi_url
+		(
+			name,
+			img_url,
+			add_time,
+			type
+		)
+		values
+		(
+			#{name}, 
+			#{imgUrl},
+			#{addTime},
+			#{type}
+		)
+	</insert>
+	
+	<delete id="remove">
+		delete from t_linshi_url where id = #{id}
+	</delete>
+	
+
+</mapper>

@@ -72,10 +72,10 @@ public interface StudentDao {
 
 	void saveResultDiopterDO(ResultDiopterDO resultDiopterDO);
 	
+	List<StudentDO> querySchoolGrade(String school);
+	
 	List<StudentDO> querySchoolName();
-	
-	List<StudentDO> queryCheckNum(String school);
-	
+			
 	List<StudentDO> queryGradeNum(String grade);
 	
 	List<StudentDO> getCheckUserNum(Map<String,Object> map);
@@ -84,7 +84,7 @@ public interface StudentDao {
 	
 	List<StudentDO> getGradeClassCheck(Map<String,Object> map);
 	
-	List<StudentDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("checkDate") String checkDate,@Param("studentClass") String studentClass);
+	List<StudentDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("start") Date start,@Param("end") Date end,@Param("studentClass") String studentClass);
 	
 	List<StudentDO> getCheckNianjiNum(@Param("school") String school,@Param("grade") String grade,@Param("checkDate") String checkDate);
 
@@ -94,4 +94,11 @@ public interface StudentDao {
 	List<ResultEyesightDO> getJInShiLv(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 
 	List<ResultDiopterDO> getResultDiopterDO(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
+	
+	List<StudentDO> getSchool(@Param("start") Date start,@Param("end") Date end);
+	
+	List<StudentDO> getLastCheckStudent(@Param("school") String school,@Param("start") Date start,@Param("end") Date end);
+
+	List<StudentDO> getCheckAllStudent(@Param("start") Date start,@Param("end") Date end,@Param("grade") String grade);
+
 }

@@ -108,32 +108,12 @@
 			#{tDiopterId}
 		</foreach>
 	</delete>
-
-	<select id="overYearMyopia" resultType="com.shaicha.information.domain.ResultDiopterDO">
-	select trd.t_diopter_id,trd.t_optometry_id,trd.diopter_s,trd.diopter_c,trd.diopter_a,trd.believe,trd.num,trd.type,trd.ifRL,trd.first_second,trd.check_date,trd.identity_card
-	from t_result_diopter trd,t_student ts where trd.identity_card = ts.identity_card and date_format(check_date,'%Y')=#{checkDate} and type = 'AVG' and ifRL = 'R' 
-		and diopter_s is not null and diopter_c is not null and ts.school = #{school}
-	</select>
-
-	<select id="gradeMyopia" resultType="com.shaicha.information.domain.ResultDiopterDO">
-		select trd.t_diopter_id,trd.t_optometry_id,trd.diopter_s,trd.diopter_c,trd.diopter_a,trd.believe,trd.num,
-		trd.type,trd.ifRL,trd.first_second,trd.check_date,trd.identity_card
-		 from t_result_diopter trd,t_student ts where trd.identity_card = ts.identity_card 
-		and trd.type = 'AVG' and trd.ifRL = 'R' and trd.diopter_s is not null and trd.diopter_c is not null
-		and ts.grade = #{grade} and ts.school = #{school}
-		<if test="checkDate != null and checkDate != ''"> and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate} </if>
-	</select>
-
-	<select id="studentSexMyopia" resultType="com.shaicha.information.domain.ResultDiopterDO">
-		select trd.t_diopter_id,trd.t_optometry_id,trd.diopter_s,trd.diopter_c,trd.diopter_a,trd.believe,trd.num,
-		trd.type,trd.ifRL,trd.first_second,trd.check_date,trd.identity_card
-		from t_result_diopter trd,t_student ts where trd.identity_card = ts.identity_card 
-		and trd.type = "AVG" and trd.ifRL = "R" and trd.diopter_s is not null and trd.diopter_c is not null
-		and ts.school = #{school}
-		<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
-		<if test="checkDate != null and checkDate != ''"> and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate} </if>
-		<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
-		<if test="studentClass != null and studentClass != ''"> and ts.student_class = #{studentClass} </if>
+	
+	<select id="ifExistData" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		select trd.t_diopter_id,trd.t_optometry_id,trd.diopter_s,trd.diopter_c,trd.diopter_a,trd.believe,trd.num,trd.type,trd.ifRL,trd.first_second,trd.check_date,trd.identity_card
+		from t_result_diopter trd,t_student ts
+		where trd.identity_card = ts.identity_card 
+		and ts.school = #{school} and trd.check_date between #{start} and #{end}
 	</select>
 	
 	<select id="maxCheckDate" resultType="com.shaicha.information.domain.ResultDiopterDO">
@@ -146,27 +126,38 @@
 		and trd.type = 'AVG'
 		<if test="school != null and school != ''"> and ts.school = #{school} </if>
 		<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
-		<if test="checkDate != null and checkDate != ''"> and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate} </if>
+		<if test="checkDate != null and checkDate != ''"> and date_format(trd.check_date,'%Y') = #{checkDate} </if>
 		<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
 		<if test="studentClass != null and studentClass != ''"> and ts.student_class = #{studentClass} </if>
 		<if test="identityCard != null and identityCard != ''"> and trd.identity_card = #{identityCard} </if>
 		
 	</select>
 	
+	<select id="queryMyopia" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		SELECT trd.t_diopter_id,trd.identity_card,MIN(trd.dengxiaoqiujing) dengxiaoqiujing FROM t_result_diopter trd,t_student ts
+		 where trd.identity_card = ts.identity_card
+		and trd.type = 'AVG' and trd.check_date between #{start} and #{end} and trd.identity_card = #{identityCard}
+	</select>
+	
 	<select id="getYanGuang" resultType="com.shaicha.information.domain.ResultDiopterDO">
 		select `diopter_s`,`diopter_c`,`diopter_a` from t_result_diopter where type = 'AVG'
-		and ifRL = #{ifRL} and identity_card = #{identityCard} and check_date = #{checkDate} 
+		and ifRL = #{ifRL} and identity_card = #{identityCard} and check_date between #{start} and #{end}
 	</select>
 
 	<select id="jianchashijian" resultType="com.shaicha.information.domain.ResultDiopterDO">
 	
-		select date_format(check_date,'%Y-%m-%d') checkDate1 from t_result_diopter where check_date is not null GROUP BY check_date
+		select date_format(check_date,'%Y-%m-%d') checkDate1 from t_result_diopter where first_second = 'FIRST_CHECK' and check_date is not null GROUP BY check_date
 	</select>
 	
 	<select id="queryTimeBetween" resultType="com.shaicha.information.domain.ResultDiopterDO">
 		select `diopter_s`,`diopter_c`,`diopter_a` from t_result_diopter where type = 'AVG'
 		AND #{startDate}&lt;=check_date
 		AND #{endDate}&gt;=check_date
+	</select>
+
+	<select id="queryQiujing" resultType="com.shaicha.information.domain.ResultDiopterDO">
+		select identity_card,MIN(dengxiaoqiujing) dengxiaoqiujing from t_result_diopter 
+		where identity_card = #{identityCard} and check_date = #{checkDate} and type = 'AVG'
 	</select>
 
 </mapper>

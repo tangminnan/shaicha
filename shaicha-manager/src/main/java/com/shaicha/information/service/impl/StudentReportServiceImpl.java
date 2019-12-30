@@ -1,5 +1,7 @@
 package com.shaicha.information.service.impl;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +17,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +31,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,12 +39,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shaicha.common.config.BootdoConfig;
+import com.shaicha.information.dao.LinShiUrlDao;
 import com.shaicha.information.dao.ResultCornealDao;
 import com.shaicha.information.dao.ResultDiopterDao;
 import com.shaicha.information.dao.ResultEyeaxisDao;
 import com.shaicha.information.dao.ResultEyepressureDao;
 import com.shaicha.information.dao.ResultEyesightDao;
 import com.shaicha.information.dao.StudentDao;
+import com.shaicha.information.domain.LinShiUrlDO;
 import com.shaicha.information.domain.ResultCornealDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
@@ -73,7 +79,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 	private ResultEyeaxisDao resultEyeaxisDao;
 	@Autowired
 	private ResultEyepressureDao resultEyepressureDao;
+	@Autowired
+	private LinShiUrlDao linShiUrlDao;
 
+	
 	//历年近视率走势图
 	@Override
 	public Map<String, List<Double>> overYearMyopia(String school){
@@ -84,6 +93,12 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Integer third = 0;
 		Map<String, Object> map = new HashMap<String,Object>();
 		List<StudentDO> list = studentDao.list(map);
+		Calendar cal = Calendar.getInstance();
+		Date xian = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qu = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qian = cal.getTime();
 		
 /*		Map<String, Object> mapLN = new HashMap<String,Object>();
 		mapLN.put("school", school);
@@ -99,7 +114,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 						map1.put("identityCard", resultEyesightDO.getIdentityCard());
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map1);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
 						}
@@ -120,7 +135,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 						map2.put("identityCard", resultEyesightDO.getIdentityCard());
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map2);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								second++;
 							}
 						}
@@ -131,7 +146,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		
 		Map<String, Object> mapLN3 = new HashMap<String,Object>();
 		mapLN3.put("school", school);
-		mapLN3.put("checkDate", "2019");
+		mapLN3.put("checkDate", sdf.format(xian));
 		List<ResultEyesightDO> liNian3 = resultEyesightDao.liNian(mapLN3);
 		if(liNian3.size()>0){
 			for (ResultEyesightDO resultEyesightDO : liNian3) {
@@ -139,9 +154,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						Map<String, Object> map3 = new HashMap<String,Object>();
 						map3.put("identityCard", resultEyesightDO.getIdentityCard());
+						map3.put("checkDate", sdf.format(xian));
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								third++;
 							}
 						}
@@ -149,17 +165,17 @@ public class StudentReportServiceImpl implements StudentReportService{
 				}
 			}
 		}			
-			
+		
 		/*System.out.println(first);
 		System.out.println(second);
 		System.out.println(third);*/
 		List<Double> da = new ArrayList<Double>();
-		DecimalFormat df = new DecimalFormat(".0");
-		//da.add(Double.parseDouble(df.format(first/list.size()*100)));
-		//da.add(Double.parseDouble(df.format(second/list.size()*100)));
+		DecimalFormat df = new DecimalFormat("0.0");
+		//da.add(Double.parseDouble(df.format((double)first/(double)liNian1.size()*100)));
+		//da.add(Double.parseDouble(df.format((double)second/(double)liNian2.size()*100)));
 		da.add(79.30);
 		da.add(66.10);
-		da.add(Double.parseDouble(df.format(third/list.size()*100)));
+		da.add(Double.parseDouble(df.format((double)third/(double)liNian3.size()*100)));
 		
 		mapP.put("overYearMyopia", da);
 		
@@ -169,72 +185,76 @@ public class StudentReportServiceImpl implements StudentReportService{
 	//各年级近视
 	@Override
 	public Map<String, List<Double>> gradeMyopia(String school,String checkDate) {
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		Map<String, List<Double>> gradeMyopia = new HashMap<String, List<Double>>();
 		List<Double> myt = new ArrayList<Double>();
-		Map<String, Object> gradeMyopiaFS = gradeMyopia("1年级",school,checkDate);
-		Map<String, Object> gradeMyopiaSE = gradeMyopia("2年级",school,checkDate);
-		Map<String, Object> gradeMyopiaTH = gradeMyopia("3年级",school,checkDate);
-		Map<String, Object> gradeMyopiaFO = gradeMyopia("4年级",school,checkDate);
-		Map<String, Object> gradeMyopiaFI = gradeMyopia("5年级",school,checkDate);
-		Map<String, Object> gradeMyopiaSI = gradeMyopia("6年级",school,checkDate);
-		
-		Object gradeFS = gradeMyopiaFS.get("gradeMyopia");
-		Object gradeSE = gradeMyopiaSE.get("gradeMyopia");
-		Object gradeTH = gradeMyopiaTH.get("gradeMyopia");
-		Object gradeFO = gradeMyopiaFO.get("gradeMyopia");
-		Object gradeFI = gradeMyopiaFI.get("gradeMyopia");
-		Object gradeSI = gradeMyopiaSI.get("gradeMyopia");
-		myt.add((double)gradeFS);
-		myt.add((double)gradeSE);
-		myt.add((double)gradeTH);
-		myt.add((double)gradeFO);
-		myt.add((double)gradeFI);
-		myt.add((double)gradeSI);
+			Date qian = null;
+			Date hou = null;
+			Date currdate = null;
+			try {
+				currdate = sdf1.parse(checkDate);
+				/*Calendar ca = Calendar.getInstance();
+				ca.setTime(currdate);
+				ca.add(Calendar.DAY_OF_MONTH, -14);
+				qian = ca.getTime();*/
 				
+				Calendar ca2 = Calendar.getInstance();
+				ca2.setTime(currdate);
+				ca2.add(Calendar.DAY_OF_MONTH, 14);
+				hou = ca2.getTime();
+				
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			List<StudentDO> gegradejs = studentDao.querySchoolGrade(school);
+			for (StudentDO studentDO : gegradejs) {
+				double gradeMyopiaFS = gradeMyopia(studentDO.getGrade(),school,currdate,hou);
+				myt.add(gradeMyopiaFS);
+			}
+			
 		gradeMyopia.put("gradeMyopia", myt);
 		return gradeMyopia;
 		
 	}
 	
-	public Map<String, Object> gradeMyopia(String grade,String school,@RequestParam(value= "checkDate",required=false) String checkDate) {
+	public double gradeMyopia(String grade,String school,
+			@RequestParam(value= "start",required=false) Date start,
+			@RequestParam(value= "end",required=false) Date end) {
 		Integer first = 0;
 		double parseDouble = 0;
-		Map<String, Object> map = new HashMap<String,Object>();
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("grade", grade);
 		mapP.put("school", school);
-		mapP.put("checkDate", checkDate);
+		mapP.put("start", start);
+		mapP.put("end", end);
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
 				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						Map<String, Object> map3 = new HashMap<String,Object>();
-						map3.put("identityCard", resultEyesightDO.getIdentityCard());
-						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
+						List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
 						}
 					}
 				}
 			}
-			DecimalFormat df = new DecimalFormat(".0");
-			parseDouble = Double.parseDouble(df.format(first/jinShi.size()*100));		
+			DecimalFormat df = new DecimalFormat("0.0");
+			parseDouble = Double.parseDouble(df.format((double)first/(double)jinShi.size()*100));		
 				
 		}			
 		
-		map.put("gradeMyopia", parseDouble);
 		/*String jsonString = JSONObject.toJSONString(gradeMyopiaFS);
 		System.out.println(jsonString);*/
-		return map;				
+		return parseDouble;				
 	}
 	
-	public Map<String, Object> gradeMyopiaLN(String grade,String school,@RequestParam(value= "checkDate",required=false) String checkDate) {
+	public double gradeMyopiaLN(String grade,String school,@RequestParam(value= "checkDate",required=false) String checkDate) {
 		Integer first = 0;
 		double parseDouble = 0;
-		Map<String, Object> map = new HashMap<String,Object>();
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("grade", grade);
 		mapP.put("school", school);
@@ -246,24 +266,24 @@ public class StudentReportServiceImpl implements StudentReportService{
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						Map<String, Object> map3 = new HashMap<String,Object>();
 						map3.put("identityCard", resultEyesightDO.getIdentityCard());
+						map3.put("checkDate", checkDate);
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
 						}
 					}
 				}
 			}
-			DecimalFormat df = new DecimalFormat(".0");
-			parseDouble = Double.parseDouble(df.format(first/jinShi.size()*100));		
+			DecimalFormat df = new DecimalFormat("0.0");
+			parseDouble = Double.parseDouble(df.format((double)first/(double)jinShi.size()*100));		
 				
 		}			
 		
-		map.put("gradeMyopia", parseDouble);
 		/*String jsonString = JSONObject.toJSONString(gradeMyopiaFS);
 		System.out.println(jsonString);*/
-		return map;				
+		return parseDouble;				
 	}
 	
 	//历年各年级近视率走势图
@@ -273,6 +293,13 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<Double> myt = new ArrayList<Double>();
 		List<Double> myt2 = new ArrayList<Double>();
 		List<Double> myt3 = new ArrayList<Double>();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
+		Calendar cal = Calendar.getInstance();
+		Date xian = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qu = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qian = cal.getTime();
 		/*Map<String, Object> gradeMyopiaFS = gradeMyopiaLN("一年级",school,"2017");
 		Map<String, Object> gradeMyopiaSE = gradeMyopiaLN("二年级",school,"2017");
 		Map<String, Object> gradeMyopiaTH = gradeMyopiaLN("三年级",school,"2017");
@@ -293,11 +320,11 @@ public class StudentReportServiceImpl implements StudentReportService{
 		myt.add((double)gradeFI);
 		myt.add((double)gradeSI);*/
 		myt.add(26.7);
-		myt.add(25.5);
-		myt.add(30.2);
-		myt.add(33.4);
-		myt.add(45.6);
-		myt.add(38.3);
+		myt.add(26.5);
+		myt.add(39.2);
+		myt.add(35.4);
+		myt.add(42.6);
+		myt.add(39.3);
 		gradeMyopia.put("seventeen", myt);
 		/*Map<String, Object> gradeMyopiaFS2 = gradeMyopiaLN("一年级",school,"2018");
 		Map<String, Object> gradeMyopiaSE2 = gradeMyopiaLN("二年级",school,"2018");
@@ -318,32 +345,18 @@ public class StudentReportServiceImpl implements StudentReportService{
 		myt2.add((double)gradeFO2);
 		myt2.add((double)gradeFI2);
 		myt2.add((double)gradeSI2);*/
-		myt2.add(23.5);
-		myt2.add(24.7);
-		myt2.add(28.2);
-		myt2.add(30.8);
+		myt2.add(25.5);
+		myt2.add(25.7);
+		myt2.add(35.2);
+		myt2.add(33.8);
 		myt2.add(40.1);
-		myt2.add(30.7);
+		myt2.add(37.7);
 		gradeMyopia.put("eighteen", myt2);
-		Map<String, Object> gradeMyopiaFS3 = gradeMyopiaLN("1年级",school,"2019");
-		Map<String, Object> gradeMyopiaSE3 = gradeMyopiaLN("2年级",school,"2019");
-		Map<String, Object> gradeMyopiaTH3 = gradeMyopiaLN("3年级",school,"2019");
-		Map<String, Object> gradeMyopiaFO3 = gradeMyopiaLN("4年级",school,"2019");
-		Map<String, Object> gradeMyopiaFI3 = gradeMyopiaLN("5年级",school,"2019");
-		Map<String, Object> gradeMyopiaSI3 = gradeMyopiaLN("6年级",school,"2019");
-		
-		Object gradeFS3 = gradeMyopiaFS3.get("gradeMyopia");
-		Object gradeSE3 = gradeMyopiaSE3.get("gradeMyopia");
-		Object gradeTH3 = gradeMyopiaTH3.get("gradeMyopia");
-		Object gradeFO3 = gradeMyopiaFO3.get("gradeMyopia");
-		Object gradeFI3 = gradeMyopiaFI3.get("gradeMyopia");
-		Object gradeSI3 = gradeMyopiaSI3.get("gradeMyopia");
-		myt3.add((double)gradeFS3);
-		myt3.add((double)gradeSE3);
-		myt3.add((double)gradeTH3);
-		myt3.add((double)gradeFO3);
-		myt3.add((double)gradeFI3);
-		myt3.add((double)gradeSI3);
+			List<StudentDO> gegradejs = studentDao.querySchoolGrade(school);
+			for (StudentDO studentDO : gegradejs) {
+				double gradeMyopiaFS3 = gradeMyopiaLN(studentDO.getGrade(),school,sdf1.format(xian));
+				myt3.add(gradeMyopiaFS3);
+			}
 		gradeMyopia.put("nineteen", myt3);
 		
 		
@@ -355,13 +368,26 @@ public class StudentReportServiceImpl implements StudentReportService{
 	public Map<String, List<Double>> studentSexMyopia(String school,String checkDate) {
 		Map<String, List<Double>> studentSexMyopia = new HashMap<String, List<Double>>();
 		List<Double> myt = new ArrayList<Double>();
-		Map<String, Object> overYearSex = overYearSex(1,school,null,checkDate);//男
-		Object overYearSexNan = overYearSex.get("overYearSex");
-		myt.add((double)overYearSexNan);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			Date hou = null;
+			Date currdate = null;
+			try {
+				currdate = sdf1.parse(checkDate);
+				Calendar ca2 = Calendar.getInstance();
+				ca2.setTime(currdate);
+				ca2.add(Calendar.DAY_OF_MONTH, 14);
+				hou = ca2.getTime();
+				
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		
-		Map<String, Object> overYearSex2 = overYearSex(2,school,null,checkDate);
-		Object overYearSexNv = overYearSex2.get("overYearSex");
-		myt.add((double)overYearSexNv);
+		double overYearSex = overYearSex(1,school,null,currdate,hou);//男
+		myt.add(overYearSex);
+		
+		double overYearSex2 = overYearSex(2,school,null,currdate,hou);
+		myt.add(overYearSex2);
 		
 		studentSexMyopia.put("studentSexMyopia",myt);
 		return studentSexMyopia;
@@ -372,6 +398,13 @@ public class StudentReportServiceImpl implements StudentReportService{
 	public Map<String, List<Double>> overYearSexNan(String school) {
 		Map<String, List<Double>> studentSexMyopia = new HashMap<String, List<Double>>();
 		List<Double> myt = new ArrayList<Double>();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
+		Calendar cal = Calendar.getInstance();
+		Date xian = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qu = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qian = cal.getTime();
 		/*Map<String, Object> overYearSex = overYearSexLN(1,school,null,"2017");
 		Object overYearSexNan = overYearSex.get("overYearSex");
 		myt.add((double)overYearSexNan);
@@ -380,9 +413,8 @@ public class StudentReportServiceImpl implements StudentReportService{
 		myt.add((double)overYearSexNan2);*/
 		myt.add(78.9);
 		myt.add(66.2);
-		Map<String, Object> overYearSex3 = overYearSexLN(1,school,null,"2019");
-		Object overYearSexNan3 = overYearSex3.get("overYearSex");
-		myt.add((double)overYearSexNan3);
+		double overYearSex3 = overYearSexLN(1,school,null,sdf1.format(xian));
+		myt.add(overYearSex3);
 		studentSexMyopia.put("studentSexMyopia",myt);
 		return studentSexMyopia;
 	}
@@ -392,6 +424,13 @@ public class StudentReportServiceImpl implements StudentReportService{
 	public Map<String, List<Double>> overYearSexNv(String school) {
 		Map<String, List<Double>> studentSexMyopia = new HashMap<String, List<Double>>();
 		List<Double> myt = new ArrayList<Double>();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
+		Calendar cal = Calendar.getInstance();
+		Date xian = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qu = cal.getTime();
+		cal.add(Calendar.YEAR, -1); 
+		Date qian = cal.getTime();
 		/*Map<String, Object> overYearSex = overYearSexLN(2,school,null,"2017");
 		Object overYearSexNv = overYearSex.get("overYearSex");
 		myt.add((double)overYearSexNv);
@@ -400,56 +439,52 @@ public class StudentReportServiceImpl implements StudentReportService{
 		myt.add((double)overYearSexNv2);*/
 		myt.add(76.7);
 		myt.add(60.5);
-		Map<String, Object> overYearSex3 = overYearSexLN(2,school,null,"2019");
-		Object overYearSexNv3 = overYearSex3.get("overYearSex");
-		myt.add((double)overYearSexNv3);
+		double overYearSex3 = overYearSexLN(2,school,null,sdf1.format(xian));
+		myt.add(overYearSex3);
 		studentSexMyopia.put("studentSexMyopia",myt);
 		return studentSexMyopia;
 		
 	}
 	
-	public Map<String, Object> overYearSex(Integer studentSex,String school,
+	public double overYearSex(Integer studentSex,String school,
 			@RequestParam(value= "grade",required=false)String grade,
-			@RequestParam(value= "checkDate",required=false) String checkDate) {
+			@RequestParam(value= "start",required=false) Date start,
+			@RequestParam(value= "end",required=false) Date end) {
 		Integer first = 0;
 		double parseDouble = 0;
-		Map<String, Object> map = new HashMap<String,Object>();
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("studentSex", studentSex);
 		mapP.put("school", school);
 		mapP.put("grade", grade);
-		mapP.put("checkDate", checkDate);
+		mapP.put("start", start);
+		mapP.put("end", end);
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
 				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						Map<String, Object> map3 = new HashMap<String,Object>();
-						map3.put("identityCard", resultEyesightDO.getIdentityCard());
-						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
+						List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
 						}
 					}
 				}
 			}
-			DecimalFormat df = new DecimalFormat(".0");
-			parseDouble = Double.parseDouble(df.format(first/jinShi.size()*100));		
+			DecimalFormat df = new DecimalFormat("0.0");
+			parseDouble = Double.parseDouble(df.format((double)first/(double)jinShi.size()*100));		
 				
 		}	
 
-		map.put("overYearSex", parseDouble);
-		return map;
+		return parseDouble;
 	}
 	
-	public Map<String, Object> overYearSexLN(Integer studentSex,String school,
+	public double overYearSexLN(Integer studentSex,String school,
 			@RequestParam(value= "grade",required=false)String grade,
 			@RequestParam(value= "checkDate",required=false) String checkDate) {
 		Integer first = 0;
 		double parseDouble = 0;
-		Map<String, Object> map = new HashMap<String,Object>();
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("studentSex", studentSex);
 		mapP.put("school", school);
@@ -462,22 +497,22 @@ public class StudentReportServiceImpl implements StudentReportService{
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						Map<String, Object> map3 = new HashMap<String,Object>();
 						map3.put("identityCard", resultEyesightDO.getIdentityCard());
+						map3.put("checkDate", checkDate);
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
 						}
 					}
 				}
 			}
-			DecimalFormat df = new DecimalFormat(".0");
-			parseDouble = Double.parseDouble(df.format(first/jinShi.size()*100));		
+			DecimalFormat df = new DecimalFormat("0.0");
+			parseDouble = Double.parseDouble(df.format((double)first/(double)jinShi.size()*100));		
 				
 		}	
 
-		map.put("overYearSex", parseDouble);
-		return map;
+		return parseDouble;
 	}
 
 	//男女生近视年级
@@ -486,1139 +521,401 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Map<String, List<Double>> overYearGradeSex = new HashMap<String, List<Double>>();
 		List<Double> myt = new ArrayList<Double>();
 		List<Double> myt2 = new ArrayList<Double>();
-		Map<String, Object> overYearSexNan = overYearSex(1,school,"1年级",checkDate);
-		Map<String, Object> overYearSexNan2 = overYearSex(1,school,"2年级",checkDate);
-		Map<String, Object> overYearSexNan3 = overYearSex(1,school,"3年级",checkDate);
-		Map<String, Object> overYearSexNan4 = overYearSex(1,school,"4年级",checkDate);
-		Map<String, Object> overYearSexNan5 = overYearSex(1,school,"5年级",checkDate);
-		Map<String, Object> overYearSexNan6 = overYearSex(1,school,"6年级",checkDate);
-		Object overYearGradeSexNan = overYearSexNan.get("overYearSex");
-		Object overYearGradeSexNan2 = overYearSexNan2.get("overYearSex");
-		Object overYearGradeSexNan3 = overYearSexNan3.get("overYearSex");
-		Object overYearGradeSexNan4 = overYearSexNan4.get("overYearSex");
-		Object overYearGradeSexNan5 = overYearSexNan5.get("overYearSex");
-		Object overYearGradeSexNan6 = overYearSexNan6.get("overYearSex");
-		myt.add((double)overYearGradeSexNan);
-		myt.add((double)overYearGradeSexNan2);
-		myt.add((double)overYearGradeSexNan3);
-		myt.add((double)overYearGradeSexNan4);
-		myt.add((double)overYearGradeSexNan5);
-		myt.add((double)overYearGradeSexNan6);
-		overYearGradeSex.put("overYearSexNan", myt);
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		Date hou = null;
+		Date currdate = null;
+		try {
+			currdate = sdf1.parse(checkDate);
+			Calendar ca2 = Calendar.getInstance();
+			ca2.setTime(currdate);
+			ca2.add(Calendar.DAY_OF_MONTH, 14);
+			hou = ca2.getTime();
+			
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		List<StudentDO> gegradejs = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : gegradejs) {
+			double overYearSexNan = overYearSex(1,school,studentDO.getGrade(),currdate,hou);
+			myt.add(overYearSexNan);
+		}
+		for (StudentDO studentDO : gegradejs) {
+			double overYearSexNv = overYearSex(2,school,studentDO.getGrade(),currdate,hou);
+			myt2.add(overYearSexNv);
+		}
 		
-		Map<String, Object> overYearSexNv = overYearSex(2,school,"1年级",checkDate);
-		Map<String, Object> overYearSexNv2 = overYearSex(2,school,"2年级",checkDate);
-		Map<String, Object> overYearSexNv3 = overYearSex(2,school,"3年级",checkDate);
-		Map<String, Object> overYearSexNv4 = overYearSex(2,school,"4年级",checkDate);
-		Map<String, Object> overYearSexNv5 = overYearSex(2,school,"5年级",checkDate);
-		Map<String, Object> overYearSexNv6 = overYearSex(2,school,"6年级",checkDate);
-		Object overYearGradeSexNv = overYearSexNv.get("overYearSex");
-		Object overYearGradeSexNv2 = overYearSexNv2.get("overYearSex");
-		Object overYearGradeSexNv3 = overYearSexNv3.get("overYearSex");
-		Object overYearGradeSexNv4 = overYearSexNv4.get("overYearSex");
-		Object overYearGradeSexNv5 = overYearSexNv5.get("overYearSex");
-		Object overYearGradeSexNv6 = overYearSexNv6.get("overYearSex");
-		myt2.add((double)overYearGradeSexNv);
-		myt2.add((double)overYearGradeSexNv2);
-		myt2.add((double)overYearGradeSexNv3);
-		myt2.add((double)overYearGradeSexNv4);
-		myt2.add((double)overYearGradeSexNv5);
-		myt2.add((double)overYearGradeSexNv6);
+		overYearGradeSex.put("overYearSexNan", myt);
 		overYearGradeSex.put("overYearSexNv", myt2);
 		
 		return overYearGradeSex;
 	}
 	
-	public void createDoc(Map<String, Object> dataMap, String fileName, String template) {
-        Configuration configuration = new Configuration();
-        configuration.setDefaultEncoding("utf-8");                                       
-        configuration.setClassForTemplateLoading(StudentReportServiceImpl.class, "/");
-        Template t = null;
-		//File outFile = new File(realPath + fileName);
-		Writer out = null;
-        try {
-            //word.xml是要生成Word文件的模板文件
-            t = configuration.getTemplate(template,"utf-8"); 
-            out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(fileName.getBytes(),"iso-8859-1"))+".docx")));                 //还有这里要设置编码
-            t.process(dataMap, out);
-            out.flush();
-            out.close();
-          
-        } catch (Exception e) {
-            e.printStackTrace();
-        } 
-    }
-	
-	/**
-	 * freemarker导出工具类
-	 */
-	
-	public void download(HttpServletRequest request,HttpServletResponse response, String fileUrl, String fileName) {
-		java.io.BufferedInputStream bis = null;
-		java.io.BufferedOutputStream bos = null;
-		try{
-			fileUrl = fileUrl + fileName;
-			response.setContentType("multipart/form-data");
-			response.setCharacterEncoding("utf-8");
-			response.setHeader("Content-disposition", "attachment; filename=" + java.net.URLEncoder.encode(fileName, "UTF-8"));
-			bis = new java.io.BufferedInputStream(new java.io.FileInputStream((fileUrl)));
-			bos = new java.io.BufferedOutputStream(response.getOutputStream());
-			byte[] buff = new byte[2048];
-			int bytesRead;
-			int i = 0;
-	
-			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
-				bos.write(buff, 0, bytesRead);
-				i++;
-			}
-			bos.flush();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			if (bis != null) {
-				try {
-					bis.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				bis = null;
-			}
-			if (bos != null) {
-				try {
-					bos.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				bos = null;
-			}
-		}
 
-    }
-
-
-	/**
-	 * 
-	 */
-	@Override
-	public void baogaoxuexiao(HttpServletRequest request,  HttpServletResponse response) {
-		String school = request.getParameter("school");
-		try {
-				Map<String, Object> params = xuexiaobaogao(request, response);
-				createDoc(params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给学校报告检测.ftl");
-				download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".docx");
-			
-			//craeteZipPath(bootdoConfig.getPoiword(),response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			File file=new File(bootdoConfig.getPoiword());
-	        if(file.exists()) {
-	           File[] files = file.listFiles();
-	           for(File f :files)
-	              f.delete();
-	        }
-	     }  
-	}
-
-
-	public Map<String,Object> xuexiaobaogao(HttpServletRequest request, HttpServletResponse response) {
+	//学校数据
+	public Map<String,Object> xuexiaobaogao(Date start,Date end,HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> params = new HashMap<String, Object>(); 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月");
-		DecimalFormat df = new DecimalFormat(".0");
-		//Date checkDate = resultDiopterDao.maxCheckDate().getCheckDate();
-		//图
+		DecimalFormat df = new DecimalFormat("0.0");
+		
 		String school = request.getParameter("school");
 		String checkDate = request.getParameter("checkDate");
+		String date = request.getParameter("date");
 		Integer schoolNum = Integer.parseInt(request.getParameter("schoolNum"));
-		/*String overYear=request.getParameter("overYear");
-		try {
-			String string = savePictoServer(overYear,"D:/word/img/");
-			String imageStr = getImageStr(string);
-			//params.put("overYear", imageStr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String gradeMyopia=request.getParameter("gradeMyopia");
-		try {
-			String string = savePictoServer(gradeMyopia,"D:/word/img/");
-			String imageStr = getImageStr(string);
-			//params.put("gradeMyopia", imageStr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String overYearGradeMyopia=request.getParameter("overYearGradeMyopia");
-		try {
-			String string = savePictoServer(overYearGradeMyopia,"D:/word/img/");
-			String imageStr = getImageStr(string);
-			//params.put("overYearGradeMyopia", imageStr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String studentSexMyopia=request.getParameter("studentSexMyopia");
-		try {
-			String string = savePictoServer(studentSexMyopia,"D:/word/img/");
-			String imageStr = getImageStr(string);
-			//params.put("studentSexMyopia", imageStr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String overYearSexNan=request.getParameter("overYearSexNan");
-		try {
-			String string = savePictoServer(overYearSexNan,"D:/word/img/");
-			String imageStr = getImageStr(string);
-			//params.put("overYearSexNan", imageStr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String overYearSexNv=request.getParameter("overYearSexNv");
-		try {
-			String string = savePictoServer(overYearSexNv,"D:/word/img/");
-			String imageStr = getImageStr(string);
-			//params.put("overYearSexNv", imageStr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String overYearGradeSex=request.getParameter("overYearGradeSex");
-		try {
-			String string = savePictoServer(overYearGradeSex,"D:/word/img/");
-			String imageStr = getImageStr(string);
-			//params.put("overYearGradeSex", imageStr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-	
+		
 		params.put("schoolName", school);
 		params.put("newDate", sdf.format(new Date()));
+		
+		//图
+		Map<String,Object> ls = new HashMap<>();
+		ls.put("type", date);
+		List<LinShiUrlDO> lsu = linShiUrlDao.list(ls);
+		for (LinShiUrlDO linShiUrlDO : lsu) {
+			params.put(linShiUrlDO.getName(), linShiUrlDO.getImgUrl());
+			
+			linShiUrlDao.remove(linShiUrlDO.getId());
+		}
 
 		//基本情况
-		//List<StudentDO> checkNum = studentDao.queryCheckNum(school);
-		Integer jiancha = jiancha(school,checkDate,null,null);
+		Integer jiancha = jiancha(school,start,end,null,null);
 		if(jiancha == -1){
 			params.put("checkNum", 0);
 		}else{
 			params.put("checkNum", jiancha);
 		}
-		params.put("schoolNum", schoolNum);
-		params.put("checkRate", Double.parseDouble(df.format(jiancha/schoolNum*100))+"%");
+		Map<String, Object> num = new HashMap<String, Object>(); 
+		num.put("school", school);
+		List<StudentDO> list = studentDao.list(num);
+		params.put("schoolNum", list.size());
+		params.put("checkRate", df.format((double)jiancha/((double)list.size())*100));
 		
-		
-		List<StudentDO> first = studentDao.queryGradeNum("1年级");
-		List<StudentDO> second = studentDao.queryGradeNum("2年级");
-		List<StudentDO> third = studentDao.queryGradeNum("3年级");
-		List<StudentDO> fourth = studentDao.queryGradeNum("4年级");
-		List<StudentDO> fifth = studentDao.queryGradeNum("5年级");
-		List<StudentDO> sixth = studentDao.queryGradeNum("6年级");
-		if(first.size()>0){
-			Integer jiancha2 = jiancha(school,checkDate,null,"1年级");
-			params.put("firstGradeNum", first.size());
-		//	params.put("firstGradeCheckNum", jiancha2);
-		//	params.put("firstGradeCheckRate", Double.parseDouble(df.format(jiancha2/first.size()*100))+"%");
-		}
-		if(second.size()>0){
-			Integer jiancha3 = jiancha(school,checkDate,null,"2年级");
-			params.put("secondGradeNum", second.size());
-		//	params.put("secondGradeCheckNum", jiancha3);
-		//	params.put("secondGradeCheckRate", Double.parseDouble(df.format(jiancha3/second.size()*100)));
-		}
-		if(third.size()>0){
-			Integer jiancha4 = jiancha(school,checkDate,null,"3年级");
-			if(jiancha4 == -1){
-				params.put("thirdGradeCheckNum", 0);
-			}else{
-				params.put("thirdGradeCheckNum", jiancha4);
+		List<Map<String,Object>> listg = new ArrayList<Map<String,Object>>();
+		List<StudentDO> gradeshu = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : gradeshu) {
+			Map<String,Object> gNum = new HashMap<>();
+ 			List<StudentDO> gradeNum = studentDao.queryGradeNum(studentDO.getGrade());
+			if(gradeNum.size()>0){
+				Integer jiancha2 = jiancha(school,start,end,null,studentDO.getGrade());
+				gNum.put("nianji", studentDO.getGrade());
+				gNum.put("gradeNum", gradeNum.size());
+				if(jiancha2 == -1){
+					gNum.put("gradeCheckNum", 0);
+					gNum.put("gradeCheckRate", 0);
+				}else{
+					gNum.put("gradeCheckNum", jiancha2);
+					gNum.put("gradeCheckRate", df.format((double)jiancha2/((double)gradeNum.size())*100));
+				}
 			}
-			params.put("thirdGradeNum", third.size());
-			params.put("thirdGradeCheckRate", Double.parseDouble(df.format(jiancha4/third.size()*100)));
+			listg.add(gNum);
 		}
-		if(fourth.size()>0){
-			Integer jiancha5 = jiancha(school,checkDate,null,"4年级");
-			params.put("fourthGradeNum", fourth.size());
-		//	params.put("fourthGradeCheckNum", jiancha5);
-		//	params.put("fourthGradeCheckRate", Double.parseDouble(df.format(jiancha5/fourth.size()*100)));
+		params.put("nianjice", listg);
+		
+		//男女近视
+		Integer nanjiancha = jiancha(school,start,end,1,null);
+		Integer nanjinshi = jinshi(school,start,end,1,null,null);
+		params.put("checkNanNum", nanjiancha);
+		params.put("myopiaNanNum", nanjinshi);
+		params.put("myopiaNanRate", df.format(((double)nanjinshi/(double)nanjiancha)*100));
+		
+		Integer nvjiancha = jiancha(school,start,end,2,null);
+		Integer nvjinshi = jinshi(school,start,end,2,null,null);
+		params.put("checkNvNum", nvjiancha);
+		params.put("myopiaNvNum", nvjinshi);
+		params.put("myopiaNvRate", df.format(((double)nvjinshi/(double)nvjiancha)*100));
+	
+		//男近视
+		List<Map<String,Object>> listnn = new ArrayList<Map<String,Object>>();
+		List<StudentDO> gradenn = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : gradenn) {
+			Map<String,Object> nnNum = new HashMap<>();
+			Integer nanjianchanianyi = jiancha(school,start,end,1,studentDO.getGrade());
+			Integer nanjinshinianyi = jinshi(school,start,end,1,studentDO.getGrade(),null);
+			if(nanjianchanianyi == -1){
+				nnNum.put("checkNanNum", 0);
+				nnNum.put("myopiaNanRate", 0);
+			}else{
+				nnNum.put("checkNanNum", nanjianchanianyi);
+				nnNum.put("myopiaNanRate", df.format(((double)nanjinshinianyi/(double)nanjianchanianyi)*100));
+			}
+			nnNum.put("nj", studentDO.getGrade());
+			nnNum.put("myopiaNanNum", nanjinshinianyi);
+			listnn.add(nnNum);	
 		}
-		if(fifth.size()>0){
-			Integer jiancha6 = jiancha(school,checkDate,null,"5年级");
-			params.put("fifthGradeNum", fifth.size());
-		//	params.put("fifthGradeCheckNum", jiancha6);
-		//	params.put("fifthGradeCheckRate", Double.parseDouble(df.format(jiancha6/fifth.size()*100)));
+		params.put("listnn", listnn);
+		//女近视
+		List<Map<String,Object>> listmm = new ArrayList<Map<String,Object>>();
+		List<StudentDO> grademm = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : grademm) {
+			Map<String,Object> mmNum = new HashMap<>();
+			Integer nvjianchanianyi = jiancha(school,start,end,2,studentDO.getGrade());
+			Integer nvjinshinianyi = jinshi(school,start,end,2,studentDO.getGrade(),null);
+			if(nvjianchanianyi == -1){
+				mmNum.put("checkNvNum", 0);
+				mmNum.put("myopiaNvRate", 0);
+			}else{
+				mmNum.put("checkNvNum", nvjianchanianyi);
+				mmNum.put("myopiaNvRate", df.format(((double)nvjinshinianyi/(double)nvjianchanianyi)*100));
+			}
+			mmNum.put("nj", studentDO.getGrade());
+			mmNum.put("myopiaNvNum", nvjinshinianyi);
+			listmm.add(mmNum);	
 		}
-		if(sixth.size()>0){
-			Integer jiancha7 = jiancha(school,checkDate,null,"6年级");
-			params.put("sixthGradeNum", sixth.size());
-		//	params.put("sixthGradeCheckNum", jiancha7);
-		//	params.put("sixthGradeCheckRate", Double.parseDouble(df.format(jiancha7/sixth.size()*100)));
+		params.put("listmm", listmm);	
+		
+		//各班级近视率
+		List<Map<String,Object>> listbj = new ArrayList<Map<String,Object>>();				
+		
+		List<StudentDO> gradebj = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : gradebj) {
+			Map<String,Object> yi = new HashMap<String,Object>();
+			List<Map<String,Object>> aa = new ArrayList<Map<String,Object>>();
+			Map<String,Object> mapClassyi = new HashMap<String,Object>();
+			mapClassyi.put("school", school);
+			mapClassyi.put("grade", studentDO.getGrade());
+			List<StudentDO> classCountyi = studentDao.queryGradeClassCount(mapClassyi);
+			for(int i= 1 ; i<=classCountyi.size();i++){
+				Map<String,Object> classyi = new HashMap<String,Object>();
+				classyi.put("class", i);
+				Integer jcyi = jianchaban(school,start,end,String.valueOf(i), studentDO.getGrade());
+				Integer jsyi = jinshi(school,start,end,null,studentDO.getGrade(),String.valueOf(i));
+				if(jcyi == -1){
+					classyi.put("classNum", 0);
+					classyi.put("classMyopiaRate", 0);
+				}else{
+					classyi.put("classNum", jcyi);
+					classyi.put("classMyopiaRate", df.format(((double)jsyi/(double)jcyi*100)));
+				}
+				classyi.put("classMyopiaNum", jsyi);
+				aa.add(classyi);
+			}
+			yi.put("grade", studentDO.getGrade());
+			yi.put("classyi", aa);
+			listbj.add(yi);
 		}
-		Integer jin = 0;
-		Map<String, Object> mapLN3 = new HashMap<String,Object>();
-		mapLN3.put("school", school);
-		mapLN3.put("checkDate", checkDate);
-		List<ResultEyesightDO> liNian3 = resultEyesightDao.liNian(mapLN3);
-		if(liNian3.size()>0){
-			for (ResultEyesightDO resultEyesightDO : liNian3) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
-					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						Map<String, Object> map3 = new HashMap<String,Object>();
-						map3.put("identityCard", resultEyesightDO.getIdentityCard());
-						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
-						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
-								jin++;
-							}
+		params.put("firstClass", listbj);
+			
+		//不良
+		List<Map<String,String>> listT = new ArrayList<Map<String,String>>();
+
+		List<StudentDO> gradebl = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : gradebl) {
+			Map<String,Object> dushuy = new HashMap<String,Object>();
+			dushuy.put("school", school);
+			dushuy.put("grade", studentDO.getGrade());
+			dushuy.put("start", start);
+			dushuy.put("end", end);
+			List<ResultEyesightDO> shiLiy = resultEyesightDao.queryLuoYanShiLi(dushuy);
+			Map<String,String> gradey = new HashMap<String,String>();
+			int checkyi = shiLiy.size();
+			int qingduyi = 0;
+			int zhongduyi = 0;
+			int zzhongduyi = 0;
+			int buliangyi = 0;
+			String qingduyiR = "0";
+			String zhongduyiR= "0";
+			String zzhongduyiR= "0";
+			String buliangyiR= "0";
+			if(shiLiy.size()>0){
+				for (ResultEyesightDO resultEyesightDO : shiLiy) {
+					if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
+						if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
+							qingduyi++;
+						}
+						if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
+							zhongduyi++;
+						}
+						if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
+							zzhongduyi++;
+						}
+						if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
+							buliangyi++;
 						}
 					}
 				}
+				qingduyiR = df.format(((double)qingduyi/(double)checkyi)*100);
+				zhongduyiR = df.format(((double)zhongduyi/(double)checkyi)*100);
+				zzhongduyiR = df.format(((double)zzhongduyi/(double)checkyi)*100);
+				buliangyiR =  df.format(((double)buliangyi/(double)checkyi)*100);
 			}
-		}		
-		
-		params.put("myopiaNum", jin);
-		params.put("myopiaRate", Double.parseDouble(df.format(jin/jiancha*100))+"%");
-		
-		Integer nanjiancha = jiancha(school,checkDate,1,null);
-		Integer nanjinshi = jinshi(school,checkDate,1,null,null);
-		//params.put("checkNanNum", nanjiancha);
-		//params.put("myopiaNanNum", nanjinshi);
-		//params.put("myopiaNanRate", Double.parseDouble(df.format(nanjinshi/nanjiancha*100))+"%");
-		
-		Integer nvjiancha = jiancha(school,checkDate,2,null);
-		Integer nvjinshi = jinshi(school,checkDate,2,null,null);
-		//params.put("checkNvNum", nvjiancha);
-		//params.put("myopiaNvNum", nvjinshi);
-		//params.put("myopiaNvRate", Double.parseDouble(df.format(nvjinshi/nvjiancha*100))+"%");
-		
-		Integer nanjianchanianyi = jiancha(school,checkDate,1,"1年级");
-		Integer nanjinshinianyi = jinshi(school,checkDate,1,"1年级",null);
-	//	params.put("firstCheckNanNum", nanjianchanianyi);
-	//	params.put("firstMyopiaNanNum", nanjinshinianyi);
-	//	params.put("firstMyopiaNanRate", Double.parseDouble(df.format(nanjinshinianyi/nanjianchanianyi*100))+"%");
-		
-		Integer nanjianchanianer = jiancha(school,checkDate,1,"2年级");
-		Integer nanjinshinianer = jinshi(school,checkDate,1,"2年级",null);
-	//	params.put("secondCheckNanNum", nanjianchanianer);
-	//	params.put("secondMyopiaNanNum", nanjinshinianer);
-	//	params.put("secondMyopiaNanRate", Double.parseDouble(df.format(nanjinshinianer/nanjianchanianer*100))+"%");
-		
-		Integer nanjianchaniansan = jiancha(school,checkDate,1,"3年级");
-		Integer nanjinshiniansan = jinshi(school,checkDate,1,"3年级",null);
-		if(nanjianchaniansan == -1){
-			params.put("thirdCheckNanNum", 0);
-			params.put("checkNanNum", 0);
-		}else{
-			params.put("thirdCheckNanNum", nanjianchaniansan);
-			params.put("checkNanNum", nanjianchaniansan);
-		}
-		params.put("thirdMyopiaNanNum", nanjinshiniansan);
-		params.put("thirdMyopiaNanRate", Double.parseDouble(df.format(nanjinshiniansan/nanjianchaniansan*100))+"%");
-		
-		params.put("myopiaNanNum", nanjinshiniansan);
-		params.put("myopiaNanRate", Double.parseDouble(df.format(nanjinshiniansan/nanjianchaniansan*100))+"%");
-		
-		
-		Integer nanjianchaniansi = jiancha(school,checkDate,1,"4年级");
-		Integer nanjinshiniansi = jinshi(school,checkDate,1,"4年级",null);
-	//	params.put("fourthCheckNanNum", nanjianchaniansi);
-	//	params.put("fourthMyopiaNanNum", nanjinshiniansi);
-	//	params.put("fourthMyopiaNanRate", Double.parseDouble(df.format(nanjinshiniansi/nanjianchaniansi*100))+"%");
-		
-		Integer nanjianchanianwu = jiancha(school,checkDate,1,"5年级");
-		Integer nanjinshinianwu = jinshi(school,checkDate,1,"5年级",null);
-	//	params.put("fifthCheckNanNum", nanjianchanianwu);
-	//	params.put("fifthMyopiaNanNum", nanjinshinianwu);
-	//	params.put("fifthMyopiaNanRate", Double.parseDouble(df.format(nanjinshinianwu/nanjianchanianwu*100))+"%");
-		
-		Integer nanjianchanianliu = jiancha(school,checkDate,1,"6年级");
-		Integer nanjinshinianliu = jinshi(school,checkDate,1,"6年级",null);
-	//	params.put("sixthCheckNanNum", nanjianchanianliu);
-	//	params.put("sixthMyopiaNanNum", nanjinshinianliu);
-	//	params.put("sixthMyopiaNanRate", Double.parseDouble(df.format(nanjinshinianliu/nanjianchanianliu*100))+"%");
-		
-		Integer nvjianchanianyi = jiancha(school,checkDate,2,"1年级");
-		Integer nvjinshinianyi = jinshi(school,checkDate,2,"1年级",null);
-	//	params.put("firstCheckNvNum", nvjianchanianyi);
-	//	params.put("firstMyopiaNvNum", nvjinshinianyi);
-	//	params.put("firstMyopiaNvRate", Double.parseDouble(df.format(nvjinshinianyi/nvjianchanianyi*100))+"%");
-		
-		Integer nvjianchanianer = jiancha(school,checkDate,2,"2年级");
-		Integer nvjinshinianer = jinshi(school,checkDate,2,"2年级",null);
-	//	params.put("secondCheckNvNum", nvjianchanianer);
-	//	params.put("secondMyopiaNvNum", nvjinshinianer);
-	//	params.put("secondMyopiaNvRate", Double.parseDouble(df.format(nvjinshinianer/nvjianchanianer*100))+"%");
-		
-		Integer nvjianchaniansan = jiancha(school,checkDate,2,"3年级");
-		Integer nvjinshiniansan = jinshi(school,checkDate,2,"3年级",null);
-		if(nvjianchaniansan == -1){
-			params.put("thirdCheckNvNum", 0);
-			params.put("checkNvNum", 0);
-		}else{
-			params.put("thirdCheckNvNum", nvjianchaniansan);
-			params.put("checkNvNum", nvjianchaniansan);
-		}
-		
-		params.put("thirdMyopiaNvNum", nvjinshiniansan);
-		params.put("thirdMyopiaNvRate", Double.parseDouble(df.format(nvjinshiniansan/nvjianchaniansan*100))+"%");
-		
-		params.put("myopiaNvNum", nvjinshiniansan);
-		params.put("myopiaNvRate", Double.parseDouble(df.format(nvjinshiniansan/nvjianchaniansan*100))+"%");
-		
-		
-		Integer nvjianchaniansi = jiancha(school,checkDate,2,"4年级");
-		Integer nvjinshiniansi = jinshi(school,checkDate,2,"4年级",null);
-	//	params.put("fourthCheckNvNum", nvjianchaniansi);
-	//	params.put("fourthMyopiaNvNum", nvjinshiniansi);
-	//	params.put("fourthMyopiaNvRate", Double.parseDouble(df.format(nvjinshiniansi/nvjianchaniansi*100))+"%");
-		
-		Integer nvjianchanianwu = jiancha(school,checkDate,2,"5年级");
-		Integer nvjinshinianwu = jinshi(school,checkDate,2,"5年级",null);
-	//	params.put("fifthCheckNvNum", nvjianchanianwu);
-	//	params.put("fifthMyopiaNvNum", nvjinshinianwu);
-	//	params.put("fifthMyopiaNvRate", Double.parseDouble(df.format(nvjinshinianwu/nvjianchanianwu*100))+"%");
-		
-		Integer nvjianchanianliu = jiancha(school,checkDate,2,"6年级");
-		Integer nvjinshinianliu = jinshi(school,checkDate,2,"6年级",null);
-	//	params.put("sixthCheckNvNum", nvjianchanianliu);
-	//	params.put("sixthMyopiaNvNum", nvjinshinianliu);
-	//	params.put("sixthMyopiaNvRate", Double.parseDouble(df.format(nvjinshinianliu/nvjianchanianliu*100))+"%");
-		
-		Map<String,Object> mapClassyi = new HashMap<String,Object>();
-		mapClassyi.put("school", school);
-		mapClassyi.put("grade", "一年级");
-		List<StudentDO> classCountyi = studentDao.queryGradeClassCount(mapClassyi);
-		List<Map<String,Object>> list1 = new ArrayList<Map<String,Object>>();
-		for(int i= 1 ; i<=classCountyi.size() ;i++){
-			Map<String,Object> classyi = new HashMap<String,Object>();
-			classyi.put("class", i);
-			Integer jcyi = jianchaban(school,checkDate,String.valueOf(i), "1年级");
-			Integer jsyi = jinshi(school,checkDate,null,null,String.valueOf(i));
-			classyi.put("classNum", jcyi);
-			classyi.put("classMyopiaNum", jsyi);
-			classyi.put("ClassMyopiaRate", Double.parseDouble(df.format(jsyi/jcyi*100))+"%");
-			list1.add(classyi);
-		}
-	//	params.put("firstClass", list1);
-		
-		Map<String,Object> mapClasser = new HashMap<String,Object>();
-		mapClasser.put("school", school);
-		mapClasser.put("grade", "二年级");
-		List<StudentDO> classCounter = studentDao.queryGradeClassCount(mapClasser);
-		List<Map<String,Object>> list2 = new ArrayList<Map<String,Object>>();
-		for(int i= 1 ; i<=classCounter.size() ;i++){
-			Map<String,Object> classer = new HashMap<String,Object>();
-			classer.put("class", i);
-			Integer jcer = jianchaban(school,checkDate,String.valueOf(i), "2年级");
-			Integer jser = jinshi(school,checkDate,null,null,String.valueOf(i));
-			classer.put("classNum", jcer);
-			classer.put("classMyopiaNum", jser);
-			classer.put("ClassMyopiaRate", Double.parseDouble(df.format(jser/jcer*100))+"%");
-			list2.add(classer);
-		}
-	//	params.put("secondClass", list2);
-		
-		Map<String,Object> mapClasssan = new HashMap<String,Object>();
-		mapClasssan.put("school", school);
-		mapClasssan.put("grade", "三年级");
-		List<StudentDO> classCountsan = studentDao.queryGradeClassCount(mapClasssan);
-		List<Map<String,Object>> list3 = new ArrayList<Map<String,Object>>();
-		for(int i= 1 ; i<=classCountsan.size() ;i++){
-			Map<String,Object> classsan = new HashMap<String,Object>();
-			classsan.put("class", i);
-			Integer jcsan = jianchaban(school,checkDate,String.valueOf(i), "3年级");
-			Integer jssan = jinshi(school,checkDate,null,null,String.valueOf(i));
-			classsan.put("classNum", jcsan);
-			classsan.put("classMyopiaNum", jssan);
-			classsan.put("ClassMyopiaRate", Double.parseDouble(df.format(jssan/jcsan*100))+"%");
-			list3.add(classsan);
-		}
-		//params.put("thirdClass", list3);
-		
-		params.put("class1", 1);
-		Integer jcsan = jianchaban(school,checkDate,String.valueOf(1), "3年级");
-		Integer jssan = jinshi(school,checkDate,null,null,String.valueOf(1));
-		if(jcsan == -1){
-			params.put("thirdClassNum1", 0);
-			params.put("thirdClassMyopiaRate1", "0%");
-		}else{
-			params.put("thirdClassNum1", jcsan);
-			params.put("thirdClassMyopiaRate1", Double.parseDouble(df.format(jssan/jcsan*100))+"%");
-		}
-		params.put("thirdClassMyopiaNum1", jssan);
-		
-		params.put("class2", 2);
-		Integer jcsan2 = jianchaban(school,checkDate,String.valueOf(2), "3年级");
-		Integer jssan2 = jinshi(school,checkDate,null,null,String.valueOf(2));
-		if(jcsan2 == -1){
-			params.put("thirdClassNum2", 0);
-			params.put("thirdClassMyopiaRate2", "0%");
-		}else{
-			params.put("thirdClassNum2", jcsan2);
-			params.put("thirdClassMyopiaRate2", Double.parseDouble(df.format(jssan2/jcsan2*100))+"%");
-		}
-		params.put("thirdClassMyopiaNum2", jssan2);
-		
-		
-		
-		Map<String,Object> mapClasssi = new HashMap<String,Object>();
-		mapClasssi.put("school", school);
-		mapClasssi.put("grade", "四年级");
-		List<StudentDO> classCountsi = studentDao.queryGradeClassCount(mapClasssi);
-		List<Map<String,Object>> list4 = new ArrayList<Map<String,Object>>();
-		for(int i= 1 ; i<=classCountsi.size() ;i++){
-			Map<String,Object> classsi = new HashMap<String,Object>();
-			classsi.put("class", i);
-			Integer jcsi = jianchaban(school,checkDate,String.valueOf(i), "4年级");
-			Integer jssi = jinshi(school,checkDate,null,null,String.valueOf(i));
-			classsi.put("classNum", jcsi);
-			classsi.put("classMyopiaNum", jssi);
-			classsi.put("ClassMyopiaRate", Double.parseDouble(df.format(jssi/jcsi*100))+"%");
-			list4.add(classsi);
-		}
-	//	params.put("fourthClass", list4);
-		
-		Map<String,Object> mapClasswu = new HashMap<String,Object>();
-		mapClasswu.put("school", school);
-		mapClasswu.put("grade", "五年级");
-		List<StudentDO> classCountwu = studentDao.queryGradeClassCount(mapClasswu);
-		List<Map<String,Object>> list5 = new ArrayList<Map<String,Object>>();
-		for(int i= 1 ; i<=classCountwu.size() ;i++){
-			Map<String,Object> classwu = new HashMap<String,Object>();
-			classwu.put("class", i);
-			Integer jcwu = jianchaban(school,checkDate,String.valueOf(i), "5年级");
-			Integer jswu = jinshi(school,checkDate,null,null,String.valueOf(i));
-			classwu.put("classNum", jcwu);
-			classwu.put("classMyopiaNum", jswu);
-			classwu.put("ClassMyopiaRate", Double.parseDouble(df.format(jswu/jcwu*100))+"%");
-			list5.add(classwu);
-		}
-	//	params.put("fifthClass", list5);
-		
-		Map<String,Object> mapClassliu = new HashMap<String,Object>();
-		mapClassliu.put("school", school);
-		mapClassliu.put("grade", "六年级");
-		List<StudentDO> classCountliu = studentDao.queryGradeClassCount(mapClassliu);
-		List<Map<String,Object>> list6 = new ArrayList<Map<String,Object>>();
-		for(int i= 1 ; i<=classCountliu.size() ;i++){
-			Map<String,Object> classliu = new HashMap<String,Object>();
-			classliu.put("class", i);
-			Integer jcliu = jianchaban(school,checkDate,String.valueOf(i), "6年级");
-			Integer jsliu = jinshi(school,checkDate,null,null,String.valueOf(i));
-			classliu.put("classNum", jcliu);
-			classliu.put("classMyopiaNum", jsliu);
-			classliu.put("ClassMyopiaRate", Double.parseDouble(df.format(jsliu/jcliu*100))+"%");
-			list6.add(classliu);
-		}
-	//	params.put("sixthClass", list6);
-		
-		
-		List<Map<String,Object>> listT = new ArrayList<Map<String,Object>>();
-
-		Map<String,Object> dushuy = new HashMap<String,Object>();
-		dushuy.put("school", school);
-		dushuy.put("grade", "1年级");
-		dushuy.put("checkDate", checkDate);
-		List<ResultEyesightDO> shiLiy = resultEyesightDao.queryLuoYanShiLi(dushuy);
-		Map<String,Object> gradey = new HashMap<String,Object>();
-		int checkyi = shiLiy.size();
-		int qingduyi = 0;
-		int zhongduyi = 0;
-		int zzhongduyi = 0;
-		int buliangyi = 0;
-		Double qingduyiR = 0.0 ;
-		Double zhongduyiR = 0.0 ;
-		Double zzhongduyiR = 0.0 ;
-		Double buliangyiR = 0.0 ;
-		if(shiLiy.size()>0){
-			for (ResultEyesightDO resultEyesightDO : shiLiy) {
-				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
-					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
-						qingduyi++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
-						zhongduyi++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
-						zzhongduyi++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						buliangyi++;
-					}
-				}
-			}
-			qingduyiR = Double.parseDouble(df.format(qingduyi/checkyi*100));
-			zhongduyiR = Double.parseDouble(df.format(zhongduyi/checkyi*100));
-			zzhongduyiR = Double.parseDouble(df.format(zzhongduyi/checkyi*100));
-			buliangyiR =  Double.parseDouble(df.format(buliangyi/checkyi*100));
-			gradey.put("grade", "1");
-			gradey.put("gradeCheckNum", checkyi);
-			gradey.put("numQDSLBL", qingduyi);
-			gradey.put("rateQDSLBL", qingduyiR+"%");
-			gradey.put("numZDSLBL", zhongduyi);
-			gradey.put("rateZDSLBL", zhongduyiR+"%");
-			gradey.put("numZZDSLBL", zzhongduyi);
-			gradey.put("rateZZDSLBL", zzhongduyiR+"%");
-			gradey.put("numSLBL", buliangyi);
-			gradey.put("rateSLBL", buliangyiR+"%");
+			gradey.put("grade", studentDO.getGrade());
+			gradey.put("xuebu", studentDO.getXueBu());
+			gradey.put("gradeCheckNum", String.valueOf(checkyi));
+			gradey.put("numQDSLBL", String.valueOf(qingduyi));
+			gradey.put("rateQDSLBL", qingduyiR);
+			gradey.put("numZDSLBL", String.valueOf(zhongduyi));
+			gradey.put("rateZDSLBL", zhongduyiR);
+			gradey.put("numZZDSLBL", String.valueOf(zzhongduyi));
+			gradey.put("rateZZDSLBL", zzhongduyiR);
+			gradey.put("numSLBL", String.valueOf(buliangyi));
+			gradey.put("rateSLBL", buliangyiR);
 			
 			listT.add(gradey);
-			
 		}
+		params.put("listbl", listT);
 		
-		Map<String,Object> dushue = new HashMap<String,Object>();
-		dushue.put("school", school);
-		dushue.put("grade", "2年级");
-		dushue.put("checkDate", checkDate);
-		List<ResultEyesightDO> shiLie = resultEyesightDao.queryLuoYanShiLi(dushue);
-		Map<String,Object> gradee = new HashMap<String,Object>();
-		int checker = shiLie.size();
-		int qingduer = 0;
-		int zhongduer = 0;
-		int zzhongduer = 0;
-		int bulianger = 0;
-		Double qingduerR = 0.0 ;
-		Double zhongduerR = 0.0 ;
-		Double zzhongduerR = 0.0 ;
-		Double buliangerR = 0.0 ;
-		if(shiLie.size()>0){
-			for (ResultEyesightDO resultEyesightDO : shiLie) {
-				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
-					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
-						qingduer++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
-						zhongduer++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
-						zzhongduer++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						bulianger++;
-					}
+		int checkT = 0;
+		int qingNT = 0;
+		double qingRT =0.0;
+		int zhongNT= 0;
+		double zhongRT= 0.0;
+		int zzhongNT= 0;
+		double zzhongRT=0.0;
+		int bulingNT=0;
+		double bulingRT= 0.0;
+		for (Map<String, String> map : listT) {
+			for(Map.Entry<String, String> m : map.entrySet()){
+				if(m.getKey().equals("gradeCheckNum")){
+					checkT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("numQDSLBL")){
+					qingNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateQDSLBL")){
+					qingRT += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numZDSLBL")){
+					zhongNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateZDSLBL")){
+					zhongRT += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numZZDSLBL")){
+					zzhongNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateZZDSLBL")){
+					zzhongRT += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numSLBL")){
+					bulingNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateSLBL")){
+					bulingRT += Double.parseDouble(m.getValue());
 				}
 			}
-			qingduerR = Double.parseDouble(df.format(qingduer/checker*100));
-			zhongduerR = Double.parseDouble(df.format(zhongduer/checker*100));
-			zzhongduerR = Double.parseDouble(df.format(zzhongduer/checker*100));
-			buliangerR =  Double.parseDouble(df.format(bulianger/checker*100));
-			gradee.put("grade", "2");
-			gradee.put("gradeCheckNum", checker);
-			gradee.put("numQDSLBL", qingduer);
-			gradee.put("rateQDSLBL", qingduerR+"%");
-			gradee.put("numZDSLBL", zhongduer);
-			gradee.put("rateZDSLBL", zhongduerR+"%");
-			gradee.put("numZZDSLBL", zzhongduer);
-			gradee.put("rateZZDSLBL", zzhongduerR+"%");
-			gradee.put("numSLBL", bulianger);
-			gradee.put("rateSLBL", buliangerR+"%");
-			
-			listT.add(gradee);
-			
 		}
 		
-		Map<String,Object> dushus = new HashMap<String,Object>();
-		dushus.put("school", school);
-		dushus.put("grade", "3年级");
-		dushus.put("checkDate", checkDate);
-		List<ResultEyesightDO> shiLis = resultEyesightDao.queryLuoYanShiLi(dushus);
-		Map<String,Object> grades = new HashMap<String,Object>();
-		int checksa = shiLis.size();
-		int qingdusa = 0;
-		int zhongdusa = 0;
-		int zzhongdusa = 0;
-		int buliangsa = 0;
-		Double qingdusaR = 0.0 ;
-		Double zhongdusaR = 0.0 ;
-		Double zzhongdusaR = 0.0 ;
-		Double buliangsaR = 0.0 ;
-		if(shiLis.size()>0){
-			for (ResultEyesightDO resultEyesightDO : shiLis) {
-				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
-					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
-						qingdusa++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
-						zhongdusa++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
-						zzhongdusa++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						buliangsa++;
-					}
-				}
-			}
-			qingdusaR = Double.parseDouble(df.format(qingdusa/checksa*100));
-			zhongdusaR = Double.parseDouble(df.format(zhongdusa/checksa*100));
-			zzhongdusaR = Double.parseDouble(df.format(zzhongdusa/checksa*100));
-			buliangsaR =  Double.parseDouble(df.format(buliangsa/checksa*100));
-//			params.put("grade", "3");
-		}
-		
-
-				params.put("gradeCheckNum", checksa);
-				params.put("numQDSLBL", qingdusa);
-				params.put("rateQDSLBL", qingdusaR+"%");
-				params.put("numZDSLBL", zhongdusa);
-				params.put("rateZDSLBL", zhongdusaR+"%");
-				params.put("numZZDSLBL", zzhongdusa);
-				params.put("rateZZDSLBL", zzhongdusaR+"%");
-				params.put("numSLBL", buliangsa);
-				params.put("rateSLBL", buliangsaR+"%");
-				
-			//	listT.add(grades);
-				
-				params.put("gradeCheckTotal", checksa);
-				params.put("numQDSLBLTotal", qingdusa);
-				params.put("rateQDSLBLTotal", qingdusaR+"%");
-				params.put("numZDSLBLTotal", zhongdusa);
-				params.put("rateSLBLTotal", zhongdusaR+"%");
-				params.put("numZZDSLBLTotal", zzhongdusa);
-				params.put("rateZZDSLBLTotal", zzhongdusaR+"%");
-				params.put("numSLBLTotal", buliangsa);
-				params.put("rateSLBLTotal", buliangsaR+"%");
-		
-		Map<String,Object> dushui = new HashMap<String,Object>();
-		dushui.put("school", school);
-		dushui.put("grade", "4年级");
-		dushui.put("checkDate", checkDate);
-		List<ResultEyesightDO> shiLii = resultEyesightDao.queryLuoYanShiLi(dushui);
-		Map<String,Object> gradei = new HashMap<String,Object>();
-		int checksi = shiLii.size();
-		int qingdusi = 0;
-		int zhongdusi = 0;
-		int zzhongdusi = 0;
-		int buliangsi = 0;
-		Double qingdusiR = 0.0 ;
-		Double zhongdusiR = 0.0 ;
-		Double zzhongdusiR = 0.0 ;
-		Double buliangsiR = 0.0 ;
-		if(shiLii.size()>0){
-			for (ResultEyesightDO resultEyesightDO : shiLii) {
-				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
-					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
-						qingdusi++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
-						zhongdusi++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
-						zzhongdusi++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						buliangsi++;
-					}
-				}
-			}
-			qingdusiR = Double.parseDouble(df.format(qingdusi/checksi*100));
-			zhongdusiR = Double.parseDouble(df.format(zhongdusi/checksi*100));
-			zzhongdusiR = Double.parseDouble(df.format(zzhongdusi/checksi*100));
-			buliangsiR =  Double.parseDouble(df.format(buliangsi/checksi*100));
-			gradei.put("grade", "4");
-			gradei.put("gradeCheckNum", checksi);
-			gradei.put("numQDSLBL", qingdusi);
-			gradei.put("rateQDSLBL", qingdusiR+"%");
-			gradei.put("numZDSLBL", zhongdusi);
-			gradei.put("rateZDSLBL", zhongdusiR+"%");
-			gradei.put("numZZDSLBL", zzhongdusi);
-			gradei.put("rateZZDSLBL", zzhongdusiR+"%");
-			gradei.put("numSLBL", buliangsi);
-			gradei.put("rateSLBL", buliangsiR+"%");
-			
-			listT.add(gradei);
-			
-		}
-		
-		Map<String,Object> dushuw = new HashMap<String,Object>();
-		dushuw.put("school", school);
-		dushuw.put("grade", "5年级");
-		dushuw.put("checkDate", checkDate);
-		List<ResultEyesightDO> shiLiw = resultEyesightDao.queryLuoYanShiLi(dushuw);
-		Map<String,Object> gradew = new HashMap<String,Object>();
-		int checkwu = shiLiw.size();
-		int qingduwu = 0;
-		int zhongduwu = 0;
-		int zzhongduwu = 0;
-		int buliangwu = 0;
-		Double qingduwuR = 0.0 ;
-		Double zhongduwuR = 0.0 ;
-		Double zzhongduwuR = 0.0 ;
-		Double buliangwuR = 0.0 ;
-		if(shiLiw.size()>0){
-			for (ResultEyesightDO resultEyesightDO : shiLiw) {
-				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
-					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
-						qingduwu++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
-						zhongduwu++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
-						zzhongduwu++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						buliangwu++;
-					}
-				}
-			}
-			qingduwuR = Double.parseDouble(df.format(qingduwu/checkwu*100));
-			zhongduwuR = Double.parseDouble(df.format(zhongduwu/checkwu*100));
-			zzhongduwuR = Double.parseDouble(df.format(zzhongduwu/checkwu*100));
-			buliangwuR =  Double.parseDouble(df.format(buliangwu/checkwu*100));
-			gradew.put("grade", "5");
-			gradew.put("gradeCheckNum", checkwu);
-			gradew.put("numQDSLBL", qingduwu);
-			gradew.put("rateQDSLBL", qingduwuR+"%");
-			gradew.put("numZDSLBL", zhongduwu);
-			gradew.put("rateZDSLBL", zhongduwuR+"%");
-			gradew.put("numZZDSLBL", zzhongduwu);
-			gradew.put("rateZZDSLBL", zzhongduwuR+"%");
-			gradew.put("numSLBL", buliangwu);
-			gradew.put("rateSLBL",buliangwuR+"%");
-			
-			listT.add(gradew);
-			
-		}
-		
-		Map<String,Object> dushul = new HashMap<String,Object>();
-		dushul.put("school", school);
-		dushul.put("grade", "6年级");
-		dushul.put("checkDate", checkDate);
-		List<ResultEyesightDO> shiLil = resultEyesightDao.queryLuoYanShiLi(dushul);
-		Map<String,Object> gradel = new HashMap<String,Object>();
-		int checkli = shiLil.size();
-		int qingduli = 0;
-		int zhongduli = 0;
-		int zzhongduli = 0;
-		int buliangli = 0;
-		Double qingduliR = 0.0 ;
-		Double zhongduliR = 0.0 ;
-		Double zzhongduliR = 0.0 ;
-		Double buliangliR = 0.0 ;
-		if(shiLil.size()>0){
-			for (ResultEyesightDO resultEyesightDO : shiLil) {
-				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
-					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
-						qingduli++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
-						zhongduli++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
-						zzhongduli++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						buliangli++;
-					}
-				}
-			}
-			qingduliR = Double.parseDouble(df.format(qingduli/checkli*100));
-			zhongduliR = Double.parseDouble(df.format(zhongduli/checkli*100));
-			zzhongduliR = Double.parseDouble(df.format(zzhongduli/checkli*100));
-			buliangliR =  Double.parseDouble(df.format(buliangli/checkli*100));
-			gradel.put("grade", "6");
-			gradel.put("gradeCheckNum", checkli);
-			gradel.put("numQDSLBL", qingduli);
-			gradel.put("rateQDSLBL", qingduliR+"%");
-			gradel.put("numZDSLBL", zhongduli);
-			gradel.put("rateZDSLBL", zhongduliR+"%");
-			gradel.put("numZZDSLBL", zzhongduli);
-			gradel.put("rateZZDSLBL", zzhongduliR+"%");
-			gradel.put("numSLBL", buliangli);
-			gradel.put("rateSLBL", buliangliR+"%");
-			
-			listT.add(gradel);
-			
-		}
-	//	params.put("shilibuliang", listT);
-		
-		int checkT = checkyi+checker+checksa+checksi+checkwu+checkli;
-		int qingNT = qingduyi+qingduer+qingdusa+qingdusi+qingduwu+qingduli;
-		Double qingRT = qingduyiR+qingduerR+qingdusaR+qingdusiR+qingduwuR+qingduliR;
-		int zhongNT= zhongduyi+zhongduer+zhongdusa+zhongdusi+zhongduwu+zhongduli;
-		Double zhongRT= zhongduyiR+zhongduerR+zhongdusaR+zhongdusiR+zhongduwuR+zhongduliR;
-		int zzhongNT= zzhongduyi+zzhongduer+zzhongdusa+zzhongdusi+zzhongduwu+zzhongduli;
-		Double zzhongRT= zzhongduyiR+zzhongduerR+zzhongdusaR+zzhongdusiR+zzhongduwuR+zzhongduliR;
-		int bulingNT= buliangyi+bulianger+buliangsa+buliangsi+buliangwu+buliangli;
-		Double bulingRT= buliangyiR+buliangerR+buliangsaR+buliangsiR+buliangwuR+buliangliR;
-		/*params.put("gradeCheckTotal", checkT);
+		params.put("gradeCheckTotal", checkT);
 		params.put("numQDSLBLTotal", qingNT);
 		params.put("rateQDSLBLTotal", qingRT);
 		params.put("numZDSLBLTotal", zhongNT);
-		params.put("rateSLBLTotal", zhongRT);
+		params.put("rateZDSLBLTotal", zhongRT);
 		params.put("numZZDSLBLTotal", zzhongNT);
 		params.put("rateZZDSLBLTotal", zzhongRT);
 		params.put("numSLBLTotal", bulingNT);
-		params.put("rateSLBLTotal", bulingRT);*/
+		params.put("rateSLBLTotal", bulingRT);
 		
-		List<Map<String,Object>> jiajin = new ArrayList<Map<String,Object>>();
+		//近视
+		List<Map<String,String>> jiajin = new ArrayList<Map<String,String>>();
 		
-		Map<String,Object> jia1 = new HashMap<String,Object>();
-		Integer linchuangy = 0;
-		Integer jiajinshiy = 0;
-		Integer diy = 0;
-		Integer zhongy = 0;
-		Integer gaoy = 0;
-		double linchuangr = 0;
-		double jiajinshir =0;
-		double dir = 0;
-		double zhongr = 0;
-		double gaor = 0;
-		int jiay = shiLiy.size();
-		if(shiLiy.size()>0){
-			linchuangy = jiajinshi(school,checkDate,"1年级","first");
-			jiajinshiy = jiajinshi(school,checkDate,"1年级","second");
-			diy = jiajinshi(school,checkDate,"1年级","third");
-			zhongy = jiajinshi(school,checkDate,"1年级","fourth");
-			gaoy = jiajinshi(school,checkDate,"1年级","fifth");
-			linchuangr = Double.parseDouble(df.format(linchuangy/jiay*100));
-			jiajinshir = Double.parseDouble(df.format(jiajinshiy/jiay*100));
-			dir = Double.parseDouble(df.format(diy/jiay*100));
-			zhongr = Double.parseDouble(df.format(zhongy/jiay*100));
-			gaor = Double.parseDouble(df.format(gaoy/jiay*100));
+		List<StudentDO> gradejs = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : gradejs) {
+			Map<String,Object> dushuy = new HashMap<String,Object>();
+			dushuy.put("school", school);
+			dushuy.put("grade", studentDO.getGrade());
+			dushuy.put("start", start);
+			dushuy.put("end", end);
+			List<ResultEyesightDO> shiLiy = resultEyesightDao.queryLuoYanShiLi(dushuy);
+			Map<String,String> jia1 = new HashMap<String,String>();
+			Integer linchuangy = 0;
+			Integer jiajinshiy = 0;
+			Integer diy = 0;
+			Integer zhongy = 0;
+			Integer gaoy = 0;
+			String linchuangr = "0";
+			String jiajinshir ="0";
+			String dir = "0";
+			String zhongr = "0";
+			String gaor = "0";
+			int jiay = shiLiy.size();
+			if(shiLiy.size()>0){
+				linchuangy = jiajinshi(school,start,end,studentDO.getGrade(),"1");
+				jiajinshiy = jiajinshi(school,start,end,studentDO.getGrade(),"2");
+				diy = jiajinshi(school,start,end,studentDO.getGrade(),"3");
+				zhongy = jiajinshi(school,start,end,studentDO.getGrade(),"4");
+				gaoy = jiajinshi(school,start,end,studentDO.getGrade(),"5");
+				linchuangr = df.format(((double)linchuangy/(double)jiay)*100);
+				jiajinshir = df.format(((double)jiajinshiy/(double)jiay)*100);
+				dir = df.format(((double)diy/(double)jiay)*100);
+				zhongr = df.format(((double)zhongy/(double)jiay)*100);
+				gaor = df.format(((double)gaoy/(double)jiay)*100);
+			}
+			Integer jinzongy = diy+zhongy+gaoy;
+			double jinzongr = Double.parseDouble(dir)+Double.parseDouble(zhongr)+Double.parseDouble(gaor);
+			jia1.put("grade", studentDO.getGrade());
+			jia1.put("xuebu", studentDO.getXueBu());
+			jia1.put("gradeCheckNum", String.valueOf(jiay));
+			jia1.put("numJSQQ", String.valueOf(linchuangy));
+			jia1.put("rateJSQQ", linchuangr);
+			jia1.put("numJXJS", String.valueOf(jiajinshiy));
+			jia1.put("rateJXJS", jiajinshir);
+			jia1.put("numDDJS", String.valueOf(diy));
+			jia1.put("rateDDJS", dir);
+			jia1.put("numZDJS", String.valueOf(zhongy));
+			jia1.put("rateZDJS", zhongr);
+			jia1.put("numGDJS", String.valueOf(gaoy));
+			jia1.put("rateGDJS", gaor);
+			jia1.put("numJS", String.valueOf(jinzongy));
+			jia1.put("rateJS", String.valueOf(jinzongr));
+			
+			jiajin.add(jia1);
 		}
-		Integer jinzongy = linchuangy+jiajinshiy+diy+zhongy+gaoy;
-		double jinzongr = linchuangr+jiajinshir+dir+zhongr+gaor;
-		jia1.put("grade", "1");
-		jia1.put("gradeCheckNum", jiay);
-		jia1.put("numJSQQ", linchuangy);
-		jia1.put("rateJSQQ", linchuangr+"%");
-		jia1.put("numJXJS", jiajinshiy);
-		jia1.put("rateJXJS", jiajinshir+"%");
-		jia1.put("numDDJS", diy);
-		jia1.put("rateDDJS", dir+"%");
-		jia1.put("numZDJS", zhongy);
-		jia1.put("rateZDJS", zhongr+"%");
-		jia1.put("numGDJS", gaoy);
-		jia1.put("rateGDJS", gaor+"%");
-		jia1.put("numJS", jinzongy);
-		jia1.put("rateJS", jinzongr+"%");
-		//jiajin.add(jia1);
 		
-		Map<String,Object> jia2 = new HashMap<String,Object>();
-		Integer linchuangy2 = 0;
-		Integer jiajinshiy2 = 0;
-		Integer diy2 = 0;
-		Integer zhongy2 = 0;
-		Integer gaoy2 = 0;
-		double linchuangr2 = 0;
-		double jiajinshir2 = 0;
-		double dir2 = 0;
-		double zhongr2 = 0;
-		double gaor2 = 0;
-		int jiay2 = shiLie.size();
-		if(shiLie.size()>0){
-			linchuangy2 = jiajinshi(school,checkDate,"2年级","first");
-			jiajinshiy2 = jiajinshi(school,checkDate,"2年级","second");
-			diy2 = jiajinshi(school,checkDate,"2年级","third");
-			zhongy2 = jiajinshi(school,checkDate,"2年级","fourth");
-			gaoy2 = jiajinshi(school,checkDate,"2年级","fifth");
-			linchuangr2 = Double.parseDouble(df.format(linchuangy2/jiay2*100));
-			jiajinshir2 = Double.parseDouble(df.format(jiajinshiy2/jiay2*100));
-			dir2 = Double.parseDouble(df.format(diy2/jiay2*100));
-			zhongr2 = Double.parseDouble(df.format(zhongy2/jiay2*100));
-			gaor2 = Double.parseDouble(df.format(gaoy2/jiay2*100));
+		params.put("jiajin", jiajin);
+		
+		int jiaJS1 =0;
+		double jiaJS2 = 0.0;
+		int jiaJS3= 0;
+		double jiaJS4= 0.0;
+		int jiaJS5= 0;
+		double jiaJS6= 0.0;
+		int jiaJS7= 0;
+		double jiaJS8= 0.0;
+		int jiaJS9= 0;
+		double jiaJS11= 0.0;
+		int jiaJS22= 0;
+		double jiaJS33=0.0;
+		for (Map<String, String> map2 : jiajin) {
+			for(Map.Entry<String, String> m : map2.entrySet()){
+				if(m.getKey().equals("numJSQQ")){
+					jiaJS1 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateJSQQ")){
+					jiaJS2 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numJXJS")){
+					jiaJS3 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateJXJS")){
+					jiaJS4 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numDDJS")){
+					jiaJS5 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateDDJS")){
+					jiaJS6 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numZDJS")){
+					jiaJS7 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateZDJS")){
+					jiaJS8 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numGDJS")){
+					jiaJS9 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateGDJS")){
+					jiaJS11 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("numJS")){
+					jiaJS22 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("rateJS")){
+					jiaJS33 += Double.parseDouble(m.getValue());
+				}
+			}
 		}
-		Integer jinzongy2 = linchuangy2+jiajinshiy2+diy2+zhongy2+gaoy2;
-		double jinzongr2 = linchuangr2+jiajinshir2+dir2+zhongr2+gaor2;
-		jia2.put("grade", "2");
-		jia2.put("gradeCheckNum", jiay2);
-		jia2.put("numJSQQ", linchuangy2);
-		jia2.put("rateJSQQ", linchuangr2+"%");
-		jia2.put("numJXJS", jiajinshiy2);
-		jia2.put("rateJXJS", jiajinshir2+"%");
-		jia2.put("numDDJS", diy2);
-		jia2.put("rateDDJS", dir2+"%");
-		jia2.put("numZDJS", zhongy2);
-		jia2.put("rateZDJS", zhongr2+"%");
-		jia2.put("numGDJS", gaoy2);
-		jia2.put("rateGDJS", gaor2+"%");
-		jia2.put("numJS", jinzongy2);
-		jia2.put("rateJS", jinzongr2+"%");
-		//jiajin.add(jia2);
 		
-		Map<String,Object> jia3 = new HashMap<String,Object>();
-		Integer linchuangy3 = 0;
-		Integer jiajinshiy3 = 0;
-		Integer diy3 =0;
-		Integer zhongy3 = 0;
-		Integer gaoy3 = 0;
-		double linchuangr3 = 0;
-		double jiajinshir3 = 0;
-		double dir3 =0;
-		double zhongr3 = 0;
-		double gaor3 =0;
-		int jiay3 = shiLis.size();
-		if(shiLis.size()>0){
-			linchuangy3 = jiajinshi(school,checkDate,"3年级","first");
-			jiajinshiy3 = jiajinshi(school,checkDate,"3年级","second");
-			diy3 = jiajinshi(school,checkDate,"3年级","third");
-			zhongy3 = jiajinshi(school,checkDate,"3年级","fourth");
-			gaoy3 = jiajinshi(school,checkDate,"3年级","fifth");
-			linchuangr3 = Double.parseDouble(df.format(linchuangy3/jiay3*100));
-			jiajinshir3 = Double.parseDouble(df.format(jiajinshiy3/jiay3*100));
-			dir3 = Double.parseDouble(df.format(diy3/jiay3*100));
-			zhongr3 = Double.parseDouble(df.format(zhongy3/jiay3*100));
-			gaor3 = Double.parseDouble(df.format(gaoy3/jiay3*100));
-		}
-		Integer jinzongy3 = linchuangy3+jiajinshiy3+diy3+zhongy3+gaoy3;
-		double jinzongr3 = linchuangr3+jiajinshir3+dir3+zhongr3+gaor3;
-		params.put("grade", "3");
-		params.put("gradeCheckNum", jiay3);
-		params.put("numJSQQ", linchuangy3);
-		params.put("rateJSQQ", linchuangr3+"%");
-		params.put("numJXJS", jiajinshiy3);
-		params.put("rateJXJS", jiajinshir3+"%");
-		params.put("numDDJS", diy3);
-		params.put("rateDDJS", dir3+"%");
-		params.put("numZDJS", zhongy3);
-		params.put("rateZDJS", zhongr3+"%");
-		params.put("numGDJS", gaoy3);
-		params.put("rateGDJS", gaor3+"%");
-		params.put("numJS", jinzongy3);
-		params.put("rateJS", jinzongr3+"%");
-		//jiajin.add(jia3);
-		params.put("numJSQQTotal", linchuangy3);
-		params.put("rateJSQQTotal", linchuangr3+"%");
-		params.put("numJXJSTotal", jiajinshiy3);
-		params.put("rateJXJSTotal", jiajinshir3+"%");
-		params.put("numDDJSTotal", diy3);
-		params.put("rateDDJSTotal", dir3+"%");
-		params.put("numZDJSTotal", zhongy3);
-		params.put("rateZDJSTotal", zhongr3+"%");
-		params.put("numGDJSTotal", gaoy3);
-		params.put("rateGDJSTotal", gaor3+"%");
-		params.put("numJSTotal", jinzongy3);
-		params.put("rateJSTotal", jinzongr3+"%");
-		
-		Map<String,Object> jia4 = new HashMap<String,Object>();
-		Integer linchuangy4 = 0;
-		Integer jiajinshiy4 = 0;
-		Integer diy4 = 0;
-		Integer zhongy4 = 0;
-		Integer gaoy4 =0;
-		double linchuangr4 = 0;
-		double jiajinshir4 =0;
-		double dir4 = 0;
-		double zhongr4 = 0;
-		double gaor4 = 0;
-		int jiay4 = shiLii.size();
-		if(shiLii.size()>0){
-			linchuangy4 = jiajinshi(school,checkDate,"4年级","first");
-			jiajinshiy4 = jiajinshi(school,checkDate,"4年级","second");
-			diy4 = jiajinshi(school,checkDate,"4年级","third");
-			zhongy4 = jiajinshi(school,checkDate,"4年级","fourth");
-			gaoy4 = jiajinshi(school,checkDate,"4年级","fifth");
-			linchuangr4 = Double.parseDouble(df.format(linchuangy4/jiay4*100));
-			jiajinshir4 = Double.parseDouble(df.format(jiajinshiy4/jiay4*100));
-			dir4 = Double.parseDouble(df.format(diy4/jiay4*100));
-			zhongr4 = Double.parseDouble(df.format(zhongy4/jiay4*100));
-			gaor4 = Double.parseDouble(df.format(gaoy4/jiay4*100));
-		}
-		Integer jinzongy4 = linchuangy4+jiajinshiy4+diy4+zhongy4+gaoy4;
-		double jinzongr4 = linchuangr4+jiajinshir4+dir4+zhongr4+gaor4;
-		jia4.put("grade", "4");
-		jia4.put("gradeCheckNum", jiay4);
-		jia4.put("numJSQQ", linchuangy4);
-		jia4.put("rateJSQQ", linchuangr4+"%");
-		jia4.put("numJXJS", jiajinshiy4);
-		jia4.put("rateJXJS", jiajinshir4+"%");
-		jia4.put("numDDJS", diy4);
-		jia4.put("rateDDJS", dir4+"%");
-		jia4.put("numZDJS", zhongy4);
-		jia4.put("rateZDJS", zhongr4+"%");
-		jia4.put("numGDJS", gaoy4);
-		jia4.put("rateGDJS", gaor4+"%");
-		jia4.put("numJS", jinzongy4);
-		jia4.put("rateJS", jinzongr4+"%");
-		//jiajin.add(jia4);
-		
-		Map<String,Object> jia5 = new HashMap<String,Object>();
-		Integer linchuangy5 = 0;
-		Integer jiajinshiy5 = 0;
-		Integer diy5 = 0;
-		Integer zhongy5 = 0;
-		Integer gaoy5 = 0;
-		double linchuangr5 = 0;
-		double jiajinshir5 = 0;
-		double dir5 = 0;
-		double zhongr5 = 0;
-		double gaor5 = 0;
-		int jiay5 = shiLii.size();
-		if(shiLii.size()>0){
-			linchuangy5 = jiajinshi(school,checkDate,"5年级","first");
-			jiajinshiy5 = jiajinshi(school,checkDate,"5年级","second");
-			diy5 = jiajinshi(school,checkDate,"5年级","third");
-			zhongy5 = jiajinshi(school,checkDate,"5年级","fourth");
-			gaoy5 = jiajinshi(school,checkDate,"5年级","fifth");
-			linchuangr5 = Double.parseDouble(df.format(linchuangy5/jiay5*100));
-			jiajinshir5 = Double.parseDouble(df.format(jiajinshiy5/jiay5*100));
-			dir5 = Double.parseDouble(df.format(diy5/jiay5*100));
-			zhongr5 = Double.parseDouble(df.format(zhongy5/jiay5*100));
-			gaor5 = Double.parseDouble(df.format(gaoy5/jiay5*100));
-		}
-		Integer jinzongy5 = linchuangy5+jiajinshiy5+diy5+zhongy5+gaoy5;
-		double jinzongr5 = linchuangr5+jiajinshir5+dir5+zhongr5+gaor5;
-		jia5.put("grade", "5");
-		jia5.put("gradeCheckNum", jiay5);
-		jia5.put("numJSQQ", linchuangy5);
-		jia5.put("rateJSQQ", linchuangr5+"%");
-		jia5.put("numJXJS", jiajinshiy5);
-		jia5.put("rateJXJS", jiajinshir5+"%");
-		jia5.put("numDDJS", diy5);
-		jia5.put("rateDDJS", dir5+"%");
-		jia5.put("numZDJS", zhongy5);
-		jia5.put("rateZDJS", zhongr5+"%");
-		jia5.put("numGDJS", gaoy5);
-		jia5.put("rateGDJS", gaor5+"%");
-		jia5.put("numJS", jinzongy5);
-		jia5.put("rateJS", jinzongr5+"%");
-		//jiajin.add(jia5);
-		
-		Map<String,Object> jia6 = new HashMap<String,Object>();
-		Integer linchuangy6 = 0;
-		Integer jiajinshiy6 = 0;
-		Integer diy6 = 0;
-		Integer zhongy6 = 0;
-		Integer gaoy6 = 0;
-		double linchuangr6 = 0;
-		double jiajinshir6 = 0;
-		double dir6 = 0;
-		double zhongr6 = 0;
-		double gaor6 = 0;
-		int jiay6 = shiLii.size();
-		if(shiLii.size()>0){
-			linchuangy6 = jiajinshi(school,checkDate,"6年级","first");
-			jiajinshiy6 = jiajinshi(school,checkDate,"6年级","second");
-			diy6 = jiajinshi(school,checkDate,"6年级","third");
-			zhongy6 = jiajinshi(school,checkDate,"6年级","fourth");
-			gaoy6 = jiajinshi(school,checkDate,"6年级","fifth");
-			linchuangr6 = Double.parseDouble(df.format(linchuangy6/jiay6*100));
-			jiajinshir6 = Double.parseDouble(df.format(jiajinshiy6/jiay6*100));
-			dir6 = Double.parseDouble(df.format(diy6/jiay6*100));
-			zhongr6 = Double.parseDouble(df.format(zhongy6/jiay6*100));
-			gaor6 = Double.parseDouble(df.format(gaoy6/jiay6*100));
-		}
-		Integer jinzongy6 = linchuangy6+jiajinshiy6+diy6+zhongy6+gaoy6;
-		double jinzongr6 = linchuangr6+jiajinshir6+dir6+zhongr6+gaor6;
-		jia6.put("grade", "6");
-		jia6.put("gradeCheckNum", jiay6);
-		jia6.put("numJSQQ", linchuangy6);
-		jia6.put("rateJSQQ", linchuangr6+"%");
-		jia6.put("numJXJS", jiajinshiy6);
-		jia6.put("rateJXJS", jiajinshir6+"%");
-		jia6.put("numDDJS", diy6);
-		jia6.put("rateDDJS", dir6+"%");
-		jia6.put("numZDJS", zhongy6);
-		jia6.put("rateZDJS", zhongr6+"%");
-		jia6.put("numGDJS", gaoy6);
-		jia6.put("rateGDJS", gaor6+"%");
-		jia6.put("numJS", jinzongy6);
-		jia6.put("rateJS", jinzongr6+"%");
-		jiajin.add(jia6);
-		
-	//	params.put("jinshi", jiajin);
-		
-		int jiaJS1 = linchuangy+linchuangy2+linchuangy3+linchuangy4+linchuangy5+linchuangy6;
-		Double jiaJS2 = linchuangr+linchuangr2+linchuangr3+linchuangr4+linchuangr5+linchuangr6;
-		int jiaJS3= jiajinshiy+jiajinshiy2+jiajinshiy3+jiajinshiy4+jiajinshiy5+jiajinshiy6;
-		Double jiaJS4= jiajinshir+jiajinshir2+jiajinshir3+jiajinshir4+jiajinshir5+jiajinshir6;
-		int jiaJS5= diy+diy2+diy3+diy4+diy5+diy6;
-		Double jiaJS6= dir+dir2+dir3+dir4+dir5+dir6;
-		int jiaJS7= zhongy+zhongy2+zhongy3+zhongy4+zhongy5+zhongy6;
-		Double jiaJS8= zhongr+zhongr2+zhongr3+zhongr4+zhongr5+zhongr6;
-		int jiaJS9= gaoy+gaoy2+gaoy3+gaoy4+gaoy5+gaoy6;
-		Double jiaJS11= gaor+gaor2+gaor3+gaor4+gaor5+gaor6;
-		int jiaJS22= jinzongy+jinzongy2+jinzongy3+jinzongy4+jinzongy5+jinzongy6;
-		Double jiaJS33= jinzongr+jinzongr2+jinzongr3+jinzongr4+jinzongr5+jinzongr6;
-		/*params.put("numJSQQTotal", jiaJS1);
+		params.put("numJSQQTotal", jiaJS1);
 		params.put("rateJSQQTotal", jiaJS2);
 		params.put("numJXJSTotal", jiaJS3);
 		params.put("rateJXJSTotal", jiaJS4);
@@ -1629,744 +926,135 @@ public class StudentReportServiceImpl implements StudentReportService{
 		params.put("numGDJSTotal", jiaJS9);
 		params.put("rateGDJSTotal", jiaJS11);
 		params.put("numJSTotal", jiaJS22);
-		params.put("rateJSTotal", jiaJS33);*/
+		params.put("rateJSTotal", jiaJS33);
 		
-		Map<String,Object> jieguo = new HashMap<String,Object>();
-		/*List<xueshengDO> yinianji = yinianji(school,checkDate);
-		List<xueshengDO> ernianji = ernianji(school,checkDate);
-		List<xueshengDO> sannianji = sannianji(school,checkDate);
-		List<xueshengDO> sinianji = sinianji(school,checkDate);
-		List<xueshengDO> wunianji = wunianji(school,checkDate);
-		List<xueshengDO> liunianji = liunianji(school,checkDate);*/
-		List<Map<String,Object>> sannianji1 = sannianji1(school,checkDate);
-		List<Map<String,Object>> sannianji2 = sannianji2(school,checkDate);
-		//params.put("yinianji", yinianji);
-		//params.put("ernianji", ernianji);
-		params.put("sannianji1", sannianji1);
-		params.put("sannianji2", sannianji2);
-		//params.put("sinianji", sinianji);
-		//params.put("wunianji", wunianji);
-		//params.put("liunianji", liunianji);
+		//附件
+		List<Map<String,Object>> xuesheng = new ArrayList<Map<String,Object>>();
+		
+		List<StudentDO> gradefj = studentDao.querySchoolGrade(school);
+		for (StudentDO studentDO : gradefj) {
+			Map<String,Object> mapClassyi = new HashMap<String,Object>();
+			mapClassyi.put("school", school);
+			mapClassyi.put("grade", studentDO.getGrade());
+			List<StudentDO> classCountyi = studentDao.queryGradeClassCount(mapClassyi);
+			for(int i= 1; i<=classCountyi.size();i++){
+				Map<String,Object> mapbb = new HashMap<String,Object>();
+				List<Map<String,Object>> bb = new ArrayList<Map<String,Object>>();
+				List<StudentDO> grade = studentDao.queryStudentGrade(school,studentDO.getGrade(),start,end,String.valueOf(i));
+				if(grade.size()>0){
+				for (StudentDO studentDO2 : grade) {
+					Map<String,Object> mapPP = new HashMap<String,Object>();
+					ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+					ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
+					ResultCornealDO resultCornealDO = new ResultCornealDO();
+					ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
+					ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
+					List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO2.getIdentityCard(),start,end);
+					List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getIdentityCard(),start,end);
+					List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getIdentityCard(),start,end);
+					List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(), "R1",start,end);
+					List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(), "R2",start,end);
+					List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO2.getIdentityCard(), "R1",start,end);
+					List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO2.getIdentityCard(), "R2",start,end);
+					List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO2.getIdentityCard(),start,end);
+					List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO2.getIdentityCard(),start,end);
+					mapPP.put("studentName", studentDO2.getStudentName());
+					mapPP.put("studentSex", studentDO2.getStudentSex());
+					if(lifeShili.size()>0){
+						resultEyesightDO = lifeShili.get(0);
+						mapPP.put("nakedNearvisionOd", resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
+						mapPP.put("nakedNearvisionOs", resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
+						mapPP.put("lifeNearvisionOd", resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
+						mapPP.put("lifeNearvisionOs", resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
+					}else{
+						mapPP.put("nakedNearvisionOd", "");
+						mapPP.put("nakedNearvisionOs", "");
+						mapPP.put("lifeNearvisionOd", "");
+						mapPP.put("lifeNearvisionOs", "");
+					}
+					if(L.size()>0){
+						resultDiopterDO = L.get(0);
+						mapPP.put("diopterSOs", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
+						mapPP.put("diopterCOs", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
+						mapPP.put("diopterAOs", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
+					}else{
+						mapPP.put("diopterSOs", "");
+						mapPP.put("diopterCOs", "");
+						mapPP.put("diopterAOs", "");
+					}
+					if(R.size()>0){
+						resultDiopterDO = R.get(0);
+						mapPP.put("diopterSOd", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
+						mapPP.put("diopterCOd", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
+						mapPP.put("diopterAOd", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
+					}else{
+						mapPP.put("diopterSOd", "");
+						mapPP.put("diopterCOd", "");
+						mapPP.put("diopterAOd", "");
+					}
+					if(LR1.size()>0){
+						resultCornealDO = LR1.get(0);
+						mapPP.put("cornealR1Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
+					}else{
+						mapPP.put("cornealR1Os", "");
+					}
+					if(LR2.size()>0){
+						resultCornealDO = LR2.get(0);
+						mapPP.put("cornealR2Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
+					}else{
+						mapPP.put("cornealR2Os","");
+					}
+					if(RR1.size()>0){
+						resultCornealDO = RR1.get(0);
+						mapPP.put("cornealR1Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
+					}else{
+						mapPP.put("cornealR1Od", "");
+					}
+					if(RR2.size()>0){
+						resultCornealDO = RR2.get(0);
+						mapPP.put("cornealR2Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
+					}else{
+						mapPP.put("cornealR2Od", "");
+					}
+					if(eyeaxis.size()>0){
+						resultEyeaxisDO = eyeaxis.get(0);
+						mapPP.put("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
+						mapPP.put("secondCheckOs",resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
+					}else{
+						mapPP.put("secondCheckOd","");
+						mapPP.put("secondCheckOs","");
+					}
+					if(eyepressure.size()>0){
+						resultEyepressureDO = eyepressure.get(0);
+						mapPP.put("eyePressureOd", resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
+						mapPP.put("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
+					}else{
+						mapPP.put("eyePressureOd", "");
+						mapPP.put("eyePressureOs", "");
+					}
+					bb.add(mapPP);
+				}
+				mapbb.put("grade", studentDO.getGrade());
+				mapbb.put("class", i);
+				mapbb.put("chaDate", checkDate);
+				mapbb.put("jieguo", bb);
+				xuesheng.add(mapbb);
+			}
+			}
+		}
+		
+		params.put("xuesheng", xuesheng);
 		
 		return params;
 		
 		
-		
-		
-		
-		
 	}
 	
-	public List<Map<String, Object>> sannianji1(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){		
-			List<Map<String,Object>> xuesheng = new ArrayList<Map<String,Object>>();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"3年级",checkDate,"1");
-			for (StudentDO studentDO : grade) {
-				Map<String,Object> mapPP = new HashMap<String,Object>();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				mapPP.put("studentName", studentDO.getStudentName());
-				mapPP.put("studentSex", studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					mapPP.put("nakedNearvisionOd", resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					mapPP.put("nakedNearvisionOs", resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					mapPP.put("lifeNearvisionOd", resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					mapPP.put("lifeNearvisionOs", resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					mapPP.put("diopterSOs", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					mapPP.put("diopterCOs", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					mapPP.put("diopterAOs", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					mapPP.put("diopterSOd", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					mapPP.put("diopterCOd", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					mapPP.put("diopterAOd", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					mapPP.put("cornealR1Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					mapPP.put("cornealR2Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					mapPP.put("cornealR1Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					mapPP.put("cornealR2Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					mapPP.put("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					mapPP.put("secondCheckOs",resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					mapPP.put("eyePressureOd", resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					mapPP.put("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng.add(mapPP);
-			}
-			
-				
-		return xuesheng;
-		
-	}
-	
-	public List<Map<String, Object>> sannianji2(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){		
-			List<Map<String,Object>> xuesheng = new ArrayList<Map<String,Object>>();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"3年级",checkDate,"2");
-			for (StudentDO studentDO : grade) {
-				Map<String,Object> mapPP = new HashMap<String,Object>();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				mapPP.put("studentName", studentDO.getStudentName());
-				mapPP.put("studentSex", studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					mapPP.put("nakedNearvisionOd", resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					mapPP.put("nakedNearvisionOs", resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					mapPP.put("lifeNearvisionOd", resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					mapPP.put("lifeNearvisionOs", resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					mapPP.put("diopterSOs", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					mapPP.put("diopterCOs", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					mapPP.put("diopterAOs", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					mapPP.put("diopterSOd", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					mapPP.put("diopterCOd", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					mapPP.put("diopterAOd", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					mapPP.put("cornealR1Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					mapPP.put("cornealR2Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					mapPP.put("cornealR1Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					mapPP.put("cornealR2Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					mapPP.put("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					mapPP.put("secondCheckOs",resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					mapPP.put("eyePressureOd", resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					mapPP.put("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng.add(mapPP);
-			}
-			
-				
-		return xuesheng;
-		
-	}
-	
-	
-	public List<xueshengDO> yinianji(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		//List<Map<String,Object>> jieguo = new ArrayList<Map<String,Object>>();
-		List<xueshengDO> jieguo = new ArrayList<>();
-		List<StudentDO> classCount = studentDao.getCheckNianjiNum(school,"1年级",checkDate);
-		for(int i = 1 ; i<=classCount.size();i++){
-			Map<String,Object> stu = new HashMap<String,Object>();
-			List<xueshengDO> xuesheng = new ArrayList<>();
-			xueshengDO xss = new xueshengDO();
-			//List<Map<String,Object>> xuesheng = new ArrayList<Map<String,Object>>();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"1年级",checkDate,String.valueOf(i));
-			for (StudentDO studentDO : grade) {
-				xueshengDO xs = new xueshengDO();
-				List<xueshengDO> xuesheng2 = xs.getXuesheng();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				xs.setStudentName(studentDO.getStudentName());
-				xs.setStudentSex(studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					xs.setNakedNearvisionOd(resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					xs.setNakedNearvisionOs(resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					xs.setLifeNearvisionOd(resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					xs.setLifeNearvisionOs(resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					xs.setDiopterSOs(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOs(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOs(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					xs.setDiopterSOd(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOd(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOd(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					xs.setCornealR1Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					xs.setCornealR2Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					xs.setCornealR1Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					xs.setCornealR2Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					xs.setSecondCheckOd(resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					xs.setSecondCheckOs(resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					xs.setEyePressureOd(resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					xs.setEyePressureOs(resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng2.add(xs);
-				xuesheng.addAll(xuesheng2);
-			}
-			
-			xss.setGradeFJ("1");
-			xss.setFirstClass(i);
-			xss.setCheckDate(checkDate);
-			jieguo.add(xss);
-			jieguo.addAll(xuesheng);
-			
-		}
-				
-		return jieguo;
-		
-	}
-	
-	public List<xueshengDO> ernianji(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		List<xueshengDO> jieguo = new ArrayList<>();
-		List<StudentDO> classCount = studentDao.getCheckNianjiNum(school,"2年级",checkDate);
-		for(int i = 1 ; i<=classCount.size();i++){
-			Map<String,Object> stu = new HashMap<String,Object>();
-			List<xueshengDO> xuesheng = new ArrayList<>();
-			xueshengDO xss = new xueshengDO();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"2年级",checkDate,String.valueOf(i));
-			for (StudentDO studentDO : grade) {
-				xueshengDO xs = new xueshengDO();
-				List<xueshengDO> xuesheng2 = xs.getXuesheng();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				xs.setStudentName(studentDO.getStudentName());
-				xs.setStudentSex(studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					xs.setNakedNearvisionOd(resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					xs.setNakedNearvisionOs(resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					xs.setLifeNearvisionOd(resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					xs.setLifeNearvisionOs(resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					xs.setDiopterSOs(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOs(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOs(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					xs.setDiopterSOd(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOd(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOd(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					xs.setCornealR1Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					xs.setCornealR2Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					xs.setCornealR1Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					xs.setCornealR2Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					xs.setSecondCheckOd(resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					xs.setSecondCheckOs(resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					xs.setEyePressureOd(resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					xs.setEyePressureOs(resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng2.add(xs);
-				xuesheng.addAll(xuesheng2);
-			}
-			
-			xss.setGradeFJ("2");
-			xss.setFirstClass(i);
-			xss.setCheckDate(checkDate);
-			jieguo.add(xss);
-			jieguo.addAll(xuesheng);
-			
-		}
-				
-		return jieguo;
-		
-	}
-	
-	public List<xueshengDO> sannianji(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		List<xueshengDO> jieguo = new ArrayList<>();
-		xueshengDO xss = new xueshengDO();
-		List<StudentDO> classCount = studentDao.getCheckNianjiNum(school,"3年级",checkDate);
-		for(int i = 1 ; i<=classCount.size();i++){
-			Map<String,Object> stu = new HashMap<String,Object>();
-			List<xueshengDO> xuesheng = new ArrayList<>();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"3年级",checkDate,String.valueOf(i));
-			for (StudentDO studentDO : grade) {
-				xueshengDO xs = new xueshengDO();
-				List<xueshengDO> xuesheng2 = xs.getXuesheng();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				xs.setStudentName(studentDO.getStudentName());
-				xs.setStudentSex(studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					xs.setNakedNearvisionOd(resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					xs.setNakedNearvisionOs(resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					xs.setLifeNearvisionOd(resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					xs.setLifeNearvisionOs(resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					xs.setDiopterSOs(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOs(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOs(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					xs.setDiopterSOd(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOd(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOd(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					xs.setCornealR1Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					xs.setCornealR2Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					xs.setCornealR1Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					xs.setCornealR2Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					xs.setSecondCheckOd(resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					xs.setSecondCheckOs(resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					xs.setEyePressureOd(resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					xs.setEyePressureOs(resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng2.add(xs);
-				xuesheng.addAll(xuesheng2);
-			}
-			
-			xss.setGradeFJ("3");
-			xss.setFirstClass(i);
-			xss.setCheckDate(checkDate);
-			jieguo.add(xss);
-			jieguo.addAll(xuesheng);
-			
-		}
-				
-		return jieguo;
-		
-	}
-	
-	public List<xueshengDO> sinianji(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		List<xueshengDO> jieguo = new ArrayList<>();
-		xueshengDO xss = new xueshengDO();
-		List<StudentDO> classCount = studentDao.getCheckNianjiNum(school,"4年级",checkDate);
-		for(int i = 1 ; i<=classCount.size();i++){
-			Map<String,Object> stu = new HashMap<String,Object>();
-			List<xueshengDO> xuesheng = new ArrayList<>();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"4年级",checkDate,String.valueOf(i));
-			for (StudentDO studentDO : grade) {
-				xueshengDO xs = new xueshengDO();
-				List<xueshengDO> xuesheng2 = xs.getXuesheng();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				xs.setStudentName(studentDO.getStudentName());
-				xs.setStudentSex(studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					xs.setNakedNearvisionOd(resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					xs.setNakedNearvisionOs(resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					xs.setLifeNearvisionOd(resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					xs.setLifeNearvisionOs(resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					xs.setDiopterSOs(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOs(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOs(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					xs.setDiopterSOd(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOd(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOd(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					xs.setCornealR1Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					xs.setCornealR2Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					xs.setCornealR1Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					xs.setCornealR2Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					xs.setSecondCheckOd(resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					xs.setSecondCheckOs(resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					xs.setEyePressureOd(resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					xs.setEyePressureOs(resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng2.add(xs);
-				xuesheng.addAll(xuesheng2);
-			}
-			
-			xss.setGradeFJ("4");
-			xss.setFirstClass(i);
-			xss.setCheckDate(checkDate);
-			jieguo.add(xss);
-			jieguo.addAll(xuesheng);
-			
-		}
-				
-		return jieguo;
-		
-	}
-	
-	public List<xueshengDO> wunianji(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){
-		Map<String,Object> stu = new HashMap<String,Object>();
-		Map<String,Object> map = new HashMap<String,Object>();
-		List<xueshengDO> jieguo = new ArrayList<>();
-		xueshengDO xss = new xueshengDO();
-		List<StudentDO> classCount = studentDao.getCheckNianjiNum(school,"5年级",checkDate);
-		for(int i = 1 ; i<=classCount.size();i++){
-			
-			List<xueshengDO> xuesheng = new ArrayList<>();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"5年级",checkDate,String.valueOf(i));
-			for (StudentDO studentDO : grade) {
-				xueshengDO xs = new xueshengDO();
-				List<xueshengDO> xuesheng2 = xs.getXuesheng();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				xs.setStudentName(studentDO.getStudentName());
-				xs.setStudentSex(studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					xs.setNakedNearvisionOd(resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					xs.setNakedNearvisionOs(resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					xs.setLifeNearvisionOd(resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					xs.setLifeNearvisionOs(resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					xs.setDiopterSOs(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOs(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOs(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					xs.setDiopterSOd(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOd(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOd(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					xs.setCornealR1Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					xs.setCornealR2Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					xs.setCornealR1Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					xs.setCornealR2Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					xs.setSecondCheckOd(resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					xs.setSecondCheckOs(resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					xs.setEyePressureOd(resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					xs.setEyePressureOs(resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng2.add(xs);
-				xuesheng.addAll(xuesheng2);
-			}
-			
-			xss.setGradeFJ("5");
-			xss.setFirstClass(i);
-			xss.setCheckDate(checkDate);
-			jieguo.add(xss);
-			jieguo.addAll(xuesheng);
-			
-		}
-				
-		return jieguo;
-		
-	}
-	
-	public List<xueshengDO> liunianji(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate
-			){
-		Map<String,Object> stu = new HashMap<String,Object>();
-		Map<String,Object> map = new HashMap<String,Object>();
-		List<xueshengDO> jieguo = new ArrayList<>();
-		xueshengDO xss = new xueshengDO();
-		List<StudentDO> classCount = studentDao.getCheckNianjiNum(school,"6年级",checkDate);
-		for(int i = 1 ; i<=classCount.size();i++){
-			
-			List<xueshengDO> xuesheng = new ArrayList<>();
-			List<StudentDO> grade = studentDao.queryStudentGrade(school,"6年级",checkDate,String.valueOf(i));
-			for (StudentDO studentDO : grade) {
-				xueshengDO xs = new xueshengDO();
-				List<xueshengDO> xuesheng2 = xs.getXuesheng();
-				ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-				ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
-				ResultCornealDO resultCornealDO = new ResultCornealDO();
-				ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
-				ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-				List<ResultEyesightDO> lifeShili = resultEyesightDao.getLifeShili(studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> L = resultDiopterDao.getYanGuang("L", studentDO.getIdentityCard(),checkDate);
-				List<ResultDiopterDO> R = resultDiopterDao.getYanGuang("R", studentDO.getIdentityCard(),checkDate);
-				List<ResultCornealDO> LR1 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> LR2 = resultCornealDao.getCornealMm("L", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultCornealDO> RR1 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R1",checkDate);
-				List<ResultCornealDO> RR2 = resultCornealDao.getCornealMm("R", studentDO.getIdentityCard(), "R2",checkDate);
-				List<ResultEyeaxisDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO.getIdentityCard(),checkDate);
-				List<ResultEyepressureDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO.getIdentityCard(),checkDate);
-				xs.setStudentName(studentDO.getStudentName());
-				xs.setStudentSex(studentDO.getStudentSex());
-				if(lifeShili.size()>0){
-					resultEyesightDO = lifeShili.get(0);
-					xs.setNakedNearvisionOd(resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-					xs.setNakedNearvisionOs(resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-					xs.setLifeNearvisionOd(resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-					xs.setLifeNearvisionOs(resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-				}
-				if(L.size()>0){
-					resultDiopterDO = L.get(0);
-					xs.setDiopterSOs(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOs(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOs(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(R.size()>0){
-					resultDiopterDO = R.get(0);
-					xs.setDiopterSOd(resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
-					xs.setDiopterCOd(resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
-					xs.setDiopterAOd(resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-				}
-				if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					xs.setCornealR1Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					xs.setCornealR2Os(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					xs.setCornealR1Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					xs.setCornealR2Od(resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-				}
-				if(eyeaxis.size()>0){
-					resultEyeaxisDO = eyeaxis.get(0);
-					xs.setSecondCheckOd(resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-					xs.setSecondCheckOs(resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-				}
-				if(eyepressure.size()>0){
-					resultEyepressureDO = eyepressure.get(0);
-					xs.setEyePressureOd(resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-					xs.setEyePressureOs(resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-				}
-				xuesheng2.add(xs);
-				xuesheng.addAll(xuesheng2);
-			}
-			
-			xss.setGradeFJ("6");
-			xss.setFirstClass(i);
-			xss.setCheckDate(checkDate);
-			jieguo.add(xss);
-			jieguo.addAll(xuesheng);
-			
-		}
-				
-		return jieguo;
-		
-	}
 	
 	
 	public Integer jiajinshi(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate,
+			@RequestParam(value= "start",required=false) Date start,
+			@RequestParam(value= "end",required=false) Date end,
 			@RequestParam(value= "grade",required=false) String grade,String type){
 		Integer first = 0;
 		Integer second = 0;
@@ -2375,28 +1063,31 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Integer fifth = 0;
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("school", school);
-		mapP.put("checkDate", checkDate);
+		mapP.put("start", start);
+		mapP.put("end", end);
 		mapP.put("grade", grade);
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
 				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
-					Map<String, Object> map = new HashMap<String,Object>();
-					map.put("identityCard", resultEyesightDO.getIdentityCard());
-					List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map);
+					List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
 					if(studentMyopia.size()>0){
 						if(Double.parseDouble(resultEyesightDO.getDushu()) == 5.0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() >= -0.5 && studentMyopia.get(0).getDengxiaoqiujing() <= -0.75){
+							if(studentMyopia.get(0).getDengxiaoqiujing() >= -0.5 && studentMyopia.get(0).getDengxiaoqiujing() <= 0.75){
 								first++;
-							}else if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
+							}
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								second++;
 							}
-						}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() > -0.5 && studentMyopia.get(0).getDengxiaoqiujing() < -3.0){
+						}
+						if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5 && studentMyopia.get(0).getDengxiaoqiujing() > -3.0){
 								third++;
-							}else if(studentMyopia.get(0).getDengxiaoqiujing() > -3.25 && studentMyopia.get(0).getDengxiaoqiujing() < -6.0){
+							}
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -3.25 && studentMyopia.get(0).getDengxiaoqiujing() > -6.0){
 								fourth++;
-							}else if(studentMyopia.get(0).getDengxiaoqiujing() > -6.0){
+							}
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -6.0){
 								fifth++;
 							}
 						}
@@ -2405,15 +1096,15 @@ public class StudentReportServiceImpl implements StudentReportService{
 			}
 		}
 		
-		if(type.equals("first")){
+		if(type.equals("1")){
 			return first;
-		}else if(type.equals("second")){
+		}else if(type.equals("2")){
 			return second;
-		}else if(type.equals("third")){
+		}else if(type.equals("3")){
 			return third;
-		}else if(type.equals("fourth")){
+		}else if(type.equals("4")){
 			return fourth;
-		}else if(type.equals("fifth")){
+		}else if(type.equals("5")){
 			return fifth;
 		}
 		return null;
@@ -2461,7 +1152,8 @@ public class StudentReportServiceImpl implements StudentReportService{
     } 
 	
 	public Integer jinshi(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate,
+			@RequestParam(value= "start",required=false) Date start,
+			@RequestParam(value= "end",required=false) Date end,
 			@RequestParam(value= "studentSex",required=false) Integer studentSex,
 			@RequestParam(value= "grade",required=false) String grade,
 			@RequestParam(value= "studentClass",required=false) String studentClass) {
@@ -2469,7 +1161,8 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("studentSex", studentSex);
 		mapP.put("school", school);
-		mapP.put("checkDate", checkDate);
+		mapP.put("start", start);
+		mapP.put("end", end);
 		mapP.put("grade", grade);
 		mapP.put("studentClass", studentClass);
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
@@ -2477,11 +1170,9 @@ public class StudentReportServiceImpl implements StudentReportService{
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
 				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						Map<String, Object> map = new HashMap<String,Object>();
-						map.put("identityCard", resultEyesightDO.getIdentityCard());
-						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map);
+						List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
 						if(studentMyopia.size()>0){
-							if(studentMyopia.get(0).getDengxiaoqiujing() <= -0.5){
+							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
 						}
@@ -2494,14 +1185,16 @@ public class StudentReportServiceImpl implements StudentReportService{
 	
 	
 	public Integer jiancha(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate,
+			@RequestParam(value= "start",required=false) Date start,
+			@RequestParam(value= "end",required=false) Date end,
 			@RequestParam(value= "studentSex",required=false) Integer studentSex,
 			@RequestParam(value= "grade",required=false) String grade) {
 		
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("studentSex", studentSex);
 		mapP.put("school", school);
-		mapP.put("checkDate", checkDate);
+		mapP.put("start", start);
+		mapP.put("end", end);
 		mapP.put("grade", grade);
 		List<StudentDO> checkUserNum = studentDao.getCheckUserNum(mapP);
 		if(checkUserNum.size()<=0){
@@ -2512,13 +1205,15 @@ public class StudentReportServiceImpl implements StudentReportService{
 	}
 	
 	public Integer jianchaban(String school,
-			@RequestParam(value= "checkDate",required=false) String checkDate,
+			@RequestParam(value= "start",required=false) Date start,
+			@RequestParam(value= "end",required=false) Date end,
 			@RequestParam(value= "studentClass",required=false) String studentClass,
 			@RequestParam(value= "grade",required=false) String grade) {
 		
 		Map<String, Object> mapP = new HashMap<String,Object>();
 		mapP.put("school", school);
-		mapP.put("checkDate", checkDate);
+		mapP.put("start", start);
+		mapP.put("end", end);
 		mapP.put("studentClass", studentClass);
 		mapP.put("grade", grade);
 		List<StudentDO> checkUserNum = studentDao.getGradeClassCheck(mapP);
@@ -2529,211 +1224,785 @@ public class StudentReportServiceImpl implements StudentReportService{
 		}
 	}
 	
-	   public static String savePictoServer(String base64String,String path)throws Exception{
+	
+	public void createDoc(Map<String, Object> dataMap, String fileName, String template) {
+        Configuration configuration = new Configuration();
+        configuration.setDefaultEncoding("utf-8");                                       
+        configuration.setClassForTemplateLoading(StudentReportServiceImpl.class, "/");
+        Template t = null;
+		//File outFile = new File(realPath + fileName);
+		Writer out = null;
+        try {
+            //word.xml是要生成Word文件的模板文件
+            t = configuration.getTemplate(template,"utf-8"); 
+            out = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(fileName.getBytes(),"utf-8")))));                 //还有这里要设置编码
+            t.process(dataMap, out);
+            out.flush();
+            out.close();
+          
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
+	
+	/**
+	 * freemarker导出工具类
+	 */
+	
+	public void download(HttpServletRequest request,HttpServletResponse response, String fileUrl, String fileName) {
+		InputStream bis = null;
+		OutputStream bos = null;
+		try{
+			fileUrl = fileUrl + fileName;
+			response.setContentType("multipart/form-data");
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes(), "iso-8859-1")+".docx");
+			bis = new BufferedInputStream(new FileInputStream((fileUrl)));
+			bos = new BufferedOutputStream(response.getOutputStream());
+			byte[] buff = new byte[1024];
+			int bytesRead;
+			int i = 0;
+	
+			while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
+				bos.write(buff, 0, bytesRead);
+				i++;
+			}
+			bos.flush();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (bis != null) {
+				try {
+					bis.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				bis = null;
+			}
+			if (bos != null) {
+				try {
+					bos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				bos = null;
+			}
+		}
 
-	        BASE64Decoder decoder = new BASE64Decoder();  //此类需引入的jar包
-	        //要把+在上传时变成的空格再改为+
-	        //base64String = base64String.replaceAll(" ", "+");
-	        //去掉“data:image/png;base64,”后面才是base64编码，去掉之后才能解析
-	        base64String = base64String.replace("data:image/png;base64,","");
-	        //在本地指定位置建立文件夹，path由控制台那边进行定义
-	        File dir=new File(path);
-	        if(!dir.exists()){
-	         dir.mkdirs();
+    }
+
+
+	/**
+	 *学校报告
+	 */
+	@Override
+	public void baogaoxuexiao(HttpServletRequest request,  HttpServletResponse response) {
+		String school = request.getParameter("school");
+		String checkDate = request.getParameter("checkDate");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date qian = null;
+			Date hou = null;
+			Date currdate = null;
+			try {
+				currdate = sdf1.parse(checkDate);
+				/*Calendar ca = Calendar.getInstance();
+				ca.setTime(currdate);
+				ca.add(Calendar.DAY_OF_MONTH, -14);
+				qian = ca.getTime();*/
+				
+				Calendar ca2 = Calendar.getInstance();
+				ca2.setTime(currdate);
+				ca2.add(Calendar.DAY_OF_MONTH, 14);
+				hou = ca2.getTime();
+				
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			Map<String, Object> params = xuexiaobaogao(currdate,hou,request, response);
+			createDoc(params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给学校报告检测.ftl");
+			download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+			
+			//craeteZipPath(bootdoConfig.getPoiword(),response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			File file=new File(bootdoConfig.getPoiword());
+	        if(file.exists()) {
+	           File[] files = file.listFiles();
+	           for(File f :files)
+	              f.delete();
 	        }
-	        String uuidImg=UUID.randomUUID().toString()+".png";
-	        String fileName=path+uuidImg;
-	        try {  
-	            byte[] buffer = decoder.decodeBuffer(base64String);  
-	            OutputStream os = new FileOutputStream(fileName);
-	            /*for(int i =0;i<buffer.length;++i){
-	                if(buffer[i]<0){//调整异常数据
-	                    buffer[i]+=256;
-	                }
-	            }*/
-	            os.write(buffer);  
-	            os.close();  
-	        } catch (IOException e) {  
-	            throw new RuntimeException();  
-	        }  
-
-	       return fileName;
-	    }
-
-	   public static String getImageStr(String imgFile) {  
-	         InputStream in = null;  
-	         byte[] data = null;  
-	         try {  
-	             in = new FileInputStream(imgFile);  
-	             data = new byte[in.available()];  
-	             in.read(data);  
-	             in.close();  
-	         } catch (IOException e) {  
-	             e.printStackTrace();  
-	         }  
-	         BASE64Encoder encoder = new BASE64Encoder();  
-	         return encoder.encode(data);  
-	     }
+	     }  
+	}
 
 	   
-	   /**
-		 * 
+		/**
+		 * 教育局报告
 		 */
 		@Override
 		public void baogaojiaoyuju(HttpServletRequest request,  HttpServletResponse response) {
-			String school = request.getParameter("school");
 			try {
-				
 					Map<String, Object> params = jiaoyujubaogao(request, response);
 					createDoc(params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给教育局报告检测.ftl");
-					download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+".docx");
+					download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 				//craeteZipPath(bootdoConfig.getPoiword(),response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
-	   
+	
+	//教育局数据
 	public Map<String, Object> jiaoyujubaogao(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> params = new HashMap<String, Object>(); 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		DecimalFormat df = new DecimalFormat(".0");
-		ResultDiopterDO checkDate = resultDiopterDao.maxCheckDate();
-		Date date = checkDate.getCheckDate();
-		System.out.println(sdf.format(date));
-		Map<String,Object> dushus = new HashMap<String,Object>();
-		dushus.put("school", "济南市外海实验学校");
-		dushus.put("grade", "3年级");
-		dushus.put("checkDate", sdf.format(date));
-		List<ResultEyesightDO> shiLis = resultEyesightDao.queryLuoYanShiLi(dushus);
-		Map<String,Object> grades = new HashMap<String,Object>();
-		int checksa = shiLis.size();
-		int qingdusa = 0;
-		int zhongdusa = 0;
-		int zzhongdusa = 0;
-		int buliangsa = 0;
-		Double qingdusaR = 0.0 ;
-		Double zhongdusaR = 0.0 ;
-		Double zzhongdusaR = 0.0 ;
-		Double buliangsaR = 0.0 ;
-		if(shiLis.size()>0){
-			for (ResultEyesightDO resultEyesightDO : shiLis) {
-				if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
-					if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
-						qingdusa++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu())>=4.6 && Double.parseDouble(resultEyesightDO.getDushu()) <= 4.9){
-						zhongdusa++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) <= 4.5){
-						zzhongdusa++;
-					}else if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
-						buliangsa++;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+		DecimalFormat df = new DecimalFormat("0.0");
+		String date = request.getParameter("date");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		Date start = null;
+		Date end = null;
+		try {
+			start = sdf1.parse(startDate);
+			end = sdf1.parse(endDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ResultEyesightDO queryMinMaxDate = resultEyesightDao.queryMinMaxDate(start,end);
+		params.put("kai", sdf.format(queryMinMaxDate.getMinCheckDate()));
+		params.put("jie", sdf.format(queryMinMaxDate.getMaxCheckDate()));
+		params.put("newDate", sdf2.format(new Date()));
+		//图
+		
+		Map<String,Object> ls = new HashMap<>();
+		ls.put("type", date);
+		List<LinShiUrlDO> lsu = linShiUrlDao.list(ls);
+		for (LinShiUrlDO linShiUrlDO : lsu) {
+			params.put(linShiUrlDO.getName(), linShiUrlDO.getImgUrl());
+			
+			linShiUrlDao.remove(linShiUrlDO.getId());
+		}
+									
+		List<StudentDO> school = studentDao.getSchool(start,end);
+		params.put("school", school.size());
+		int renshu = 0;
+		int you = 0;
+		int xiao = 0;
+		int chu = 0;
+		int gao = 0;
+		int your = 0;
+		int xiaor = 0;
+		int chur = 0;
+		int gaor = 0;
+		List<Integer> list2 = new ArrayList<>();
+		for (StudentDO studentDO : school) {
+			String school2 = studentDO.getSchool();
+			Map<String, Object> map = new HashMap<String, Object>(); 
+			map.put("school", school2);
+			List<StudentDO> list = studentDao.list(map);
+			list2.add(list.size());
+			if(studentDO.getXueBu().equals("幼儿园")){
+				you++;
+				Map<String, Object> map2 = new HashMap<String, Object>(); 
+				map.put("school", school2);
+				List<StudentDO> list3 = studentDao.list(map2);
+				your += list3.size();
+			}
+			if(studentDO.getXueBu().equals("小学")){
+				xiao++;
+				Map<String, Object> map3 = new HashMap<String, Object>(); 
+				map.put("school", school2);
+				List<StudentDO> list4 = studentDao.list(map3);
+				xiaor += list4.size();
+			}
+			if(studentDO.getXueBu().equals("初中")){
+				chu++;
+				Map<String, Object> map4 = new HashMap<String, Object>(); 
+				map.put("school", school2);
+				List<StudentDO> list5 = studentDao.list(map4);
+				chur += list5.size();
+			}
+			if(studentDO.getXueBu().equals("高中")){
+				gao++;
+				Map<String, Object> map5 = new HashMap<String, Object>(); 
+				map.put("school", school2);
+				List<StudentDO> list6 = studentDao.list(map5);
+				gaor += list6.size();
+			}			
+			
+		}
+		for (Integer integer : list2) {
+			renshu += integer.intValue();
+		}
+		params.put("gong", renshu);
+		params.put("you", you);
+		params.put("xiao", xiao);
+		params.put("chu", chu);
+		params.put("gao", gao);
+		
+		params.put("your", your);
+		params.put("xiaor", xiaor);
+		params.put("chur", chur);
+		params.put("gaor", gaor);
+		
+		List<Map<String, String>> list3 = new ArrayList<Map<String, String>>();
+		List<Map<String, String>> list5 = new ArrayList<Map<String, String>>();
+		List<Map<String, Integer>> list6 = new ArrayList<Map<String, Integer>>();
+		for (StudentDO studentDO : school) {
+			Map<String,String> map = new HashMap<String,String>();
+			Map<String,String> map2 = new HashMap<String,String>();
+			Map<String,Integer> map3 = new HashMap<String,Integer>();
+			Integer first = 0;
+			Integer second = 0;
+			Integer third = 0;
+			Integer fourth = 0;
+			Integer fifth = 0;
+			String firstr = "0";
+			String secondr ="0";
+			String thirdr = "0";
+			String fourthr = "0";
+			String fifthr = "0";
+			String school2 = studentDO.getSchool();
+			List<StudentDO> lastCheckStudent = studentDao.getLastCheckStudent(school2, start, end);
+			for (StudentDO studentDO2 : lastCheckStudent) {
+				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+				if(dushu.size()>0){
+					ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+					if(queryQiujing.getDengxiaoqiujing() != null){
+						if(Double.parseDouble(dushu.get(0).getDushu()) == 5.0){
+							if(queryQiujing.getDengxiaoqiujing() >= -0.5 && queryQiujing.getDengxiaoqiujing() <= 0.75){
+								first++;
+							}
+							if(queryQiujing.getDengxiaoqiujing() < -0.5){
+								second++;
+							}
+						}
+						if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
+							if(queryQiujing.getDengxiaoqiujing() < -0.5 && queryQiujing.getDengxiaoqiujing() > -3.0){
+								third++;
+							}
+							if(queryQiujing.getDengxiaoqiujing() < -3.25 && queryQiujing.getDengxiaoqiujing() > -6.0){
+								fourth++;
+							}
+							if(queryQiujing.getDengxiaoqiujing() < -6.0){
+								fifth++;
+							}
+						}
 					}
 				}
 			}
-			qingdusaR = Double.parseDouble(df.format(qingdusa/checksa*100));
-			zhongdusaR = Double.parseDouble(df.format(zhongdusa/checksa*100));
-			zzhongdusaR = Double.parseDouble(df.format(zzhongdusa/checksa*100));
-			buliangsaR =  Double.parseDouble(df.format(buliangsa/checksa*100));
-
+			map.put("xuexiao", school2);
+			map.put("xuebu", studentDO.getXueBu());
+			map.put("jiancha", String.valueOf(lastCheckStudent.size()));
+			map.put("qq", String.valueOf(first));
+			map.put("jx", String.valueOf(second));
+			map.put("dd", String.valueOf(third));
+			map.put("zd", String.valueOf(fourth));
+			map.put("gd", String.valueOf(fifth));
+			firstr = df.format(((double)first/(double)lastCheckStudent.size())*100);
+			secondr = df.format(((double)second/(double)lastCheckStudent.size())*100);
+			thirdr = df.format(((double)third/(double)lastCheckStudent.size())*100);
+			fourthr = df.format(((double)fourth/(double)lastCheckStudent.size())*100);
+			fifthr = df.format(((double)fifth/(double)lastCheckStudent.size())*100);
+			Integer jinzongy = third+fourth+fifth;
+			double jinzongr = Double.parseDouble(thirdr)+Double.parseDouble(fourthr)+Double.parseDouble(fifthr);
+			map.put("qqr", firstr);
+			map.put("jxr", secondr);
+			map.put("ddr", thirdr);
+			map.put("zdr", fourthr);
+			map.put("gdr", fifthr);
+			map.put("zz", String.valueOf(jinzongy));
+			map.put("zzr", String.valueOf(jinzongr));
+			list3.add(map);
+			map2.put(studentDO.getXueBu(), String.valueOf(jinzongr));
+			list5.add(map2);
+			map3.put(studentDO.getXueBu(), lastCheckStudent.size());
+			list6.add(map3);
+		}
+		params.put("jinshi", list3);
+		
+		int jiaJS1 =0;
+		double jiaJS2 = 0.0;
+		int jiaJS3= 0;
+		double jiaJS4= 0.0;
+		int jiaJS5= 0;
+		double jiaJS6= 0.0;
+		int jiaJS7= 0;
+		double jiaJS8= 0.0;
+		int jiaJS9= 0;
+		double jiaJS11= 0.0;
+		int jiaJS22= 0;
+		double jiaJS33=0.0;
+		int jiaJS44=0;
+		for (Map<String, String> map : list3) {
+			for(Map.Entry<String, String> m : map.entrySet()){
+				if(m.getKey().equals("qq")){
+					jiaJS1 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("qqr")){
+					jiaJS2 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("jx")){
+					jiaJS3 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("jxr")){
+					jiaJS4 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("dd")){
+					jiaJS5 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("ddr")){
+					jiaJS6 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("zd")){
+					jiaJS7 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("zdr")){
+					jiaJS8 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("gd")){
+					jiaJS9 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("gdr")){
+					jiaJS11 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("zz")){
+					jiaJS22 += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("zzr")){
+					jiaJS33 += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("jiancha")){
+					jiaJS44 += Integer.parseInt(m.getValue());
+				}
+			}
+		}
+		params.put("AA", jiaJS1);
+		params.put("BB", jiaJS2);
+		params.put("CC", jiaJS3);
+		params.put("DD", jiaJS4);
+		params.put("EE", jiaJS5);
+		params.put("FF", jiaJS6);
+		params.put("GG", jiaJS7);
+		params.put("HH", jiaJS8);
+		params.put("II", jiaJS9);
+		params.put("JJ", jiaJS11);
+		params.put("KK", jiaJS22);
+		params.put("LL", jiaJS33);
+		params.put("MM", jiaJS44);
+			
+		int sy =0;
+		int sx = 0;
+		int sc= 0;
+		int sg= 0;
+		for (Map<String, Integer> map : list6) {
+			for(Map.Entry<String, Integer> m : map.entrySet()){
+				if(m.getKey().equals("幼儿园")){
+					sy += m.getValue();
+				}
+				if(m.getKey().equals("小学")){
+					sx += m.getValue();
+				}
+				if(m.getKey().equals("初中")){
+					sc += m.getValue();
+				}
+				if(m.getKey().equals("高中")){
+					sg += m.getValue();
+				}
+			}
+		}
+		params.put("sy", sy);
+		params.put("sx", sx);
+		params.put("sc", sc);
+		params.put("sg", sg);
+		
+		List<Map<String, String>> list4 = new ArrayList<Map<String, String>>();
+		for (StudentDO studentDO : school) {
+			int qingduyi = 0;
+			int zhongduyi = 0;
+			int zzhongduyi = 0;
+			int buliangyi = 0;
+			String qingduyiR = "0";
+			String zhongduyiR= "0";
+			String zzhongduyiR= "0";
+			String buliangyiR= "0";
+			Map<String,String> map = new HashMap<String,String>();
+			String school2 = studentDO.getSchool();
+			List<StudentDO> lastCheckStudent = studentDao.getLastCheckStudent(school2, start, end);
+			for (StudentDO studentDO2 : lastCheckStudent) {
+				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+				if(dushu.size()>0){
+					if(Double.parseDouble(dushu.get(0).getDushu())==4.9){
+						qingduyi++;
+					}
+					if(Double.parseDouble(dushu.get(0).getDushu())>=4.6 && Double.parseDouble(dushu.get(0).getDushu()) <= 4.9){
+						zhongduyi++;
+					}
+					if(Double.parseDouble(dushu.get(0).getDushu()) <= 4.5){
+						zzhongduyi++;
+					}
+					if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
+						buliangyi++;
+					}
+				}
+			}
+			qingduyiR = df.format(((double)qingduyi/(double)lastCheckStudent.size())*100);
+			zhongduyiR = df.format(((double)zhongduyi/(double)lastCheckStudent.size())*100);
+			zzhongduyiR = df.format(((double)zzhongduyi/(double)lastCheckStudent.size())*100);
+			buliangyiR =  df.format(((double)buliangyi/(double)lastCheckStudent.size())*100);
+			
+			map.put("xuexiao", school2);
+			map.put("xuebu", studentDO.getXueBu());
+			map.put("jiancha", String.valueOf(lastCheckStudent.size()));
+			map.put("qd", String.valueOf(qingduyi));
+			map.put("qdr", qingduyiR);
+			map.put("zd", String.valueOf(zhongduyi));
+			map.put("zdr", zhongduyiR);
+			map.put("zzd", String.valueOf(zzhongduyi));
+			map.put("zzdr", zzhongduyiR);
+			map.put("bl", String.valueOf(buliangyi));
+			map.put("blr", buliangyiR);
+			
+			list4.add(map);
+		}
+		params.put("biliang", list4);
+		
+		int checkT = 0;
+		int qingNT = 0;
+		double qingRT =0.0;
+		int zhongNT= 0;
+		double zhongRT= 0.0;
+		int zzhongNT= 0;
+		double zzhongRT=0.0;
+		int bulingNT=0;
+		double bulingRT= 0.0;
+		for (Map<String, String> map : list4) {
+			for(Map.Entry<String, String> m : map.entrySet()){
+				if(m.getKey().equals("jiancha")){
+					checkT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("qd")){
+					qingNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("qdr")){
+					qingRT += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("zd")){
+					zhongNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("zdr")){
+					zhongRT += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("zzd")){
+					zzhongNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("zzdr")){
+					zzhongRT += Double.parseDouble(m.getValue());
+				}
+				if(m.getKey().equals("bl")){
+					bulingNT += Integer.parseInt(m.getValue());
+				}
+				if(m.getKey().equals("blr")){
+					bulingRT += Double.parseDouble(m.getValue());
+				}
+			}
 		}
 		
-				params.put("school", "济南市外海实验学校");
-				params.put("A", checksa);
-				params.put("O", qingdusa);
-				params.put("P", qingdusaR);
-				params.put("Q", zhongdusa);
-				params.put("R", zhongdusaR);
-				params.put("S", zzhongdusa);
-				params.put("T", zzhongdusaR);
-				params.put("U", buliangsa);
-				params.put("V", buliangsaR);
-								
-				Map<String,Object> jia3 = new HashMap<String,Object>();
-				Integer linchuangy3 = 0;
-				Integer jiajinshiy3 = 0;
-				Integer diy3 =0;
-				Integer zhongy3 = 0;
-				Integer gaoy3 = 0;
-				double linchuangr3 = 0;
-				double jiajinshir3 = 0;
-				double dir3 =0;
-				double zhongr3 = 0;
-				double gaor3 =0;
-				int jiay3 = shiLis.size();
-				if(shiLis.size()>0){
-					linchuangy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","first");
-					jiajinshiy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","second");
-					diy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","third");
-					zhongy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","fourth");
-					gaoy3 = jiajinshi("济南市外海实验学校",sdf.format(date),"3年级","fifth");
-					linchuangr3 = Double.parseDouble(df.format(linchuangy3/jiay3*100));
-					jiajinshir3 = Double.parseDouble(df.format(jiajinshiy3/jiay3*100));
-					dir3 = Double.parseDouble(df.format(diy3/jiay3*100));
-					zhongr3 = Double.parseDouble(df.format(zhongy3/jiay3*100));
-					gaor3 = Double.parseDouble(df.format(gaoy3/jiay3*100));
+		params.put("NN", checkT);
+		params.put("OO", qingNT);
+		params.put("PP", qingRT);
+		params.put("QQ", zhongNT);
+		params.put("RR", zhongRT);
+		params.put("SS", zzhongNT);
+		params.put("TT", zzhongRT);
+		params.put("UU", bulingNT);
+		params.put("VV", bulingRT);
+		
+		int daijingNum = resultEyesightDao.queryDaijingNum(start, end);
+		String format = df.format(((double)daijingNum/(double)checkT)*100);
+		params.put("dj", daijingNum);
+		params.put("djr", format);
+		
+		double yo = 0;
+		double xi = 0;
+		double ch = 0;
+		double ga = 0;
+		for (Map<String, String> map : list5) {
+			for(Map.Entry<String, String> m : map.entrySet()){
+				if(m.getKey().equals("幼儿园")){
+					yo += Double.parseDouble(m.getValue());
 				}
-				Integer jinzongy3 = linchuangy3+jiajinshiy3+diy3+zhongy3+gaoy3;
-				double jinzongr3 = linchuangr3+jiajinshir3+dir3+zhongr3+gaor3;
-				
-				params.put("B", linchuangy3);
-				params.put("C", linchuangr3);
-				params.put("D", jiajinshiy3);
-				params.put("E", jiajinshir3);
-				params.put("F", diy3);
-				params.put("G", dir3);
-				params.put("H", zhongy3);
-				params.put("I", zhongr3);
-				params.put("G", gaoy3);
-				params.put("K", gaor3);
-				params.put("L", jinzongy3);
-				params.put("M", jinzongr3);
-				
-				params.put("yx", checksa);
-				params.put("sx", checksa);
-				
-				params.put("lq", linchuangy3);
-				params.put("lqb", linchuangr3);
-				params.put("ja", jiajinshiy3);
-				params.put("jab", jiajinshir3);
-				params.put("dd", dir3);
-				params.put("zd", zhongr3);
-				params.put("gd", gaoy3);
-				params.put("sc", jinzongy3);
-				params.put("scb", jinzongr3);
-				
-				params.put("qbl", qingdusa);
-				params.put("qblb", qingdusaR);
-				params.put("zbl", zhongdusa);
-				params.put("zblb", zhongdusaR);
-				params.put("gbl", zzhongdusa);
-				params.put("gblb", zzhongdusaR);
-				params.put("bl", buliangsa);
-				params.put("blb", buliangsaR);
-				
-				Integer nanjianchaniansan = jiancha("济南市外海实验学校",sdf.format(date),1,"3年级");
-				Integer nanjinshiniansan = jinshi("济南市外海实验学校",sdf.format(date),1,"3年级",null);
-				if(nanjianchaniansan == -1){
-					params.put("nz", 0);
-				}else{
-					params.put("nz", nanjianchaniansan);
+				if(m.getKey().equals("小学")){
+					xi += Double.parseDouble(m.getValue());
 				}
-				params.put("nj", nanjinshiniansan);
-				params.put("njb", Double.parseDouble(df.format(nanjinshiniansan/nanjianchaniansan*100)));
-				
-				
-				Integer nvjianchaniansan = jiancha("济南市外海实验学校",sdf.format(date),2,"3年级");
-				Integer nvjinshiniansan = jinshi("济南市外海实验学校",sdf.format(date),2,"3年级",null);
-				if(nvjianchaniansan == -1){
-					params.put("wz", 0);
-				}else{
-					params.put("wz", nvjianchaniansan);
+				if(m.getKey().equals("初中")){
+					ch += Double.parseDouble(m.getValue());
 				}
-				params.put("wj", nvjinshiniansan);
-				params.put("wjb", Double.parseDouble(df.format(nvjinshiniansan/nvjianchaniansan*100)));
-				
+				if(m.getKey().equals("高中")){
+					ga += Double.parseDouble(m.getValue());
+				}
+			}
+		}
+		params.put("yo", yo);
+		params.put("xi", xi);
+		params.put("ch", ch);
+		params.put("ga", ga);
+		
+		int nn = 0;
+		int vv = 0;
+		int njs = 0;
+		int vjs = 0;
+		String njsr = "0";
+		String vjsr= "0";
+		for (StudentDO studentDO : school) {
+			String school2 = studentDO.getSchool();
+			List<StudentDO> lastCheckStudent = studentDao.getLastCheckStudent(school2, start, end);
+			for (StudentDO studentDO2 : lastCheckStudent) {
+				if(studentDO2.getStudentSex() == 1){
+					nn++;
+					List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+					if(dushu.size()>0){
+						ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+						if(queryQiujing.getDengxiaoqiujing() != null){
+							if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
+								if(queryQiujing.getDengxiaoqiujing() < -0.5){
+									njs++;
+								}
+							}
+						}
+					}
+				}
+				if(studentDO2.getStudentSex() == 2){
+					vv++;
+					List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+					if(dushu.size()>0){
+						ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+						if(queryQiujing.getDengxiaoqiujing() != null){
+							if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
+								if(queryQiujing.getDengxiaoqiujing() < -0.5){
+									vjs++;
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			njsr = df.format(((double)njs/(double)nn)*100);
+			vjsr = df.format(((double)vjs/(double)vv)*100);
+		}
+		params.put("WW", nn);
+		params.put("XX", vv);
+		params.put("YY", njs);
+		params.put("ZZ", vjs);
+		params.put("njsr", njsr);
+		params.put("vjsr", vjsr);
+		
+		
 		return params;			
 								
 	}
 
+	//各年级近视（教育局）
+	@Override
+	public Map<String, List<Double>> suoyounianjijinshi(Date start, Date end) {
+		Map<String, List<Double>> jinshi = new HashMap<String, List<Double>>();
+		List<Double> myt = new ArrayList<Double>();
+		double map1 = suoyounianjijinshi2(start,end,"幼儿园");
+		double map2 = suoyounianjijinshi2(start,end,"1年级");
+		double map3 = suoyounianjijinshi2(start,end,"2年级");
+		double map4 = suoyounianjijinshi2(start,end,"3年级");
+		double map5 = suoyounianjijinshi2(start,end,"4年级");
+		double map6 = suoyounianjijinshi2(start,end,"5年级");
+		double map7 = suoyounianjijinshi2(start,end,"6年级");
+		double map8 = suoyounianjijinshi2(start,end,"初一");
+		double map9 = suoyounianjijinshi2(start,end,"初二");
+		double map11 = suoyounianjijinshi2(start,end,"初三");
+		double map22 = suoyounianjijinshi2(start,end,"高一");
+		double map33 = suoyounianjijinshi2(start,end,"高二");
+		double map44 = suoyounianjijinshi2(start,end,"高三");
+		myt.add(map1);
+		myt.add(map2); myt.add(map3); myt.add(map4);
+		myt.add(map5); myt.add(map6); myt.add(map7);
+		myt.add(map8); myt.add(map9); myt.add(map11);
+		myt.add(map22); myt.add(map33); myt.add(map44);
+		jinshi.put("jinshi", myt);
+		return jinshi;
+	}
+	
+	public double suoyounianjijinshi2(Date start, Date end,String grade){
+		DecimalFormat df = new DecimalFormat("0.0");
+		int js = 0; 
+		double rate ;
+		List<StudentDO> allStudent = studentDao.getCheckAllStudent(start, end,grade);
+		if(allStudent.size()>0){
+			for (StudentDO studentDO : allStudent) {
+				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO.getIdentityCard(), studentDO.getLastCheckTime());
+				if(dushu.size()>0){
+					ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO.getIdentityCard(), studentDO.getLastCheckTime());
+					if(queryQiujing.getDengxiaoqiujing() != null){
+						if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
+							if(queryQiujing.getDengxiaoqiujing() < -0.5){
+								js++;
+							}
+						}
+					}
+				}
+			}
+			rate = Double.parseDouble(df.format((double)js/(double)allStudent.size()*100));
+		}else{
+			rate = 0;
+		}				
+		return rate;
+		
+	}
+	
+	//不良（教育局）
+	@Override
+	public Map<String, List<Double>> suoyounianjibuliang(Date start, Date end) {
+		Map<String, List<Double>> buliang = new HashMap<String, List<Double>>();
+		List<Double> myt = new ArrayList<Double>();
+		double map1 = suoyounianjibuliang2(start,end,"幼儿园");
+		double map2 = suoyounianjibuliang2(start,end,"1年级");
+		double map3 = suoyounianjibuliang2(start,end,"2年级");
+		double map4 = suoyounianjibuliang2(start,end,"3年级");
+		double map5 = suoyounianjibuliang2(start,end,"4年级");
+		double map6 = suoyounianjibuliang2(start,end,"5年级");
+		double map7 = suoyounianjibuliang2(start,end,"6年级");
+		double map8 = suoyounianjibuliang2(start,end,"初一");
+		double map9 = suoyounianjibuliang2(start,end,"初二");
+		double map11 = suoyounianjibuliang2(start,end,"初三");
+		double map22 = suoyounianjibuliang2(start,end,"高一");
+		double map33 = suoyounianjibuliang2(start,end,"高二");
+		double map44 = suoyounianjibuliang2(start,end,"高三");
+		myt.add(map1);
+		myt.add(map2); myt.add(map3); myt.add(map4);
+		myt.add(map5); myt.add(map6); myt.add(map7);
+		myt.add(map8); myt.add(map9); myt.add(map11);
+		myt.add(map22); myt.add(map33); myt.add(map44);
+		buliang.put("buliang", myt);
+		return buliang;
+	}
+	
+	public double suoyounianjibuliang2(Date start, Date end,String grade){
+		DecimalFormat df = new DecimalFormat("0.0");
+		int bl = 0; 
+		double rate ;
+		List<StudentDO> allStudent = studentDao.getCheckAllStudent(start, end,grade);
+		if(allStudent.size()>0){
+			for (StudentDO studentDO : allStudent) {
+				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO.getIdentityCard(), studentDO.getLastCheckTime());
+				if(dushu.size()>0){
+					if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
+						bl++;
+					}
+				}
+			}
+			rate = Double.parseDouble(df.format((double)bl/(double)allStudent.size()*100));
+		}else{
+			rate = 0;
+		}
+		
+		return rate;
+		
+	}
+	
+	//各年龄近视（教育局）
+	@Override
+	public Map<String, Object> genianlingjinshiyear(Date start, Date end) {
+		Map<String, Object> jinshi2 = new HashMap<String, Object>();
+		Map<String, List<Double>> jinshi = new HashMap<String, List<Double>>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		List<ResultEyesightDO> getcheckDate = resultEyesightDao.getcheckDate(start,end);
+		if(getcheckDate.size()>0){
+			for (ResultEyesightDO resultEyesightDO : getcheckDate) {
+				List<Double> myt = new ArrayList<Double>();
+				Date checkDate = resultEyesightDO.getCheckDate();
+				double map1 = genianlingjinshiyear2("幼儿园",checkDate);
+				double map2 = genianlingjinshiyear2("小学",checkDate);
+				double map3 = genianlingjinshiyear2("初中",checkDate);
+				double map4 = genianlingjinshiyear2("高中",checkDate);
+				myt.add(map1);
+				myt.add(map2);
+				myt.add(map3);
+				myt.add(map4);
+				jinshi.put(sdf.format(checkDate), myt);
+			}
+		}
+		jinshi2.put("nianling", jinshi);
+		return jinshi2;
+	}
+	
+	public double genianlingjinshiyear2(String xueBu,Date checkDate){
+		DecimalFormat df = new DecimalFormat("0.0");
+		int js = 0; 
+		double rate ;
+		List<ResultEyesightDO> list = resultEyesightDao.getgenianlingjinshi(checkDate,xueBu);
+		if(list.size()>0){
+			for (ResultEyesightDO resultEyesightDO2 : list) {
+				if(Double.parseDouble(resultEyesightDO2.getDushu()) < 5.0){
+					ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(resultEyesightDO2.getIdentityCard(), checkDate);
+					if(queryQiujing.getDengxiaoqiujing() < -0.5){
+						js++;
+					}
+				}
+			}
+			rate = Double.parseDouble(df.format((double)js/(double)list.size()*100));
+		}else{
+			rate = 0;
+		}
+		return rate;
+		
+	}
+	
+	//男女近视（教育局）
+	@Override
+	public Map<String, Object> nannvjinshiyear(Date start, Date end) {
+		Map<String, Object> jinshi = new HashMap<String, Object>();
+		Map<String, Object> map1 = nannvjinshiyear2(1,start,end);
+		Map<String, Object> map2 = nannvjinshiyear2(2,start,end);
+		jinshi.put("nan", map1);
+		jinshi.put("nv", map2);
+		return jinshi;
+	}
+	
+	public Map<String, Object> nannvjinshiyear2(Integer studentSex,Date start, Date end) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		DecimalFormat df = new DecimalFormat("0.0");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		List<ResultEyesightDO> getcheckDate = resultEyesightDao.getcheckDate(start,end);
+		if(getcheckDate.size()>0){
+			for (ResultEyesightDO resultEyesightDO : getcheckDate) {
+				int js = 0; 
+				double rate ;
+				List<ResultEyesightDO> list = resultEyesightDao.getnannvjinshi(resultEyesightDO.getCheckDate(),studentSex);
+				if(list.size()>0){
+					for (ResultEyesightDO resultEyesightDO2 : list) {
+						if(Double.parseDouble(resultEyesightDO2.getDushu()) < 5.0){
+							ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(resultEyesightDO2.getIdentityCard(), resultEyesightDO.getCheckDate());
+							if(queryQiujing.getDengxiaoqiujing() < -0.5){
+								js++;
+							}
+						}
+					}
+					rate = Double.parseDouble(df.format((double)js/(double)list.size()*100));
+				}else{
+					rate = 0;
+				}
+				map.put(sdf.format(resultEyesightDO.getCheckDate()), rate);
+			}
+		}
+		
+		return map;
+		
+	}
 	
 }

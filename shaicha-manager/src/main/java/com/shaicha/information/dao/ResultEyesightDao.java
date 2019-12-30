@@ -1,5 +1,6 @@
 package com.shaicha.information.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,5 +38,18 @@ public interface ResultEyesightDao {
 	
 	List<ResultEyesightDO> jinShi(Map<String,Object> map);
 	
-	List<ResultEyesightDO> getLifeShili(@Param("identityCard") String identityCard,@Param("checkDate") String checkDate);
+	List<ResultEyesightDO> getLifeShili(@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
+
+	ResultEyesightDO queryMinMaxDate(@Param("start") Date start,@Param("end") Date end);
+	
+	List<ResultEyesightDO> queryDushu(@Param("identityCard") String identityCard,@Param("checkDate") Date checkDate);
+	
+	int queryDaijingNum(@Param("start") Date start,@Param("end") Date end);
+	
+	List<ResultEyesightDO> getcheckDate(@Param("start") Date start,@Param("end") Date end);
+	
+	List<ResultEyesightDO> getgenianlingjinshi(@Param("checkDate") Date checkDate,@Param("xueBu") String xueBu);
+	
+	List<ResultEyesightDO> getnannvjinshi(@Param("checkDate") Date checkDate,@Param("studentSex") Integer studentSex);
+
 }

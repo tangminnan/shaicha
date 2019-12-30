@@ -1,5 +1,6 @@
 package com.shaicha.information.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,5 +35,5 @@ public interface ResultCornealDao {
 	List<ResultCornealDO> queryByToptometryTd(Integer tOptometryId);
 	
 	List<ResultCornealDO> getCornealMm(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard
-			,@Param("type") String type,@Param("checkDate") String checkDate);
+			,@Param("type") String type,@Param("start") Date start,@Param("end") Date end);
 }

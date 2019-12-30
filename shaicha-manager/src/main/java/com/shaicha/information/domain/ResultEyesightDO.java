@@ -60,6 +60,21 @@ public class ResultEyesightDO implements Serializable {
 	private Date endTime;
 	private Date startTime;
 	
+	private Date minCheckDate;
+	private Date maxCheckDate;
+	
+	public Date getMinCheckDate() {
+		return minCheckDate;
+	}
+	public void setMinCheckDate(Date minCheckDate) {
+		this.minCheckDate = minCheckDate;
+	}
+	public Date getMaxCheckDate() {
+		return maxCheckDate;
+	}
+	public void setMaxCheckDate(Date maxCheckDate) {
+		this.maxCheckDate = maxCheckDate;
+	}
 	//戴镜视力右
 	private String glassvisionOd;
 	//身份证号

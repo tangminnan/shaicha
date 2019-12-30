@@ -96,7 +96,7 @@
 	
 	<select id="getEyepressure" resultType="com.shaicha.information.domain.ResultEyepressureDO">
 		select eye_pressure_od,eye_pressure_os from t_result_eyepressure
-		where identity_card = #{identityCard} and check_date = #{checkDate} 
+		where identity_card = #{identityCard} and check_date between #{start} and #{end}
 	</select>
 
 </mapper>

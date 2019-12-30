@@ -865,11 +865,7 @@ public class StudentServiceImpl implements StudentService {
 	public List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id) {
 		return studentDao.getLatelestResultEyeaxisDO(id);
 	}
-
-	@Override
-	public List<StudentDO> querySchoolName() {
-		return studentDao.querySchoolName();
-	}
+	
 
 	public List<ResultCornealDO> getResultCornealDOList(Integer studentId, String ifrl, String type) {
 		return studentDao.getResultCornealDOList(studentId, ifrl, type);
@@ -1192,6 +1188,12 @@ public class StudentServiceImpl implements StudentService {
 		
 	}
 		 return freeMap;
+	}
+
+	@Override
+	public List<StudentDO> querySchoolName() {
+		
+		return studentDao.querySchoolName();
 	}
 	
 	

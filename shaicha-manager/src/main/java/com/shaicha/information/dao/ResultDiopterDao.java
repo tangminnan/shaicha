@@ -32,23 +32,21 @@ public interface ResultDiopterDao {
 	
 	int batchRemove(Integer[] tDiopterIds);
 	
+	List<ResultDiopterDO> ifExistData(@Param("school") String school,@Param("start") Date start,@Param("end") Date end);
+	
 	List<ResultDiopterDO> getByToptometryId(Integer tOptometryId);
-	
-//	List<ResultDiopterDO> overYearMyopia(@Param("checkDate") Date checkDate,@Param("identityCard") String identityCard);
-	List<ResultDiopterDO> overYearMyopia(@Param("checkDate") String checkDate,@Param("school") String school);
-	
-	List<ResultDiopterDO> gradeMyopia(Map<String,Object> map);
-	
-	List<ResultDiopterDO> studentSexMyopia(Map<String,Object> map);
-	
+				
 	ResultDiopterDO maxCheckDate();
 	
 	List<ResultDiopterDO> getStudentMyopia(Map<String,Object> map);
 	
-	List<ResultDiopterDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("checkDate") String checkDate);
+	List<ResultDiopterDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
 	
 	List<ResultDiopterDO> jianchashijian();
 	
 	List<ResultDiopterDO> queryTimeBetween(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 
+	ResultDiopterDO queryQiujing(@Param("identityCard") String identityCard,@Param("checkDate") Date checkDate);
+	
+	List<ResultDiopterDO> queryMyopia(@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
 }
