@@ -82,9 +82,7 @@ public interface StudentService {
 
 	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id);
 
-	
 	List<StudentDO> querySchoolName();
-
 
 	List<ResultCornealDO> getResultCornealDOList(Integer id, String string, String string2);
 

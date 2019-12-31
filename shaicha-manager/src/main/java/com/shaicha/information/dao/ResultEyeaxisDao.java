@@ -1,5 +1,6 @@
 package com.shaicha.information.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,5 @@ public interface ResultEyeaxisDao {
 	
 	int batchRemove(Integer[] tEyeaxisIds);
 	
-	List<ResultEyeaxisDO> getEyeaxis(@Param("identityCard")String identityCard,@Param("checkDate") String checkDate);
+	List<ResultEyeaxisDO> getEyeaxis(@Param("identityCard")String identityCard,@Param("start") Date start,@Param("end") Date end);
 }

@@ -591,9 +591,9 @@
 		select id, school from t_student group by school
 	</select>
 	
-	<select id="queryCheckNum" resultType="com.shaicha.information.domain.StudentDO">
-		select id, school,student_name from t_student where school = #{school} group by student_name
-	</select>
+	<select id="querySchoolGrade" resultType="com.shaicha.information.domain.StudentDO">
+		select id, school,student_name,grade ,xue_bu from t_student where school = #{school} group by grade,xue_bu
+	</select>	
 	
 	<select id="queryGradeNum" resultType="com.shaicha.information.domain.StudentDO">
 		select id, school,student_name from t_student where grade = #{grade} group by student_name
@@ -602,7 +602,7 @@
 	<select id="getCheckUserNum" resultType="com.shaicha.information.domain.StudentDO">
 		select ts.id, ts.school,ts.student_name from t_student ts,t_result_diopter trd
 		where trd.identity_card = ts.identity_card and ts.school = #{school}
-		and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		and trd.check_date between #{start} and #{end}
 		<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
 		<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
 		  group by ts.identity_card
@@ -611,7 +611,7 @@
 	<select id="getGradeClassCheck" resultType="com.shaicha.information.domain.StudentDO">
 		select ts.id, ts.school,ts.student_name from t_student ts,t_result_diopter trd
 		where trd.identity_card = ts.identity_card and ts.school = #{school}
-		and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		and trd.check_date between #{start} and #{end}
 		and ts.student_class = #{studentClass}
 		and ts.grade = #{grade}
 		  group by ts.identity_card
@@ -630,9 +630,24 @@
 	
 	<select id="queryStudentGrade" resultType="com.shaicha.information.domain.StudentDO">
 		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,trd.identity_card from t_result_diopter trd , t_student ts 
-		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and trd.check_date between #{start} and #{end}
 		and ts.student_class = #{studentClass}
 		GROUP BY trd.identity_card
+	</select>
+	
+	<select id="getSchool" resultType="com.shaicha.information.domain.StudentDO">
+		select ts.student_class,ts.school,ts.xue_bu from t_student ts , t_result_eyesight tre 
+		where ts.identity_card = tre.identity_card and check_date between #{start} and #{end}
+		group by ts.school
+	</select>
+	
+	<select id="getLastCheckStudent" resultType="com.shaicha.information.domain.StudentDO">
+		select school ,student_sex ,identity_card ,last_check_time ,xue_bu from t_student where school =  #{school} and last_check_time between #{start} and #{end}
+	</select>
+	
+	<select id="getCheckAllStudent" resultType="com.shaicha.information.domain.StudentDO">
+		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
+		from t_student where last_check_time between #{start} and #{end} and grade = #{grade}
 	</select>
 
 	

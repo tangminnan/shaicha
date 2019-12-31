@@ -1,5 +1,6 @@
 package com.shaicha.information.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,5 +32,5 @@ public interface ResultEyepressureDao {
 	
 	int batchRemove(Integer[] tEyepressureIds);
 	
-	List<ResultEyepressureDO> getEyepressure(@Param("identityCard")String identityCard, @Param("checkDate") String checkDate);
+	List<ResultEyepressureDO> getEyepressure(@Param("identityCard")String identityCard, @Param("start") Date start,@Param("end") Date end);
 }

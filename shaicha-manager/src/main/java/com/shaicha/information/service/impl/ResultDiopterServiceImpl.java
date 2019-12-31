@@ -69,5 +69,11 @@ public class ResultDiopterServiceImpl implements ResultDiopterService {
 		// TODO Auto-generated method stub
 		return resultDiopterDao.queryTimeBetween(startDate, endDate);
 	}
+
+	@Override
+	public List<ResultDiopterDO> ifExistData(String school, Date start, Date end) {
+		// TODO Auto-generated method stub
+		return resultDiopterDao.ifExistData(school, start, end);
+	}
 	
 }

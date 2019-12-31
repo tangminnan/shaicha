@@ -46,6 +46,7 @@ public class ShiroConfig {
     @Value("${server.session-timeout}")
     private int tomcatTimeout;
 
+
     @Bean
     public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();

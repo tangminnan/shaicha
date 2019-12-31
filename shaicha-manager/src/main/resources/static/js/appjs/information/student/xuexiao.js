@@ -15,24 +15,18 @@ function save() {
 				"school" : $("#school").val(),
 				"checkDate" :$("#checkDate").val(),
 				"schoolNum":$("#schoolNum").val(),
-				/*"overYear" : overYear.getDataURL(),
-				"gradeMyopia" : gradeMyopia.getDataURL(),
-				"overYearGradeMyopia" : overYearGradeMyopia.getDataURL(),
-				"studentSexMyopia" : studentSexMyopia.getDataURL(),
-				"overYearSexNan" : overYearSexNan.getDataURL(),
-				"overYearSexNv" : overYearSexNv.getDataURL(),
-				"overYearGradeSex" : overYearGradeSex.getDataURL(),*/
 			},
 			url : '/studentReport/baogaoimg',
 			success : function(result) {
 				console.info(result);
-				if(result.code == -1.0){
+				if(result.code == -1){
 					alert("该学校在该检查时间没有数据");
 				}else{
 					
-				/*// 基于准备好的dom，初始化echarts实例
+				// 基于准备好的dom，初始化echarts实例
 				var overYear = echarts.init(document.getElementById('overYear'));
 			 	var option = {
+			 			 animation:false,
 			 			 xAxis: {
 			 				 type: 'category',
 			 			     data: ["2017","2018","2019"]
@@ -57,8 +51,8 @@ function save() {
 
 			            			},
 			            		},
-			 			       // data: result.overYearMyopia,
-			 			        data: [79.3,61.1,33.5],
+			 			        data: result.overYearMyopia,
+			 			        //data: [79.3,61.1,33.5],
 			 			        type: 'line'
 			 			  }] 
 			 			         
@@ -69,6 +63,7 @@ function save() {
 
 			 			//console.info(result.gradeMyopia);
 			 			var option = {
+			 			animation:false,
 			 				    color: ['#3398DB'],
 			 				    legend: {
 			 			            data:['系列一'],
@@ -100,8 +95,8 @@ function save() {
 			 				           // name:'系列一',
 			 				            type:'bar',
 			 				            barWidth: '30%',
-			 				            //data:result.gradeMyopia
-			 				           data: [0,0,33.2,0,0]
+			 				           data:result.gradeMyopia
+			 				           //data: [0,0,33.2,0,0]
 			 				        }]
 			 				}
 			 			
@@ -111,6 +106,7 @@ function save() {
 				var overYearGradeMyopia = echarts.init(document.getElementById('overYearGradeMyopia'));	
 
 			 			var option = {
+			 			animation:false,
 			 				    legend: { 
 			 				    	data : ['2017', '2018', '2019'],
 			 				    	bottom : "1%"
@@ -147,8 +143,8 @@ function save() {
 			 				        		},
 			 				                 name:'2018',
 			 				                 type:'bar',
-			 				                 //data:result.eighteen
-			 				                 data:[23.5,24.7,28.2,30.8,40.1,30.7]
+			 				                 data:result.eighteen
+			 				                 //data:[23.5,24.7,28.2,30.8,40.1,30.7]
 			 				             },
 			 				             {
 			 				            	 label: {
@@ -161,8 +157,8 @@ function save() {
 			 				        		},
 			 				                 name:'2019',
 			 				                 type:'bar',
-			 				                // data:result.nineteen
-			 				                data:[23.6,22.3,26.5,26.7,33.2,25.7]
+			 				                 data:result.nineteen
+			 				                //data:[23.6,22.3,26.5,26.7,33.2,25.7]
 			 				             },
 
 			 				    ]
@@ -173,6 +169,7 @@ function save() {
 				
 				var studentSexMyopia = echarts.init(document.getElementById('studentSexMyopia'));	
 			 			var option = {
+			 			animation:false,
 			 				    color: ['#3398DB'],
 			 				    legend: {
 			 			            data:['男生','女生'],
@@ -204,8 +201,8 @@ function save() {
 			 				    	   // name:'男生',
 			 				            type:'bar',
 			 				            barWidth: '50%',
-			 				            //data:result.studentSexMyopia
-			 				           data:[29.6,33.5]
+			 				            data:result.studentSexMyopia
+			 				           //data:[29.6,33.5]
 			 				        }]
 			 				}
 			 			
@@ -214,6 +211,7 @@ function save() {
 					// 基于准备好的dom，初始化echarts实例
 				var overYearSexNan = echarts.init(document.getElementById('overYearSexNan'));
 			 			var option = {
+			 			animation:false,
 			 					 xAxis: {
 			 						 type: 'category',
 			 			             data: ["2017","2018","2019"]
@@ -238,9 +236,9 @@ function save() {
 
 			                 			},
 			                 		},
-			 			            // data: result.studentSexNanMyopia,
+			 			             data: result.studentSexNanMyopia,
 			 			             type: 'line',
-			 			            data: [79.3,63.1,28.5],
+			 			            //data: [79.3,63.1,28.5],
 			 			         }] 
 			 			         
 			 			}
@@ -250,6 +248,7 @@ function save() {
 					// 基于准备好的dom，初始化echarts实例
 				var overYearSexNv = echarts.init(document.getElementById('overYearSexNv'));
 			 			var option = {
+			 			animation:false,
 			 					 xAxis: {
 			 						 type: 'category',
 			 			             data: ["2017","2018","2019"]
@@ -274,9 +273,9 @@ function save() {
 
 			                 			},
 			                 		},
-			 			             //data: result.studentSexNvMyopia,
+			 			             data: result.studentSexNvMyopia,
 			 			             type: 'line',
-			 			            data: [79.4,62.1,32.4],
+			 			            //data: [79.4,62.1,32.4],
 			 			         }] 
 			 			         
 			 			}
@@ -285,6 +284,7 @@ function save() {
 
 				var overYearGradeSex = echarts.init(document.getElementById('overYearGradeSex'));	
 			 			var option = {
+			 			animation:false,
 			 				    legend: { 
 			 				    	data : ['男生', '女生'],
 			 				    	bottom : "1%"
@@ -307,8 +307,8 @@ function save() {
 			 				        		},
 			 				                 name:'男生',
 			 				                 type:'bar',
-			 				                 //data:result.overYearSexNan
-			 				                data:[0,0,33.2,0,0,0]
+			 				                 data:result.overYearSexNan
+			 				                //data:[0,0,33.2,0,0,0]
 			 				             },
 			 				             {
 			 				            	 label: {
@@ -321,15 +321,15 @@ function save() {
 			 				        		},
 			 				                 name:'女生',
 			 				                 type:'bar',
-			 				                 //data:result.overYearSexNv
-			 				                data:[0,0,32.5,0,0,0]
+			 				                 data:result.overYearSexNv
+			 				                //data:[0,0,32.5,0,0,0]
 			 				             }
 			 				    ]
 			 				};
 			 			
 			 			overYearGradeSex.setOption(option);
 						
-			 			console.info(overYear.getDataURL()); 
+			 			/*console.info(overYear.getDataURL()); 
 						console.info(gradeMyopia.getDataURL()); 
 						console.info(overYearGradeMyopia.getDataURL()); 
 						console.info(studentSexMyopia.getDataURL()); 
@@ -337,7 +337,7 @@ function save() {
 						console.info(overYearSexNv.getDataURL()); 
 						console.info(overYearGradeSex.getDataURL());*/
 						
-			 			/*$.ajax({
+			 			$.ajax({
 			 				type : 'POST',
 			 				data : {
 			 					"school" : $("#school").val(),
@@ -351,15 +351,16 @@ function save() {
 			 					"overYearSexNv" : overYearSexNv.getDataURL(),
 			 					"overYearGradeSex" : overYearGradeSex.getDataURL(),
 			 				},
-			 				url : '/studentReport/baogaoxuexiao',
+			 				url : '/studentReport/xuexiaotu',
 			 				success : function(result) {
-			 					
-			 					
+			 					console.info(result);
+			 					window.location.href="/studentReport/baogaoxuexiao?school="+$("#school").val()
+																							+"&checkDate="+$("#checkDate").val()
+																							+"&schoolNum="+$("#schoolNum").val()
+																							+"&date="+result;
 			 				}
-			 			})*/
-			 			window.location.href="/studentReport/baogaoxuexiao?school="+$("#school").val()
-			 																		+"&checkDate="+$("#checkDate").val()
-			 																		+"&schoolNum="+$("#schoolNum").val();
+			 			})
+			 			
 			 			/*parent.reLoad();
 						var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 						parent.layer.close(index);*/
