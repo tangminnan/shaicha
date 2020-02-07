@@ -62,6 +62,8 @@ public class ResultEyesightDO implements Serializable {
 	
 	private Date minCheckDate;
 	private Date maxCheckDate;
+	//检查类型   示范校筛查    普通筛查
+	private String checkType;
 	
 	public Date getMinCheckDate() {
 		return minCheckDate;
@@ -361,6 +363,12 @@ public class ResultEyesightDO implements Serializable {
 	}
 	public void setDengxiaoqiujing(Double dengxiaoqiujing) {
 		this.dengxiaoqiujing = dengxiaoqiujing;
+	}
+	public String getCheckType() {
+		return checkType;
+	}
+	public void setCheckType(String checkType) {
+		this.checkType = checkType;
 	}
 	
 	

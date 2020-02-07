@@ -11,11 +11,13 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,12 +49,14 @@ import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.BuLiangShili;
 import com.shaicha.information.domain.ResultCornealDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
 import com.shaicha.information.domain.ResultOptometryDO;
+import com.shaicha.information.domain.ShiliJinShi;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.ResultEyesightService;
 import com.shaicha.information.service.ResultOptometryService;
@@ -610,32 +614,41 @@ public class StudentController {
 	 * 计算近视率	
 	 */
 	
-	@ResponseBody
+	/*@ResponseBody
 	@GetMapping("/getJInShiLv")
 	public Map<String,Object> getJInShiLv(Date startDate,Date endDate){
 		
 		return  studentService.getJInShiLv(startDate,endDate);		
-	}
+	}*/
 	
 	/**
 	 * 男生女生近期近视率
 	 */
-	@GetMapping("/getJInShiLvSex")
+	/*@GetMapping("/getJInShiLvSex")
 	@ResponseBody
 	public Map<String,Object> getJInShiLvSex(Date startDate,Date endDate){
 		return  studentService.getJInShiLvSex( startDate,endDate);	
-	}
+	}*/
 	
 	/**
 	 * 教育局
 	 * @throws ParseException 
 	 */
 	
-	@GetMapping("/getee")
-	public Map<String,Object>  getee() throws ParseException{
-		Map<String,Object> map =  studentService.createDataToJiAOYuJu(new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-10"),new Date());
-		System.out.println(map);
-		return map;
+//	@GetMapping("/getee")
+//	public Map<String,Object>  getee() throws ParseException{
+//		Map<String,Object> map =  studentService.createDataToJiAOYuJu(new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-10"),new Date());
+//		System.out.println(map);
+//		return map;
+//	}
+	
+	/**
+	 * 首页真实数据展示
+	 */
+	@ResponseBody
+	@GetMapping("/shouYeTrueData")
+	public Map<String,Object> shouYeTrueData(){
+		return studentService.shouYeTrueData();	
 	}
 	
 }

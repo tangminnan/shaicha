@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head th:include="include :: header"></head>
+    
     <title>欢迎页</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -32,7 +34,7 @@
     			</p>
     			<p class="itemLs">
 	    			<span>2019年下半年济南示范校筛查系统</span>
-	    			<span>2050人</span>
+	    			<span id="shifanxiao">2050人</span>
     			</p>
     		</div>
     		<div class="checkItem">
@@ -41,7 +43,7 @@
     			</p>
     			<p class="itemLs">
 	    			<span>2019年下半年济南普通筛查系统</span>
-	    			<span>422人</span>
+	    			<span id="putong">422人</span>
     			</p>
     		</div>
     		<!-- <div class="checkItem">
@@ -147,8 +149,43 @@
         </ul>
     </div>  -->
 </div>
+<div th:include="include :: footer"></div>
+<input type="hidden" id="didujinshiNumber">
+<input type="hidden" id="zhongdujinshiNumber">
+<input type="hidden" id="gaodujinshiNumber">
+<input type="hidden" id="jinshizongjiNumber">
+<input type="hidden" id="jslcqianqiNumber">
+<input type="hidden" id="jxjsNumber">
+<input type="hidden" id="zhengchang">
+<input type="hidden" id="jinshilv">
+
 <script src="/js/plugins/echarts/echarts.js"></script>
 <script type="text/javascript">
+	
+$.ajax({
+	cache : true,
+	type : "GET",
+	async:false,
+	url : "/information/student/shouYeTrueData",
+	error : function(request) {
+		parent.layer.alert("网络超时");
+	},
+	success : function(data) {
+		$(".total").text(data.totalNumber+"人");
+		$("#shifanxiao").text(data.shifanxiao+"人");
+		$("#putong").text(data.putong);
+		$("#jxjsNumber").val(data.jxjsNumber);
+		$("#jslcqianqiNumber").val(data.jslcqianqiNumber);
+		$("#jinshizongjiNumber").val(data.jinshizongjiNumber);
+		$("#gaodujinshiNumber").val(data.gaodujinshiNumber);
+		$("#zhongdujinshiNumber").val(data.zhongdujinshiNumber);
+		$("#didujinshiNumber").val(data.didujinshiNumber);
+		$("#zhengchang").val(data.zhengchang);
+		$("#jinshilv").val(data.jinshilv);
+	}
+});
+	
+	
 	
 	// 基于准备好的dom，初始化echarts实例
 	var myChart =  echarts.init(document.getElementById('pie_charts'));
@@ -498,7 +535,7 @@
     var option2 = {
     		 title: {
     	       // text: '正常',
-    	        subtext: '56.72%',
+    	        subtext:$("#jinshilv").val(),
     	        textStyle:{
     	            fontSize:16,
     	            color: '#666666'
@@ -553,10 +590,10 @@
     	                }
     	            },
     	            data:[
-							{value:76581, name:'低度'},
-							{value:41446, name:'中度'},
-							{value:8988, name:'高度'},
-							{value:96915, name:'正常'}
+							{value:$("#didujinshiNumber").val(), name:'低度'},
+							{value:$("#zhongdujinshiNumber").val(), name:'中度'},
+							{value:$("#gaodujinshiNumber").val(), name:'高度'},
+							{value:$("#zhengchang").val(), name:'正常'}
     	              ]
     	        },
     	            

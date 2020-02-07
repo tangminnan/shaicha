@@ -565,27 +565,28 @@
 
 <select id="getJInShiLv" resultType="com.shaicha.information.domain.ResultEyesightDO">
 											SELECT
-						d.naked_farvision_od,
-						d.naked_farvision_os,
+						ifnull(d.naked_farvision_od,0.0) nakedFarvisionOd,
+						ifnull(d.naked_farvision_os,0.0) nakedFarvisionOs,
 						d.identity_card,
 						d.check_date,
 						t.school,
 						t.grade,
 						t.student_sex,
-						t.xue_bu
+						t.xue_bu,
+						t.check_type
 					FROM
 						t_result_eyesight d,
 						t_student t
 					WHERE
 					
 					 d.identity_card = t.identity_card 
-					 AND #{startDate}&lt;=d.check_date
-					AND #{endDate}&gt;=d.check_date
+					<!--  AND #{startDate}&lt;=d.check_date
+					AND #{endDate}&gt;=d.check_date -->
 </select>
 
 <select id="getResultDiopterDO" resultType="com.shaicha.information.domain.ResultDiopterDO">
-	select dengxiaoqiujing,ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG'   AND #{startDate}&lt;=check_date
-					AND #{endDate}&gt;=check_date
+	select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,  ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG'   <!-- AND #{startDate}&lt;=check_date -->
+					<!-- AND #{endDate}&gt;=check_date -->
 </select>
 	<select id="querySchoolName" resultType="com.shaicha.information.domain.StudentDO">
 		select id, school from t_student group by school
