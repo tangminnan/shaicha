@@ -424,19 +424,19 @@ public class StudentController {
 			correctionFarvisionOd=resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString();
 			correctionFarvisionOs=resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString();
 		}
-		model.addAttribute("nakedFarvisionOd",nakedFarvisionOd);
-		model.addAttribute("nakedFarvisionOs",nakedFarvisionOs);
-		model.addAttribute("glassvisionOd",correctionFarvisionOd);
-		model.addAttribute("glassvisionOs",correctionFarvisionOs);
+		model.addAttribute("nakedFarvisionOd",zhuanhuan(nakedFarvisionOd));
+		model.addAttribute("nakedFarvisionOs",zhuanhuan(nakedFarvisionOs));
+		model.addAttribute("glassvisionOd",zhuanhuan(correctionFarvisionOd));
+		model.addAttribute("glassvisionOs",zhuanhuan(correctionFarvisionOs));
 		//自动电脑验光结果(左眼) 
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
-		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
-		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":zhuanhuan(resultDiopterDO.getDiopterC().toString()));
+		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));;
 		dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
 		
 		
@@ -445,9 +445,9 @@ public class StudentController {
 		 resultDiopterDO = new ResultDiopterDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
-		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
-		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
+		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":zhuanhuan(resultDiopterDO.getDiopterC().toString()));
+		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));;
 		dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
 		
 		//眼内压结果拼装
@@ -455,15 +455,15 @@ public class StudentController {
 		ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
 		if(ResultEyepressureDOList.size()>0)
 			resultEyepressureDO=ResultEyepressureDOList.get(0);
-		model.addAttribute("eyePressureOd",resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd().toString());
-		model.addAttribute("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs().toString());
+		model.addAttribute("eyePressureOd",resultEyepressureDO.getEyePressureOd()==null?"":zhuanhuan(resultEyepressureDO.getEyePressureOd().toString()));
+		model.addAttribute("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":zhuanhuan(resultEyepressureDO.getEyePressureOs().toString()));
 		//眼轴长度数据拼装
 		List<ResultEyeaxisDO> resultEyeaxisDOList = studentService.getLatelestResultEyeaxisDO(studentDO.getId());
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
-		model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd().toString());
-		model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs().toString());
+		model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOd().toString()));
+		model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOs().toString()));
 		
 		System.out.println("===========================");
 		System.out.println("===========================");
@@ -471,19 +471,19 @@ public class StudentController {
 		ResultCornealDO resultCornealDO = new ResultCornealDO();
 		List<ResultCornealDO> resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealDO();
 		resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"R","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		
 		resultCornealDO = new ResultCornealDO();
 	    resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"L","R1");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
+	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		
 		
 	    
@@ -491,8 +491,8 @@ public class StudentController {
 	    resultCornealDOList = studentService.getResultCornealDOList(studentDO.getId(),"L","R2");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0.0":resultCornealDO.getCornealMm());
-	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0.0":resultCornealDO.getCornealDeg());
+	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		//医生的建议
 	   double od=0.0,os=0.0;
 	   if(!StringUtils.isBlank(nakedFarvisionOd)){
@@ -651,4 +651,18 @@ public class StudentController {
 		return studentService.shouYeTrueData();	
 	}
 	
+	private static Object zhuanhuan(Object s){
+	       Double d=null;
+	        if(s instanceof String){
+	        	if("".equals((String)s))
+	        		return "";
+	        	d = Double.parseDouble((String)s);
+	        }
+	        if(s instanceof Double)
+	            d = (Double)s;
+	        System.out.println("d:"+d+" s:"+s);
+	        if(Math.floor(d)==d)
+	            return d.intValue();
+	        return d;
+	    }
 }
