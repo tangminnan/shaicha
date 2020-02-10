@@ -177,15 +177,15 @@ function load() {
 						},
 														{
 							field : 'cornealMm', 
-							title : '右眼曲率' 
+							title : '曲率' 
 						},
 														{
 							field : 'cornealD', 
-							title : '右眼屈光度' 
+							title : '屈光度' 
 						},
 														{
 							field : 'cornealDeg', 
-							title : '右眼角膜柱镜轴向' 
+							title : '角膜柱镜轴向' 
 						},
 														
 														{
