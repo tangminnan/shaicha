@@ -24,7 +24,7 @@
     		</p>
     		<p class="itemLs">
     			<span>受检者总数</span>
-    			<span class="total">432335人</span>
+    			<span class="total"></span>
     		</p>
     	</div>
     	<div class="right">
@@ -34,7 +34,7 @@
     			</p>
     			<p class="itemLs">
 	    			<span>2019年下半年济南示范校筛查系统</span>
-	    			<span id="shifanxiao">2050人</span>
+	    			<span id="shifanxiao"></span>
     			</p>
     		</div>
     		<div class="checkItem">
@@ -43,7 +43,7 @@
     			</p>
     			<p class="itemLs">
 	    			<span>2019年下半年济南普通筛查系统</span>
-	    			<span id="putong">422人</span>
+	    			<span id="putong"></span>
     			</p>
     		</div>
     		<!-- <div class="checkItem">
@@ -112,7 +112,7 @@
     					<div id="pie_charts5" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
-    			<li>
+    			<!-- <li>
     				<div class="char_Parent">
     					<div class="content_area">
     						<div class="radius_area">
@@ -121,7 +121,7 @@
     					</div>
     					<div id="pie_charts6" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
-    			</li>
+    			</li> -->
     		</ul>
     	</div>
     </div>
@@ -158,7 +158,18 @@
 <input type="hidden" id="jxjsNumber">
 <input type="hidden" id="zhengchang">
 <input type="hidden" id="jinshilv">
-
+<input type="hidden" id="buliangshiliNumber">
+<input type="hidden" id="buliangshililv">
+<input type="hidden" id="wubuliang">
+<input type="hidden" id="yuanshiNumber">
+<input type="hidden" id="yunshihuanbinglv">
+<input type="hidden" id="wuyuanshi">
+<input type="hidden" id="zhengshiNumber">
+<input type="hidden" id="wuzhengshi">
+<input type="hidden" id="zhengshiyanlv">
+<input type="hidden" id="quguangcenciNumber">
+<input type="hidden" id="quguangcenciNumberLv">
+<input type="hidden" id="wuquguangcenci">
 <script src="/js/plugins/echarts/echarts.js"></script>
 <script type="text/javascript">
 	
@@ -182,6 +193,18 @@ $.ajax({
 		$("#didujinshiNumber").val(data.didujinshiNumber);
 		$("#zhengchang").val(data.zhengchang);
 		$("#jinshilv").val(data.jinshilv);
+		$("#buliangshiliNumber").val(data.buliangshiliNumber);
+		$("#buliangshililv").val(data.buliangshililv);
+		$("#wubuliang").val(data.wubuliang);
+		$("#yuanshiNumber").val(data.yuanshiNumber);
+		$("#wuyuanshi").val(data.wuyuanshi);
+		$("#yunshihuanbinglv").val(data.yunshihuanbinglv);
+		$("#zhengshiNumber").val(data.zhengshiNumber);
+		$("#wuzhengshi").val(data.wuzhengshi);
+		$("#zhengshiyanlv").val(data.zhengshiyanlv);
+		$("#wuquguangcenci").val(data.wuquguangcenci);
+		$("#quguangcenciNumberLv").val(data.quguangcenciNumberLv);
+		$("#quguangcenciNumber").val(data.quguangcenciNumber);
 	}
 });
 	
@@ -193,12 +216,12 @@ $.ajax({
 	var myChart3 = echarts.init(document.getElementById('pie_charts3'));
 	var myChart4 = echarts.init(document.getElementById('pie_charts4'));
 	var myChart5 = echarts.init(document.getElementById('pie_charts5'));
-	var myChart6 = echarts.init(document.getElementById('pie_charts6'));
-	 // 指定图表的配置项和数据
+/* 	var myChart6 = echarts.init(document.getElementById('pie_charts6'));
+ */	 // 指定图表的配置项和数据
     var option = {
     		 title: {
     	       // text: '正常',
-    	        subtext: '46.17%',
+    	        subtext: $("#buliangshililv").val(),
     	        textStyle:{
     	            fontSize:16,
     	            color: '#666666'
@@ -253,8 +276,8 @@ $.ajax({
     	                }
     	            },
     	            data:[
-							{value:210262, name:'正常'},
-							{value:180363, name:'患病'}
+							{value:$("#wubuliang").val(), name:'正常'},
+							{value:$("#buliangshiliNumber").val(), name:'患病'}
     	              ]
     	        },
     	            
@@ -265,7 +288,7 @@ $.ajax({
     var option1 = {
    		 title: {
    	       // text: '正常',
-   	        subtext: '5.35%',
+   	        subtext: $("#yunshihuanbinglv").val(),
    	        textStyle:{
    	            fontSize:16,
    	            color: '#666666'
@@ -320,8 +343,8 @@ $.ajax({
    	                }
    	            },
    	            data:[
-							{value:210262, name:'正常'},
-							{value:11895, name:'患病'}
+							{value:$("#wuyuanshi").val(), name:'正常'},
+							{value:$("#yuanshiNumber").val(), name:'患病'}
    	              ]
    	        },
    	            
@@ -333,7 +356,7 @@ $.ajax({
     var option6 = {
    		 title: {
    	       // text: '正常',
-   	        subtext: '6.50%',
+   	        subtext: $("#quguangcenciNumberLv").val(),
    	        textStyle:{
    	            fontSize:16,
    	            color: '#666666'
@@ -388,8 +411,8 @@ $.ajax({
    	                }
    	            },
    	            data:[
-							{value:217183, name:'正常'},
-							{value:15094, name:'患病'}
+							{value:$("#wuquguangcenci").val(), name:'正常'},
+							{value:$("#quguangcenciNumber").val(), name:'患病'}
    	              ]
    	        },
    	            
@@ -400,7 +423,7 @@ $.ajax({
     var option3 = {
    		 title: {
    	       // text: '正常',
-   	        subtext: '18.8%',
+   	        subtext: $("#zhengshiyanlv").val(),
    	        textStyle:{
    	            fontSize:16,
    	            color: '#666666'
@@ -455,8 +478,8 @@ $.ajax({
    	                }
    	            },
    	            data:[
-							{value:188603, name:'正常'},
-							{value:43674, name:'患病'}
+							{value:$("#zhengshiNumber").val(), name:'正常'},
+							{value:$("#wuzhengshi").val(), name:'患病'}
    	              ]
    	        },
    	            
@@ -606,8 +629,8 @@ $.ajax({
     myChart3.setOption(option1);
     myChart4.setOption(option6);
     myChart5.setOption(option3);
-    myChart6.setOption(option4);
-</script>
+/*     myChart6.setOption(option4);
+ */</script>
 
 </body>
 </html>

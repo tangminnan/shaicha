@@ -1443,15 +1443,15 @@ public class StudentReportServiceImpl implements StudentReportService{
 			renshu += integer.intValue();
 		}
 		params.put("gong", renshu);
-		params.put("you", you);
-		params.put("xiao", xiao);
-		params.put("chu", chu);
-		params.put("gao", gao);
+		params.put("you", you);//幼儿园数
+		params.put("xiao", xiao);//小学数
+		params.put("chu", chu);//初中数
+		params.put("gao", gao);//高中数
 		
-		params.put("your", your);
-		params.put("xiaor", xiaor);
-		params.put("chur", chur);
-		params.put("gaor", gaor);
+		params.put("your", your);//幼儿园人数
+		params.put("xiaor", xiaor);//小学人数
+		params.put("chur", chur);//初中人数
+		params.put("gaor", gaor);//高中人数
 		
 		List<Map<String, String>> list3 = new ArrayList<Map<String, String>>();
 		List<Map<String, String>> list5 = new ArrayList<Map<String, String>>();
@@ -1513,6 +1513,12 @@ public class StudentReportServiceImpl implements StudentReportService{
 			fourthr = df.format(((double)fourth/(double)lastCheckStudent.size())*100);
 			fifthr = df.format(((double)fifth/(double)lastCheckStudent.size())*100);
 			Integer jinzongy = third+fourth+fifth;
+			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
+			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
+			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
+			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
+			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
+
 			double jinzongr = Double.parseDouble(thirdr)+Double.parseDouble(fourthr)+Double.parseDouble(fifthr);
 			map.put("qqr", firstr);
 			map.put("jxr", secondr);

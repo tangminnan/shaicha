@@ -1260,7 +1260,12 @@ public class StudentServiceImpl implements StudentService {
 				 	  didujinshiNumber=0L,//低度近视人数
 				 	  zhongdujinshiNumber=0L,//中度近视人数
 				 	  gaodujinshiNumber=0L,//高度近视人数
-				 	  jinshizongjiNumber=0L;//近视总人数
+				 	  jinshizongjiNumber=0L,//近视总人数
+				      buliangshiliNumber=0L,//不良视力人数
+				 	  yuanshiNumber=0L,//远视人数
+				 	  zhengshiNumber=0L,//正视眼率
+				 	  quguangcenciNumber=0L;
+				 
 			 for(ResultEyesightDO r:resultEyesightDOList){
 				 Double luoyanshilii=0.0;
 				 Double dengxiaoqiujing=0.0;
@@ -1287,12 +1292,26 @@ public class StudentServiceImpl implements StudentService {
 						gaodujinshiNumber++;
 					}
 					
-					 if(luoyanshilii<5.0 &&  dengxiaoqiujing>-6.0 && dengxiaoqiujing<-3.25){//中度近视
-						 zhongdujinshiNumber++;
-					 }
-					 if(luoyanshilii<5.0 && dengxiaoqiujing>-3.0 && dengxiaoqiujing<-0.5){//低度近视
-						 didujinshiNumber++;
-					 }
+					if(luoyanshilii<5.0 &&  dengxiaoqiujing>-6.0 && dengxiaoqiujing<-3.25){//中度近视
+						zhongdujinshiNumber++;
+					}
+					if(luoyanshilii<5.0 && dengxiaoqiujing>-3.0 && dengxiaoqiujing<-0.5){//低度近视
+						didujinshiNumber++;
+					}
+					if(luoyanshilii<5.0){
+						buliangshiliNumber++;
+					}
+					if(dengxiaoqiujingR>0.75 || dengxiaoqiujingL>0.75){
+						yuanshiNumber++;
+					}
+					if((dengxiaoqiujingR>=-0.5&& dengxiaoqiujingR<=0.75) ||
+						(dengxiaoqiujingL>=-0.5 && dengxiaoqiujingL<=0.75)){
+							zhengshiNumber++;
+					}
+					if(Math.abs(dengxiaoqiujingL-dengxiaoqiujingR)>=1.0){
+						quguangcenciNumber++;
+					}
+						
 				}
 		 jinshizongjiNumber=didujinshiNumber+zhongdujinshiNumber+gaodujinshiNumber;//近视总人数
 		 freeMap.put("jslcqianqiNumber", jslcqianqiNumber);
@@ -1306,6 +1325,18 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("putong",resultEyesightDOList.stream().filter(i ->"PU_TONG".equals(i.getCheckType())).count());
 		 freeMap.put("zhengchang",resultEyesightDOList.size()-jinshizongjiNumber);
 		 freeMap.put("jinshilv",resultEyesightDOList.size()==0?0:(float)(jinshizongjiNumber*10000/resultEyesightDOList.size())/100+"%");
+		 freeMap.put("buliangshiliNumber", buliangshiliNumber);
+		 freeMap.put("buliangshililv", resultEyesightDOList.size()==0?0:(float)(buliangshiliNumber*10000/resultEyesightDOList.size())/100+"%");
+		 freeMap.put("wubuliang", resultEyesightDOList.size()-buliangshiliNumber);
+		 freeMap.put("yuanshiNumber", yuanshiNumber);
+		 freeMap.put("yunshihuanbinglv",resultEyesightDOList.size()==0?0:(float)(yuanshiNumber*10000/resultEyesightDOList.size())/100+"%" );
+		 freeMap.put("wuyuanshi",resultEyesightDOList.size()-yuanshiNumber);
+		 freeMap.put("zhengshiNumber", zhengshiNumber);
+		 freeMap.put("wuzhengshi", resultEyesightDOList.size()-zhengshiNumber);
+		 freeMap.put("zhengshiyanlv",resultEyesightDOList.size()==0?0:(float)(zhengshiNumber*10000/resultEyesightDOList.size())/100+"%" );
+		 freeMap.put("quguangcenciNumber", quguangcenciNumber);
+		 freeMap.put("quguangcenciNumberLv",resultEyesightDOList.size()==0?0:(float)(quguangcenciNumber*10000/resultEyesightDOList.size())/100+"%"  );
+		 freeMap.put("wuquguangcenci", resultEyesightDOList.size()-quguangcenciNumber);
 		 return freeMap;
 	}
 	
