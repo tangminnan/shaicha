@@ -1225,18 +1225,22 @@ public class StudentReportServiceImpl implements StudentReportService{
 	}
 	
 	
-	public void createDoc(Map<String, Object> dataMap, String fileName, String template) {
+	public void createDoc(HttpServletResponse response,Map<String, Object> dataMap, String fileName, String template) {
         Configuration configuration = new Configuration();
         configuration.setDefaultEncoding("utf-8");                                       
         configuration.setClassForTemplateLoading(StudentReportServiceImpl.class, "/");
         Template t = null;
 		//File outFile = new File(realPath + fileName);
-		Writer out = null;
+//		Writer out = null;
         try {
             //word.xml是要生成Word文件的模板文件
             t = configuration.getTemplate(template,"utf-8"); 
-            out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(fileName.getBytes(),"utf-8")))));                 //还有这里要设置编码
+ //           out = new BufferedWriter(new OutputStreamWriter(
+ //                   new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(fileName.getBytes(),"utf-8")))));                 //还有这里要设置编码
+   //         t.process(dataMap, out);
+            response.setContentType("multipart/form-data");
+			response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes(), "iso-8859-1")+".docx");
+            Writer out = new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
             t.process(dataMap, out);
             out.flush();
             out.close();
@@ -1324,8 +1328,8 @@ public class StudentReportServiceImpl implements StudentReportService{
 			}
 			
 			Map<String, Object> params = xuexiaobaogao(currdate,hou,request, response);
-			createDoc(params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给学校报告检测.ftl");
-			download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+			createDoc(response,params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给学校报告检测.ftl");
+		//	download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 			
 			//craeteZipPath(bootdoConfig.getPoiword(),response);
 		} catch (Exception e) {
@@ -1348,8 +1352,8 @@ public class StudentReportServiceImpl implements StudentReportService{
 		public void baogaojiaoyuju(HttpServletRequest request,  HttpServletResponse response) {
 			try {
 					Map<String, Object> params = jiaoyujubaogao(request, response);
-					createDoc(params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给教育局报告检测.ftl");
-					download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+					createDoc(response,params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给教育局报告检测.ftl");
+	//				download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 				//craeteZipPath(bootdoConfig.getPoiword(),response);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1513,12 +1517,6 @@ public class StudentReportServiceImpl implements StudentReportService{
 			fourthr = df.format(((double)fourth/(double)lastCheckStudent.size())*100);
 			fifthr = df.format(((double)fifth/(double)lastCheckStudent.size())*100);
 			Integer jinzongy = third+fourth+fifth;
-			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
-			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
-			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
-			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
-			System.out.println("近视总人数===  "+String.valueOf(lastCheckStudent.size()));
-
 			double jinzongr = Double.parseDouble(thirdr)+Double.parseDouble(fourthr)+Double.parseDouble(fifthr);
 			map.put("qqr", firstr);
 			map.put("jxr", secondr);
