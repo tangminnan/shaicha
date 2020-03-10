@@ -585,3 +585,29 @@ function jyjshaichabaogao(){
 	   myChart1.setOption(option);*/
 	  
 }
+
+//微信推送功能
+function wxtuisong(){
+	var school=$("#school option:selected").val();
+	var grade=$("#grade").val();
+	var studentClass=$("#studentClass").val();
+	if(school==""){
+		alert("请选择学校"); return;
+	}
+	if(grade==""){
+		alert("请选择年级");return ;
+	}
+	if(studentClass==""){
+		alert("请选择班级"); return;
+	}
+	
+	 $.ajax({
+			type : "GET",
+			url : "http://localhost:8088/app/WxPushReport",
+			data : {school:school,grade:grade,studentClass:studentClass},
+			async : false,
+			success : function(data) {
+				alert(data.msg)
+			}
+		});
+}
