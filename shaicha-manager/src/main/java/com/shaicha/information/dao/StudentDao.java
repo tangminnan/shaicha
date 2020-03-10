@@ -91,14 +91,16 @@ public interface StudentDao {
 
 	List<ResultCornealDO> getResultCornealDOList(@Param("studentId") Integer studentId,@Param("ifrl") String ifrl,@Param("type") String type);
 
-	List<ResultEyesightDO> getJInShiLv();
+	List<ResultEyesightDO> getJInShiLv(@Param("i") int i,@Param("j") int j);
 
-	List<ResultDiopterDO> getResultDiopterDO();
+	List<ResultDiopterDO> getResultDiopterDO(@Param("i") int i,@Param("j") int j,@Param("ifRL") String ifRL);
 	
 	List<StudentDO> getSchool(@Param("start") Date start,@Param("end") Date end);
 	
 	List<StudentDO> getLastCheckStudent(@Param("school") String school,@Param("start") Date start,@Param("end") Date end);
 
 	List<StudentDO> getCheckAllStudent(@Param("start") Date start,@Param("end") Date end,@Param("grade") String grade);
+
+	List<StudentDO> getStudentDOshou(@Param("i") int i,@Param("j") int j);
 
 }
