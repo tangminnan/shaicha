@@ -175,10 +175,13 @@ public class StudentReportServiceImpl implements StudentReportService{
 		//da.add(Double.parseDouble(df.format((double)second/(double)liNian2.size()*100)));
 		da.add(79.30);
 		da.add(66.10);
-		da.add(Double.parseDouble(df.format((double)third/(double)liNian3.size()*100)));
+		
+
+		da.add(liNian3.size()==0?0:Double.parseDouble(df.format((double)third/(double)liNian3.size()*100)));
 		
 		mapP.put("overYearMyopia", da);
 		
+
 		return mapP;
 	}
 	
