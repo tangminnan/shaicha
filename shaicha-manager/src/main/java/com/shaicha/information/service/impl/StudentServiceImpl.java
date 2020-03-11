@@ -61,6 +61,7 @@ import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -76,7 +77,11 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -941,8 +946,12 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	public Map<String, Double> shouYeTrueData() {
-		 
-		int size = studentDao.count(new HashMap<String,Object>());
+		Map<String,Object> paMap = new HashMap<String,Object>();
+		int totalnumber = studentDao.countP(paMap);
+		paMap.put("checkType","SHI_FANXIAO");
+		int shifan = studentDao.countP(paMap);
+		
+		
 		 Map<String,Double> freeMap = new HashMap<String,Double>();
 
 		 freeMap.put("jslcqianqiNumber",0.0);
@@ -958,65 +967,74 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("buliangshiliNumber",0.0);
 		 freeMap.put("yuanshiNumber",0.0);
 		 freeMap.put("quguangcenciNumber",0.0);
-		 freeMap.put("totalnumber",0.0);
-		 freeMap.put("shifanxiaoshaicha", 0.0);
-		 freeMap.put("putongshaicha", 0.0);
-		for(int i=1;i<size/100000;i++){
+		 freeMap.put("totalnumber",(double)totalnumber);
+		 freeMap.put("shifanxiaoshaicha",(double)shifan);
+		 freeMap.put("putongshaicha",(double)(totalnumber-shifan));
+		 
+		for(int i=1;i<=totalnumber/100000+1;i++){
 			countShouYe(i,100000,freeMap);	
 			
 		}
-		 
 		
 	
 		 Double jinshizongjiNumber=freeMap.get("didujinshiNumber")+freeMap.get("zhongdujinshiNumber")
 		 					+freeMap.get("gaodujinshiNumber");//近视总人数
-		 Double totalnumber= freeMap.get("totalnumber");
+	//	 Double totalnumber= freeMap.get("totalnumber");
 		 freeMap.put("zhengchang",totalnumber-jinshizongjiNumber);
-		 freeMap.put("jinshilv",totalnumber==0?0:(double)(jinshizongjiNumber*10000/totalnumber)/100);
-		 freeMap.put("buliangshililv", totalnumber==0?0:(double)(freeMap.get("buliangshiliNumber")*10000/totalnumber)/100);
+		 freeMap.put("jinshilv",totalnumber==0?0:FormatDouble((double)(jinshizongjiNumber*10000/totalnumber)/100));
+		 freeMap.put("buliangshililv", totalnumber==0?0:FormatDouble((double)(freeMap.get("buliangshiliNumber")*10000/totalnumber)/100));
 		 freeMap.put("wubuliang", totalnumber-freeMap.get("buliangshiliNumber"));
-		 freeMap.put("yunshihuanbinglv",totalnumber==0?0:(double)(freeMap.get("yuanshiNumber")*10000/totalnumber)/100);
+		 freeMap.put("yunshihuanbinglv",totalnumber==0?0:FormatDouble((double)(freeMap.get("yuanshiNumber")*10000/totalnumber)/100));
 		 freeMap.put("wuyuanshi",totalnumber-freeMap.get("yuanshiNumber"));
 		 freeMap.put("wuzhengshi", totalnumber-freeMap.get("zhengshiNumber"));
-		 freeMap.put("zhengshiyanlv",totalnumber==0?0:(double)(freeMap.get("zhengshiNumber")*10000/totalnumber)/100);
-		 freeMap.put("quguangcenciNumberLv",totalnumber==0?0:(double)(freeMap.get("quguangcenciNumber")*10000/totalnumber)/100 );
+		 freeMap.put("zhengshiyanlv",totalnumber==0?0:FormatDouble((double)(freeMap.get("zhengshiNumber")*10000/totalnumber)/100));
+		 freeMap.put("quguangcenciNumberLv",totalnumber==0?0:FormatDouble((double)(freeMap.get("quguangcenciNumber")*10000/totalnumber)/100) );
 		 freeMap.put("wuquguangcenci", totalnumber-freeMap.get("quguangcenciNumber"));
 		
 		 return freeMap;
 	}
 
 	private void countShouYe(int i, int j,Map<String,Double> freeMap) {
-		 CyclicBarrier cyclicBarrier = new CyclicBarrier(3);
-		 new Thread(()->{
+		 CountDownLatch countDownLatch = new CountDownLatch(3);
+		 long inittimnes = System.currentTimeMillis();
+		 ExecutorService executor = Executors.newFixedThreadPool(3);
+	
+		/*	executor.execute(() ->{
 			 studentDOlIST1 = studentDao.getStudentDOshou((i-1)*100000,j);
-			 try {
-				cyclicBarrier.await();
-			} catch (Exception e) {
-			}
-		 }).start();
-		 new Thread(()->{
+			 for(StudentDO s : studentDOlIST1){
+				 if(s.getLastCheckTime()!=null){
+					freeMap.put("totalnumber",freeMap.get("totalnumber")+1);
+					if("SHI_FANXIAO".equals(s.getCheckType()) )
+						freeMap.put("shifanxiaoshaicha", freeMap.get("shifanxiaoshaicha")+1);
+					else
+						freeMap.put("putongshaicha", freeMap.get("putongshaicha")+1);
+				 }
+			 }
+			 countDownLatch.countDown();
+		 });*/
+			executor.execute(() ->{
 			 resultEyesightDOList11 = studentDao.getJInShiLv((i-1)*100000,j);
-			 try {
-				cyclicBarrier.await();
-			} catch (Exception e) {
-			}
-		 }).start();
-		 new Thread(()->{
+			 countDownLatch.countDown();
+		 });
+			executor.execute(() ->{
 			 resultDiopterDOListR11 = studentDao.getResultDiopterDO((i-1)*100000,j, "R");
-			 try {
-				cyclicBarrier.await();
-			} catch (Exception e) {
-			}
-		 }).start();
-		new Thread(()->{
+			 countDownLatch.countDown();
+		 });
+			executor.execute(() ->{
 			 resultDiopterDOListL11 = studentDao.getResultDiopterDO((i-1)*100000,j,"L");
-			 try {
-				cyclicBarrier.await();
-			} catch (Exception e) {
-			}
-		 }).start();
-
-		 
+			 countDownLatch.countDown();
+		 });
+			
+			
+		try {
+			countDownLatch.await();
+			executor.shutdown();
+			 long endtimes = System.currentTimeMillis();
+			 System.out.println("单独查询时间==========================================="+(endtimes-inittimnes));
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 //		Map<String,List<ResultEyesightDO>> resultEyeSightMap = resultEyesightDOList11.stream().collect(Collectors.groupingBy(ResultEyesightDO::getIdentityCard));
 		Map<String,String> stMap = studentDOlIST1.stream().collect(Collectors.toMap(StudentDO::getIdentityCard,StudentDO::getCheckType));
 		Map<String,Double> dengxLMap = resultDiopterDOListL11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
@@ -1063,14 +1081,18 @@ public class StudentServiceImpl implements StudentService {
 			if(Math.abs(dengxiaoqiujingL-dengxiaoqiujingR)>=1.0){
 				freeMap.put("quguangcenciNumber",freeMap.get("quguangcenciNumber")+1);
 			}
-			freeMap.put("totalnumber",freeMap.get("totalnumber")+1);
-			if(stMap.get(identityCard)!=null &&"SHI_FANXIAO".equals(stMap.get(identityCard)) )
-			freeMap.put("shifanxiaoshaicha", freeMap.get("shifanxiaoshaicha")+1);
-			if(stMap.get(identityCard)!=null &&"PU_TONG".equals(stMap.get(identityCard)) )
-			freeMap.put("putongshaicha", freeMap.get("putongshaicha")+1);
+		
 	}
 	
 	}
+	
+	private static Double FormatDouble(double s){
+		
+			 DecimalFormat    df   = new DecimalFormat("######0.00"); // 保留两位小数
+				
+	         return Double.parseDouble(df.format(s));
+		}
+	
 	
 }
 

@@ -103,4 +103,6 @@ public interface StudentDao {
 
 	List<StudentDO> getStudentDOshou(@Param("i") int i,@Param("j") int j);
 
+	int countP(Map<String, Object> paMap);
+
 }

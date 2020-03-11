@@ -182,9 +182,9 @@ $.ajax({
 		parent.layer.alert("网络超时");
 	},
 	success : function(data) {
-		$(".total").text(data.totalNumber+"人");
-		$("#shifanxiao").text(data.shifanxiao+"人");
-		$("#putong").text(data.putong);
+		$(".total").text(data.totalnumber+"人");
+		$("#shifanxiao").text(data.shifanxiaoshaicha+"人");
+		$("#putong").text(data.putongshaicha);
 		$("#jxjsNumber").val(data.jxjsNumber);
 		$("#jslcqianqiNumber").val(data.jslcqianqiNumber);
 		$("#jinshizongjiNumber").val(data.jinshizongjiNumber);
@@ -221,7 +221,7 @@ $.ajax({
     var option = {
     		 title: {
     	       // text: '正常',
-    	        subtext: $("#buliangshililv").val(),
+    	        subtext: $("#buliangshililv").val()+'%',
     	        textStyle:{
     	            fontSize:16,
     	            color: '#666666'
@@ -288,7 +288,7 @@ $.ajax({
     var option1 = {
    		 title: {
    	       // text: '正常',
-   	        subtext: $("#yunshihuanbinglv").val(),
+   	        subtext: $("#yunshihuanbinglv").val()+'%',
    	        textStyle:{
    	            fontSize:16,
    	            color: '#666666'
@@ -356,7 +356,7 @@ $.ajax({
     var option6 = {
    		 title: {
    	       // text: '正常',
-   	        subtext: $("#quguangcenciNumberLv").val(),
+   	        subtext: $("#quguangcenciNumberLv").val()+'%',
    	        textStyle:{
    	            fontSize:16,
    	            color: '#666666'
@@ -423,7 +423,7 @@ $.ajax({
     var option3 = {
    		 title: {
    	       // text: '正常',
-   	        subtext: $("#zhengshiyanlv").val(),
+   	        subtext: $("#zhengshiyanlv").val()+'%',
    	        textStyle:{
    	            fontSize:16,
    	            color: '#666666'
@@ -558,7 +558,7 @@ $.ajax({
     var option2 = {
     		 title: {
     	       // text: '正常',
-    	        subtext:$("#jinshilv").val(),
+    	        subtext:$("#jinshilv").val()+'%',
     	        textStyle:{
     	            fontSize:16,
     	            color: '#666666'

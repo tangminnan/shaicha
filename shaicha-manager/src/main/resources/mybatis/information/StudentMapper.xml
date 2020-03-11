@@ -70,7 +70,11 @@
 		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
 		  		</where>
 	</select>
-	
+	<select id="countP" resultType="int">
+		select count(*) from t_student where  last_check_time is not null
+		 <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
+		
+	</select>
 	 
 	<insert id="save" parameterType="com.shaicha.information.domain.StudentDO" useGeneratedKeys="true" keyProperty="id">
 		insert into t_student
@@ -605,7 +609,7 @@ having check_date=max(check_date) limit #{i},#{j}
 </select>
 
 <select id="getStudentDOshou" resultType="com.shaicha.information.domain.StudentDO">
-	select school,ifnull(check_type,0) checkType ,ifnull(identity_card,0) identityCard from t_student limit #{i},#{j}
+	select school,ifnull(check_type,0) checkType ,ifnull(identity_card,0) identityCard,last_check_time from t_student limit #{i},#{j}
 </select>
 	<select id="querySchoolName" resultType="com.shaicha.information.domain.StudentDO">
 		select id, school from t_student group by school
