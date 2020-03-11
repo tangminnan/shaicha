@@ -971,8 +971,8 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("shifanxiaoshaicha",(double)shifan);
 		 freeMap.put("putongshaicha",(double)(totalnumber-shifan));
 		 
-		for(int i=1;i<=totalnumber/100000+1;i++){
-			countShouYe(i,100000,freeMap);	
+		for(int i=1;i<=totalnumber/300000+1;i++){
+			countShouYe(i,3000000,freeMap);	
 			
 		}
 		
@@ -998,30 +998,16 @@ public class StudentServiceImpl implements StudentService {
 		 CountDownLatch countDownLatch = new CountDownLatch(3);
 		 long inittimnes = System.currentTimeMillis();
 		 ExecutorService executor = Executors.newFixedThreadPool(3);
-	
-		/*	executor.execute(() ->{
-			 studentDOlIST1 = studentDao.getStudentDOshou((i-1)*100000,j);
-			 for(StudentDO s : studentDOlIST1){
-				 if(s.getLastCheckTime()!=null){
-					freeMap.put("totalnumber",freeMap.get("totalnumber")+1);
-					if("SHI_FANXIAO".equals(s.getCheckType()) )
-						freeMap.put("shifanxiaoshaicha", freeMap.get("shifanxiaoshaicha")+1);
-					else
-						freeMap.put("putongshaicha", freeMap.get("putongshaicha")+1);
-				 }
-			 }
-			 countDownLatch.countDown();
-		 });*/
 			executor.execute(() ->{
-			 resultEyesightDOList11 = studentDao.getJInShiLv((i-1)*100000,j);
+			 resultEyesightDOList11 = studentDao.getJInShiLv((i-1)*j,j);
 			 countDownLatch.countDown();
 		 });
 			executor.execute(() ->{
-			 resultDiopterDOListR11 = studentDao.getResultDiopterDO((i-1)*100000,j, "R");
+			 resultDiopterDOListR11 = studentDao.getResultDiopterDO((i-1)*j,j, "R");
 			 countDownLatch.countDown();
 		 });
 			executor.execute(() ->{
-			 resultDiopterDOListL11 = studentDao.getResultDiopterDO((i-1)*100000,j,"L");
+			 resultDiopterDOListL11 = studentDao.getResultDiopterDO((i-1)*j,j,"L");
 			 countDownLatch.countDown();
 		 });
 			
