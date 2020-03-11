@@ -647,7 +647,7 @@ public class StudentController {
 	 */
 	@ResponseBody
 	@GetMapping("/shouYeTrueData")
-	public Map<String,Object> shouYeTrueData(){
+	public Map<String,Double> shouYeTrueData(){
 		return studentService.shouYeTrueData();	
 	}
 	

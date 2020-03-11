@@ -95,5 +95,5 @@ public interface StudentService {
 	/**  
 	 *首页真实数据展示
 	*/  
-	Map<String, Object> shouYeTrueData();
+	Map<String, Double> shouYeTrueData();
 }
