@@ -989,37 +989,37 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	private void countShouYe(int i, int j) {
-		 CyclicBarrier cyclicBarrier = new CyclicBarrier(4);
-		 new Thread(()->{
+//		 CyclicBarrier cyclicBarrier = new CyclicBarrier(4);
+//		 new Thread(()->{
 			 studentDOlIST1 = studentDao.getStudentDOshou((i-1)*10000,j);
-			 try {
+/*			 try {
 				cyclicBarrier.await();
 			} catch (Exception e) {
 			}
-		 }).start();
-		 new Thread(()->{
+		 }).start();*/
+//		 new Thread(()->{
 			 resultEyesightDOList11 = studentDao.getJInShiLv((i-1)*10000,j);
-			 try {
+	/*		 try {
 				cyclicBarrier.await();
 			} catch (Exception e) {
 			}
-		 }).start();
+		 }).start();*/
 		 
-		 new Thread(()->{
+	//	 new Thread(()->{
 			 resultDiopterDOListR11 = studentDao.getResultDiopterDO((i-1)*10000,j, "R");
-			 try {
+	/*		 try {
 				cyclicBarrier.await();
 			} catch (Exception e) {
 			}
-		 }).start();
+		 }).start();*/
 		 
-		 new Thread(()->{
+	//	 new Thread(()->{
 			 resultDiopterDOListL11 = studentDao.getResultDiopterDO((i-1)*10000,j,"L");
-			 try {
+			 /*try {
 				cyclicBarrier.await();
 			} catch (Exception e) {
 			}
-		 }).start();
+		 }).start();*/
 		 
 //		Map<String,List<ResultEyesightDO>> resultEyeSightMap = resultEyesightDOList11.stream().collect(Collectors.groupingBy(ResultEyesightDO::getIdentityCard));
 		Map<String,String> stMap = studentDOlIST1.stream().collect(Collectors.toMap(StudentDO::getIdentityCard,StudentDO::getCheckType));
