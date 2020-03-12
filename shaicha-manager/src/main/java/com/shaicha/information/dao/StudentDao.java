@@ -105,4 +105,6 @@ public interface StudentDao {
 
 	int countP(Map<String, Object> paMap);
 
+	void updateS(StudentDO studentDO);
+
 }

@@ -603,8 +603,8 @@ function wxtuisong(){
 	
 	 $.ajax({
 			type : "GET",
-			url : "http://localhost:8088/app/WxPushReport",
-			data : {school:school,grade:grade,studentClass:studentClass},
+			url : "http://39.98.218.125:8072/app/WxPushReport",
+			data : {school:encodeURIComponent(school),grade:encodeURIComponent(grade),studentClass:studentClass},
 			async : false,
 			success : function(data) {
 				alert(data.msg)

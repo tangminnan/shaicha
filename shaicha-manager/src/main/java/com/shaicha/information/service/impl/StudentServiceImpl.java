@@ -66,6 +66,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -970,9 +971,13 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("totalnumber",(double)totalnumber);
 		 freeMap.put("shifanxiaoshaicha",(double)shifan);
 		 freeMap.put("putongshaicha",(double)(totalnumber-shifan));
-		 
-		for(int i=1;i<=totalnumber/300000+1;i++){
-			countShouYe(i,3000000,freeMap);	
+		 freeMap.put("nain6",0.0);
+		 freeMap.put("nain612",0.0);
+		 freeMap.put("nain1315",0.0);
+		 freeMap.put("nain1618",0.0);
+		 freeMap.put("nain18",0.0);
+		for(int i=1;i<=totalnumber/100000+1;i++){
+			countShouYe(i,100000,freeMap);	
 			
 		}
 		
@@ -995,9 +1000,14 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	private void countShouYe(int i, int j,Map<String,Double> freeMap) {
-		 CountDownLatch countDownLatch = new CountDownLatch(3);
+
+		 CountDownLatch countDownLatch = new CountDownLatch(4);
 		 long inittimnes = System.currentTimeMillis();
-		 ExecutorService executor = Executors.newFixedThreadPool(3);
+		 ExecutorService executor = Executors.newFixedThreadPool(4);
+		 	executor.execute(() ->{
+		 		studentDOlIST1=  studentDao.getStudentDOshou((i-1)*j,j);
+				 countDownLatch.countDown();
+		 	});
 			executor.execute(() ->{
 			 resultEyesightDOList11 = studentDao.getJInShiLv((i-1)*j,j);
 			 countDownLatch.countDown();
@@ -1022,15 +1032,19 @@ public class StudentServiceImpl implements StudentService {
 			e.printStackTrace();
 		} 
 //		Map<String,List<ResultEyesightDO>> resultEyeSightMap = resultEyesightDOList11.stream().collect(Collectors.groupingBy(ResultEyesightDO::getIdentityCard));
-		Map<String,String> stMap = studentDOlIST1.stream().collect(Collectors.toMap(StudentDO::getIdentityCard,StudentDO::getCheckType));
+		Map<String,Date> stMap = studentDOlIST1.stream().collect(Collectors.toMap(StudentDO::getIdentityCard,StudentDO::getBirthday));
 		Map<String,Double> dengxLMap = resultDiopterDOListL11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
 		Map<String,Double> dengxRMap = resultDiopterDOListR11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
 		for(ResultEyesightDO resultEyeSight:resultEyesightDOList11){
+//		for(StudentDO s:studentDOList){
+//			if(s.getLastCheckTime()==null) continue;
 			String identityCard = resultEyeSight.getIdentityCard();
 			Double luoyanshilii=0.0;
 			Double dengxiaoqiujing=0.0;
 			String nakedFarvisionOd=resultEyeSight.getNakedFarvisionOd();
 			String nakedFarvisionOs=resultEyeSight.getNakedFarvisionOs();
+			/*String nakedFarvisionOd=s.getNakedNearvisionOd();
+			String nakedFarvisionOs=s.getNakedNearvisionOs();*/
 			if(!nakedFarvisionOd.matches("-?[0-9]+.?[0-9]*")) continue;
 			if(!nakedFarvisionOs.matches("-?[0-9]+.?[0-9]*")) continue;
 			 nakedFarvisionOd=nakedFarvisionOd.compareTo(nakedFarvisionOs)>0?nakedFarvisionOs:nakedFarvisionOd;
@@ -1038,7 +1052,10 @@ public class StudentServiceImpl implements StudentService {
 				 luoyanshilii=Double.parseDouble(nakedFarvisionOd);
 			 Double dengxiaoqiujingR = Optional.ofNullable(dengxRMap.get(identityCard)).orElse(0.0);
 			 Double dengxiaoqiujingL = Optional.ofNullable(dengxLMap.get(identityCard)).orElse(0.0);
+			/* Double dengxiaoqiujingR = s.getDengxiaoqiujingr();
+			 Double dengxiaoqiujingL = s.getDengxiaoqiujingl();*/
 			 dengxiaoqiujing = dengxiaoqiujingR>dengxiaoqiujingL?dengxiaoqiujingL:dengxiaoqiujingR;
+			 
 			 if(luoyanshilii==5.0 && dengxiaoqiujing>=-0.5 && dengxiaoqiujing<=0.75){//近视临床前期
 				freeMap.put("jslcqianqiNumber",freeMap.get("jslcqianqiNumber")+1);
 			 }
@@ -1067,8 +1084,35 @@ public class StudentServiceImpl implements StudentService {
 			if(Math.abs(dengxiaoqiujingL-dengxiaoqiujingR)>=1.0){
 				freeMap.put("quguangcenciNumber",freeMap.get("quguangcenciNumber")+1);
 			}
+			/**
+			 * 年龄
+			 */
+			
+			Date da=stMap.get(identityCard);
+		
+			if(da!=null){
+				int now = Calendar.getInstance().get(Calendar.YEAR);
+				Calendar c = Calendar.getInstance();c.setTime(da);
+				int b = c.get(Calendar.YEAR);
+				int age= now-b+1;
+				if(age<6){
+					 freeMap.put("nain6",freeMap.get("nain6")+1);
+				}else if(age>=6 && age<=12){
+					 freeMap.put("nain612",freeMap.get("nain612")+1);
+				}else if(age>=13 && age<=15){
+					 freeMap.put("nain1315",freeMap.get("nain1315")+1);
+				}else if(age>=16 &&age<=18){
+					 freeMap.put("nain1618",freeMap.get("nain1618")+1);
+				}else{
+					 freeMap.put("nain18",freeMap.get("nain18")+1);
+				}	
+			}
 		
 	}
+		
+		resultEyesightDOList11 = null;
+		resultDiopterDOListR11 = null;
+		resultDiopterDOListL11= null;
 	
 	}
 	

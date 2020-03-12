@@ -601,6 +601,17 @@
 group by identity_card having check_date=max(check_date) limit #{i},#{j}
 </select>
 
+<update id="updateS" parameterType="com.shaicha.information.domain.StudentDO">
+	update t_student set dengxiaoqiujingr=#{dengxiaoqiujingr},
+	dengxiaoqiujingl=#{dengxiaoqiujingl},
+	naked_nearvision_od=#{nakedNearvisionOd},
+	naked_nearvision_os=#{nakedNearvisionOs}
+	where identity_card=#{identityCard}
+</update>
+
+
+
+
 <select id="getResultDiopterDO" resultType="com.shaicha.information.domain.ResultDiopterDO">
 	<!-- select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,  ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG' -->   <!-- AND #{startDate}&lt;=check_date -->
 					<!-- AND #{endDate}&gt;=check_date -->
@@ -609,7 +620,12 @@ having check_date=max(check_date) limit #{i},#{j}
 </select>
 
 <select id="getStudentDOshou" resultType="com.shaicha.information.domain.StudentDO">
-	select school,ifnull(check_type,0) checkType ,ifnull(identity_card,0) identityCard,last_check_time from t_student limit #{i},#{j}
+	SELECT
+	ifnull(identity_card, 0) identityCard,
+	ifnull(birthday,now()) birthday
+FROM
+	t_student
+LIMIT #{i},#{j}
 </select>
 	<select id="querySchoolName" resultType="com.shaicha.information.domain.StudentDO">
 		select id, school from t_student group by school
