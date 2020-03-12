@@ -998,34 +998,47 @@ public class StudentServiceImpl implements StudentService {
 		
 		 return freeMap;
 	}
-
+	long a=0,b=0;
 	private void countShouYe(int i, int j,Map<String,Double> freeMap) {
 
 		 CountDownLatch countDownLatch = new CountDownLatch(4);
 		 long inittimnes = System.currentTimeMillis();
+		 
 		 ExecutorService executor = Executors.newFixedThreadPool(4);
 		 	executor.execute(() ->{
+		 		 a  = System.currentTimeMillis();
 		 		studentDOlIST1=  studentDao.getStudentDOshou((i-1)*j,j);
-				 countDownLatch.countDown();
+		 		countDownLatch.countDown();
+				 b=System.currentTimeMillis();
+				 System.out.println("查询学生年龄段时间==============================="+(b-a));
 		 	});
 			executor.execute(() ->{
+				 a  = System.currentTimeMillis();
 			 resultEyesightDOList11 = studentDao.getJInShiLv((i-1)*j,j);
 			 countDownLatch.countDown();
+			 b=System.currentTimeMillis();
+			 System.out.println("查询视力段时间==============================="+(b-a));
 		 });
 			executor.execute(() ->{
+				 a  = System.currentTimeMillis();
 			 resultDiopterDOListR11 = studentDao.getResultDiopterDO((i-1)*j,j, "R");
 			 countDownLatch.countDown();
+			 b=System.currentTimeMillis();
+			 System.out.println("查询右眼等效球镜段时间==============================="+(b-a));
 		 });
 			executor.execute(() ->{
+				 a  = System.currentTimeMillis();
 			 resultDiopterDOListL11 = studentDao.getResultDiopterDO((i-1)*j,j,"L");
 			 countDownLatch.countDown();
+			 b=System.currentTimeMillis();
+			 System.out.println("查询左眼等效球镜段时间==============================="+(b-a));
 		 });
 			
-			
+			long endtimes=0	;
 		try {
 			countDownLatch.await();
 			executor.shutdown();
-			 long endtimes = System.currentTimeMillis();
+			endtimes = System.currentTimeMillis();
 			 System.out.println("单独查询时间==========================================="+(endtimes-inittimnes));
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -1093,8 +1106,8 @@ public class StudentServiceImpl implements StudentService {
 			if(da!=null){
 				int now = Calendar.getInstance().get(Calendar.YEAR);
 				Calendar c = Calendar.getInstance();c.setTime(da);
-				int b = c.get(Calendar.YEAR);
-				int age= now-b+1;
+				int dd = c.get(Calendar.YEAR);
+				int age= now-dd+1;
 				if(age<6){
 					 freeMap.put("nain6",freeMap.get("nain6")+1);
 				}else if(age>=6 && age<=12){
@@ -1107,9 +1120,12 @@ public class StudentServiceImpl implements StudentService {
 					 freeMap.put("nain18",freeMap.get("nain18")+1);
 				}	
 			}
+			
+			
 		
 	}
-		
+		long mm = System.currentTimeMillis();
+		System.out.println("每一次的遍历时间==="+(mm-endtimes));
 		resultEyesightDOList11 = null;
 		resultDiopterDOListR11 = null;
 		resultDiopterDOListL11= null;
