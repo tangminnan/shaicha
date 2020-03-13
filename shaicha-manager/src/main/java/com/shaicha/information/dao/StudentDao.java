@@ -107,4 +107,6 @@ public interface StudentDao {
 
 	void updateS(StudentDO studentDO);
 
+	List<StudentDO> getAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
+
 }

@@ -615,7 +615,7 @@ group by identity_card having check_date=max(check_date) limit #{i},#{j}
 <select id="getResultDiopterDO" resultType="com.shaicha.information.domain.ResultDiopterDO">
 	<!-- select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,  ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG' -->   <!-- AND #{startDate}&lt;=check_date -->
 					<!-- AND #{endDate}&gt;=check_date -->
-	select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,check_date,ifRL from t_result_diopter where ifRL=#{ifRL} AND  type='AVG' GROUP BY  identity_card
+	select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,check_date from t_result_diopter where ifRL=#{ifRL} AND  type='AVG' GROUP BY  identity_card
 having check_date=max(check_date) limit #{i},#{j}
 </select>
 
@@ -689,6 +689,13 @@ LIMIT #{i},#{j}
 		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
 		from t_student where last_check_time between #{start} and #{end} and grade = #{grade}
 	</select>
-
+<select id="getAllCheckStudentDO"  resultType="com.shaicha.information.domain.StudentDO">
+	select ifnull(dengxiaoqiujingr,-10) dengxiaoqiujingr,
+		   ifnull(dengxiaoqiujingl,-10) dengxiaoqiujingl,birthday,
+		   ifnull(naked_nearvision_od,"r") nakedNearvisionOd,
+		   ifnull(naked_nearvision_os,"r") nakedNearvisionOs
+		   
+		   from t_student  where last_check_time is not null limit #{i},#{j}
+</select>
 	
 </mapper>

@@ -1,20 +1,12 @@
 package com.shaicha.information.service.impl;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
-import org.hibernate.validator.internal.util.privilegedactions.GetClassLoader;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,27 +19,17 @@ import com.shaicha.common.utils.R;
 import com.shaicha.common.utils.WordUtils;
 import com.shaicha.information.dao.StudentDao;
 import com.shaicha.information.domain.AnswerResultDO;
-import com.shaicha.information.domain.BuLiangShili;
 import com.shaicha.information.domain.ResultCornealDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
-import com.shaicha.information.domain.ShiliJinShi;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.StudentService;
 import com.shaicha.system.config.ExcelUtils;
 
-import freemarker.core.ParseException;
 import freemarker.template.Configuration;
-import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import freemarker.template.TemplateNotFoundException;
-
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,36 +38,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.lang.reflect.Method;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -936,10 +911,10 @@ public class StudentServiceImpl implements StudentService {
 		return studentDao.querySchoolName();
 	}
 
-	List<ResultEyesightDO> resultEyesightDOList11 = new ArrayList<ResultEyesightDO>();
+	/*List<ResultEyesightDO> resultEyesightDOList11 = new ArrayList<ResultEyesightDO>();
 	List<ResultDiopterDO> resultDiopterDOListR11 = new ArrayList<ResultDiopterDO>();
 	List<ResultDiopterDO>  resultDiopterDOListL11= new ArrayList<ResultDiopterDO>();
-	List<StudentDO>  studentDOlIST1= new ArrayList<StudentDO>();
+	List<StudentDO>  studentDOlIST1= new ArrayList<StudentDO>();*/
 	
 			  
 	/**
@@ -976,15 +951,14 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("nain1315",0.0);
 		 freeMap.put("nain1618",0.0);
 		 freeMap.put("nain18",0.0);
-		for(int i=1;i<=totalnumber/100000+1;i++){
-			countShouYe(i,100000,freeMap);	
+		for(int i=1;i<=totalnumber/150000+1;i++){
+			countShouYe(i,150000,freeMap);	
 			
 		}
 		
 	
 		 Double jinshizongjiNumber=freeMap.get("didujinshiNumber")+freeMap.get("zhongdujinshiNumber")
 		 					+freeMap.get("gaodujinshiNumber");//近视总人数
-	//	 Double totalnumber= freeMap.get("totalnumber");
 		 freeMap.put("zhengchang",totalnumber-jinshizongjiNumber);
 		 freeMap.put("jinshilv",totalnumber==0?0:FormatDouble((double)(jinshizongjiNumber*10000/totalnumber)/100));
 		 freeMap.put("buliangshililv", totalnumber==0?0:FormatDouble((double)(freeMap.get("buliangshiliNumber")*10000/totalnumber)/100));
@@ -995,14 +969,17 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("zhengshiyanlv",totalnumber==0?0:FormatDouble((double)(freeMap.get("zhengshiNumber")*10000/totalnumber)/100));
 		 freeMap.put("quguangcenciNumberLv",totalnumber==0?0:FormatDouble((double)(freeMap.get("quguangcenciNumber")*10000/totalnumber)/100) );
 		 freeMap.put("wuquguangcenci", totalnumber-freeMap.get("quguangcenciNumber"));
-		
 		 return freeMap;
 	}
 	long a=0,b=0;
 	private void countShouYe(int i, int j,Map<String,Double> freeMap) {
-
-		 CountDownLatch countDownLatch = new CountDownLatch(4);
 		 long inittimnes = System.currentTimeMillis();
+		 List<StudentDO> studentDOList = studentDao.getAllCheckStudentDO((i-1)*j,j);
+		 long  ddt  =System.currentTimeMillis();
+		 System.out.println("查询所用时间============"+(ddt-inittimnes));
+		 System.out.println("查到的数=============="+studentDOList.size());
+		 /*CountDownLatch countDownLatch = new CountDownLatch(4);
+		
 		 
 		 ExecutorService executor = Executors.newFixedThreadPool(4);
 		 	executor.execute(() ->{
@@ -1020,7 +997,7 @@ public class StudentServiceImpl implements StudentService {
 			 System.out.println("查询视力段时间==============================="+(b-a));
 		 });
 			executor.execute(() ->{
-				 a  = System.currentTimeMillis();
+			 a  = System.currentTimeMillis();
 			 resultDiopterDOListR11 = studentDao.getResultDiopterDO((i-1)*j,j, "R");
 			 countDownLatch.countDown();
 			 b=System.currentTimeMillis();
@@ -1031,6 +1008,7 @@ public class StudentServiceImpl implements StudentService {
 			 resultDiopterDOListL11 = studentDao.getResultDiopterDO((i-1)*j,j,"L");
 			 countDownLatch.countDown();
 			 b=System.currentTimeMillis();
+			 System.out.println("查询个数======================"+resultDiopterDOListL11.size());
 			 System.out.println("查询左眼等效球镜段时间==============================="+(b-a));
 		 });
 			
@@ -1043,30 +1021,32 @@ public class StudentServiceImpl implements StudentService {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		} */
 //		Map<String,List<ResultEyesightDO>> resultEyeSightMap = resultEyesightDOList11.stream().collect(Collectors.groupingBy(ResultEyesightDO::getIdentityCard));
-		Map<String,Date> stMap = studentDOlIST1.stream().collect(Collectors.toMap(StudentDO::getIdentityCard,StudentDO::getBirthday));
-		Map<String,Double> dengxLMap = resultDiopterDOListL11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
-		Map<String,Double> dengxRMap = resultDiopterDOListR11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
-		for(ResultEyesightDO resultEyeSight:resultEyesightDOList11){
-//		for(StudentDO s:studentDOList){
-//			if(s.getLastCheckTime()==null) continue;
-			String identityCard = resultEyeSight.getIdentityCard();
+//		Map<String,Date> stMap = studentDOlIST1.stream().collect(Collectors.toMap(StudentDO::getIdentityCard,StudentDO::getBirthday));
+//		Map<String,Double> dengxLMap = resultDiopterDOListL11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
+//		Map<String,Double> dengxRMap = resultDiopterDOListR11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
+		
+		
+//		for(ResultEyesightDO resultEyeSight:resultEyesightDOList11){
+		for(StudentDO s:studentDOList){
+		
+//			String identityCard = resultEyeSight.getIdentityCard();
 			Double luoyanshilii=0.0;
 			Double dengxiaoqiujing=0.0;
-			String nakedFarvisionOd=resultEyeSight.getNakedFarvisionOd();
-			String nakedFarvisionOs=resultEyeSight.getNakedFarvisionOs();
-			/*String nakedFarvisionOd=s.getNakedNearvisionOd();
-			String nakedFarvisionOs=s.getNakedNearvisionOs();*/
+//			String nakedFarvisionOd=resultEyeSight.getNakedFarvisionOd();
+//			String nakedFarvisionOs=resultEyeSight.getNakedFarvisionOs();
+			String nakedFarvisionOd=s.getNakedNearvisionOd();
+			String nakedFarvisionOs=s.getNakedNearvisionOs();
 			if(!nakedFarvisionOd.matches("-?[0-9]+.?[0-9]*")) continue;
 			if(!nakedFarvisionOs.matches("-?[0-9]+.?[0-9]*")) continue;
 			 nakedFarvisionOd=nakedFarvisionOd.compareTo(nakedFarvisionOs)>0?nakedFarvisionOs:nakedFarvisionOd;
 			 if(!StringUtils.isBlank(nakedFarvisionOd))
 				 luoyanshilii=Double.parseDouble(nakedFarvisionOd);
-			 Double dengxiaoqiujingR = Optional.ofNullable(dengxRMap.get(identityCard)).orElse(0.0);
-			 Double dengxiaoqiujingL = Optional.ofNullable(dengxLMap.get(identityCard)).orElse(0.0);
-			/* Double dengxiaoqiujingR = s.getDengxiaoqiujingr();
-			 Double dengxiaoqiujingL = s.getDengxiaoqiujingl();*/
+			/* Double dengxiaoqiujingR = Optional.ofNullable(dengxRMap.get(identityCard)).orElse(0.0);
+			 Double dengxiaoqiujingL = Optional.ofNullable(dengxLMap.get(identityCard)).orElse(0.0);*/
+			 Double dengxiaoqiujingR = s.getDengxiaoqiujingr();
+			 Double dengxiaoqiujingL = s.getDengxiaoqiujingl();
 			 dengxiaoqiujing = dengxiaoqiujingR>dengxiaoqiujingL?dengxiaoqiujingL:dengxiaoqiujingR;
 			 
 			 if(luoyanshilii==5.0 && dengxiaoqiujing>=-0.5 && dengxiaoqiujing<=0.75){//近视临床前期
@@ -1101,7 +1081,7 @@ public class StudentServiceImpl implements StudentService {
 			 * 年龄
 			 */
 			
-			Date da=stMap.get(identityCard);
+			Date da=s.getBirthday();
 		
 			if(da!=null){
 				int now = Calendar.getInstance().get(Calendar.YEAR);
@@ -1125,11 +1105,9 @@ public class StudentServiceImpl implements StudentService {
 		
 	}
 		long mm = System.currentTimeMillis();
-		System.out.println("每一次的遍历时间==="+(mm-endtimes));
-		resultEyesightDOList11 = null;
-		resultDiopterDOListR11 = null;
-		resultDiopterDOListL11= null;
-	
+		System.out.println("每一次的遍历时间==="+(mm-ddt));
+		studentDOList=null;
+		System.gc();
 	}
 	
 	private static Double FormatDouble(double s){
