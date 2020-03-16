@@ -2040,7 +2040,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>小学</w:t>
+									<w:t>${bl.xuebu}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -2413,7 +2413,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>小学</w:t>
+									<w:t>${xuebu}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -3793,7 +3793,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>小学</w:t>
+									<w:t>${js.xuebu}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4324,7 +4324,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>小学</w:t>
+									<w:t>${xuebu}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>

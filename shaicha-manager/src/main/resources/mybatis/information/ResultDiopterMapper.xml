@@ -134,8 +134,8 @@
 	</select>
 	
 	<select id="queryMyopia" resultType="com.shaicha.information.domain.ResultDiopterDO">
-		SELECT trd.t_diopter_id,trd.identity_card,MIN(trd.dengxiaoqiujing) dengxiaoqiujing FROM t_result_diopter trd,t_student ts
-		 where trd.identity_card = ts.identity_card
+		SELECT trd.t_diopter_id,trd.identity_card,MIN(trd.dengxiaoqiujing) dengxiaoqiujing FROM t_result_diopter trd
+		 where trd.identity_card
 		and trd.type = 'AVG' and trd.check_date between #{start} and #{end} and trd.identity_card = #{identityCard}
 	</select>
 	

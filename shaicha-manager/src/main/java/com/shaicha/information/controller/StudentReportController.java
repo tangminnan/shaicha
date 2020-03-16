@@ -71,13 +71,13 @@ public class StudentReportController {
 		}else{
 			map.put("code", "0");
 		String schoolNum = request.getParameter("schoolNum");
-		Map<String, List<Double>> overYearMyopia = studentReportService.overYearMyopia(school);
-		Map<String, List<Double>> gradeMyopia = studentReportService.gradeMyopia(school,checkDate);
-		Map<String, List<Double>> overYearGradeMyopia = studentReportService.overYearGradeMyopia(school);
+		Map<String, List<Object>> overYearMyopia = studentReportService.overYearMyopia(school);
+		Map<String, List<Object>> gradeMyopia = studentReportService.gradeMyopia(school,checkDate);
+		Map<String, List<Object>> overYearGradeMyopia = studentReportService.overYearGradeMyopia(school);
 		Map<String, List<Double>> studentSexMyopia = studentReportService.studentSexMyopia(school,checkDate);
-		Map<String, List<Double>> overYearSexNan = studentReportService.overYearSexNan(school);
-		Map<String, List<Double>> overYearSexNv = studentReportService.overYearSexNv(school);
-		Map<String, List<Double>> overYearGradeSex = studentReportService.overYearGradeSex(school,checkDate);
+		Map<String, List<Object>> overYearSexNan = studentReportService.overYearSexNan(school);
+		Map<String, List<Object>> overYearSexNv = studentReportService.overYearSexNv(school);
+		Map<String, List<Object>> overYearGradeSex = studentReportService.overYearGradeSex(school,checkDate);
 		
 		map.put("overYearMyopia", overYearMyopia.get("overYearMyopia"));
 		
@@ -95,6 +95,9 @@ public class StudentReportController {
 		
 		map.put("overYearSexNan", overYearGradeSex.get("overYearSexNan"));
 		map.put("overYearSexNv", overYearGradeSex.get("overYearSexNv"));
+		
+		map.put("year", overYearMyopia.get("year"));
+		map.put("grade", gradeMyopia.get("grade"));
 		}
 		return map;
 		
@@ -147,10 +150,11 @@ public class StudentReportController {
 
 	}
 	
+
 	@GetMapping("/studentReport/baogaoxuexiao")
 	public void baogaoxuexiao(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		studentReportService.baogaoxuexiao(request, response);
-			
+					
 	}
 	
 	@GetMapping("/studentReport/jiaoyuju")
@@ -225,8 +229,35 @@ public class StudentReportController {
 	@GetMapping("/studentReport/baogaojiaoyuju")
 	public void baogaojiaoyuju(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		studentReportService.baogaojiaoyuju(request, response);
+	}
+	
+	@GetMapping("/studentReport/dengdaixuexiao")
+	public String dengdai(HttpServletRequest request, HttpServletResponse response,Model model){
+		String school = request.getParameter("school");
+		String checkDate = request.getParameter("checkDate");
+		String date = request.getParameter("date");
+		String schoolNum = request.getParameter("schoolNum");		
+		model.addAttribute("school", school);
+		model.addAttribute("checkDate", checkDate);
+		model.addAttribute("date", date);
+		model.addAttribute("schoolNum", schoolNum);
+		return "information/student/dengdaixuexiao";
+		
 			
 	}
+	
+	@GetMapping("/studentReport/dengdaijiaoyuju")
+	public String dengdaijiaoyuju(HttpServletRequest request, HttpServletResponse response,Model model){
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		String date = request.getParameter("date");
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("date", date);
+		return "information/student/dengdajiaoyuju";
 		
+			
+	}
+	
 	
 }

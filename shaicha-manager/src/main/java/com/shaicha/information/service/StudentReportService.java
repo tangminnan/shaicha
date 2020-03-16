@@ -14,19 +14,19 @@ import com.shaicha.information.domain.ResultDiopterDO;
 
 public interface StudentReportService {
 	
-	Map<String,List<Double>> overYearMyopia(String school);
+	Map<String,List<Object>> overYearMyopia(String school);
 	
-	Map<String,List<Double>> gradeMyopia(String school,String checkDate);
+	Map<String,List<Object>> gradeMyopia(String school,String checkDate);
 	
-	Map<String,List<Double>> overYearGradeMyopia(String school);
+	Map<String,List<Object>> overYearGradeMyopia(String school);
 	
 	Map<String,List<Double>> studentSexMyopia(String school,String checkDate);
 	
-	Map<String,List<Double>> overYearSexNan(String school);
+	Map<String,List<Object>> overYearSexNan(String school);
 	
-	Map<String,List<Double>> overYearSexNv(String school);
+	Map<String,List<Object>> overYearSexNv(String school);
 	
-	Map<String,List<Double>> overYearGradeSex(String school,String checkDate);
+	Map<String,List<Object>> overYearGradeSex(String school,String checkDate);
 
 	void baogaoxuexiao(HttpServletRequest request, HttpServletResponse response);
 	

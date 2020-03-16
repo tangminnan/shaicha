@@ -46,6 +46,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 
 import com.shaicha.common.utils.PageUtils;
+import com.shaicha.common.utils.QRCodeUtil;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
@@ -144,6 +145,9 @@ public class StudentController {
 	@RequiresPermissions("information:student:edit")
 	String code(@PathVariable("id") Integer id,Model model){
 		StudentDO student = studentService.get(id);
+		String identityCard = student.getIdentityCard();
+		String code = QRCodeUtil.creatRrCode(identityCard, 200,200);
+		model.addAttribute("code", "data:image/png;base64,"+code);
 		model.addAttribute("student", student);
 	    return "information/student/QrCode";
 	}
@@ -261,8 +265,8 @@ public class StudentController {
 	}
 
 	@GetMapping("/downloadErweima")
-	public void  downloadErweima(Integer[] ids,HttpServletResponse response){
-		studentService.downloadErweima(ids,response);
+	public void  downloadErweima(Integer[] ids,HttpServletRequest request,HttpServletResponse response){
+		studentService.downloadErweima(ids,request,response);
 		System.out.println(ids);
 	}
 	
@@ -334,7 +338,10 @@ public class StudentController {
 		model.addAttribute("school",studentDO.getSchool());
 		model.addAttribute("grade",studentDO.getGrade());
 		model.addAttribute("studentClass",studentDO.getStudentClass());
-		model.addAttribute("QRCode",studentDO.getQRCode());
+		String identityCard = studentDO.getIdentityCard();
+		String code = QRCodeUtil.creatRrCode(identityCard, 200,200);
+		model.addAttribute("QRCode", "data:image/png;base64,"+code);
+		//model.addAttribute("QRCode",studentDO.getQRCode());
 		return "information/student/二维码";
 	}
 	
