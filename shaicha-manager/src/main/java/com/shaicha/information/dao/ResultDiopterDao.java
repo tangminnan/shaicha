@@ -46,7 +46,7 @@ public interface ResultDiopterDao {
 	
 	List<ResultDiopterDO> queryTimeBetween(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
 
-	ResultDiopterDO queryQiujing(@Param("identityCard") String identityCard,@Param("checkDate") Date checkDate);
+	List<ResultDiopterDO> queryQiujing(@Param("identityCard") String identityCard,@Param("checkDate") Date checkDate);
 	
 	List<ResultDiopterDO> queryMyopia(@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
 }

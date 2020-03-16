@@ -196,11 +196,10 @@ function save() {
 		 				url : '/studentReport/jiaoyujutu',
 		 				success : function(result) {
 		 					console.info(result);
-		 					
-		 			        window.location.href="/studentReport/baogaojiaoyuju?startDate="+$("#startDate").val()
+		 					window.location.href= "/studentReport/dengdaijiaoyuju?startDate="+$("#startDate").val()
 																				+"&endDate="+$("#endDate").val()
 																				+"&date="+result;
-		 			              
+		 			        
 		 				}
 		 			})
 					/*$.ajax({

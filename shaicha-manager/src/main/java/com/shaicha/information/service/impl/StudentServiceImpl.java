@@ -196,11 +196,11 @@ public class StudentServiceImpl implements StudentService {
 								continue;
 							}else{
 								student.setIdentityCard(identityCard);
-								String destPath = bootdoConfig.getUploadPath();
+								/*String destPath = bootdoConfig.getUploadPath();
 								String rand = new Random().nextInt(99999999)+".jpg";
 								//生成二维码
 								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
-								student.setQRCode("/files/"+rand);
+								student.setQRCode("/files/"+rand);*/
 							}
 						}else{
 							continue;
@@ -237,17 +237,31 @@ public class StudentServiceImpl implements StudentService {
 	public List<StudentDO> getList() {
 		return studentDao.getList();
 	}
+	
+	public Map<String, Object> studentQRcodes(Integer ids){
+		Map<String, Object> params = new HashMap<String, Object>();  
+		StudentDO studentDO=studentDao.get(ids);
+		params.put("studentName",studentDO.getStudentName());
+		params.put("grade",studentDO.getGrade()==null?"":studentDO.getGrade());  
+		params.put("studentClass",studentDO.getStudentClass()==null?"":studentDO.getStudentClass());
+		String identityCard = studentDO.getIdentityCard();
+		String code = QRCodeUtil.creatRrCode(identityCard, 500,500);
+		params.put("QRCode",code);
+		return params;
+	}
 
 	/**
 	 * 二维码下载
 	 * @throws IOException 
 	 */
 	@Override
-	public void downloadErweima(Integer[] ids,HttpServletResponse response){
+	public void downloadErweima(Integer[] ids,HttpServletRequest request,HttpServletResponse response){
 		try{
 			for(int i=0;i<ids.length;i++){
-				Map<String, Object> params = new HashMap<String, Object>();  
-				StudentDO studentDO=studentDao.get(ids[i]);
+				Map<String, Object> params = studentQRcodes(ids[i]);
+				if(params==null) continue;
+				download(request, response, "studentQRcodes.ftl",ids[i].toString(), params);
+				/*
 				File file = new File(bootdoConfig.getUploadPath()+studentDO.getQRCode().substring(studentDO.getQRCode().lastIndexOf("/")+1));
 				if(!file.exists())
 					continue;
@@ -264,6 +278,7 @@ public class StudentServiceImpl implements StudentService {
 				XWPFDocument doc = new XWPFDocument(is);
 				WordUtils.replaceInPara(doc, params);  
 				doc.write(new FileOutputStream(bootdoConfig.getPoiword()+new File(new String(studentDO.getStudentName().getBytes(),"utf-8")+".docx")));
+				*/
 			}
 			craeteZipPath(bootdoConfig.getPoiword(),response);
 		} catch (Exception e) {

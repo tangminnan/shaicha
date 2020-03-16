@@ -47,7 +47,7 @@ public interface StudentService {
 	
 	List<StudentDO> getList();
 
-	void downloadErweima(Integer[] ids,HttpServletResponse response);
+	void downloadErweima(Integer[] ids,HttpServletRequest request,HttpServletResponse response);
 
 	R daorudatijiguo(MultipartFile file);
 

@@ -76,7 +76,7 @@ public interface StudentDao {
 	
 	List<StudentDO> querySchoolName();
 			
-	List<StudentDO> queryGradeNum(String grade);
+	List<StudentDO> queryGradeNum(@Param("grade") String grade,@Param("school") String school);
 	
 	List<StudentDO> getCheckUserNum(Map<String,Object> map);
 	
@@ -101,4 +101,5 @@ public interface StudentDao {
 
 	List<StudentDO> getCheckAllStudent(@Param("start") Date start,@Param("end") Date end,@Param("grade") String grade);
 
+	List<StudentDO> jiancharenshu(Map<String,Object> map);
 }

@@ -28,6 +28,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -85,8 +86,8 @@ public class StudentReportServiceImpl implements StudentReportService{
 	
 	//历年近视率走势图
 	@Override
-	public Map<String, List<Double>> overYearMyopia(String school){
-		Map<String, List<Double>> mapP = new HashMap<String, List<Double>>();
+	public Map<String, List<Object>> overYearMyopia(String school){
+		Map<String, List<Object>> mapP = new HashMap<String, List<Object>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		Integer first = 0;
 		Integer second = 0;
@@ -100,20 +101,20 @@ public class StudentReportServiceImpl implements StudentReportService{
 		cal.add(Calendar.YEAR, -1); 
 		Date qian = cal.getTime();
 		
-/*		Map<String, Object> mapLN = new HashMap<String,Object>();
+		Map<String, Object> mapLN = new HashMap<String,Object>();
 		mapLN.put("school", school);
-		mapLN.put("checkDate", "2017");
+		mapLN.put("checkDate", sdf.format(qian));
 		List<ResultEyesightDO> liNian = resultEyesightDao.liNian(mapLN);
 		//String jsonString = JSONObject.toJSONString(overYearMyopia);
 		//System.out.println(jsonString);
 		if(liNian.size()>0){
 			for (ResultEyesightDO resultEyesightDO : liNian) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						Map<String, Object> map1 = new HashMap<String,Object>();
 						map1.put("identityCard", resultEyesightDO.getIdentityCard());
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map1);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
@@ -125,16 +126,16 @@ public class StudentReportServiceImpl implements StudentReportService{
 		
 		Map<String, Object> mapLN2 = new HashMap<String,Object>();
 		mapLN2.put("school", school);
-		mapLN2.put("checkDate", "2018");
+		mapLN2.put("checkDate", sdf.format(qu));
 		List<ResultEyesightDO> liNian2 = resultEyesightDao.liNian(mapLN2);
 		if(liNian2.size()>0){
 			for (ResultEyesightDO resultEyesightDO : liNian2) {
 				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
-					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
+					if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 						Map<String, Object> map2 = new HashMap<String,Object>();
 						map2.put("identityCard", resultEyesightDO.getIdentityCard());
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map2);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								second++;
 							}
@@ -142,7 +143,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 					}
 				}
 			}
-		}*/
+		}
 		
 		Map<String, Object> mapLN3 = new HashMap<String,Object>();
 		mapLN3.put("school", school);
@@ -150,13 +151,13 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> liNian3 = resultEyesightDao.liNian(mapLN3);
 		if(liNian3.size()>0){
 			for (ResultEyesightDO resultEyesightDO : liNian3) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						Map<String, Object> map3 = new HashMap<String,Object>();
 						map3.put("identityCard", resultEyesightDO.getIdentityCard());
 						map3.put("checkDate", sdf.format(xian));
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								third++;
 							}
@@ -169,25 +170,44 @@ public class StudentReportServiceImpl implements StudentReportService{
 		/*System.out.println(first);
 		System.out.println(second);
 		System.out.println(third);*/
-		List<Double> da = new ArrayList<Double>();
+		List<Object> da = new ArrayList<Object>();
 		DecimalFormat df = new DecimalFormat("0.0");
 		//da.add(Double.parseDouble(df.format((double)first/(double)liNian1.size()*100)));
 		//da.add(Double.parseDouble(df.format((double)second/(double)liNian2.size()*100)));
-		da.add(79.30);
-		da.add(66.10);
-		da.add(Double.parseDouble(df.format((double)third/(double)liNian3.size()*100)));
-		
+		//da.add(79.30);
+		//da.add(66.10);
+		if(liNian.size() == 0){
+			da.add(0d);
+		}else{
+			da.add(Double.parseDouble(df.format((double)first/(double)liNian.size()*100)));
+		}
+		if(liNian2.size() == 0){
+			da.add(0d);
+		}else{
+			da.add(Double.parseDouble(df.format((double)second/(double)liNian2.size()*100)));
+		}
+		if(liNian3.size() == 0){
+			da.add(0d);
+		}else{
+			da.add(Double.parseDouble(df.format((double)third/(double)liNian3.size()*100)));
+		}
+		List<Object> ye = new ArrayList<>();
+		ye.add(sdf.format(qian));
+		ye.add(sdf.format(qu));
+		ye.add(sdf.format(xian));
 		mapP.put("overYearMyopia", da);
+		mapP.put("year", ye);
 		
 		return mapP;
 	}
 	
 	//各年级近视
 	@Override
-	public Map<String, List<Double>> gradeMyopia(String school,String checkDate) {
+	public Map<String, List<Object>> gradeMyopia(String school,String checkDate) {
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		Map<String, List<Double>> gradeMyopia = new HashMap<String, List<Double>>();
-		List<Double> myt = new ArrayList<Double>();
+		Map<String, List<Object>> gradeMyopia = new HashMap<String, List<Object>>();
+		List<Object> myt = new ArrayList<Object>();
+		List<Object> ye = new ArrayList<>();
 			Date qian = null;
 			Date hou = null;
 			Date currdate = null;
@@ -211,9 +231,11 @@ public class StudentReportServiceImpl implements StudentReportService{
 			for (StudentDO studentDO : gegradejs) {
 				double gradeMyopiaFS = gradeMyopia(studentDO.getGrade(),school,currdate,hou);
 				myt.add(gradeMyopiaFS);
+				ye.add(studentDO.getGrade());
 			}
 			
 		gradeMyopia.put("gradeMyopia", myt);
+		gradeMyopia.put("grade", ye);
 		return gradeMyopia;
 		
 	}
@@ -231,10 +253,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
@@ -262,13 +284,13 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> jinShi = resultEyesightDao.liNian(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						Map<String, Object> map3 = new HashMap<String,Object>();
 						map3.put("identityCard", resultEyesightDO.getIdentityCard());
 						map3.put("checkDate", checkDate);
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
@@ -288,11 +310,11 @@ public class StudentReportServiceImpl implements StudentReportService{
 	
 	//历年各年级近视率走势图
 	@Override
-	public Map<String, List<Double>> overYearGradeMyopia(String school) {
-		Map<String, List<Double>> gradeMyopia = new HashMap<String, List<Double>>();
-		List<Double> myt = new ArrayList<Double>();
-		List<Double> myt2 = new ArrayList<Double>();
-		List<Double> myt3 = new ArrayList<Double>();
+	public Map<String, List<Object>> overYearGradeMyopia(String school) {
+		Map<String, List<Object>> gradeMyopia = new HashMap<String, List<Object>>();
+		List<Object> myt = new ArrayList<Object>();
+		List<Object> myt2 = new ArrayList<Object>();
+		List<Object> myt3 = new ArrayList<Object>();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
 		Calendar cal = Calendar.getInstance();
 		Date xian = cal.getTime();
@@ -318,14 +340,14 @@ public class StudentReportServiceImpl implements StudentReportService{
 		myt.add((double)gradeTH);
 		myt.add((double)gradeFO);
 		myt.add((double)gradeFI);
-		myt.add((double)gradeSI);*/
+		myt.add((double)gradeSI);
 		myt.add(26.7);
 		myt.add(26.5);
 		myt.add(39.2);
 		myt.add(35.4);
 		myt.add(42.6);
 		myt.add(39.3);
-		gradeMyopia.put("seventeen", myt);
+		gradeMyopia.put("seventeen", myt);*/
 		/*Map<String, Object> gradeMyopiaFS2 = gradeMyopiaLN("一年级",school,"2018");
 		Map<String, Object> gradeMyopiaSE2 = gradeMyopiaLN("二年级",school,"2018");
 		Map<String, Object> gradeMyopiaTH2 = gradeMyopiaLN("三年级",school,"2018");
@@ -344,21 +366,30 @@ public class StudentReportServiceImpl implements StudentReportService{
 		myt2.add((double)gradeTH2);
 		myt2.add((double)gradeFO2);
 		myt2.add((double)gradeFI2);
-		myt2.add((double)gradeSI2);*/
+		myt2.add((double)gradeSI2);
 		myt2.add(25.5);
 		myt2.add(25.7);
 		myt2.add(35.2);
 		myt2.add(33.8);
 		myt2.add(40.1);
 		myt2.add(37.7);
-		gradeMyopia.put("eighteen", myt2);
+		gradeMyopia.put("eighteen", myt2);*/
 			List<StudentDO> gegradejs = studentDao.querySchoolGrade(school);
+			for (StudentDO studentDO : gegradejs) {
+				double gradeMyopiaFS = gradeMyopiaLN(studentDO.getGrade(),school,sdf1.format(qian));
+				myt.add(gradeMyopiaFS);
+			}
+			for (StudentDO studentDO : gegradejs) {
+				double gradeMyopiaFS2 = gradeMyopiaLN(studentDO.getGrade(),school,sdf1.format(qu));
+				myt2.add(gradeMyopiaFS2);
+			}
 			for (StudentDO studentDO : gegradejs) {
 				double gradeMyopiaFS3 = gradeMyopiaLN(studentDO.getGrade(),school,sdf1.format(xian));
 				myt3.add(gradeMyopiaFS3);
 			}
+		gradeMyopia.put("seventeen", myt);
+		gradeMyopia.put("eighteen", myt2);
 		gradeMyopia.put("nineteen", myt3);
-		
 		
 		return gradeMyopia;
 	}
@@ -395,9 +426,9 @@ public class StudentReportServiceImpl implements StudentReportService{
 
 	//历年男生近视率走势图
 	@Override
-	public Map<String, List<Double>> overYearSexNan(String school) {
-		Map<String, List<Double>> studentSexMyopia = new HashMap<String, List<Double>>();
-		List<Double> myt = new ArrayList<Double>();
+	public Map<String, List<Object>> overYearSexNan(String school) {
+		Map<String, List<Object>> studentSexMyopia = new HashMap<String, List<Object>>();
+		List<Object> myt = new ArrayList<Object>();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
 		Calendar cal = Calendar.getInstance();
 		Date xian = cal.getTime();
@@ -405,25 +436,24 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Date qu = cal.getTime();
 		cal.add(Calendar.YEAR, -1); 
 		Date qian = cal.getTime();
-		/*Map<String, Object> overYearSex = overYearSexLN(1,school,null,"2017");
-		Object overYearSexNan = overYearSex.get("overYearSex");
-		myt.add((double)overYearSexNan);
-		Map<String, Object> overYearSex2 = overYearSexLN(1,school,null,"2018");
-		Object overYearSexNan2 = overYearSex2.get("overYearSex");
-		myt.add((double)overYearSexNan2);*/
-		myt.add(78.9);
-		myt.add(66.2);
+		double overYearSex = overYearSexLN(1,school,null,sdf1.format(qian));
+		myt.add(overYearSex);
+		double overYearSex2 = overYearSexLN(1,school,null,sdf1.format(qu));
+		myt.add(overYearSex2);
+		//myt.add(78.9);
+		//myt.add(66.2);
 		double overYearSex3 = overYearSexLN(1,school,null,sdf1.format(xian));
 		myt.add(overYearSex3);
 		studentSexMyopia.put("studentSexMyopia",myt);
+		
 		return studentSexMyopia;
 	}
 
 	//历年女生近视率走势图
 	@Override
-	public Map<String, List<Double>> overYearSexNv(String school) {
-		Map<String, List<Double>> studentSexMyopia = new HashMap<String, List<Double>>();
-		List<Double> myt = new ArrayList<Double>();
+	public Map<String, List<Object>> overYearSexNv(String school) {
+		Map<String, List<Object>> studentSexMyopia = new HashMap<String, List<Object>>();
+		List<Object> myt = new ArrayList<Object>();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
 		Calendar cal = Calendar.getInstance();
 		Date xian = cal.getTime();
@@ -431,17 +461,16 @@ public class StudentReportServiceImpl implements StudentReportService{
 		Date qu = cal.getTime();
 		cal.add(Calendar.YEAR, -1); 
 		Date qian = cal.getTime();
-		/*Map<String, Object> overYearSex = overYearSexLN(2,school,null,"2017");
-		Object overYearSexNv = overYearSex.get("overYearSex");
-		myt.add((double)overYearSexNv);
-		Map<String, Object> overYearSex2 = overYearSexLN(2,school,null,"2018");
-		Object overYearSexNv2 = overYearSex2.get("overYearSex");
-		myt.add((double)overYearSexNv2);*/
-		myt.add(76.7);
-		myt.add(60.5);
+		double overYearSex = overYearSexLN(2,school,null,sdf1.format(qian));
+		myt.add(overYearSex);
+		double overYearSex2 = overYearSexLN(2,school,null,sdf1.format(qu));
+		myt.add(overYearSex2);
+		//myt.add(76.7);
+		//myt.add(60.5);
 		double overYearSex3 = overYearSexLN(2,school,null,sdf1.format(xian));
 		myt.add(overYearSex3);
 		studentSexMyopia.put("studentSexMyopia",myt);
+		
 		return studentSexMyopia;
 		
 	}
@@ -461,10 +490,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
@@ -493,13 +522,13 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> jinShi = resultEyesightDao.liNian(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						Map<String, Object> map3 = new HashMap<String,Object>();
 						map3.put("identityCard", resultEyesightDO.getIdentityCard());
 						map3.put("checkDate", checkDate);
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.getStudentMyopia(map3);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
@@ -517,10 +546,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 
 	//男女生近视年级
 	@Override
-	public Map<String, List<Double>> overYearGradeSex(String school,String checkDate) {
-		Map<String, List<Double>> overYearGradeSex = new HashMap<String, List<Double>>();
-		List<Double> myt = new ArrayList<Double>();
-		List<Double> myt2 = new ArrayList<Double>();
+	public Map<String, List<Object>> overYearGradeSex(String school,String checkDate) {
+		Map<String, List<Object>> overYearGradeSex = new HashMap<String, List<Object>>();
+		List<Object> myt = new ArrayList<Object>();
+		List<Object> myt2 = new ArrayList<Object>();
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		Date hou = null;
 		Date currdate = null;
@@ -547,7 +576,6 @@ public class StudentReportServiceImpl implements StudentReportService{
 		
 		overYearGradeSex.put("overYearSexNan", myt);
 		overYearGradeSex.put("overYearSexNv", myt2);
-		
 		return overYearGradeSex;
 	}
 	
@@ -577,25 +605,26 @@ public class StudentReportServiceImpl implements StudentReportService{
 		}
 
 		//基本情况
-		Integer jiancha = jiancha(school,start,end,null,null);
-		if(jiancha == -1){
-			params.put("checkNum", 0);
-		}else{
-			params.put("checkNum", jiancha);
-		}
+		Integer jiancha = jiancharenshu(school,start,end,null,null,null);
+		
 		Map<String, Object> num = new HashMap<String, Object>(); 
 		num.put("school", school);
 		List<StudentDO> list = studentDao.list(num);
 		params.put("schoolNum", list.size());
-		params.put("checkRate", df.format((double)jiancha/((double)list.size())*100));
-		
+		if(jiancha == -1){
+			params.put("checkNum", 0);
+			params.put("checkRate", 0);
+		}else{
+			params.put("checkNum", jiancha);
+			params.put("checkRate", df.format((double)jiancha/((double)list.size())*100));
+		}
 		List<Map<String,Object>> listg = new ArrayList<Map<String,Object>>();
 		List<StudentDO> gradeshu = studentDao.querySchoolGrade(school);
 		for (StudentDO studentDO : gradeshu) {
 			Map<String,Object> gNum = new HashMap<>();
- 			List<StudentDO> gradeNum = studentDao.queryGradeNum(studentDO.getGrade());
+ 			List<StudentDO> gradeNum = studentDao.queryGradeNum(studentDO.getGrade(),school);
 			if(gradeNum.size()>0){
-				Integer jiancha2 = jiancha(school,start,end,null,studentDO.getGrade());
+				Integer jiancha2 = jiancharenshu(school,start,end,null,studentDO.getGrade(),null);
 				gNum.put("nianji", studentDO.getGrade());
 				gNum.put("gradeNum", gradeNum.size());
 				if(jiancha2 == -1){
@@ -611,24 +640,34 @@ public class StudentReportServiceImpl implements StudentReportService{
 		params.put("nianjice", listg);
 		
 		//男女近视
-		Integer nanjiancha = jiancha(school,start,end,1,null);
+		Integer nanjiancha = jiancharenshu(school,start,end,1,null,null);
 		Integer nanjinshi = jinshi(school,start,end,1,null,null);
-		params.put("checkNanNum", nanjiancha);
-		params.put("myopiaNanNum", nanjinshi);
-		params.put("myopiaNanRate", df.format(((double)nanjinshi/(double)nanjiancha)*100));
-		
-		Integer nvjiancha = jiancha(school,start,end,2,null);
+		if(nanjiancha == -1){
+			params.put("checkNanNum", 0);
+			params.put("myopiaNanRate", 0);
+		}else{
+			params.put("checkNanNum", nanjiancha);
+			params.put("myopiaNanRate", df.format(((double)nanjinshi/(double)nanjiancha)*100));
+		}
+		params.put("myopiaNanNum", nanjinshi);		
+		Integer nvjiancha = jiancharenshu(school,start,end,2,null,null);
 		Integer nvjinshi = jinshi(school,start,end,2,null,null);
-		params.put("checkNvNum", nvjiancha);
+		if(nvjiancha == -1){
+			params.put("checkNvNum", 0);
+			params.put("myopiaNvRate", 0);
+		}else{
+			params.put("checkNvNum", nvjiancha);
+			params.put("myopiaNvRate", df.format(((double)nvjinshi/(double)nvjiancha)*100));
+		}
 		params.put("myopiaNvNum", nvjinshi);
-		params.put("myopiaNvRate", df.format(((double)nvjinshi/(double)nvjiancha)*100));
+		
 	
 		//男近视
 		List<Map<String,Object>> listnn = new ArrayList<Map<String,Object>>();
 		List<StudentDO> gradenn = studentDao.querySchoolGrade(school);
 		for (StudentDO studentDO : gradenn) {
 			Map<String,Object> nnNum = new HashMap<>();
-			Integer nanjianchanianyi = jiancha(school,start,end,1,studentDO.getGrade());
+			Integer nanjianchanianyi = jiancharenshu(school,start,end,1,studentDO.getGrade(),null);
 			Integer nanjinshinianyi = jinshi(school,start,end,1,studentDO.getGrade(),null);
 			if(nanjianchanianyi == -1){
 				nnNum.put("checkNanNum", 0);
@@ -647,7 +686,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<StudentDO> grademm = studentDao.querySchoolGrade(school);
 		for (StudentDO studentDO : grademm) {
 			Map<String,Object> mmNum = new HashMap<>();
-			Integer nvjianchanianyi = jiancha(school,start,end,2,studentDO.getGrade());
+			Integer nvjianchanianyi = jiancharenshu(school,start,end,2,studentDO.getGrade(),null);
 			Integer nvjinshinianyi = jinshi(school,start,end,2,studentDO.getGrade(),null);
 			if(nvjianchanianyi == -1){
 				mmNum.put("checkNvNum", 0);
@@ -676,7 +715,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 			for(int i= 1 ; i<=classCountyi.size();i++){
 				Map<String,Object> classyi = new HashMap<String,Object>();
 				classyi.put("class", i);
-				Integer jcyi = jianchaban(school,start,end,String.valueOf(i), studentDO.getGrade());
+				Integer jcyi = jiancharenshu(school,start,end,null, studentDO.getGrade(),String.valueOf(i));
 				Integer jsyi = jinshi(school,start,end,null,studentDO.getGrade(),String.valueOf(i));
 				if(jcyi == -1){
 					classyi.put("classNum", 0);
@@ -717,7 +756,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 			String buliangyiR= "0";
 			if(shiLiy.size()>0){
 				for (ResultEyesightDO resultEyesightDO : shiLiy) {
-					if(resultEyesightDO.getDushu()!=null || resultEyesightDO.getDushu()!=""){
+					if(resultEyesightDO.getDushu()!=null && resultEyesightDO.getDushu().length()!= 0){
 						if(Double.parseDouble(resultEyesightDO.getDushu())==4.9){
 							qingduyi++;
 						}
@@ -755,13 +794,9 @@ public class StudentReportServiceImpl implements StudentReportService{
 		
 		int checkT = 0;
 		int qingNT = 0;
-		double qingRT =0.0;
 		int zhongNT= 0;
-		double zhongRT= 0.0;
 		int zzhongNT= 0;
-		double zzhongRT=0.0;
 		int bulingNT=0;
-		double bulingRT= 0.0;
 		for (Map<String, String> map : listT) {
 			for(Map.Entry<String, String> m : map.entrySet()){
 				if(m.getKey().equals("gradeCheckNum")){
@@ -770,39 +805,31 @@ public class StudentReportServiceImpl implements StudentReportService{
 				if(m.getKey().equals("numQDSLBL")){
 					qingNT += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateQDSLBL")){
-					qingRT += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numZDSLBL")){
 					zhongNT += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateZDSLBL")){
-					zhongRT += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numZZDSLBL")){
 					zzhongNT += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateZZDSLBL")){
-					zzhongRT += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numSLBL")){
 					bulingNT += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateSLBL")){
-					bulingRT += Double.parseDouble(m.getValue());
-				}
+				
 			}
 		}
-		
+		params.put("xuebu", gradebl.get(0).getXueBu());
 		params.put("gradeCheckTotal", checkT);
 		params.put("numQDSLBLTotal", qingNT);
-		params.put("rateQDSLBLTotal", qingRT);
+		params.put("rateQDSLBLTotal", df.format(((double)qingNT/(double)checkT)*100));
 		params.put("numZDSLBLTotal", zhongNT);
-		params.put("rateZDSLBLTotal", zhongRT);
+		params.put("rateZDSLBLTotal", df.format(((double)zhongNT/(double)checkT)*100));
 		params.put("numZZDSLBLTotal", zzhongNT);
-		params.put("rateZZDSLBLTotal", zzhongRT);
+		params.put("rateZZDSLBLTotal", df.format(((double)zzhongNT/(double)checkT)*100));
 		params.put("numSLBLTotal", bulingNT);
-		params.put("rateSLBLTotal", bulingRT);
+		params.put("rateSLBLTotal", df.format(((double)bulingNT/(double)checkT)*100));
 		
 		//近视
 		List<Map<String,String>> jiajin = new ArrayList<Map<String,String>>();
@@ -840,7 +867,8 @@ public class StudentReportServiceImpl implements StudentReportService{
 				gaor = df.format(((double)gaoy/(double)jiay)*100);
 			}
 			Integer jinzongy = diy+zhongy+gaoy;
-			double jinzongr = Double.parseDouble(dir)+Double.parseDouble(zhongr)+Double.parseDouble(gaor);
+			//double jinzongr = Double.parseDouble(dir)+Double.parseDouble(zhongr)+Double.parseDouble(gaor);
+			String jinzongr = df.format(((double)jinzongy/(double)jiay)*100);
 			jia1.put("grade", studentDO.getGrade());
 			jia1.put("xuebu", studentDO.getXueBu());
 			jia1.put("gradeCheckNum", String.valueOf(jiay));
@@ -855,7 +883,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 			jia1.put("numGDJS", String.valueOf(gaoy));
 			jia1.put("rateGDJS", gaor);
 			jia1.put("numJS", String.valueOf(jinzongy));
-			jia1.put("rateJS", String.valueOf(jinzongr));
+			jia1.put("rateJS", jinzongr);
 			
 			jiajin.add(jia1);
 		}
@@ -863,70 +891,52 @@ public class StudentReportServiceImpl implements StudentReportService{
 		params.put("jiajin", jiajin);
 		
 		int jiaJS1 =0;
-		double jiaJS2 = 0.0;
 		int jiaJS3= 0;
-		double jiaJS4= 0.0;
 		int jiaJS5= 0;
-		double jiaJS6= 0.0;
 		int jiaJS7= 0;
-		double jiaJS8= 0.0;
 		int jiaJS9= 0;
-		double jiaJS11= 0.0;
 		int jiaJS22= 0;
-		double jiaJS33=0.0;
 		for (Map<String, String> map2 : jiajin) {
 			for(Map.Entry<String, String> m : map2.entrySet()){
 				if(m.getKey().equals("numJSQQ")){
 					jiaJS1 += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateJSQQ")){
-					jiaJS2 += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numJXJS")){
 					jiaJS3 += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateJXJS")){
-					jiaJS4 += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numDDJS")){
 					jiaJS5 += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateDDJS")){
-					jiaJS6 += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numZDJS")){
 					jiaJS7 += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateZDJS")){
-					jiaJS8 += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numGDJS")){
 					jiaJS9 += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateGDJS")){
-					jiaJS11 += Double.parseDouble(m.getValue());
-				}
+				
 				if(m.getKey().equals("numJS")){
 					jiaJS22 += Integer.parseInt(m.getValue());
 				}
-				if(m.getKey().equals("rateJS")){
-					jiaJS33 += Double.parseDouble(m.getValue());
-				}
+				
 			}
 		}
 		
 		params.put("numJSQQTotal", jiaJS1);
-		params.put("rateJSQQTotal", jiaJS2);
+		params.put("rateJSQQTotal", df.format(((double)jiaJS1/(double)checkT)*100));
 		params.put("numJXJSTotal", jiaJS3);
-		params.put("rateJXJSTotal", jiaJS4);
+		params.put("rateJXJSTotal", df.format(((double)jiaJS3/(double)checkT)*100));
 		params.put("numDDJSTotal", jiaJS5);
-		params.put("rateDDJSTotal", jiaJS6);
+		params.put("rateDDJSTotal", df.format(((double)jiaJS5/(double)checkT)*100));
 		params.put("numZDJSTotal", jiaJS7);
-		params.put("rateZDJSTotal", jiaJS8);
+		params.put("rateZDJSTotal", df.format(((double)jiaJS7/(double)checkT)*100));
 		params.put("numGDJSTotal", jiaJS9);
-		params.put("rateGDJSTotal", jiaJS11);
+		params.put("rateGDJSTotal", df.format(((double)jiaJS9/(double)checkT)*100));
 		params.put("numJSTotal", jiaJS22);
-		params.put("rateJSTotal", jiaJS33);
+		params.put("rateJSTotal", df.format(((double)jiaJS22/(double)checkT)*100));
 		
 		//附件
 		List<Map<String,Object>> xuesheng = new ArrayList<Map<String,Object>>();
@@ -1069,9 +1079,9 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length()!= 0){
 					List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
-					if(studentMyopia.size()>0){
+					if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 						if(Double.parseDouble(resultEyesightDO.getDushu()) == 5.0){
 							if(studentMyopia.get(0).getDengxiaoqiujing() >= -0.5 && studentMyopia.get(0).getDengxiaoqiujing() <= 0.75){
 								first++;
@@ -1168,10 +1178,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> jinShi = resultEyesightDao.jinShi(mapP);
 		if(jinShi.size()>0){
 			for (ResultEyesightDO resultEyesightDO : jinShi) {
-				if(resultEyesightDO.getDushu()!= null || resultEyesightDO.getDushu()!= ""){
+				if(resultEyesightDO.getDushu()!= null && resultEyesightDO.getDushu().length() != 0){
 					if(Double.parseDouble(resultEyesightDO.getDushu()) < 5.0){
 						List<ResultDiopterDO> studentMyopia = resultDiopterDao.queryMyopia(resultEyesightDO.getIdentityCard(),start,end);
-						if(studentMyopia.size()>0){
+						if(1 == studentMyopia.size()&& null != studentMyopia.get(0)){
 							if(studentMyopia.get(0).getDengxiaoqiujing() < -0.5){
 								first++;
 							}
@@ -1183,6 +1193,27 @@ public class StudentReportServiceImpl implements StudentReportService{
 		return first;
 	}
 	
+	public Integer jiancharenshu(String school,
+			@RequestParam(value= "start",required=false) Date start,
+			@RequestParam(value= "end",required=false) Date end,
+			@RequestParam(value= "studentSex",required=false) Integer studentSex,
+			@RequestParam(value= "grade",required=false) String grade,
+			@RequestParam(value= "studentClass",required=false) String studentClass) {
+		
+		Map<String, Object> mapP = new HashMap<String,Object>();
+		mapP.put("studentSex", studentSex);
+		mapP.put("school", school);
+		mapP.put("start", start);
+		mapP.put("end", end);
+		mapP.put("grade", grade);
+		mapP.put("studentClass", studentClass);
+		List<StudentDO> checkUserNum = studentDao.jiancharenshu(mapP);
+		if(checkUserNum.size()<=0){
+			return -1;
+		}else{
+			return checkUserNum.size();
+		}
+	}
 	
 	public Integer jiancha(String school,
 			@RequestParam(value= "start",required=false) Date start,
@@ -1240,11 +1271,16 @@ public class StudentReportServiceImpl implements StudentReportService{
    //         t.process(dataMap, out);
             response.setContentType("multipart/form-data");
 			response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes(), "iso-8859-1")+".docx");
-            Writer out = new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
+           
+			Cookie status = new Cookie("status","success");
+		    status.setMaxAge(600);
+		    response.addCookie(status);
+			
+			Writer out = new BufferedWriter(new OutputStreamWriter(response.getOutputStream()));
             t.process(dataMap, out);
             out.flush();
             out.close();
-          
+           
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -1341,10 +1377,10 @@ public class StudentReportServiceImpl implements StudentReportService{
 	           for(File f :files)
 	              f.delete();
 	        }
+	        
 	     }  
 	}
-
-	   
+	
 		/**
 		 * 教育局报告
 		 */
@@ -1478,25 +1514,25 @@ public class StudentReportServiceImpl implements StudentReportService{
 			List<StudentDO> lastCheckStudent = studentDao.getLastCheckStudent(school2, start, end);
 			for (StudentDO studentDO2 : lastCheckStudent) {
 				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
-				if(dushu.size()>0){
-					ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
-					if(queryQiujing.getDengxiaoqiujing() != null){
+				if(dushu.size()>0 && null != dushu.get(0)){
+					List<ResultDiopterDO> queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+					if(1 == queryQiujing.size()&& null != queryQiujing.get(0)){
 						if(Double.parseDouble(dushu.get(0).getDushu()) == 5.0){
-							if(queryQiujing.getDengxiaoqiujing() >= -0.5 && queryQiujing.getDengxiaoqiujing() <= 0.75){
+							if(queryQiujing.get(0).getDengxiaoqiujing() >= -0.5 && queryQiujing.get(0).getDengxiaoqiujing() <= 0.75){
 								first++;
 							}
-							if(queryQiujing.getDengxiaoqiujing() < -0.5){
+							if(queryQiujing.get(0).getDengxiaoqiujing() < -0.5){
 								second++;
 							}
 						}
 						if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
-							if(queryQiujing.getDengxiaoqiujing() < -0.5 && queryQiujing.getDengxiaoqiujing() > -3.0){
+							if(queryQiujing.get(0).getDengxiaoqiujing() < -0.5 && queryQiujing.get(0).getDengxiaoqiujing() > -3.0){
 								third++;
 							}
-							if(queryQiujing.getDengxiaoqiujing() < -3.25 && queryQiujing.getDengxiaoqiujing() > -6.0){
+							if(queryQiujing.get(0).getDengxiaoqiujing() < -3.25 && queryQiujing.get(0).getDengxiaoqiujing() > -6.0){
 								fourth++;
 							}
-							if(queryQiujing.getDengxiaoqiujing() < -6.0){
+							if(queryQiujing.get(0).getDengxiaoqiujing() < -6.0){
 								fifth++;
 							}
 						}
@@ -1643,7 +1679,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 			List<StudentDO> lastCheckStudent = studentDao.getLastCheckStudent(school2, start, end);
 			for (StudentDO studentDO2 : lastCheckStudent) {
 				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
-				if(dushu.size()>0){
+				if(dushu.size()>0 && null != dushu.get(0)){
 					if(Double.parseDouble(dushu.get(0).getDushu())==4.9){
 						qingduyi++;
 					}
@@ -1773,11 +1809,11 @@ public class StudentReportServiceImpl implements StudentReportService{
 				if(studentDO2.getStudentSex() == 1){
 					nn++;
 					List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
-					if(dushu.size()>0){
-						ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
-						if(queryQiujing.getDengxiaoqiujing() != null){
+					if(dushu.size()>0 && null != dushu.get(0)){
+						List<ResultDiopterDO> queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+						if(1 == queryQiujing.size()&& null != queryQiujing.get(0)){
 							if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
-								if(queryQiujing.getDengxiaoqiujing() < -0.5){
+								if(queryQiujing.get(0).getDengxiaoqiujing() < -0.5){
 									njs++;
 								}
 							}
@@ -1787,11 +1823,11 @@ public class StudentReportServiceImpl implements StudentReportService{
 				if(studentDO2.getStudentSex() == 2){
 					vv++;
 					List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
-					if(dushu.size()>0){
-						ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
-						if(queryQiujing.getDengxiaoqiujing() != null){
+					if(dushu.size()>0 && null != dushu.get(0)){
+						List<ResultDiopterDO> queryQiujing = resultDiopterDao.queryQiujing(studentDO2.getIdentityCard(), studentDO2.getLastCheckTime());
+						if(1 == queryQiujing.size()&& null != queryQiujing.get(0)){
 							if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
-								if(queryQiujing.getDengxiaoqiujing() < -0.5){
+								if(queryQiujing.get(0).getDengxiaoqiujing() < -0.5){
 									vjs++;
 								}
 							}
@@ -1850,11 +1886,12 @@ public class StudentReportServiceImpl implements StudentReportService{
 		if(allStudent.size()>0){
 			for (StudentDO studentDO : allStudent) {
 				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO.getIdentityCard(), studentDO.getLastCheckTime());
-				if(dushu.size()>0){
-					ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(studentDO.getIdentityCard(), studentDO.getLastCheckTime());
-					if(queryQiujing.getDengxiaoqiujing() != null){
+				if(dushu.size()>0 && null != dushu.get(0)){
+					System.out.println(studentDO.getIdentityCard());
+					List<ResultDiopterDO> queryQiujing = resultDiopterDao.queryQiujing(studentDO.getIdentityCard(), studentDO.getLastCheckTime());
+					if(1 == queryQiujing.size()&& null != queryQiujing.get(0)){
 						if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
-							if(queryQiujing.getDengxiaoqiujing() < -0.5){
+							if(queryQiujing.get(0).getDengxiaoqiujing() < -0.5){
 								js++;
 							}
 						}
@@ -1904,7 +1941,7 @@ public class StudentReportServiceImpl implements StudentReportService{
 		if(allStudent.size()>0){
 			for (StudentDO studentDO : allStudent) {
 				List<ResultEyesightDO> dushu = resultEyesightDao.queryDushu(studentDO.getIdentityCard(), studentDO.getLastCheckTime());
-				if(dushu.size()>0){
+				if(dushu.size()>0 && null != dushu.get(0)){
 					if(Double.parseDouble(dushu.get(0).getDushu()) < 5.0){
 						bl++;
 					}
@@ -1952,11 +1989,15 @@ public class StudentReportServiceImpl implements StudentReportService{
 		List<ResultEyesightDO> list = resultEyesightDao.getgenianlingjinshi(checkDate,xueBu);
 		if(list.size()>0){
 			for (ResultEyesightDO resultEyesightDO2 : list) {
+				if(resultEyesightDO2.getDushu()!= null && resultEyesightDO2.getDushu().length()!= 0){
 				if(Double.parseDouble(resultEyesightDO2.getDushu()) < 5.0){
-					ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(resultEyesightDO2.getIdentityCard(), checkDate);
-					if(queryQiujing.getDengxiaoqiujing() < -0.5){
+					List<ResultDiopterDO> queryQiujing = resultDiopterDao.queryQiujing(resultEyesightDO2.getIdentityCard(), checkDate);
+					if(1 == queryQiujing.size()&& null != queryQiujing.get(0)){
+					if(queryQiujing.get(0).getDengxiaoqiujing() < -0.5){
 						js++;
 					}
+					}
+				}
 				}
 			}
 			rate = Double.parseDouble(df.format((double)js/(double)list.size()*100));
@@ -1990,11 +2031,15 @@ public class StudentReportServiceImpl implements StudentReportService{
 				List<ResultEyesightDO> list = resultEyesightDao.getnannvjinshi(resultEyesightDO.getCheckDate(),studentSex);
 				if(list.size()>0){
 					for (ResultEyesightDO resultEyesightDO2 : list) {
+						if(resultEyesightDO2.getDushu()!= null && resultEyesightDO2.getDushu().length()!= 0){
 						if(Double.parseDouble(resultEyesightDO2.getDushu()) < 5.0){
-							ResultDiopterDO queryQiujing = resultDiopterDao.queryQiujing(resultEyesightDO2.getIdentityCard(), resultEyesightDO.getCheckDate());
-							if(queryQiujing.getDengxiaoqiujing() < -0.5){
+							List<ResultDiopterDO> queryQiujing = resultDiopterDao.queryQiujing(resultEyesightDO2.getIdentityCard(), resultEyesightDO.getCheckDate());
+							if(1 == queryQiujing.size()&& null != queryQiujing.get(0)){
+							if(queryQiujing.get(0).getDengxiaoqiujing() < -0.5){
 								js++;
 							}
+							}
+						}
 						}
 					}
 					rate = Double.parseDouble(df.format((double)js/(double)list.size()*100));

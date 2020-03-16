@@ -29,7 +29,7 @@ function save() {
 			 			 animation:false,
 			 			 xAxis: {
 			 				 type: 'category',
-			 			     data: ["2017","2018","2019"]
+			 			     data: result.year
 			 			  },
 			 			  yAxis: {
 			 			      type: 'value'
@@ -72,7 +72,7 @@ function save() {
 			 				    xAxis : [
 			 				        {
 			 				            type : 'category',
-			 				            data : ['一年级', '二年级', '三年级', '四年级', '五年级', '六年级'],
+			 				            data : result.grade,
 			 				            axisTick: {
 			 				                alignWithLabel: true
 			 				            }
@@ -108,13 +108,13 @@ function save() {
 			 			var option = {
 			 			animation:false,
 			 				    legend: { 
-			 				    	data : ['2017', '2018', '2019'],
+			 				    	data : result.year,
 			 				    	bottom : "1%"
 			 				    	},
 			 				    //tooltip: {},
 			 				    xAxis: {
 			 				    	type: 'category',
-			 				    	data: ['一年级','二年级','三年级','四年级','五年级','六年级'],
+			 				    	data: result.grade,
 			 				    	},
 			 				    yAxis: {type: 'value'},
 			 				    series: [
@@ -127,10 +127,10 @@ function save() {
 
 			 				        			},
 			 				        		},
-			 				                 name:'2017',
+			 				                 name:'2018',
 			 				                 type:'bar',
-			 				                 //data:result.seventeen
-			 				                 data:[26.7,25.5,30.2,33.4,45.6,38.3]
+			 				                 data:result.seventeen
+			 				                 //data:[26.7,25.5,30.2,33.4,45.6,38.3]
 			 				             },
 			 				             {
 			 				            	label: {
@@ -141,7 +141,7 @@ function save() {
 
 			 				        			},
 			 				        		},
-			 				                 name:'2018',
+			 				                 name:'2019',
 			 				                 type:'bar',
 			 				                 data:result.eighteen
 			 				                 //data:[23.5,24.7,28.2,30.8,40.1,30.7]
@@ -155,7 +155,7 @@ function save() {
 
 			 				        			},
 			 				        		},
-			 				                 name:'2019',
+			 				                 name:'2020',
 			 				                 type:'bar',
 			 				                 data:result.nineteen
 			 				                //data:[23.6,22.3,26.5,26.7,33.2,25.7]
@@ -214,7 +214,7 @@ function save() {
 			 			animation:false,
 			 					 xAxis: {
 			 						 type: 'category',
-			 			             data: ["2017","2018","2019"]
+			 			             data: result.year
 			 			         },
 			 			         yAxis: {
 			 			             type: 'value'
@@ -251,7 +251,7 @@ function save() {
 			 			animation:false,
 			 					 xAxis: {
 			 						 type: 'category',
-			 			             data: ["2017","2018","2019"]
+			 			             data: result.year
 			 			         },
 			 			         yAxis: {
 			 			             type: 'value'
@@ -292,7 +292,7 @@ function save() {
 			 				    //tooltip: {},
 			 				    xAxis: {
 			 				    	type: 'category',
-			 				    	data: ['一年级','二年级','三年级','四年级','五年级','六年级'],
+			 				    	data: result.grade,
 			 				    	},
 			 				    yAxis: {type: 'value'},
 			 				    series: [
@@ -353,11 +353,12 @@ function save() {
 			 				},
 			 				url : '/studentReport/xuexiaotu',
 			 				success : function(result) {
-			 					console.info(result);
-			 					window.location.href="/studentReport/baogaoxuexiao?school="+$("#school").val()
-																							+"&checkDate="+$("#checkDate").val()
-																							+"&schoolNum="+$("#schoolNum").val()
-																							+"&date="+result;
+			 					
+			 					window.location.href= "/studentReport/dengdaixuexiao?school="+$("#school").val()
+																			  +"&checkDate="+$("#checkDate").val()
+																			  +"&schoolNum="+$("#schoolNum").val()
+																			  +"&date="+result;
+			 								 					
 			 				}
 			 			})
 			 			
