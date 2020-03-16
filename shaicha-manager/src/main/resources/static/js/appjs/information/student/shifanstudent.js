@@ -591,7 +591,7 @@ function wxtuisong(){
 	var school=$("#school option:selected").val();
 	var grade=$("#grade").val();
 	var studentClass=$("#studentClass").val();
-	if(school==""){
+	/*if(school==""){
 		alert("请选择学校"); return;
 	}
 	if(grade==""){
@@ -599,12 +599,12 @@ function wxtuisong(){
 	}
 	if(studentClass==""){
 		alert("请选择班级"); return;
-	}
+	}*/
 	
 	 $.ajax({
 			type : "GET",
-			url : "http://localhost:8088/app/WxPushReport",
-			data : {school:school,grade:grade,studentClass:studentClass},
+			url : "http://39.98.218.125:8072/app/WxPushReport",
+			data : {school:encodeURIComponent(school),grade:encodeURIComponent(grade),studentClass:studentClass},
 			async : false,
 			success : function(data) {
 				alert(data.msg)

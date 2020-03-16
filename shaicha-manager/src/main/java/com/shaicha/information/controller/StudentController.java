@@ -409,7 +409,7 @@ public class StudentController {
 	public String shifanshaichadayin(Integer id,Model model){
 		//基本信息获取
 		StudentDO studentDO = studentService.get(id);
-		if(studentDO==null || studentDO.getLastCheckTime()==null) return null;
+		if(studentDO==null || studentDO.getLastCheckTime()==null) return "information/student/示范校筛查打印";
 		model.addAttribute("school", studentDO.getSchool());
 		model.addAttribute("grade",studentDO.getGrade().toString());
 		model.addAttribute("studentClass",studentDO.getStudentClass().toString());
@@ -654,7 +654,7 @@ public class StudentController {
 	 */
 	@ResponseBody
 	@GetMapping("/shouYeTrueData")
-	public Map<String,Object> shouYeTrueData(){
+	public Map<String,Double> shouYeTrueData(){
 		return studentService.shouYeTrueData();	
 	}
 	

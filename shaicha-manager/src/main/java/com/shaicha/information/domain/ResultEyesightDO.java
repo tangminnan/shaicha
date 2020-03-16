@@ -370,6 +370,21 @@ public class ResultEyesightDO implements Serializable {
 	public void setCheckType(String checkType) {
 		this.checkType = checkType;
 	}
+	@Override
+	public String toString() {
+		return "ResultEyesightDO [tEyesightId=" + tEyesightId + ", studentId=" + studentId + ", checkorId=" + checkorId
+				+ ", lifeFarvisionOd=" + lifeFarvisionOd + ", lifeFarvisionOs=" + lifeFarvisionOs
+				+ ", nakedFarvisionOd=" + nakedFarvisionOd + ", nakedFarvisionOs=" + nakedFarvisionOs
+				+ ", correctionFarvisionOd=" + correctionFarvisionOd + ", correctionFarvisionOs="
+				+ correctionFarvisionOs + ", lifeNearvisionOd=" + lifeNearvisionOd + ", lifeNearvisionOs="
+				+ lifeNearvisionOs + ", nakedNearvisionOd=" + nakedNearvisionOd + ", nakedNearvisionOs="
+				+ nakedNearvisionOs + ", school=" + school + ", grade=" + grade + ", studentSex=" + studentSex
+				+ ", xueBu=" + xueBu + ", checkDate=" + checkDate + ", checkDate1=" + checkDate1 + ", deleteFlag="
+				+ deleteFlag + ", endTime=" + endTime + ", startTime=" + startTime + ", minCheckDate=" + minCheckDate
+				+ ", maxCheckDate=" + maxCheckDate + ", checkType=" + checkType + ", glassvisionOd=" + glassvisionOd
+				+ ", identityCard=" + identityCard + ", glassvisionOs=" + glassvisionOs + ", dengxiaoqiujing="
+				+ dengxiaoqiujing + ", dushu=" + dushu + "]";
+	}
 	
 	
 }

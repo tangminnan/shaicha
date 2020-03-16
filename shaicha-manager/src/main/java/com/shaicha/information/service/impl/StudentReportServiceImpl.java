@@ -176,28 +176,19 @@ public class StudentReportServiceImpl implements StudentReportService{
 		//da.add(Double.parseDouble(df.format((double)second/(double)liNian2.size()*100)));
 		//da.add(79.30);
 		//da.add(66.10);
-		if(liNian.size() == 0){
-			da.add(0d);
-		}else{
-			da.add(Double.parseDouble(df.format((double)first/(double)liNian.size()*100)));
-		}
-		if(liNian2.size() == 0){
-			da.add(0d);
-		}else{
-			da.add(Double.parseDouble(df.format((double)second/(double)liNian2.size()*100)));
-		}
-		if(liNian3.size() == 0){
-			da.add(0d);
-		}else{
-			da.add(Double.parseDouble(df.format((double)third/(double)liNian3.size()*100)));
-		}
 		List<Object> ye = new ArrayList<>();
 		ye.add(sdf.format(qian));
 		ye.add(sdf.format(qu));
 		ye.add(sdf.format(xian));
+		
+		da.add(liNian.size()==0?0:Double.parseDouble(df.format((double)first/(double)liNian.size()*100)));
+		da.add(liNian2.size()==0?0:Double.parseDouble(df.format((double)second/(double)liNian2.size()*100)));
+		da.add(liNian3.size()==0?0:Double.parseDouble(df.format((double)third/(double)liNian3.size()*100)));
+		
 		mapP.put("overYearMyopia", da);
 		mapP.put("year", ye);
 		
+
 		return mapP;
 	}
 	

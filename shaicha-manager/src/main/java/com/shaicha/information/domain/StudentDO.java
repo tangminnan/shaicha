@@ -47,10 +47,40 @@ public class StudentDO implements Serializable {
 	private String studentNumber;
 	//联系电话
 	private String phone;
+	//右眼最新等效球镜
+	private Double dengxiaoqiujingr;
+	//左眼最新等效球镜
+	private Double dengxiaoqiujingl;
+	private String nakedNearvisionOd;//右眼裸眼近视力
+	private String nakedNearvisionOs;//左眼裸眼近视力
 	
 	
 	
+	public Double getDengxiaoqiujingr() {
+		return dengxiaoqiujingr;
+	}
+	public void setDengxiaoqiujingr(Double dengxiaoqiujingr) {
+		this.dengxiaoqiujingr = dengxiaoqiujingr;
+	}
+	public Double getDengxiaoqiujingl() {
+		return dengxiaoqiujingl;
+	}
+	public void setDengxiaoqiujingl(Double dengxiaoqiujingl) {
+		this.dengxiaoqiujingl = dengxiaoqiujingl;
+	}
+	public String getNakedNearvisionOd() {
+		return nakedNearvisionOd;
+	}
+	public void setNakedNearvisionOd(String nakedNearvisionOd) {
+		this.nakedNearvisionOd = nakedNearvisionOd;
+	}
 	
+	public String getNakedNearvisionOs() {
+		return nakedNearvisionOs;
+	}
+	public void setNakedNearvisionOs(String nakedNearvisionOs) {
+		this.nakedNearvisionOs = nakedNearvisionOs;
+	}
 	public String getNameJianpin() {
 		return nameJianpin;
 	}

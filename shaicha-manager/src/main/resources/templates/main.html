@@ -112,42 +112,19 @@
     					<div id="pie_charts5" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
     			</li>
-    			<!-- <li>
+    			 <li>
     				<div class="char_Parent">
     					<div class="content_area">
     						<div class="radius_area">
-    							<span>高眼压率</span>
+    							<span>年龄人数</span>
     						</div>
     					</div>
     					<div id="pie_charts6" class="pie_charts" style="width: 240px;height: 300px;-webkit-tap-highlight-color: transparent;user-select: none;position: relative;"></div>
     				</div>
-    			</li> -->
+    			</li>
     		</ul>
     	</div>
     </div>
-    
-
- <!--     <div style="padding: 10px 0 20px 10px;">
-        <h3>&nbsp;&nbsp;&nbsp;项目介绍</h3>
-        <ul>
-            <li>面向学习型的开源框架，简洁高效，减少过渡封装，展现技术本质</li>
-            <li>Springboot作为基础框架，使用mybatis作为持久层框架</li>
-            <li>使用官方推荐的thymeleaf做为模板引擎，shiro作为安全框架,主流技术，“一网打尽”</li>
-            <li>极简配置，一键前后台代码生成</li>
-        </ul>
-
-        <h3>&nbsp;&nbsp;&nbsp;获取源码</h3>
-        <ul>
-            <li>Github地址：<a href="https://github.com/lcg0124/bootdo.git" th:href="@{https://github.com/lcg0124/bootdo.git}" target="_blank">https://github.com/lcg0124/bootdo.git</a></li>
-            <li>Oschina地址：<a href="https://gitee.com/lcg0124/bootdo.git" target="_blank">https://gitee.com/lcg0124/bootdo.git</a></li>
-        </ul>
-
-        <h3>&nbsp;&nbsp;&nbsp;官方QQ群</h3>
-        <ul>
-            <li>点击链接加入群【BootDo交流群】：<a href="https://jq.qq.com/?_wv=1027&k=5EYXfiZ">669039323(满)</a></li>
-            <li>点击链接加入群聊【BootDo交流二群】：<a href="https://jq.qq.com/?_wv=1027&k=5M659N4">614726589</a></li>
-        </ul>
-    </div>  -->
 </div>
 <div th:include="include :: footer"></div>
 <input type="hidden" id="didujinshiNumber">
@@ -170,21 +147,31 @@
 <input type="hidden" id="quguangcenciNumber">
 <input type="hidden" id="quguangcenciNumberLv">
 <input type="hidden" id="wuquguangcenci">
+
+<input type="hidden" id="xiaoyuliusui">
+<input type="hidden" id="liudaoshiersui">
+<input type="hidden" id="shisandaoshiwusui">
+<input type="hidden" id="shiliudaoshibasui">
+<input type="hidden" id="dyushibasui">
+
+					
+				
+				
 <script src="/js/plugins/echarts/echarts.js"></script>
 <script type="text/javascript">
 	
 $.ajax({
 	cache : true,
 	type : "GET",
-	async:false,
+  	async:false,  
 	url : "/information/student/shouYeTrueData",
 	error : function(request) {
 		parent.layer.alert("网络超时");
 	},
 	success : function(data) {
-		$(".total").text(data.totalNumber+"人");
-		$("#shifanxiao").text(data.shifanxiao+"人");
-		$("#putong").text(data.putong);
+		$(".total").text(data.totalnumber+"人");
+		$("#shifanxiao").text(data.shifanxiaoshaicha+"人");
+		$("#putong").text(data.putongshaicha);
 		$("#jxjsNumber").val(data.jxjsNumber);
 		$("#jslcqianqiNumber").val(data.jslcqianqiNumber);
 		$("#jinshizongjiNumber").val(data.jinshizongjiNumber);
@@ -192,23 +179,29 @@ $.ajax({
 		$("#zhongdujinshiNumber").val(data.zhongdujinshiNumber);
 		$("#didujinshiNumber").val(data.didujinshiNumber);
 		$("#zhengchang").val(data.zhengchang);
-		$("#jinshilv").val(data.jinshilv);
+		$("#jinshilv").val(data.jinshilv+'%');
 		$("#buliangshiliNumber").val(data.buliangshiliNumber);
-		$("#buliangshililv").val(data.buliangshililv);
+		$("#buliangshililv").val(data.buliangshililv+'%');
 		$("#wubuliang").val(data.wubuliang);
 		$("#yuanshiNumber").val(data.yuanshiNumber);
 		$("#wuyuanshi").val(data.wuyuanshi);
-		$("#yunshihuanbinglv").val(data.yunshihuanbinglv);
+		$("#yunshihuanbinglv").val(data.yunshihuanbinglv+'%');
 		$("#zhengshiNumber").val(data.zhengshiNumber);
 		$("#wuzhengshi").val(data.wuzhengshi);
-		$("#zhengshiyanlv").val(data.zhengshiyanlv);
+		$("#zhengshiyanlv").val(data.zhengshiyanlv+'%');
 		$("#wuquguangcenci").val(data.wuquguangcenci);
-		$("#quguangcenciNumberLv").val(data.quguangcenciNumberLv);
+		$("#quguangcenciNumberLv").val(data.quguangcenciNumberLv+'%');
 		$("#quguangcenciNumber").val(data.quguangcenciNumber);
+
+		
+		$("#xiaoyuliusui").val(data.nain6);
+		$("#liudaoshiersui").val(data.nain612);
+		$("#shisandaoshiwusui").val(data.nain1315);
+		$("#shiliudaoshibasui").val(data.nain1618);
+		$("#dyushibasui").val(data.nain18);
+
 	}
 });
-	
-	
 	
 	// 基于准备好的dom，初始化echarts实例
 	var myChart =  echarts.init(document.getElementById('pie_charts'));
@@ -216,8 +209,8 @@ $.ajax({
 	var myChart3 = echarts.init(document.getElementById('pie_charts3'));
 	var myChart4 = echarts.init(document.getElementById('pie_charts4'));
 	var myChart5 = echarts.init(document.getElementById('pie_charts5'));
-/* 	var myChart6 = echarts.init(document.getElementById('pie_charts6'));
- */	 // 指定图表的配置项和数据
+ 	var myChart6 = echarts.init(document.getElementById('pie_charts6'));
+ 	 // 指定图表的配置项和数据
     var option = {
     		 title: {
     	       // text: '正常',
@@ -490,7 +483,7 @@ $.ajax({
     var option4 = {
    		 title: {
    	       // text: '正常',
-   	        subtext: '11.18%',
+   	        subtext: '',
    	        textStyle:{
    	            fontSize:16,
    	            color: '#666666'
@@ -511,7 +504,7 @@ $.ajax({
    	    legend: {
    	       // orient: 'vertical',
    	        bottom: "2%",
-   	        data:['患病','正常']
+   	     data:['<6岁','6—12岁','13-15岁','16-18岁','>18岁']
    	    },
    	    
    	    series: [
@@ -544,9 +537,12 @@ $.ajax({
    	                    show: false
    	                }
    	            },
-   	            data:[
-							{value:20804, name:'正常'},
-							{value:2618, name:'患病'}
+   	            data:[ 
+					{value:$("#xiaoyuliusui").val(), name:'<6岁'},
+					{value:$("#liudaoshiersui").val(), name:'6—12岁'},
+					{value:$("#shisandaoshiwusui").val(), name:'13-15岁'},
+					{value:$("#shiliudaoshibasui").val(), name:'16-18岁'},
+					{value:$("#dyushibasui").val(), name:'>18岁'}
    	              ]
    	        },
    	            
@@ -629,8 +625,9 @@ $.ajax({
     myChart3.setOption(option1);
     myChart4.setOption(option6);
     myChart5.setOption(option3);
-/*     myChart6.setOption(option4);
- */</script>
+	myChart6.setOption(option4);
+
+ </script>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 shaicha:
-  uploadPath: D:/www/uploaded_files/
-  poiword: D:/www/poiword/
+  uploadPath: /www/uploaded_files/
+  poiword: /www/poiword/
 logging:
   level:
     root: info
@@ -49,3 +49,4 @@ spring:
         max-active: 100
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1
+  
