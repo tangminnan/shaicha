@@ -308,6 +308,12 @@ public class ResultServiceImpl implements ResultService{
 		else{
 			eyesightDao.saveEyesightDO(resultEyesightDO);
 		}
+		//向t_student表中更新nakedFarvisionOd nakedFarvisionOs
+		StudentDO studentDO = new StudentDO();
+		studentDO.setIdentityCard(resultEyesightDO.getIdentityCard());
+		studentDO.setNakedFarvisionOd(resultEyesightDO.getNakedFarvisionOd());
+		studentDO.setNakedFarvisionOs(resultEyesightDO.getNakedFarvisionOs());
+		studentDao.updateStudentDOshi(studentDO);
 	}
 	public void addUpdate(Long studentId,ResultEyeaxisDO resultEyeaxisDO){
 		
@@ -415,6 +421,16 @@ public class ResultServiceImpl implements ResultService{
 			for(ResultDiopterDO resultDiopterDO:diopterDOs){
 				diopterDao.saveDiopterDO(resultDiopterDO);
 			}
+			//向t_student表中更新 dengxiaoqiujingr，dengxiaoqiujingl
+			StudentDO studentDO = new StudentDO();
+			studentDO.setIdentityCard(diopterDOs.get(0).getIdentityCard());
+			for(ResultDiopterDO d :diopterDOs){
+				if("AVG".equals(d.getType()) && "SECOND_CHECK".equals(d.getFirstSecond()) && "R".equals(d.getIfrl()))
+					studentDO.setDengxiaoqiujingr(d.getDengxiaoqiujing());
+				if("AVG".equals(d.getType()) && "SECOND_CHECK".equals(d.getFirstSecond()) && "L".equals(d.getIfrl()))
+					studentDO.setDengxiaoqiujingl(d.getDengxiaoqiujing());
+			}
+			studentDao.updateStudentDOshi(studentDO);	
 		}
 	}
 	public void addUpdatec(Long studentId,List<ResultCornealDO> cornealDOs){		

@@ -51,8 +51,8 @@ public class StudentDO implements Serializable {
 	private Double dengxiaoqiujingr;
 	//左眼最新等效球镜
 	private Double dengxiaoqiujingl;
-	private String nakedNearvisionOd;//右眼裸眼近视力
-	private String nakedNearvisionOs;//左眼裸眼近视力
+	private String nakedFarvisionOd;//右眼裸眼近视力
+	private String nakedFarvisionOs;//左眼裸眼近视力
 	
 	
 	
@@ -67,19 +67,6 @@ public class StudentDO implements Serializable {
 	}
 	public void setDengxiaoqiujingl(Double dengxiaoqiujingl) {
 		this.dengxiaoqiujingl = dengxiaoqiujingl;
-	}
-	public String getNakedNearvisionOd() {
-		return nakedNearvisionOd;
-	}
-	public void setNakedNearvisionOd(String nakedNearvisionOd) {
-		this.nakedNearvisionOd = nakedNearvisionOd;
-	}
-	
-	public String getNakedNearvisionOs() {
-		return nakedNearvisionOs;
-	}
-	public void setNakedNearvisionOs(String nakedNearvisionOs) {
-		this.nakedNearvisionOs = nakedNearvisionOs;
 	}
 	public String getNameJianpin() {
 		return nameJianpin;
@@ -346,5 +333,19 @@ public class StudentDO implements Serializable {
 	public void setCheckType(String checkType) {
 		this.checkType = checkType;
 	}
+	public String getNakedFarvisionOd() {
+		return nakedFarvisionOd;
+	}
+	public void setNakedFarvisionOd(String nakedFarvisionOd) {
+		this.nakedFarvisionOd = nakedFarvisionOd;
+	}
+	public String getNakedFarvisionOs() {
+		return nakedFarvisionOs;
+	}
+	public void setNakedFarvisionOs(String nakedFarvisionOs) {
+		this.nakedFarvisionOs = nakedFarvisionOs;
+	}
+	
+	
 	
 }

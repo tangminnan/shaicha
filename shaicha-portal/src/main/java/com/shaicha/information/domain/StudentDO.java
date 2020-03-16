@@ -49,7 +49,10 @@ public class StudentDO implements Serializable {
 	private String QRCode;
 	//上次检查时间
 	private Date lastCheckTime;
-	
+	private String nakedFarvisionOd;//右眼裸眼近视力
+	private String nakedFarvisionOs;//左眼裸眼近视力
+	private Double dengxiaoqiujingr;
+	private Double dengxiaoqiujingl;
 
 	public String getQRCode() {
 		return QRCode;
@@ -243,8 +246,29 @@ public class StudentDO implements Serializable {
 	public void setLastCheckTime(Date lastCheckTime) {
 		this.lastCheckTime = lastCheckTime;
 	}
-	
-	
-	
+	public String getNakedFarvisionOd() {
+		return nakedFarvisionOd;
+	}
+	public void setNakedFarvisionOd(String nakedFarvisionOd) {
+		this.nakedFarvisionOd = nakedFarvisionOd;
+	}
+	public String getNakedFarvisionOs() {
+		return nakedFarvisionOs;
+	}
+	public void setNakedFarvisionOs(String nakedFarvisionOs) {
+		this.nakedFarvisionOs = nakedFarvisionOs;
+	}
+	public Double getDengxiaoqiujingr() {
+		return dengxiaoqiujingr;
+	}
+	public void setDengxiaoqiujingr(Double dengxiaoqiujingr) {
+		this.dengxiaoqiujingr = dengxiaoqiujingr;
+	}
+	public Double getDengxiaoqiujingl() {
+		return dengxiaoqiujingl;
+	}
+	public void setDengxiaoqiujingl(Double dengxiaoqiujingl) {
+		this.dengxiaoqiujingl = dengxiaoqiujingl;
+	}
 	
 }

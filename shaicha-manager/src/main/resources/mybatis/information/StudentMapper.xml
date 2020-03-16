@@ -71,8 +71,11 @@
 		  		</where>
 	</select>
 	<select id="countP" resultType="int">
-		select count(*) from t_student where  last_check_time is not null
-		 <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
+		select count(*) from t_student 
+		where last_check_time is not null
+			 <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
+			 <if test="address != null and address != ''">and  address = #{address} </if>
+			 <if test="lastCheckTime != null and lastCheckTime != ''">and last_check_time &gt; DATE_FORMAT('2019-06-30','%Y-%m-%d') </if>
 		
 	</select>
 	 
@@ -692,10 +695,10 @@ LIMIT #{i},#{j}
 <select id="getAllCheckStudentDO"  resultType="com.shaicha.information.domain.StudentDO">
 	select ifnull(dengxiaoqiujingr,-10) dengxiaoqiujingr,
 		   ifnull(dengxiaoqiujingl,-10) dengxiaoqiujingl,birthday,
-		   ifnull(naked_nearvision_od,"r") nakedNearvisionOd,
-		   ifnull(naked_nearvision_os,"r") nakedNearvisionOs
+		   ifnull(naked_farvision_od,"r") nakedFarvisionOd,
+		   ifnull(naked_farvision_os,"r") nakedFarvisionOs
 		   
-		   from t_student  where last_check_time is not null limit #{i},#{j}
+		   from t_student  where last_check_time is not null   limit #{i},#{j}  
 </select>
 	
 </mapper>

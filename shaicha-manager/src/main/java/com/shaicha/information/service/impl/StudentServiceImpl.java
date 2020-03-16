@@ -923,12 +923,22 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Map<String, Double> shouYeTrueData() {
 		Map<String,Object> paMap = new HashMap<String,Object>();
-		int totalnumber = studentDao.countP(paMap);
+		int totalnumber =studentDao.countP(paMap);
 		paMap.put("checkType","SHI_FANXIAO");
+		paMap.put("address","济南市");
+		Calendar calendar  = Calendar.getInstance();
+		calendar.set(Calendar.YEAR,2019);
+		calendar.set(Calendar.MONTH, 6);
+		calendar.set(Calendar.DAY_OF_MONTH, 0);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND,0);
+		String str = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+		paMap.put("lastCheckTime",str);
 		int shifan = studentDao.countP(paMap);
-		
-		
-		 Map<String,Double> freeMap = new HashMap<String,Double>();
+		paMap.put("checkType","PU_TONG");
+		int putong = studentDao.countP(paMap);
+		Map<String,Double> freeMap = new HashMap<String,Double>();
 
 		 freeMap.put("jslcqianqiNumber",0.0);
 		 freeMap.put("jxjsNumber", 0.0);
@@ -945,7 +955,7 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("quguangcenciNumber",0.0);
 		 freeMap.put("totalnumber",(double)totalnumber);
 		 freeMap.put("shifanxiaoshaicha",(double)shifan);
-		 freeMap.put("putongshaicha",(double)(totalnumber-shifan));
+		 freeMap.put("putongshaicha",(double)(putong));
 		 freeMap.put("nain6",0.0);
 		 freeMap.put("nain612",0.0);
 		 freeMap.put("nain1315",0.0);
@@ -1036,8 +1046,8 @@ public class StudentServiceImpl implements StudentService {
 			Double dengxiaoqiujing=0.0;
 //			String nakedFarvisionOd=resultEyeSight.getNakedFarvisionOd();
 //			String nakedFarvisionOs=resultEyeSight.getNakedFarvisionOs();
-			String nakedFarvisionOd=s.getNakedNearvisionOd();
-			String nakedFarvisionOs=s.getNakedNearvisionOs();
+			String nakedFarvisionOd=s.getNakedFarvisionOd();
+			String nakedFarvisionOs=s.getNakedFarvisionOs();
 			if(!nakedFarvisionOd.matches("-?[0-9]+.?[0-9]*")) continue;
 			if(!nakedFarvisionOs.matches("-?[0-9]+.?[0-9]*")) continue;
 			 nakedFarvisionOd=nakedFarvisionOd.compareTo(nakedFarvisionOs)>0?nakedFarvisionOs:nakedFarvisionOd;

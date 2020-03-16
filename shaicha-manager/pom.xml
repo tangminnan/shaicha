@@ -272,7 +272,7 @@
 		</dependency>
 		
         <!--war包部署需要-->
-                   <dependency>
+                    <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
