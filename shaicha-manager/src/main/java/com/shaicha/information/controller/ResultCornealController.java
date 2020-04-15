@@ -70,7 +70,7 @@ public class ResultCornealController {
 		List<ResultOptometryDO> list = resultOptometryService.list(params);
 		for (ResultOptometryDO resultOptometryDO : list) {
 			Integer tOptometryId = resultOptometryDO.gettOptometryId();
-			resultCornealList = resultCornealService.queryByToptometryTd(tOptometryId);
+			resultCornealList.addAll(resultCornealService.queryByToptometryTd(tOptometryId));
 		
 		}
 		int size = resultCornealList.size();
