@@ -70,7 +70,7 @@ public class ResultDiopterController {
 		List<ResultOptometryDO> list = resultOptometryService.list(params);
 		for (ResultOptometryDO resultOptometryDO : list) {
 			Integer tOptometryId = resultOptometryDO.gettOptometryId();
-			 resultDiopterDOList = resultDiopterService.getByToptometryId(tOptometryId);
+			resultDiopterDOList.addAll(resultDiopterService.getByToptometryId(tOptometryId));
 		
 		}
 		int size = resultDiopterDOList.size();

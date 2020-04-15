@@ -142,13 +142,9 @@ public class ChectorController {
 	@ResponseBody
 	@RequiresPermissions("information:chector:remove")
 	public R remove( Long chectorId){
-		ChectorDO chectorDO=new ChectorDO();
-		chectorDO.setChectorId(chectorId);
-		chectorDO.setDeleted(1);
-		if(chectorService.update(chectorDO)>0){
+			chectorService.remove(chectorId);
 		return R.ok();
-		}
-		return R.error();
+		
 	}
 	
 	/**

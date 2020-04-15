@@ -86,10 +86,10 @@ function load() {
 							field : 'secondCheckLcs', 
 							title : '第二次检查左眼cs' 
 						},
-						/*								{
-							field : 'deleteFlag', 
-							title : '状态0：正常1：禁止' 
-						},*/
+														{
+							field : 'checkDate', 
+							title : '检查日期' 
+						},
 														
 						{
 							field : 'secondCheckVd', 
