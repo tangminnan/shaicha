@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head th:include="include :: header"></head>
+    
+    <title>欢迎页</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+   
+</head>
+<body>
+
+<div class="panel panel-default" style="background-color: #EEEEEE; top: 1px;">
+    <div class="panel-heading"> 
+    <!-- <h3>&nbsp;&nbsp;&nbsp;欢迎登录儿童近视防控数据平台管理系统</h3></div> -->
+    
+    	<a href="https://console.huaweicloud.com/dlvapp/share/?id=e32c088833e64d2a80ac287b166d90f3&locale=zh-cn&region=cn-north-4" id="shouye_dlv" style="display: none;"></a>
+    
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+	<script type="text/javascript">
+		window.onload = function(){
+		        function autoclick(){
+		            var url = document.getElementById('shouye_dlv').href;//获取要点击的a标签
+		            window.location.href= url;
+		        }
+		       
+		        setTimeout(autoclick, 1000)
+		    }
+	</script>
+</body>
+</html>
