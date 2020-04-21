@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header">
+<style type="text/css">
+
+
+</style>
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						
+						<div class="columns pull-right">
+							
+							<button class="btn btn-primary" onclick="window.history.go(-1);">返回</button>
+						</div>
+						<div class="columns pull-right">
+							<input id="identityCard" th:value="${identityCard}" type="hidden">
+							<button class="btn btn-success" onclick="jiazai()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-3 nopadding ">
+							<input id="checkDate" name="checkDate" class="form-control" placeholder="检查时间" type="text">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		        	<ul class="nav nav-tabs" id="myTab">
+  						<li class="active"><a class="btn btn-primary btn-xs" href="#shilidetail" mce_href="#" style="text-decoration: none;">视力详情</a></li>
+						<li><a class="btn btn-primary btn-xs" href="#yanzhoudetail" mce_href="#" style="text-decoration: none;">眼轴长度</a></li>
+						<li><a class="btn btn-primary btn-xs" href="#yanneiyadetail" mce_href="#" style="text-decoration: none;">眼内压</a></li>
+						<li><a class="btn btn-primary btn-xs" href="#yanqianhoujie" mce_href="#" style="text-decoration: none;">眼前后节</a></li>
+						<li><a class="btn btn-primary btn-xs" href="#tiaojiedetail" mce_href="#" style="text-decoration: none;">调节灵敏度</a></li>
+						<!-- <li><a class="btn btn-primary btn-xs" href="#yanguangdetail" mce_href="#" style="text-decoration: none;">验光详情</a></li> -->
+					</ul>
+ 
+					<div class="tab-content">
+  						<div class="tab-pane active " id="shilidetail">
+  					     	<table id="exampleTable1" data-mobile-responsive="true"></table>
+  						</div>
+  					
+  						<div class="tab-pane" id="yanzhoudetail">
+  							<table id="exampleTable2" data-mobile-responsive="true"></table>
+  						</div>
+  						
+  						<div class="tab-pane" id="yanneiyadetail">
+  							<table id="exampleTable3" data-mobile-responsive="true"></table>
+  						</div>
+  						
+  						<div class="tab-pane" id="yanqianhoujie">
+  							<table id="exampleTable4" data-mobile-responsive="true"></table>
+  						</div>
+  						
+  						<div class="tab-pane" id="tiaojiedetail">
+  							<table id="exampleTable5" data-mobile-responsive="true"></table>
+  						</div>
+  						
+  						<!-- <div class="tab-pane" id="yanguangdetail">
+  							<table id="exampleTable6" data-mobile-responsive="true"></table>
+  						</div> -->
+					</div>
+	
+	</div>
+
+
+    
+  
+		<input type="hidden" id="getMemberPhone">
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+				var s_jilu_h = 'hidden';
+			</script>
+		</div>
+		
+		<div shiro:hasPermission="information:member:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="information:device:device">
+			<script type="text/javascript">
+			 s_jilu_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="information:member:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="information:member:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+		<script type="text/javascript" src="/js/appjs/informationNEW/student/detailed.js"></script>
+		
+	<script type="text/javascript">
+
+	$('#myTab a').click(function (e) {
+		  e.preventDefault();
+		  if($(this).text()=="运动日志")
+			  reLoad2();
+		  $(this).tab('show');
+		})
+	
+		function jiazai(){
+			$("#myTab a:first").tab('show');
+			reLoad();
+		}
+	
+	
+	
+	laydate.render({
+		elem: '#lessonTime',
+		type: 'month',
+		done: function(value, date){
+			$("#lessonTime").val(value);
+			reLoad2();
+		}
+	});
+	
+	laydate.render({
+		elem: '#checkDate',
+		type: 'date'
+	});
+	laydate.render({
+		elem: '#endTime',
+		type: 'datetime'
+	});
+
+
+	function exportBySingleMember(){
+		var startTime = $("#startTime").val();
+		var endTime = $("#endTime").val();
+		var id=$("#detail_id").val();
+		window.location.href="/information/member/exportBySingleMember?startTime="+startTime+"&endTime="+endTime+"&id="+id;
+	}
+	</script>
+	
+	 <script type="text/javascript" src="/js/appjs/information/member/detail.js"></script>
+	 <script type="text/javascript" src="/js/appjs/information/sportslog/log.js"></script>
+	 
+</body>
+</html>

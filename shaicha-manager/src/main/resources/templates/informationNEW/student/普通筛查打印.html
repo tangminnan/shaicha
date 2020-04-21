@@ -1,0 +1,99 @@
+<html>
+ <head>
+  <style>
+  	p{margin-top:0pt;margin-bottom:1pt;}
+	  	span.X1{font-size:11.0pt;}
+	  	span.X3{font-size:11.0pt;}
+	  	span.X4{font-size:11.0pt;}
+	  	span.X5{font-size:11.0pt;color:#0000ff;text-decoration:underline;}
+	  	p.X6{text-indent:21.0pt;}
+	  	span.X6{font-family:'Times New Roman';font-size:10.0pt;}
+  		table{margin: 0 auto;}
+  	
+  	</style>
+ </head>
+ <body>
+  <div style="width:612.0pt;margin-bottom:72.0pt;margin-top:72.0pt;margin-left:90.0pt;margin-right:90.0pt;">
+   <table class="">
+    <tbody>
+     <tr class="">
+      <td class="" style="width:494.55pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:left;text-indent:-37.0pt;text-indent:37.0pt;text-align:center;"><br /></p><p style="text-align:center;"><span style="font-family:'宋体';font-size:16.0pt;font-weight:bold;color:#000000;">山东省儿童青少年近视筛查防控健康档案</span><span style="font-family:'宋体';font-size:16.0pt;font-weight:bold;color:#000000;"> </span></p><p style="text-align:center;"><br /></p><p style="text-align:center;"></p></td>
+     </tr>
+     <tr class="">
+      <td class="" style="width:494.55pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">学校:</span><span style="font-family:'宋体';font-size:12.0pt;"th:text="${school}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 年级:</span><span style="font-family:'宋体';font-size:12.0pt;"th:text="${grade}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 班级:</span><span style="font-family:'宋体';font-size:12.0pt;" th:text="${studentClass}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> </span></p><p><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">姓名:</span><span style="font-family:'宋体';font-size:12.0pt;" th:text="${studentName}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 性别:</span><span style="font-family:'宋体';font-size:12.0pt;"th:text="${studentSex}"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span style="font-family:'宋体';font-size:12.0pt;"> 检查时间:</span><span style="font-family:'宋体';font-size:12.0pt;color:#000000;" th:text="${lastCheckTime}"></span></p></td>
+     </tr>
+     <tr class="">
+      <td class="" style="width:494.55pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><br /></p><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;font-weight:bold;color:#000000;">视力检查结果</span></p>
+       <table class="">
+        <tbody>
+         <tr class="">
+          <td class="" style="width:39.65pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">眼别</span></p></td>
+          <td class="" style="width:136.15pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">裸眼视力</span></p></td>
+          <td class="" style="width:233.25pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">戴镜视</span><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">力</span></p></td>
+         </tr>
+         <tr class="">
+          <td class="" style="width:39.65pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">右眼</span></p></td>
+          <td class="" style="width:136.15pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span id="luoyanyuanshili_CheckItem_20181123135936410"><span style="font-family:'宋体';font-size:12.0pt;"></span><span style="font-family:'宋体';font-size:10.0pt;" th:text="${nakedFarvisionOd}"></span><span style="font-family:'宋体';font-size:12.0pt;"></span></span></p></td>
+          <td class="" style="width:233.25pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-indent:36.0pt;text-align:justified;"><span style="font-family:'宋体';font-size:12.0pt;"></span><span style="font-family:'宋体';font-size:10.0pt;" th:text="${correctionFarvisionOd}"></span><span style="font-family:'宋体';font-size:12.0pt;"></span></p></td>
+         </tr>
+         <tr class="">
+          <td class="" style="width:39.65pt;border:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">左眼</span></p></td>
+          <td class="" style="width:136.15pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-indent:12.0pt;text-align:justified;"><span style="font-family:'宋体';font-size:12.0pt;"></span><span style="font-family:'宋体';font-size:10.0pt;" th:text="${nakedFarvisionOs}"></span><span style="font-family:'宋体';font-size:12.0pt;"></span></p></td>
+          <td class="" style="width:233.25pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:justified;"><span style="font-family:'宋体';font-size:12.0pt;"> </span><span style="font-family:'宋体';font-size:10.0pt;" th:text="${correctionFarvisionOs}"></span><span style="font-family:'宋体';font-size:12.0pt;"></span></p></td>
+         </tr>
+        </tbody>
+       </table><p style="text-align:center;"><br /></p><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;font-weight:bold;color:#000000;">自动电脑验光结果</span></p>
+       <table class="">
+        <tbody>
+         <tr class="">
+          <td class="" style="width:50.25pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><br /></p></td>
+          <td class="" style="width:117.75pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">球镜</span></p></td>
+          <td class="" style="width:109.5pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">柱镜</span></p></td>
+          <td class="" style="width:123.75pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">轴位</span></p></td>
+         </tr>
+         <tr class="">
+          <td class="" style="width:50.25pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">右眼</span></p></td>
+          <td class="" style="width:117.75pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:justified;"><span id="diannaoyanguang_CheckItem_20181123140009700"><span style="font-family:'宋体';font-size:12.0pt;" th:text="${diopterSR}"></span></span></p></td>
+          <td class="" style="width:109.5pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;" th:text="${diopterCR}"></span></p></td>
+          <td class="" style="width:123.75pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;" th:text="${diopterAR}"></span></p></td>
+         </tr>
+         <tr class="">
+          <td class="" style="width:50.25pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">左眼</span></p></td>
+          <td class="" style="width:117.75pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:justified;"><span id="diannaoyanguang_CheckItem_20181123140016441"><span style="font-family:'宋体';font-size:12.0pt;" th:text="${diopterSL}"></span></span></p></td>
+          <td class="" style="width:109.5pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;" th:text="${diopterCL}"></span></p></td>
+          <td class="" style="width:123.75pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p style="text-align:center;"><span style="font-family:'宋体';font-size:12.0pt;" th:text="${diopterAL}"></span></p></td>
+         </tr>
+        </tbody>
+       </table><p><span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> </span></p><p class="X1 X6" style="text-align:center;"><span class="X1 X6" style="font-family:'宋体';font-size:14.0pt;font-weight:bold;color:#000000;"> 医生诊断及建议</span></p><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 1、 医生的初步诊断：</span></p>
+       <table class="">
+        <tbody>
+         <tr class="">
+          <td class="" style="width:406.5pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p class="X1 X6"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;" th:text="${doctorchubu}"></span></p></td>
+         </tr>
+        </tbody>
+       </table><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 2、医生的特别建议：</span></p>
+       <table class="">
+        <tbody>
+         <tr class="">
+          <td class="" style="width:405.75pt;border-top:0.1px solid #000000;border-bottom:0.1px solid #000000;border-left:0.1px solid #000000;border-right:0.1px solid #000000;"><p class="X1 X6"><span id="jianyi_CheckItem_20181025142218427"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;" th:text="${doctortebie}"></span></span></p></td>
+         </tr>
+        </tbody>
+       </table><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 3、日常生活注意事项：</span></p><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> </span></p><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 1）定期进行眼底检查。佩戴眼镜或近视屈光手术可以矫正视力，但并不能阻止眼底病</span></p><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 变的进展。</span></p><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 2）养成良好的生活习惯：减少近距离用眼时间，每40分钟放松休息5到10分钟（特别</span></p><p class="X1 X6" style="text-indent:0.0pt;"><span class="X1 X6" style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 针对青少年：多进行户外活动，注意保持良好的读写姿势）。</span></p><p></p></td>
+     </tr>
+    </tbody>
+   </table>
+   
+   <p style="margin-left: 100px;"><span style="font-family:'宋体';font-size:11.0pt;color:#000000;"> </span><span style="font-family:'宋体';font-size:12.0pt;color:#000000;">山东省卫生健康委员会</span></p>
+   <div style="float: right">
+	   <p><span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 山东省教育厅监制</span></p>
+	   <p><span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 山东省青少年视力低下防治中心</span></p>
+	   <p><span style="font-family:'宋体';font-size:12.0pt;color:#000000;"> 联系电话：0531-58859678</span><span style="font-family:'宋体';font-size:11.0pt;color:#000000;"> </span></p>
+  </div>
+  </div>
+ </body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.ResultEyeaxisNewDao">
+
+	<select id="get" resultType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
+		select `t_eyeaxis_id`,`student_id`,`checkor_id`,`first_check_od`,`first_check_os`,`check_date`,`second_check_od`,`second_check_os`,`delete_flag`,activity_id from t_result_eyeaxis_new where t_eyeaxis_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
+		select `t_eyeaxis_id`,`student_id`,`checkor_id`,`first_check_od`,`first_check_os`,`check_date`,`second_check_od`,`second_check_os`,`delete_flag`,`identity_card`,activity_id from t_result_eyeaxis_new
+        <where>  
+		  		  <if test="tEyeaxisId != null and tEyeaxisId != ''"> and t_eyeaxis_id = #{tEyeaxisId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="firstCheckOd != null and firstCheckOd != ''"> and first_check_od = #{firstCheckOd} </if>
+		  		  <if test="firstCheckOs != null and firstCheckOs != ''"> and first_check_os = #{firstCheckOs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="secondCheckOd != null and secondCheckOd != ''"> and second_check_od = #{secondCheckOd} </if>
+		  		  <if test="secondCheckOs != null and secondCheckOs != ''"> and second_check_os = #{secondCheckOs} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		  <!-- <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if> -->
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t_eyeaxis_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_eyeaxis_new
+		 <where>  
+		  		  <if test="tEyeaxisId != null and tEyeaxisId != ''"> and t_eyeaxis_id = #{tEyeaxisId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="firstCheckOd != null and firstCheckOd != ''"> and first_check_od = #{firstCheckOd} </if>
+		  		  <if test="firstCheckOs != null and firstCheckOs != ''"> and first_check_os = #{firstCheckOs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="secondCheckOd != null and secondCheckOd != ''"> and second_check_od = #{secondCheckOd} </if>
+		  		  <if test="secondCheckOs != null and secondCheckOs != ''"> and second_check_os = #{secondCheckOs} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO" useGeneratedKeys="true" keyProperty="tEyeaxisId">
+		insert into t_result_eyeaxis_new
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`first_check_od`, 
+			`first_check_os`, 
+			`check_date`, 
+			`second_check_od`, 
+			`second_check_os`, 
+			`delete_flag`,
+			activity_id
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{firstCheckOd}, 
+			#{firstCheckOs}, 
+			#{checkDate}, 
+			#{secondCheckOd}, 
+			#{secondCheckOs}, 
+			#{deleteFlag},
+			#{activityId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
+		update t_result_eyeaxis_new 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="firstCheckOd != null">`first_check_od` = #{firstCheckOd}, </if>
+			<if test="firstCheckOs != null">`first_check_os` = #{firstCheckOs}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="secondCheckOd != null">`second_check_od` = #{secondCheckOd}, </if>
+			<if test="secondCheckOs != null">`second_check_os` = #{secondCheckOs}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag},</if>
+			<if test="activityId != null"> activity_id = #{activityId} </if>
+		</set>
+		where t_eyeaxis_id = #{tEyeaxisId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_eyeaxis_new where t_eyeaxis_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_eyeaxis_new where t_eyeaxis_id in 
+		<foreach item="tEyeaxisId" collection="array" open="(" separator="," close=")">
+			#{tEyeaxisId}
+		</foreach>
+	</delete>
+	
+	<select id="getEyeaxis" resultType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
+		select first_check_od,first_check_os from t_result_eyeaxis_new
+		where identity_card = #{identityCard} and check_date between #{start} and #{end}
+	</select>
+
+</mapper>

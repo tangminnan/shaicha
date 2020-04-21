@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.ResultEyepressureNewDao">
+
+	<select id="get" resultType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
+		select `t_eyepressure_id`,`student_id`,`checkor_id`,`eye_pressure_od`,`eye_pressure_os`,`check_date`,`delete_flag`,activity_id from t_result_eyepressure_new where t_eyepressure_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
+		select `t_eyepressure_id`,`student_id`,`checkor_id`,`eye_pressure_od`,`eye_pressure_os`,`check_date`,`delete_flag`,`identity_card`,activity_id from t_result_eyepressure_new
+        <where>  
+		  		  <if test="tEyepressureId != null and tEyepressureId != ''"> and t_eyepressure_id = #{tEyepressureId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="eyePressureOd != null and eyePressureOd != ''"> and eye_pressure_od = #{eyePressureOd} </if>
+		  		  <if test="eyePressureOs != null and eyePressureOs != ''"> and eye_pressure_os = #{eyePressureOs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		  <!-- <if test="startTime != null and startTime != ''"> and check_date &gt;= #{startTime} </if>
+		  		  <if test="endTime != null and endTime != ''"> and check_date &lt;= #{endTime} </if> -->
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t_eyepressure_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_eyepressure_new
+		 <where>  
+		  		  <if test="tEyepressureId != null and tEyepressureId != ''"> and t_eyepressure_id = #{tEyepressureId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="eyePressureOd != null and eyePressureOd != ''"> and eye_pressure_od = #{eyePressureOd} </if>
+		  		  <if test="eyePressureOs != null and eyePressureOs != ''"> and eye_pressure_os = #{eyePressureOs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO" useGeneratedKeys="true" keyProperty="tEyepressureId">
+		insert into t_result_eyepressure_new
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`eye_pressure_od`, 
+			`eye_pressure_os`, 
+			`check_date`, 
+			`delete_flag`,
+			activity_id
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{eyePressureOd}, 
+			#{eyePressureOs}, 
+			#{checkDate}, 
+			#{deleteFlag},
+			#{activityId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
+		update t_result_eyepressure_new 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="eyePressureOd != null">`eye_pressure_od` = #{eyePressureOd}, </if>
+			<if test="eyePressureOs != null">`eye_pressure_os` = #{eyePressureOs}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag},</if>
+			<if test="activityId != null"> activity_id = #{activityId} </if>
+		</set>
+		where t_eyepressure_id = #{tEyepressureId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_eyepressure_new where t_eyepressure_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_eyepressure_new where t_eyepressure_id in 
+		<foreach item="tEyepressureId" collection="array" open="(" separator="," close=")">
+			#{tEyepressureId}
+		</foreach>
+	</delete>
+	
+	<select id="getEyepressure" resultType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
+		select eye_pressure_od,eye_pressure_os from t_result_eyepressure_new
+		where identity_card = #{identityCard} and check_date between #{start} and #{end}
+	</select>
+
+</mapper>

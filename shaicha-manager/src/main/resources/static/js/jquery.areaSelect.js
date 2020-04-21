@@ -28,7 +28,7 @@ required:必选项
 		var box_obj=this;
 		var prov_obj=box_obj.find("#province");
 		var city_obj=box_obj.find("#city");
-		var dist_obj=box_obj.find(".dist");
+		var dist_obj=box_obj.find("#dist");
 		var select_prehtml=(settings.required) ? "" : "<option value=''>请选择</option>";
 		var city_json;
 		
@@ -55,7 +55,7 @@ required:必选项
 			// 遍历赋值市级下拉列表
 			var temp_html = "";
 			$.each(city_json[prov_id].city,function(i,city){
-				temp_html+="<option value='"+city.cityName+"'>"+city.cityName+"</option>";
+				temp_html+="<option value='"+city.cityCode+"'>"+city.cityName+"</option>";
 			});
 			city_obj.html(temp_html).attr("disabled",false).css({"display":"","visibility":""});
 			distStart();
@@ -92,7 +92,7 @@ required:必选项
 			// 遍历赋值省份下拉列表
 			temp_html=select_prehtml;
 			$.each(city_json,function(i,area){
-				temp_html+="<option value='"+area.provName+"'>"+area.provName+"</option>";
+				temp_html+="<option value='"+area.provCode+"'>"+area.provName+"</option>";
 			});
 			prov_obj.html(temp_html);
 			

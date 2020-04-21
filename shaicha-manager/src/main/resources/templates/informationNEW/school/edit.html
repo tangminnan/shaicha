@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="id" name="id" th:value="${school.id}" type="hidden">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">学校编码：</label>
+								<div class="col-sm-8">
+									<input id="orgcode" name="orgcode" th:value="${school.orgcode}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">学校名称：</label>
+								<div class="col-sm-8">
+									<input id="orgname" name="orgname" th:value="${school.orgname}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="shortname" name="shortname"
+										th:value="${school.shortname}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="spellname" name="spellname"
+										th:value="${school.spellname}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">0系统机构 1医疗机构 2学校机构
+									3 教委机构 4社区单位 9其他：</label>
+								<div class="col-sm-8">
+									<input id="orgtype" name="orgtype" th:value="${school.orgtype}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="provincecode" name="provincecode"
+										th:value="${school.provincecode}" class="form-control"
+										type="text">
+								</div>
+							</div> -->
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">地址：</label>
+								<div class="col-sm-8 form-inline" data-toggle="distpicker">
+									<select id="eprovinceName" name="provinceName" class="form-control chosen-select" ></select>
+									<select id="ecityName"  name="cityName" class="form-control chosen-select"></select>    							
+    								<select id="edistrictName" name="districtName" class="form-control chosen-select"></select>
+								</div>
+							</div>
+							<input id="provincecode" name="provincecode" th:value="${school.provincecode}" class="form-control" type="hidden">
+							<input id="provincename" name="provincename" th:value="${school.provincename}" class="form-control" type="hidden">
+							<input id="citycode" name="citycode" th:value="${school.citycode}" class="form-control" type="hidden">
+							<input id="cityname" name="cityname" th:value="${school.cityname}" class="form-control" type="hidden">
+							<input id="areacode" name="areacode" th:value="${school.areacode}" class="form-control" type="hidden">
+							<input id="areaname" name="areaname" th:value="${school.areaname}" class="form-control" type="hidden">
+							<!--
+							<div class="form-group">
+								<label class="col-sm-3 control-label">省份：</label>
+								<div class="col-sm-8">
+									<input id="provincename" name="provincename"
+										th:value="${school.provincename}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="citycode" name="citycode"
+										th:value="${school.citycode}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">城市：</label>
+								<div class="col-sm-8">
+									<input id="cityname" name="cityname"
+										th:value="${school.cityname}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="areacode" name="areacode"
+										th:value="${school.areacode}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">市区县：</label>
+								<div class="col-sm-8">
+									<input id="areaname" name="areaname"
+										th:value="${school.areaname}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="street" name="street" th:value="${school.street}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="address" name="address" th:value="${school.address}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="sortnumber" name="sortnumber"
+										th:value="${school.sortnumber}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="linker" name="linker" th:value="${school.linker}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="linkphone" name="linkphone"
+										th:value="${school.linkphone}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">0 未启用 1 已启用：</label>
+								<div class="col-sm-8">
+									<input id="enabledstatus" name="enabledstatus"
+										th:value="${school.enabledstatus}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">0否
+									1是，公共机构可以在平台和项目中都可见：</label>
+								<div class="col-sm-8">
+									<input id="ispublic" name="ispublic"
+										th:value="${school.ispublic}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="createdate" name="createdate"
+										th:value="${school.createdate}" class="form-control"
+										type="text">
+								</div>
+							</div> -->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">学部：</label>
+								<div class="col-sm-8">
+									<input id="xuebu" name="xuebu" th:value="${school.xuebu}"
+										class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/informationNEW/school/edit.js">
+		
+	</script>
+	<script type="text/javascript">
+	
+	$().ready(function(){
+		
+		var provincename = $("input[name='provincename']").val();
+		var provincecode = $("input[name='provincecode']").val();
+		var cityname = $("input[name='cityname']").val();
+		var citycode = $("input[name='citycode']").val();
+		var areaname = $("input[name='areaname']").val();
+		var areacode = $("input[name='areacode']").val();
+		
+		$("#eprovinceName").find("[value="+provincename+"]").attr("selected",true);
+		$("#eprovinceName").trigger("change");
+		$("#ecityName").find("[value="+cityname+"]").attr("selected",true);
+		$("#ecityName").trigger("change");
+		$("#edistrictName").find("[value="+areaname+"]").attr("selected",true);
+		
+	})
+	
+	</script>
+	
+</body>
+</html>

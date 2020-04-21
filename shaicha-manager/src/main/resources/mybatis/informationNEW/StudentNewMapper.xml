@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.StudentNewDao">
+
+	<select id="get" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,xue_bu,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,activity_id,sys_id,school_id from t_student_new where id = #{value}
+	</select>
+	
+	<select id="getList" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,activity_id,sys_id,school_id from t_student_new
+		GROUP BY school
+	</select>
+
+	<select id="list" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select `id`,model_type,ideentity_type,school_code,xue_bu,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,activity_id,sys_id,school_id from t_student_new
+		  	<where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="checkType != null and checkType != ''"> and check_type = #{checkType} </if>
+		  		  <if test="studentName != null and studentName != ''"> and student_name like concat('%', #{studentName},'%') </if>
+		  		  <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
+		  		  <if test="nation != null and nation != ''"> and nation = #{nation} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="school != null and school != ''"> and school = #{school} </if>
+		  		  <if test="grade != null and grade != ''"> and grade = #{grade} </if>
+		  		  <if test="studentClass != null and studentClass != ''"> and student_class = #{studentClass} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="height != null and height != ''"> and height = #{height} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="QRCode != null and QRCode != ''"> and q_r_code = #{QRCode} </if>
+		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+		  		  <if test="schoolId != null and schoolId != ''"> and school_id = #{schoolId} </if>
+		  	</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_student_new
+		<where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="checkType != null and checkType != ''"> and check_type = #{checkType} </if>
+		  		  <if test="studentName != null and studentName != ''"> and student_name = #{studentName} </if>
+		  		  <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
+		  		  <if test="nation != null and nation != ''"> and nation = #{nation} </if>
+		  		  <if test="birthday != null and birthday != ''"> and birthday = #{birthday} </if>
+		  		  <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		  		  <if test="school != null and school != ''"> and school = #{school} </if>
+		  		  <if test="grade != null and grade != ''"> and grade = #{grade} </if>
+		  		  <if test="studentClass != null and studentClass != ''"> and student_class = #{studentClass} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		  <if test="height != null and height != ''"> and height = #{height} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="QRCode != null and QRCode != ''"> and q_r_code = #{QRCode} </if>
+		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+		  		  <if test="schoolId != null and schoolId != ''"> and school_id = #{schoolId} </if>
+		  		</where>
+	</select>
+	<select id="countP" resultType="int">
+		select count(*) from t_student_new 
+		where last_check_time is not null
+			 <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
+			 <if test="address != null and address != ''">and  address = #{address} </if>
+			 <if test="lastCheckTime != null and lastCheckTime != ''">and last_check_time &gt; DATE_FORMAT('2019-06-30','%Y-%m-%d') </if>
+		
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.informationNEW.domain.StudentNewDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_student_new
+		(
+			`student_name`, 
+			`student_sex`, 
+			`nation`, 
+			`birthday`, 
+			`identity_card`, 
+			`school`, 
+			`grade`, 
+			`student_class`, 
+			`phone`, 
+			`address`, 
+			`height`, 
+			`weight`, 
+			`add_time`, 
+			`status`,
+			q_r_code,
+			last_check_time,
+			model_type,
+  			ideentity_type,
+  			school_code,
+  			xue_bu,
+  			check_type,
+  			check_local,
+  			student_number,
+  			name_jianpin,
+  			activity_id,
+  			sys_id,
+  			school_id
+		)
+		values
+		(
+			#{studentName}, 
+			#{studentSex}, 
+			#{nation}, 
+			#{birthday}, 
+			#{identityCard}, 
+			#{school}, 
+			#{grade}, 
+			#{studentClass}, 
+			#{phone}, 
+			#{address}, 
+			#{height}, 
+			#{weight}, 
+			#{addTime}, 
+			#{status},
+			#{QRCode},
+			#{lastCheckTime},
+			#{modelType},
+  			#{ideentityType},
+  			#{schoolCode},
+  			#{xueBu},
+  			#{checkType},
+  			#{checkLocal},
+  			#{studentNumber},
+  			#{nameJianpin},
+  			#{activityId},
+  			#{sysId},
+  			#{schoolId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.informationNEW.domain.StudentNewDO">
+		update t_student_new 
+		<set>
+			<if test="studentName != null">`student_name` = #{studentName}, </if>
+			<if test="studentSex != null">`student_sex` = #{studentSex}, </if>
+			<if test="nation != null">`nation` = #{nation}, </if>
+			<if test="birthday != null">`birthday` = #{birthday}, </if>
+			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
+			<if test="school != null">`school` = #{school}, </if>
+			<if test="grade != null">`grade` = #{grade}, </if>
+			<if test="studentClass != null">`student_class` = #{studentClass}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="height != null">`height` = #{height}, </if>
+			<if test="weight != null">`weight` = #{weight}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="status != null">`status` = #{status},</if>
+			<if test="QRCode != null">`q_r_code` = #{QRCode},</if>
+			<if test="lastCheckTime != null">`last_check_time` = #{lastCheckTime},</if>
+			<if test="activityId != null"> activity_id = #{activityId}, </if>
+		  	<if test="sysId != null"> sys_id = #{sysId}, </if>
+		  	<if test="schoolId != null"> school_id = #{schoolId}, </if>
+		  	<if test="xueBu != null"> xue_bu = #{xueBu} </if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_student_new where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_student_new where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<insert id="saveAnswer" parameterType="com.shaicha.information.domain.AnswerResultDO" useGeneratedKeys="true" keyProperty="answerId">
+		insert into t_answer_result(
+  			`identity_card`,
+  			`add_time`,
+  			`status`,
+  			`file_name`,
+  			`answer_result1`,
+  			`answer_result2`,
+  			`answer_result3`,
+  			`answer_result4`,
+  			`answer_result5`,
+  			`answer_result6`,
+  			`answer_result7`,
+  			`answer_result8`,
+  			`answer_result9`,
+  			`answer_result10`,
+  			`answer_result11`,
+  			`answer_result12`,
+  			`answer_result13`,
+  			`answer_result14`,
+  			`answer_result15`,
+  			`answer_result16`,
+  			`answer_result17`,
+  			`answer_result18`,
+  			`answer_result19`,
+  			`answer_result20`,
+  			`answer_result21`,
+  			`answer_result22`,
+  			`answer_result23`,
+  			`answer_result24`,
+  			`answer_result25`,
+  			`answer_result26`,
+  			`answer_result27`,
+  			`answer_result28`,
+  			`answer_result29`,
+  			`answer_result30`,
+  			`answer_result31`,
+  			`answer_result32`,
+  			`answer_result33`,
+  			`answer_result34`,
+  			`answer_result35`,
+  			`answer_result36`,
+  			`answer_result37`,
+  			`answer_result38`,
+  			`answer_result39`,
+  			`answer_result40`,
+  			`answer_result41`,
+  			`answer_result42`,
+  			`answer_result43`,
+  			`answer_result44`,
+  			`answer_result45`,
+  			`answer_result46`,
+  			`answer_result47`,
+  			`answer_result48`,
+  			`answer_result49`,
+  			`answer_result50`,
+  			`answer_result51`,
+  			`answer_result52`,
+  			`answer_result53`,
+  			`answer_result54`,
+  			`answer_result55`,
+  			`answer_result56`,
+  			`answer_result57`,
+  			`answer_result58`,
+  			`answer_result59`,
+  			`answer_result60`,
+  			`answer_result61`,
+  			`answer_result62`,
+  			`answer_result63`,
+  			`answer_result64`,
+  			`answer_result65`,
+  			`answer_result66`,
+  			`answer_result67`,
+  			`answer_result68`,
+  			`answer_result69`,
+  			`answer_result70`,
+  			`answer_result71`,
+  			`answer_result72`,
+  			`answer_result73`,
+  			`answer_result74`,
+  			`answer_result75`
+  			
+		)
+		values(
+			#{identityCard},
+			#{addTime},
+			#{status},
+			#{fileName},
+			#{answerResult1},
+			#{answerResult2},
+			#{answerResult3},
+			#{answerResult4},
+			#{answerResult5},
+			#{answerResult6},
+			#{answerResult7},
+			#{answerResult8},
+			#{answerResult9},
+			#{answerResult10},
+			#{answerResult11},
+			#{answerResult12},
+			#{answerResult13},
+			#{answerResult14},
+			#{answerResult15},
+			#{answerResult16},
+			#{answerResult17},
+			#{answerResult18},
+			#{answerResult19},
+			#{answerResult20},
+			#{answerResult21},
+			#{answerResult22},
+			#{answerResult23},
+			#{answerResult24},
+			#{answerResult25},
+			#{answerResult26},
+			#{answerResult27},
+			#{answerResult28},
+			#{answerResult29},
+			#{answerResult30},
+			#{answerResult31},
+			#{answerResult32},
+			#{answerResult33},
+			#{answerResult34},
+			#{answerResult35},
+			#{answerResult36},
+			#{answerResult37},
+			#{answerResult38},
+			#{answerResult39},
+			#{answerResult40},
+			#{answerResult41},
+			#{answerResult42},
+			#{answerResult43},
+			#{answerResult44},
+			#{answerResult45},
+			#{answerResult46},
+			#{answerResult47},
+			#{answerResult48},
+			#{answerResult49},
+			#{answerResult50},
+			#{answerResult51},
+			#{answerResult52},
+			#{answerResult53},
+			#{answerResult54},
+			#{answerResult55},
+			#{answerResult56},
+			#{answerResult57},
+			#{answerResult58},
+			#{answerResult59},
+			#{answerResult60},
+			#{answerResult61},
+			#{answerResult62},
+			#{answerResult63},
+			#{answerResult64},
+			#{answerResult65},
+			#{answerResult66},
+			#{answerResult67},
+			#{answerResult68},
+			#{answerResult69},
+			#{answerResult70},
+			#{answerResult71},
+			#{answerResult72},
+			#{answerResult73},
+			#{answerResult74},
+			#{answerResult75}
+		)
+	</insert>
+	
+	<select id="listDati" resultType="com.shaicha.information.domain.AnswerResultDO">
+		select * from t_answer_result
+		<where>
+			 <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+			 <if test="addTime != null and addTime != ''"> and DATE_FORMAT(add_time,'%Y-%m-%d') = #{addTime} </if>
+		</where>
+		<choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by answer_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="countDati" resultType="int">
+		select count(answer_id) from t_answer_result
+		<where>
+			 <if test="identityCard != null and identityCard != ''"> and identity_card = #{identityCard} </if>
+		</where>
+	</select>
+	
+	<select id="getLatestResultEyesightDO" resultType="com.shaicha.informationNEW.domain.ResultEyesightNewDO">
+								SELECT
+							t_eyesight_id,
+							student_id,
+							checkor_id,
+							life_farvision_od,
+							life_farvision_os,
+							ifnull(naked_farvision_od,'') nakedFarvisionOd,
+							ifnull(naked_farvision_os,'') nakedFarvisionOs,
+							ifnull(correction_farvision_od,'') correctionFarvisionOd,
+							ifnull(correction_farvision_os,'') correctionFarvisionOs,
+							ifnull(life_nearvision_od,'') lifeNearvisionOd,
+							ifnull(life_nearvision_os,'') lifeNearvisionOs,
+							ifnull(naked_nearvision_od,'') nakedNearvisionOd,
+							ifnull(naked_nearvision_os,'') nakedNearvisionOs,
+							check_date
+						FROM
+							t_result_eyesight
+						WHERE
+							student_id = #{studentId}
+							order by check_date desc limit 1
+					
+	</select>
+	
+	<select id="getLatestResultDiopterDOListL" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
+										SELECT
+							ifnull(diopter_s, '') diopterS,
+							ifnull(diopter_c, '') diopterC,
+							ifnull(diopter_a, '') diopterA,
+							ifnull(dengxiaoqiujing,'') dengxiaoqiujing
+						FROM
+							t_result_diopter d,
+							(
+								SELECT
+									`t_optometry_id`,
+									`student_id`
+								FROM
+									t_result_optometry
+								WHERE
+									student_id = #{studentId} order by check_date desc limit 1
+							) o
+						WHERE
+							d.t_optometry_id = o.t_optometry_id
+						AND d.ifRL = #{ifRL} AND type="AVG"
+						ORDER BY
+							d.t_diopter_id DESC
+	</select>
+	
+	<select id="getLatestResultEyepressureDO" resultType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
+		select ifnull(eye_pressure_od,'') eyePressureOd,ifnull(eye_pressure_os,'') eyePressureOs from t_result_eyepressure where student_id=#{studentId} order by  check_date desc limit 1
+	
+	</select>
+	
+	<select id="getLatelestResultEyeaxisDO" resultType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
+		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs,ifnull(first_check_od,'') firstCheckOd,ifnull(first_check_os,'') firstCheckOs 
+		from t_result_eyeaxis where student_id=#{studentId} order by check_date desc limit 1
+	</select>
+	
+	<insert id="saveEyePressure" parameterType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
+		insert into t_result_eyepressure
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`eye_pressure_od`, 
+			`eye_pressure_os`, 
+			`check_date`, 
+			`delete_flag`,
+			identity_card
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{eyePressureOd}, 
+			#{eyePressureOs}, 
+			#{checkDate}, 
+			#{deleteFlag},
+			#{identityCard}
+		)
+	</insert>
+	
+	<insert id="saveResultEyesightDO" parameterType="com.shaicha.informationNEW.domain.ResultEyesightNewDO">
+		insert into t_result_eyesight
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`life_farvision_od`, 
+			`life_farvision_os`, 
+			`naked_farvision_od`, 
+			`naked_farvision_os`, 
+			`correction_farvision_od`, 
+			`correction_farvision_os`, 
+			`life_nearvision_od`, 
+			`life_nearvision_os`, 
+			`naked_nearvision_od`, 
+			`naked_nearvision_os`, 
+			`check_date`, 
+			`delete_flag`,
+			identity_card,
+			glassvision_od,
+			glassvision_os
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{lifeFarvisionOd}, 
+			#{lifeFarvisionOs}, 
+			#{nakedFarvisionOd}, 
+			#{nakedFarvisionOs}, 
+			#{correctionFarvisionOd}, 
+			#{correctionFarvisionOs}, 
+			#{lifeNearvisionOd}, 
+			#{lifeNearvisionOs}, 
+			#{nakedNearvisionOd}, 
+			#{nakedNearvisionOs}, 
+			#{checkDate}, 
+			#{deleteFlag},
+			#{identityCard},
+			#{glassvisionOd},
+			#{glassvisionOs}
+		)
+	</insert>
+	
+	<insert id="ResultEyeaxisDO" parameterType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
+		insert into t_result_eyeaxis
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`first_check_od`, 
+			`first_check_os`, 
+			`check_date`, 
+			`second_check_od`, 
+			`second_check_os`, 
+			`delete_flag`,
+			identity_card
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{firstCheckOd}, 
+			#{firstCheckOs}, 
+			#{checkDate}, 
+			#{secondCheckOd}, 
+			#{secondCheckOs}, 
+			#{deleteFlag},
+			#{identityCard}
+		)
+	
+	
+	</insert>
+	
+	<insert id="saveResultDiopterDO" parameterType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
+		insert into t_result_diopter
+		(
+			`t_optometry_id`, 
+			`diopter_s`, 
+			`diopter_c`, 
+			`diopter_a`, 
+			`believe`, 
+			`num`, 
+			`type`, 
+			`ifRL`,
+			first_second,
+			identity_card,
+			check_date
+		)
+		values
+		(
+			#{tOptometryId}, 
+			#{diopterS}, 
+			#{diopterC}, 
+			#{diopterA}, 
+			#{believe}, 
+			#{num}, 
+			#{type}, 
+			#{ifrl},
+			#{firstSecond},
+			#{identityCard},
+			#{checkDate}
+		)
+	</insert>
+	
+	<select id="getResultCornealDOList" resultType="com.shaicha.informationNEW.domain.ResultCornealNewDO">
+							SELECT
+						ifnull(corneal_mm, '') cornealMm,
+						ifnull(corneal_d, '') cornealD,
+						ifnull(corneal_deg, '') cornealDeg
+					FROM
+						t_result_corneal d,
+						(
+							SELECT
+								`t_optometry_id`,
+								`student_id`
+							FROM
+								t_result_optometry
+							WHERE
+								student_id = #{studentId} order by check_date desc limit 1
+						) o
+					WHERE
+						d.t_optometry_id = o.t_optometry_id
+					AND d.ifRL = #{ifrl} AND d.type=#{type}
+					ORDER BY
+						d.t_corneal_id DESC
+	</select>
+
+
+<select id="getJInShiLv" resultType="com.shaicha.informationNEW.domain.ResultEyesightNewDO">
+										<!-- 	SELECT
+						ifnull(d.naked_farvision_od,0.0) nakedFarvisionOd,
+						ifnull(d.naked_farvision_os,0.0) nakedFarvisionOs,
+						d.identity_card,
+						d.check_date,
+						t.school,
+					
+				
+					
+						t.check_type
+					FROM
+						t_result_eyesight d join 
+						t_student_new t
+			on
+					
+					 d.identity_card = t.identity_card  -->
+					<!--  AND #{startDate}&lt;=d.check_date
+					AND #{endDate}&gt;=d.check_date -->
+						SELECT
+						ifnull(naked_farvision_od,0.0) nakedFarvisionOd,
+						ifnull(naked_farvision_os,0.0) nakedFarvisionOs,
+						identity_card,
+						check_date
+					  
+					
+				
+					
+				
+					FROM
+						t_result_eyesight
+group by identity_card having check_date=max(check_date) limit #{i},#{j}
+</select>
+
+<update id="updateS" parameterType="com.shaicha.informationNEW.domain.StudentNewDO">
+	update t_student_new set dengxiaoqiujingr=#{dengxiaoqiujingr},
+	dengxiaoqiujingl=#{dengxiaoqiujingl},
+	naked_nearvision_od=#{nakedNearvisionOd},
+	naked_nearvision_os=#{nakedNearvisionOs}
+	where identity_card=#{identityCard}
+</update>
+
+
+
+
+<select id="getResultDiopterDO" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
+	<!-- select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,  ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG' -->   <!-- AND #{startDate}&lt;=check_date -->
+					<!-- AND #{endDate}&gt;=check_date -->
+	select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,check_date from t_result_diopter where ifRL=#{ifRL} AND  type='AVG' GROUP BY  identity_card
+having check_date=max(check_date) limit #{i},#{j}
+</select>
+
+<select id="getStudentDOshou" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+	SELECT
+	ifnull(identity_card, 0) identityCard,
+	ifnull(birthday,now()) birthday
+FROM
+	t_student_new
+LIMIT #{i},#{j}
+</select>
+	<select id="querySchoolName" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select id, school from t_student_new group by school
+	</select>
+	
+	<select id="querySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select id, school,student_name,grade ,xue_bu from t_student_new where school = #{school} group by grade
+	</select>	
+	
+	<select id="queryGradeNum" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select id, school,student_name from t_student_new where grade = #{grade} and school = #{school} group by identity_card
+	</select>
+	
+	<select id="getCheckUserNum" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select ts.id, ts.school,ts.student_name from t_student_new ts,t_result_diopter trd
+		where trd.identity_card = ts.identity_card and ts.school = #{school}
+		and trd.check_date between #{start} and #{end}
+		<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
+		<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
+		  group by ts.identity_card
+	</select>
+	
+	<select id="getGradeClassCheck" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select ts.id, ts.school,ts.student_name from t_student_new ts,t_result_diopter trd
+		where trd.identity_card = ts.identity_card and ts.school = #{school}
+		and trd.check_date between #{start} and #{end}
+		and ts.student_class = #{studentClass}
+		and ts.grade = #{grade}
+		  group by ts.identity_card
+	</select>
+	
+	<select id="queryGradeClassCount" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select id ,student_class,school,student_name from t_student_new
+		 where school = #{school} and grade = #{grade} GROUP BY student_class
+	</select>
+	
+	<select id="getCheckNianjiNum" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex from t_result_diopter trd , t_student_new ts 
+		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
+		GROUP BY ts.student_class
+	</select>
+	
+	<select id="queryStudentGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,trd.identity_card from t_result_diopter trd , t_student_new ts 
+		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and trd.check_date between #{start} and #{end}
+		and ts.student_class = #{studentClass}
+		GROUP BY trd.identity_card
+	</select>
+	
+	<select id="getSchool" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select ts.student_class,ts.school,ts.xue_bu from t_student_new ts , t_result_eyesight tre 
+		where ts.identity_card = tre.identity_card and check_date between #{start} and #{end}
+		group by ts.school
+	</select>
+	
+	<select id="getLastCheckStudent" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select school ,student_sex ,identity_card ,last_check_time ,xue_bu from t_student_new where school =  #{school} and last_check_time between #{start} and #{end}
+	</select>
+	
+	<select id="getCheckAllStudent" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
+		from t_student_new where last_check_time between #{start} and #{end} and grade = #{grade}
+	</select>
+
+	<select id="jiancharenshu" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
+		from t_student_new where last_check_time between #{start} and #{end} and school = #{school}
+		<if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
+		<if test="grade != null and grade != ''"> and grade = #{grade} </if>
+		<if test="studentClass != null and studentClass != ''"> and student_class = #{studentClass}</if>
+		  group by identity_card
+	</select>
+
+<select id="getAllCheckStudentDO"  resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+	select ifnull(dengxiaoqiujingr,-10) dengxiaoqiujingr,
+		   ifnull(dengxiaoqiujingl,-10) dengxiaoqiujingl,birthday,
+		   ifnull(naked_farvision_od,"r") nakedFarvisionOd,
+		   ifnull(naked_farvision_os,"r") nakedFarvisionOs
+		   
+		   from t_student_new  where last_check_time is not null   limit #{i},#{j}  
+</select>
+	
+</mapper>

@@ -801,6 +801,27 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     border-color: #cccccc;
 }
 
+.btn-white {
+    background-color: #fff;
+    border-color: #c2c2c2;
+    color: #FFFFFF;
+}
+
+.btn-white:hover, .btn-white:focus, .btn-white:active,  .btn-white.active, .open .dropdown-toggle.btn-white {
+    background-color: #bababa;
+    border-color: #bababa;
+    color: #FFFFFF;
+}
+
+.btn-white:active, .btn-white.active, .open .dropdown-toggle.btn-white {
+    background-image: none;
+}
+
+.btn-white.disabled, .btn-white.disabled:hover, .btn-white.disabled:focus,  .btn-white.disabled:active, .btn-white.disabled.active,  .btn-white[disabled], .btn-white[disabled]:hover, .btn-white[disabled]:focus,  .btn-white[disabled]:active, .btn-white.active[disabled], fieldset[disabled] .btn-white,  fieldset[disabled] .btn-white:hover, fieldset[disabled] .btn-white:focus,  fieldset[disabled] .btn-white:active, fieldset[disabled] .btn-white.active {
+    background-color: #cccccc;
+    border-color: #cccccc;
+}
+
 .btn-warning {
     background-color: #f8ac59;
     border-color: #f8ac59;

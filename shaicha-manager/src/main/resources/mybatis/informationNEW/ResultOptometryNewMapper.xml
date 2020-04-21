@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.ResultOptometryNewDao">
+
+	<select id="get" resultType="com.shaicha.informationNEW.domain.ResultOptometryNewDO">
+		select `t_optometry_id`,`student_id`,`checkor_id`,`first_check_vd`,`first_check_rps`,`first_check_lps`,`first_check_rcs`,`first_check_lcs`,`check_date`,`second_check_vd`,`second_check_rps`,`second_check_lps`,`second_check_rcs`,`second_check_lcs`,`delete_flag`,first_check_pd ,second_check_pd,activity_id from t_result_optometry_new where t_optometry_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.informationNEW.domain.ResultOptometryNewDO">
+		select `t_optometry_id`,`student_id`,`checkor_id`,`first_check_vd`,`first_check_rps`,`first_check_lps`,`first_check_rcs`,`first_check_lcs`,`check_date`,date_format(t_result_optometry_new.check_date, '%Y-%m-%d') as checkDate1,`second_check_vd`,`second_check_rps`,`second_check_lps`,`second_check_rcs`,`second_check_lcs`,`delete_flag`,first_check_pd ,second_check_pd,activity_id from t_result_optometry_new
+        <where>  
+		  		  <if test="tOptometryId != null and tOptometryId != ''"> and t_optometry_id = #{tOptometryId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="firstCheckVd != null and firstCheckVd != ''"> and first_check_vd = #{firstCheckVd} </if>
+		  		  <if test="firstCheckRps != null and firstCheckRps != ''"> and first_check_rps = #{firstCheckRps} </if>
+		  		  <if test="firstCheckLps != null and firstCheckLps != ''"> and first_check_lps = #{firstCheckLps} </if>
+		  		  <if test="firstCheckRcs != null and firstCheckRcs != ''"> and first_check_rcs = #{firstCheckRcs} </if>
+		  		  <if test="firstCheckLcs != null and firstCheckLcs != ''"> and first_check_lcs = #{firstCheckLcs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="secondCheckVd != null and secondCheckVd != ''"> and second_check_vd = #{secondCheckVd} </if>
+		  		  <if test="secondCheckRps != null and secondCheckRps != ''"> and second_check_rps = #{secondCheckRps} </if>
+		  		  <if test="secondCheckLps != null and secondCheckLps != ''"> and second_check_lps = #{secondCheckLps} </if>
+		  		  <if test="secondCheckRcs != null and secondCheckRcs != ''"> and second_check_rcs = #{secondCheckRcs} </if>
+		  		  <if test="secondCheckLcs != null and secondCheckLcs != ''"> and second_check_lcs = #{secondCheckLcs} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="firstCheckPd != null and firstCheckPd != ''"> and first_check_pd = #{firstCheckPd} </if>
+		  		  <if test="secondCheckPd != null and secondCheckPd != ''"> and second_check_pd = #{secondCheckPd} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by check_date desc
+            </when>
+			
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_optometry_new
+		 <where>  
+		  		  <if test="tOptometryId != null and tOptometryId != ''"> and t_optometry_id = #{tOptometryId} </if>
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="checkorId != null and checkorId != ''"> and checkor_id = #{checkorId} </if>
+		  		  <if test="firstCheckVd != null and firstCheckVd != ''"> and first_check_vd = #{firstCheckVd} </if>
+		  		  <if test="firstCheckRps != null and firstCheckRps != ''"> and first_check_rps = #{firstCheckRps} </if>
+		  		  <if test="firstCheckLps != null and firstCheckLps != ''"> and first_check_lps = #{firstCheckLps} </if>
+		  		  <if test="firstCheckRcs != null and firstCheckRcs != ''"> and first_check_rcs = #{firstCheckRcs} </if>
+		  		  <if test="firstCheckLcs != null and firstCheckLcs != ''"> and first_check_lcs = #{firstCheckLcs} </if>
+		  		  <if test="checkDate != null and checkDate != ''"> and check_date = #{checkDate} </if>
+		  		  <if test="secondCheckVd != null and secondCheckVd != ''"> and second_check_vd = #{secondCheckVd} </if>
+		  		  <if test="secondCheckRps != null and secondCheckRps != ''"> and second_check_rps = #{secondCheckRps} </if>
+		  		  <if test="secondCheckLps != null and secondCheckLps != ''"> and second_check_lps = #{secondCheckLps} </if>
+		  		  <if test="secondCheckRcs != null and secondCheckRcs != ''"> and second_check_rcs = #{secondCheckRcs} </if>
+		  		  <if test="secondCheckLcs != null and secondCheckLcs != ''"> and second_check_lcs = #{secondCheckLcs} </if>
+		  		  <if test="deleteFlag != null and deleteFlag != ''"> and delete_flag = #{deleteFlag} </if>
+		  		  <if test="firstCheckPd != null and firstCheckPd != ''"> and first_check_pd = #{firstCheckPd} </if>
+		  		  <if test="secondCheckPd != null and secondCheckPd != ''"> and second_check_pd = #{secondCheckPd} </if>
+		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.informationNEW.domain.ResultOptometryNewDO" useGeneratedKeys="true" keyProperty="tOptometryId">
+		insert into t_result_optometry_new
+		(
+			`student_id`, 
+			`checkor_id`, 
+			`first_check_vd`, 
+			`first_check_rps`, 
+			`first_check_lps`, 
+			`first_check_rcs`, 
+			`first_check_lcs`, 
+			`check_date`, 
+			`second_check_vd`, 
+			`second_check_rps`, 
+			`second_check_lps`, 
+			`second_check_rcs`, 
+			`second_check_lcs`, 
+			`delete_flag`,
+			first_check_pd ,
+			second_check_pd,
+			activity_id
+		)
+		values
+		(
+			#{studentId}, 
+			#{checkorId}, 
+			#{firstCheckVd}, 
+			#{firstCheckRps}, 
+			#{firstCheckLps}, 
+			#{firstCheckRcs}, 
+			#{firstCheckLcs}, 
+			#{checkDate}, 
+			#{secondCheckVd}, 
+			#{secondCheckRps}, 
+			#{secondCheckLps}, 
+			#{secondCheckRcs}, 
+			#{secondCheckLcs}, 
+			#{deleteFlag},
+			#{firstCheckPd},
+			#{secondCheckPd},
+			#{activityId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.informationNEW.domain.ResultOptometryNewDO">
+		update t_result_optometry_new 
+		<set>
+			<if test="studentId != null">`student_id` = #{studentId}, </if>
+			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
+			<if test="firstCheckVd != null">`first_check_vd` = #{firstCheckVd}, </if>
+			<if test="firstCheckRps != null">`first_check_rps` = #{firstCheckRps}, </if>
+			<if test="firstCheckLps != null">`first_check_lps` = #{firstCheckLps}, </if>
+			<if test="firstCheckRcs != null">`first_check_rcs` = #{firstCheckRcs}, </if>
+			<if test="firstCheckLcs != null">`first_check_lcs` = #{firstCheckLcs}, </if>
+			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
+			<if test="secondCheckVd != null">`second_check_vd` = #{secondCheckVd}, </if>
+			<if test="secondCheckRps != null">`second_check_rps` = #{secondCheckRps}, </if>
+			<if test="secondCheckLps != null">`second_check_lps` = #{secondCheckLps}, </if>
+			<if test="secondCheckRcs != null">`second_check_rcs` = #{secondCheckRcs}, </if>
+			<if test="secondCheckLcs != null">`second_check_lcs` = #{secondCheckLcs}, </if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag},</if>
+			<if test="firstCheckPd != null">`first_check_pd` = #{firstCheckPd},</if>
+			<if test="secondCheckPd != null">`second_check_pd` = #{secondCheckPd},</if>
+			<if test="activityId != null"> activity_id = #{activityId} </if>
+		</set>
+		where t_optometry_id = #{tOptometryId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_optometry_new where t_optometry_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_optometry_new where t_optometry_id in 
+		<foreach item="tOptometryId" collection="array" open="(" separator="," close=")">
+			#{tOptometryId}
+		</foreach>
+	</delete>
+
+</mapper>
