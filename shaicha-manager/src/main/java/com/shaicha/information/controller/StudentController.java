@@ -314,7 +314,7 @@ public class StudentController {
 	 * 普通筛查导出（freemarker导出模式）
 	 */
 	@GetMapping("/shaichajieguodaochu")
-	public void exportWordPByFreemarker(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
+	public void exportWordPByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response){
 		studentService.exportWordPByFreemarker(ids,request,response);
 	}
 	
