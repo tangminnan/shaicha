@@ -10,3 +10,6 @@
 /bin/
 /applog/
 /doc/
+/.idea/
+shaicha-portal.iml
+.springBeans
