@@ -122,7 +122,7 @@
 		</foreach>
 	</delete>
 
-	<select id="getYanGuang" resultType="com.shaicha.information.domain.ResultDiopterDO">
+	<select id="getYanGuang" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
 		select `diopter_s`,`diopter_c`,`diopter_a` from t_result_diopter_new where type = 'AVG'
 		and ifRL = #{ifRL} and identity_card = #{identityCard} and activity_id = #{activityId}
 	</select>

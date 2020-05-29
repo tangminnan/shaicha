@@ -204,9 +204,9 @@ public class StudentNewServiceImpl implements StudentNewService {
 							Date d = c.getTime();
 							Date _d = DateUtils.addDays(d, Integer.parseInt(birthday));
 							student.setBirthday(_d);
-						}*/
-						else
+						}else
 							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("1990-12-24"));
+						*/
 						student.setAddTime(new Date());
 						if(identityCard != null && identityCard != ""){
 							/*Map<String,Object> map = new HashMap<String,Object>();

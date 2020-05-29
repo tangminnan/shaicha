@@ -138,7 +138,7 @@
 		</foreach>
 	</delete>
 	
-	<select id="getLifeShili" resultType="com.shaicha.information.domain.ResultEyesightDO">
+	<select id="getLifeShili" resultType="com.shaicha.informationNEW.domain.ResultEyesightNewDO">
 		select ifnull(`correction_farvision_od`,'') correctionFarvisionOd,ifnull(`correction_farvision_os`,'') correctionFarvisionOs
 		,ifnull(`naked_farvision_od`,'') nakedFarvisionOd,ifnull(`naked_farvision_os`,'') nakedFarvisionOs
 		 from t_result_eyesight_new where student_id = #{studentId}

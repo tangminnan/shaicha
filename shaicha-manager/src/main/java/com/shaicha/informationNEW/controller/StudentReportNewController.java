@@ -85,8 +85,8 @@ public class StudentReportNewController {
 		String school = request.getParameter("school");
 		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
 		/*Map<String, Object> mapp = new HashMap<>();
-		mapp.put("checkDate", checkDate);
-		List<ResultDiopterDO> list = resultDiopterService.list(mapp);
+		mapp.put("activityId", activityId);
+		List<StudentNewDO> list = studentService.list(mapp);
 		if(list.size()<=0){
 			map.put("code", "-1");
 		}else{
@@ -222,8 +222,10 @@ public class StudentReportNewController {
 		}
 		
 		Map<String, Object> map = new HashMap<>();
-		/*List<ResultDiopterDO> timeBetween = resultDiopterService.queryTimeBetween(sdf.parse(startDate), sdf.parse(endDate));
-		if(timeBetween.size()<=0){
+		/*Map<String, Object> mapp = new HashMap<>();
+		mapp.put("activityId", activityId);
+		List<StudentNewDO> list = studentService.list(mapp);
+		if(list.size()<=0){
 			map.put("code", "-1");
 		}else{
 			map.put("code", "0");*/

@@ -1,8 +1,10 @@
 package com.shaicha.informationNEW.controller;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,7 @@ import com.shaicha.common.utils.QRCodeUtil;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.common.utils.ShiroUtils;
+import com.shaicha.common.utils.TimeUtils;
 import com.shaicha.information.domain.AnswerResultDO;
 import com.shaicha.information.domain.BuLiangShili;
 import com.shaicha.informationNEW.domain.ActivityListNewDO;
@@ -547,6 +550,21 @@ public class StudentNewController {
 	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
 	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		//医生的建议
+	   Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
+	   int birth = 0;
+	   try {
+		   birth = TimeUtils.getAgeByBirth(birthday);
+		
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   
+	   if(birth>=3 && birth<=5){
+		   model.addAttribute("ifStu","1");
+	   }else{
+		   model.addAttribute("ifStu","2");
+	   }
 	   double od=0.0,os=0.0;
 	   if(!StringUtils.isBlank(nakedFarvisionOd)){
 	    	od=Double.parseDouble(nakedFarvisionOd);
@@ -755,6 +773,6 @@ public class StudentNewController {
 		return stuClass;
 		
 	}
-	
-	
+
+
 }

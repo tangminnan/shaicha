@@ -111,7 +111,7 @@
 		</foreach>
 	</delete>
 	
-	<select id="getCornealMm" resultType="com.shaicha.information.domain.ResultCornealDO">
+	<select id="getCornealMm" resultType="com.shaicha.informationNEW.domain.ResultCornealNewDO">
 		select corneal_mm from t_result_corneal_new where first_second = 'FIRST_CHECK' 
 		and ifRL = #{ifRL} and identity_card = #{identityCard} and type = #{type} 
 		and activity_id = #{activityId}

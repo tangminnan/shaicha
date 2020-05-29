@@ -108,7 +108,7 @@
 		</foreach>
 	</delete>
 	
-	<select id="getEyeaxis" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
+	<select id="getEyeaxis" resultType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
 		select first_check_od,first_check_os from t_result_eyeaxis_new
 		where student_id = #{studentId}
 	</select>
