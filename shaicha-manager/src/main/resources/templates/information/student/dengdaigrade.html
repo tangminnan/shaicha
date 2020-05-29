@@ -15,9 +15,10 @@
 				<div class="ibox-content">
 					<div>
 						<input id="school" name="school" th:value="${school}" type="hidden">
-						<input id="checkDate" name="checkDate" th:value="${checkDate}" type="hidden">
-						<input id="date" name="date" th:value="${date}" type="hidden">
-						<input id="schoolNum" name="schoolNum" th:value="${schoolNum}" type="hidden">
+						<input id="activityId" name="activityId" th:value="${activityId}" type="hidden">
+						<input id="grade" name="grade" th:value="${grade}" type="hidden">					
+						<input id="type" name="type" th:value="${type}" type="hidden">
+						<input id="stuclass" name="stuclass" th:value="${stuclass}" type="hidden">
 						<div class="box">
 							  <h4>正在整理数据,请您稍候 ...</h4>   
 							  <p class="nowTurn">整理数据时间较长请您耐心等待 ...</p>
@@ -31,10 +32,20 @@
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript">
 	 $(function(){
-		window.location.href="/studentReportNEW/baogaoxuexiao?school="+$("#school").val()
-													+"&checkDate="+$("#checkDate").val()
-													+"&schoolNum="+$("#schoolNum").val()
-													+"&date="+$("#date").val();
+		 
+		var type = $("input[name='type']").val();
+		if(type == 3){
+			window.location.href= "/studentReport/gradeBaogao?activityId="+$("#activityId").val()
+																+"&school="+$("#school").val()
+																+"&grade="+$("#grade").val()
+			
+		}
+		if(type == 4){
+			window.location.href= "/studentReport/stuClassBaogao?activityId="+$("#activityId").val()
+																	+"&school="+$("#school").val()
+																	+"&grade="+$("#grade").val()
+																	+"&stuclass="+$("#stuclass").val()
+		}
 													
 	 })
 	 

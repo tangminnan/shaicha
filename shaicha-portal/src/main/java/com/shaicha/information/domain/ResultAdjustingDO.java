@@ -38,7 +38,16 @@ public class ResultAdjustingDO implements Serializable {
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
 	private String identityCard;
-
+	private Integer activityId;
+	
+	
+	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public String getIdentityCard() {
 		return identityCard;
 	}
@@ -182,7 +191,7 @@ public class ResultAdjustingDO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	public ResultAdjustingDO(Long studentId, Long checkorId, Double adjustingOd, Double adjustingOs, Double adjustingOu,
-			Integer jjOd, Integer jjOs, Integer jjOu, Date checkDate, Integer deleteFlag,String identityCard) {
+			Integer jjOd, Integer jjOs, Integer jjOu, Date checkDate, Integer deleteFlag,String identityCard,Integer activityId) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -195,6 +204,7 @@ public class ResultAdjustingDO implements Serializable {
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
 	}
 	
 	

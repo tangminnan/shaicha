@@ -4,12 +4,17 @@
 <mapper namespace="com.shaicha.informationNEW.dao.StudentNewDao">
 
 	<select id="get" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,xue_bu,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,activity_id,sys_id,school_id from t_student_new where id = #{value}
+		select `id`,`student_name`,`student_sex`,ideentity_type,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,xue_bu,activity_id,sys_id,school_id from t_student_new where id = #{value}
 	</select>
 	
 	<select id="getList" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,activity_id,sys_id,school_id from t_student_new
+		select `id`,`student_name`,`student_sex`,ideentity_type,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,xue_bu,activity_id,sys_id,school_id from t_student_new
 		GROUP BY school
+	</select>
+	
+	<select id="querylistStudentName" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select DISTINCT student_name from t_student_new where check_type = 'SHI_FANXIAO' and student_name like concat('%', #{studentName},'%')
+		limit #{offset}, #{limit}
 	</select>
 
 	<select id="list" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
@@ -169,8 +174,7 @@
 			<if test="lastCheckTime != null">`last_check_time` = #{lastCheckTime},</if>
 			<if test="activityId != null"> activity_id = #{activityId}, </if>
 		  	<if test="sysId != null"> sys_id = #{sysId}, </if>
-		  	<if test="schoolId != null"> school_id = #{schoolId}, </if>
-		  	<if test="xueBu != null"> xue_bu = #{xueBu} </if>
+		  	<if test="schoolId != null"> school_id = #{schoolId} </if>
 		</set>
 		where id = #{id}
 	</update>
@@ -395,7 +399,7 @@
 							ifnull(naked_nearvision_os,'') nakedNearvisionOs,
 							check_date
 						FROM
-							t_result_eyesight
+							t_result_eyesight_new
 						WHERE
 							student_id = #{studentId}
 							order by check_date desc limit 1
@@ -409,13 +413,13 @@
 							ifnull(diopter_a, '') diopterA,
 							ifnull(dengxiaoqiujing,'') dengxiaoqiujing
 						FROM
-							t_result_diopter d,
+							t_result_diopter_new d,
 							(
 								SELECT
 									`t_optometry_id`,
 									`student_id`
 								FROM
-									t_result_optometry
+									t_result_optometry_new
 								WHERE
 									student_id = #{studentId} order by check_date desc limit 1
 							) o
@@ -427,17 +431,17 @@
 	</select>
 	
 	<select id="getLatestResultEyepressureDO" resultType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
-		select ifnull(eye_pressure_od,'') eyePressureOd,ifnull(eye_pressure_os,'') eyePressureOs from t_result_eyepressure where student_id=#{studentId} order by  check_date desc limit 1
+		select ifnull(eye_pressure_od,'') eyePressureOd,ifnull(eye_pressure_os,'') eyePressureOs from t_result_eyepressure_new where student_id=#{studentId} order by  check_date desc limit 1
 	
 	</select>
 	
 	<select id="getLatelestResultEyeaxisDO" resultType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
 		select ifnull(second_check_od,'') secondCheckOd,ifnull(second_check_os,'') secondCheckOs,ifnull(first_check_od,'') firstCheckOd,ifnull(first_check_os,'') firstCheckOs 
-		from t_result_eyeaxis where student_id=#{studentId} order by check_date desc limit 1
+		from t_result_eyeaxis_new where student_id=#{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveEyePressure" parameterType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
-		insert into t_result_eyepressure
+		insert into t_result_eyepressure_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -460,7 +464,7 @@
 	</insert>
 	
 	<insert id="saveResultEyesightDO" parameterType="com.shaicha.informationNEW.domain.ResultEyesightNewDO">
-		insert into t_result_eyesight
+		insert into t_result_eyesight_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -503,7 +507,7 @@
 	</insert>
 	
 	<insert id="ResultEyeaxisDO" parameterType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
-		insert into t_result_eyeaxis
+		insert into t_result_eyeaxis_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -532,7 +536,7 @@
 	</insert>
 	
 	<insert id="saveResultDiopterDO" parameterType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
-		insert into t_result_diopter
+		insert into t_result_diopter_new
 		(
 			`t_optometry_id`, 
 			`diopter_s`, 
@@ -574,7 +578,7 @@
 								`t_optometry_id`,
 								`student_id`
 							FROM
-								t_result_optometry
+								t_result_optometry_new
 							WHERE
 								student_id = #{studentId} order by check_date desc limit 1
 						) o
@@ -599,7 +603,7 @@
 						t.check_type
 					FROM
 						t_result_eyesight d join 
-						t_student_new t
+						t_student t
 			on
 					
 					 d.identity_card = t.identity_card  -->
@@ -616,7 +620,7 @@
 					
 				
 					FROM
-						t_result_eyesight
+						t_result_eyesight_new
 group by identity_card having check_date=max(check_date) limit #{i},#{j}
 </select>
 
@@ -634,7 +638,7 @@ group by identity_card having check_date=max(check_date) limit #{i},#{j}
 <select id="getResultDiopterDO" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
 	<!-- select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,  ifRL,diopter_s,diopter_c,diopter_a from t_result_diopter where type='AVG' -->   <!-- AND #{startDate}&lt;=check_date -->
 					<!-- AND #{endDate}&gt;=check_date -->
-	select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,check_date from t_result_diopter where ifRL=#{ifRL} AND  type='AVG' GROUP BY  identity_card
+	select ifnull(dengxiaoqiujing,0.0) dengxiaoqiujing,identity_card,check_date from t_result_diopter_new where ifRL=#{ifRL} AND  type='AVG' GROUP BY  identity_card
 having check_date=max(check_date) limit #{i},#{j}
 </select>
 
@@ -646,77 +650,23 @@ FROM
 	t_student_new
 LIMIT #{i},#{j}
 </select>
-	<select id="querySchoolName" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select id, school from t_student_new group by school
-	</select>
+
 	
 	<select id="querySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 		select id, school,student_name,grade ,xue_bu from t_student_new where school = #{school} group by grade
 	</select>	
 	
-	<select id="queryGradeNum" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select id, school,student_name from t_student_new where grade = #{grade} and school = #{school} group by identity_card
-	</select>
-	
-	<select id="getCheckUserNum" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select ts.id, ts.school,ts.student_name from t_student_new ts,t_result_diopter trd
-		where trd.identity_card = ts.identity_card and ts.school = #{school}
-		and trd.check_date between #{start} and #{end}
-		<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
-		<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
-		  group by ts.identity_card
-	</select>
-	
-	<select id="getGradeClassCheck" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select ts.id, ts.school,ts.student_name from t_student_new ts,t_result_diopter trd
-		where trd.identity_card = ts.identity_card and ts.school = #{school}
-		and trd.check_date between #{start} and #{end}
-		and ts.student_class = #{studentClass}
-		and ts.grade = #{grade}
-		  group by ts.identity_card
-	</select>
-	
 	<select id="queryGradeClassCount" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 		select id ,student_class,school,student_name from t_student_new
-		 where school = #{school} and grade = #{grade} GROUP BY student_class
-	</select>
-	
-	<select id="getCheckNianjiNum" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex from t_result_diopter trd , t_student_new ts 
-		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
-		GROUP BY ts.student_class
-	</select>
-	
-	<select id="queryStudentGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,trd.identity_card from t_result_diopter trd , t_student_new ts 
-		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and trd.check_date between #{start} and #{end}
-		and ts.student_class = #{studentClass}
-		GROUP BY trd.identity_card
-	</select>
-	
-	<select id="getSchool" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select ts.student_class,ts.school,ts.xue_bu from t_student_new ts , t_result_eyesight tre 
-		where ts.identity_card = tre.identity_card and check_date between #{start} and #{end}
-		group by ts.school
-	</select>
-	
-	<select id="getLastCheckStudent" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select school ,student_sex ,identity_card ,last_check_time ,xue_bu from t_student_new where school =  #{school} and last_check_time between #{start} and #{end}
-	</select>
-	
-	<select id="getCheckAllStudent" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
-		from t_student_new where last_check_time between #{start} and #{end} and grade = #{grade}
+		 where school = #{school} and activity_id = #{activityId} and grade = #{grade} GROUP BY student_class
 	</select>
 
-	<select id="jiancharenshu" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
-		from t_student_new where last_check_time between #{start} and #{end} and school = #{school}
-		<if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
-		<if test="grade != null and grade != ''"> and grade = #{grade} </if>
-		<if test="studentClass != null and studentClass != ''"> and student_class = #{studentClass}</if>
-		  group by identity_card
+	<select id="queryStudentGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,ts.identity_card from t_student_new ts 
+		where ts.grade = #{grade} and ts.school = #{school} and  ts.activity_id = #{activityId}
+		and ts.student_class = #{studentClass}
 	</select>
+
 
 <select id="getAllCheckStudentDO"  resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 	select ifnull(dengxiaoqiujingr,-10) dengxiaoqiujingr,
@@ -726,5 +676,23 @@ LIMIT #{i},#{j}
 		   
 		   from t_student_new  where last_check_time is not null   limit #{i},#{j}  
 </select>
+
+	<select id="queryBySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select activity_id,school,grade from t_student_new where activity_id = #{activityId} and school = #{school} GROUP BY grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','高一','高二','高三')
+	</select>
+	
+	<select id="queryBySchoolStudentClass" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select activity_id,school,grade,student_class from t_student_new where activity_id = #{activityId} and school = #{school} GROUP BY student_class
+	</select>
+	
+	<select id="schoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select activity_id,school,grade from t_student_new where school = #{school} GROUP BY grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','高一','高二','高三')
+	</select>
+	
+	<select id="schoolStudentClass" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select activity_id,school,grade,student_class from t_student_new where school = #{school} GROUP BY student_class
+	</select>
 	
 </mapper>

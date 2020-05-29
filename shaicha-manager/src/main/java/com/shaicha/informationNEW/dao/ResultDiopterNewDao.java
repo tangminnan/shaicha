@@ -32,21 +32,13 @@ public interface ResultDiopterNewDao {
 	
 	int batchRemove(Integer[] tDiopterIds);
 	
-	List<ResultDiopterNewDO> ifExistData(@Param("school") String school,@Param("start") Date start,@Param("end") Date end);
-	
 	List<ResultDiopterNewDO> getByToptometryId(Integer tOptometryId);
-				
-	ResultDiopterNewDO maxCheckDate();
 	
-	List<ResultDiopterNewDO> getStudentMyopia(Map<String,Object> map);
-	
-	List<ResultDiopterNewDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
+	List<ResultDiopterNewDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("activityId") Integer activityId);
 	
 	List<ResultDiopterNewDO> jianchashijian();
 	
 	List<ResultDiopterNewDO> queryTimeBetween(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
-
-	List<ResultDiopterNewDO> queryQiujing(@Param("identityCard") String identityCard,@Param("checkDate") Date checkDate);
 	
-	List<ResultDiopterNewDO> queryMyopia(@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
+	//int insertForeach(List<ResultDiopterNewDO> list);
 }

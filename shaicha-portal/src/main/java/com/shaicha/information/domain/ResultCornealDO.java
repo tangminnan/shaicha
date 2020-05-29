@@ -33,7 +33,16 @@ public class ResultCornealDO implements Serializable {
 	private String firstSecond;
 
 	private String identityCard;
+	private Integer activityId;
 	
+	
+	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public String getIdentityCard() {
 		return identityCard;
 	}
@@ -144,7 +153,8 @@ public class ResultCornealDO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	public ResultCornealDO(Integer tOptometryId, Double cornealMm, Double cornealD, Integer cornealDeg, String type,
-			String ifrl, String firstSecond,String identityCard) {
+			String ifrl, //String firstSecond,
+			String identityCard,Integer activityId) {
 		super();
 		this.tOptometryId = tOptometryId;
 		this.cornealMm = cornealMm;
@@ -152,8 +162,9 @@ public class ResultCornealDO implements Serializable {
 		this.cornealDeg = cornealDeg;
 		this.type = type;
 		this.ifrl = ifrl;
-		this.firstSecond = firstSecond;
+		//this.firstSecond = firstSecond;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
 	}
 	
 	

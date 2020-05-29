@@ -82,6 +82,24 @@ public class StudentNewDO implements Serializable {
 	private Integer activityId;
 	private Long sysId;
 	
+	private Date mincheckdate;
+	private Date maxcheckdate;
+	
+	
+	
+	
+	public Date getMincheckdate() {
+		return mincheckdate;
+	}
+	public void setMincheckdate(Date mincheckdate) {
+		this.mincheckdate = mincheckdate;
+	}
+	public Date getMaxcheckdate() {
+		return maxcheckdate;
+	}
+	public void setMaxcheckdate(Date maxcheckdate) {
+		this.maxcheckdate = maxcheckdate;
+	}
 	
 	public Integer getSchoolId() {
 		return schoolId;

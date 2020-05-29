@@ -1,15 +1,7 @@
 package com.shaicha.information.controller;
 
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,14 +14,6 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -62,6 +46,8 @@ import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.ResultEyesightService;
 import com.shaicha.information.service.ResultOptometryService;
 import com.shaicha.information.service.StudentService;
+import com.shaicha.information.domain.SchoolDO;
+import com.shaicha.information.service.SchoolService;
 
 
 /**
@@ -81,6 +67,8 @@ public class StudentController {
 	private ResultEyesightService resultEyesightService;
 	@Autowired
 	private ResultOptometryService resultOptometryService;
+	@Autowired
+	private SchoolService schoolService;
 	
 	@GetMapping()
 	@RequiresPermissions("information:student:student")
@@ -109,7 +97,18 @@ public class StudentController {
 	public String demonstration(Model model){
 		List<StudentDO> studentList = studentService.getList();
 		model.addAttribute("studentList", studentList);
+		Map<String, Object> params = new HashMap<>();
+		List<SchoolDO> school = schoolService.list(params);
+		model.addAttribute("school", school);
 	    return "information/student/shifanstudent";
+	}
+	
+	//模糊查询（姓名）
+	@ResponseBody
+	@GetMapping("/studentName")
+	List<StudentDO> studentName(String studentName, Integer offset, Integer limit){
+		List<StudentDO> list = studentService.querylistStudentName(studentName,offset,limit);
+		return list;
 	}
 	
 	/**

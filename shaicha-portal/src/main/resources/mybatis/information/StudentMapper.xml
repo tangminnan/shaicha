@@ -4,26 +4,52 @@
 <mapper namespace="com.shaicha.information.dao.StudentDao">
 
 	<select id="get" resultType="com.shaicha.information.domain.StudentDO">
-		select `id`,last_check_time,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code from t_student where id = #{value}
+		select `id`,last_check_time,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,activity_id,ideentity_type,school_id from t_student_new where id = #{value}
 	</select>
 	
 	<update id="updateLastCheckTime">
-		update t_student set last_check_time=#{date} where id=#{studentId}
+		update t_student_new set last_check_time=#{date} where id=#{studentId}
 	</update>
 	
 	<select id="getStudentInfo" resultType="com.shaicha.information.domain.StudentDO">
-		select `id`,last_check_time,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code from t_student where identity_card = #{value}
+		select `id`,last_check_time,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code ,ideentity_type,school_id
+		from t_student_new where identity_card = #{identityCard} and id = #{id}
 	</select>
 	
 	<update id="updateStudentDOshi" parameterType="com.shaicha.information.domain.StudentDO">
-		update t_student 
+		update t_student_new 
 		<set>
 			<if test="dengxiaoqiujingr != null">`dengxiaoqiujingr` = #{dengxiaoqiujingr}, </if>
 			<if test="dengxiaoqiujingl != null">`dengxiaoqiujingl` = #{dengxiaoqiujingl}, </if>
 			<if test="nakedFarvisionOd != null">`naked_farvision_od` = #{nakedFarvisionOd}, </if>
 			<if test="nakedFarvisionOs != null">`naked_farvision_os` = #{nakedFarvisionOs} </if>
 		</set>	
-			where identity_card=#{identityCard}
+			where id = #{id}
 	</update>
-
+	
+	<update id="update" parameterType="com.shaicha.information.domain.StudentDO">
+		update t_student_new 
+		<set>
+			<if test="studentName != null">`student_name` = #{studentName}, </if>
+			<if test="studentSex != null">`student_sex` = #{studentSex}, </if>
+			<if test="nation != null">`nation` = #{nation}, </if>
+			<if test="birthday != null">`birthday` = #{birthday}, </if>
+			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
+			<if test="school != null">`school` = #{school}, </if>
+			<if test="grade != null">`grade` = #{grade}, </if>
+			<if test="studentClass != null">`student_class` = #{studentClass}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="height != null">`height` = #{height}, </if>
+			<if test="weight != null">`weight` = #{weight}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="status != null">`status` = #{status},</if>
+			<if test="lastCheckTime != null">`last_check_time` = #{lastCheckTime},</if>
+		  	<if test="schoolId != null"> school_id = #{schoolId}, </if>
+		  	<if test="ideentityType != null"> ideentity_type = #{ideentityType}, </if>
+		  	<if test="schoolCode != null"> school_code = #{schoolCode}, </if>
+		  	<if test="xueBu != null"> xue_bu = #{xueBu} </if>
+		</set>
+		where id = #{id}
+	</update>
 </mapper>

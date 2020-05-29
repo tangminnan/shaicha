@@ -73,35 +73,16 @@ public interface StudentNewDao {
 	void saveResultDiopterDO(ResultDiopterNewDO resultDiopterDO);
 	
 	List<StudentNewDO> querySchoolGrade(String school);
-	
-	List<StudentNewDO> querySchoolName();
-			
-	List<StudentNewDO> queryGradeNum(@Param("grade") String grade,@Param("school") String school);
-	
-	List<StudentNewDO> getCheckUserNum(Map<String,Object> map);
-	
+		
 	List<StudentNewDO> queryGradeClassCount(Map<String,Object> map);
-	
-	List<StudentNewDO> getGradeClassCheck(Map<String,Object> map);
-	
-	List<StudentNewDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("start") Date start,@Param("end") Date end,@Param("studentClass") String studentClass);
-	
-	List<StudentNewDO> getCheckNianjiNum(@Param("school") String school,@Param("grade") String grade,@Param("checkDate") String checkDate);
-
+		
+	List<StudentNewDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("activityId") Integer activityId,@Param("studentClass") String studentClass);	
 
 	List<ResultCornealNewDO> getResultCornealDOList(@Param("studentId") Integer studentId,@Param("ifrl") String ifrl,@Param("type") String type);
 
 	List<ResultEyesightNewDO> getJInShiLv(@Param("i") int i,@Param("j") int j);
 
 	List<ResultDiopterNewDO> getResultDiopterDO(@Param("i") int i,@Param("j") int j,@Param("ifRL") String ifRL);
-	
-	List<StudentNewDO> getSchool(@Param("start") Date start,@Param("end") Date end);
-	
-	List<StudentNewDO> getLastCheckStudent(@Param("school") String school,@Param("start") Date start,@Param("end") Date end);
-
-	List<StudentNewDO> getCheckAllStudent(@Param("start") Date start,@Param("end") Date end,@Param("grade") String grade);
-
-	List<StudentNewDO> jiancharenshu(Map<String,Object> map);
 
 	List<StudentNewDO> getStudentDOshou(@Param("i") int i,@Param("j") int j);
 
@@ -110,6 +91,13 @@ public interface StudentNewDao {
 	void updateS(StudentNewDO studentDO);
 
 	List<StudentNewDO> getAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
+		
+	List<StudentNewDO> queryBySchoolGrade(@Param("activityId") Integer activityId,@Param("school") String school);
+	
+	List<StudentNewDO> queryBySchoolStudentClass(@Param("activityId") Integer activityId,@Param("school") String school);
 
+	List<StudentNewDO> schoolGrade(String school);
+	
+	List<StudentNewDO> schoolStudentClass(String school);
 
 }

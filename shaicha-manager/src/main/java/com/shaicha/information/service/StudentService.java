@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shaicha.common.utils.Query;
@@ -82,7 +83,7 @@ public interface StudentService {
 
 	List<ResultEyeaxisDO> getLatelestResultEyeaxisDO(Integer id);
 
-	List<StudentDO> querySchoolName();
+//	List<StudentDO> querySchoolName();
 
 	List<ResultCornealDO> getResultCornealDOList(Integer id, String string, String string2);
 
@@ -96,4 +97,10 @@ public interface StudentService {
 	 *首页真实数据展示
 	*/  
 	Map<String, Double> shouYeTrueData();
+	
+	List<StudentDO> querylistStudentName(String studentname, Integer offset, Integer limit );
+	
+	List<StudentDO> queryBySchoolGrade(Integer activityId,String school);
+			
+	List<StudentDO> queryBySchoolStudentClass(Integer activityId,String school);
 }

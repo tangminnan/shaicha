@@ -17,12 +17,12 @@
 				`check_date`,
 				`delete_flag`
 			FROM
-				t_result_adjusting
+				t_result_adjusting_new
 			WHERE
 				student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	<insert id="saveAdjustingDO" parameterType="com.shaicha.information.domain.ResultAdjustingDO" useGeneratedKeys="true" keyProperty="tAdjustingId">
-		insert into t_result_adjusting
+		insert into t_result_adjusting_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -34,7 +34,8 @@
 			`jj_ou`, 
 			`check_date`, 
 			`delete_flag`,
-			identity_card
+			identity_card,
+			activity_id
 		)
 		values
 		(
@@ -48,12 +49,13 @@
 			#{jjOu}, 
 			#{checkDate}, 
 			#{deleteFlag},
-			#{identityCard}
+			#{identityCard},
+			#{activityId}
 		)
 	</insert>
 	
 	<update id="updateAdjustingDO" parameterType="com.shaicha.information.domain.ResultAdjustingDO">
-		update t_result_adjusting 
+		update t_result_adjusting_new
 		<set>
 			<if test="studentId != null">`student_id` = #{studentId}, </if>
 			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>

@@ -30,9 +30,7 @@ public interface ResultDiopterNewService {
 	int remove(Integer tDiopterId);
 	
 	int batchRemove(Integer[] tDiopterIds);
-	
-	List<ResultDiopterNewDO> ifExistData(String school,Date start,Date end);
-	
+		
 	List<ResultDiopterNewDO> getByToptometryId(Integer tOptometryId);
 	
 	List<ResultDiopterNewDO> jianchashijian();

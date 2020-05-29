@@ -43,14 +43,21 @@ public class ResultDiopterNewDO implements Serializable {
 	private String checkDate1;
 	private String endTime;
 	private String startTime;
-	private Integer activityId;
+	private String activityId;
+	private String RelationPatientCrfId;
 	
 	
 	
-	public Integer getActivityId() {
+	public String getRelationPatientCrfId() {
+		return RelationPatientCrfId;
+	}
+	public void setRelationPatientCrfId(String relationPatientCrfId) {
+		RelationPatientCrfId = relationPatientCrfId;
+	}
+	public String getActivityId() {
 		return activityId;
 	}
-	public void setActivityId(Integer activityId) {
+	public void setActivityId(String activityId) {
 		this.activityId = activityId;
 	}
 	public String getEndTime() {

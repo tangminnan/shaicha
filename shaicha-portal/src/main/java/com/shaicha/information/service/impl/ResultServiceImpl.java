@@ -1,5 +1,7 @@
 package com.shaicha.information.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -27,6 +29,7 @@ import com.shaicha.information.dao.ResultEyepressureDao;
 import com.shaicha.information.dao.ResultEyesightDao;
 import com.shaicha.information.dao.ResultOptometryDao;
 import com.shaicha.information.dao.ResultVisibilityDao;
+import com.shaicha.information.dao.SchoolNewDao;
 import com.shaicha.information.dao.StudentDao;
 import com.shaicha.information.domain.ResultAdjustingDO;
 import com.shaicha.information.domain.ResultCornealDO;
@@ -36,6 +39,7 @@ import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
 import com.shaicha.information.domain.ResultOptometryDO;
 import com.shaicha.information.domain.ResultVisibilityDO;
+import com.shaicha.information.domain.SchoolNewDO;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.ResultService;
 
@@ -60,72 +64,118 @@ public class ResultServiceImpl implements ResultService{
 	private ResultOptometryDao optometryDao;
 	@Autowired
 	private ResultVisibilityDao visibilityDao;
+	@Autowired
+	private SchoolNewDao  schoolNewDao;
 
 	@Override
 	public Map<String, Object> saveResultData(JSONObject obj) {
 		Map<String,Object> result = new HashMap<String,Object>();
     	Date date = new Date();
-		String identityCard=obj.getString("identityCard");
+		String identityCard1=obj.getString("identityCard");
+		String identityCard = identityCard1.split("JOIN")[0];
 		Long studentId = obj.getLong("studentId");
+		Integer activityId = studentDao.get(studentId).getActivityId();
 		Long chectorId = obj.getLong("chectorId");
+		StudentDO stu = new StudentDO();
+		JSONObject studentDetails = obj.getJSONObject("studentDetails");
+		String studentName=studentDetails.getString("studentName");
+		Integer studentSex=studentDetails.getInteger("studentSex");
+		Integer schoolId=studentDetails.getInteger("schoolId");
+		String nation=studentDetails.getString("nation");
+		String grade=studentDetails.getString("grade");
+		String studentClass=studentDetails.getString("studentClass");
+		String phone=studentDetails.getString("phone");
+		String ideentityType=studentDetails.getString("ideentityType");
+		if(ideentityType.equals("身份证") && identityCard.length() == 18){
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String year = identityCard.substring(6, 10);
+			String month = identityCard.substring(10, 12);
+			String day = identityCard.substring(12, 14);
+			String bir = year+"-"+month+"-"+day;
+			try {
+				stu.setBirthday(sdf.parse(bir));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		stu.setStudentName(studentName);
+		stu.setStudentSex(studentSex);
+		stu.setNation(nation);
+		stu.setGrade(grade);
+		stu.setStudentClass(studentClass);
+		stu.setPhone(phone);
+		stu.setIdeentityType(ideentityType);
+		SchoolNewDO schoolNewDO = schoolNewDao.get(schoolId);
+		stu.setSchool(schoolNewDO.getOrgname());
+		stu.setAddress(schoolNewDO.getCityname());
+		stu.setSchoolCode(schoolNewDO.getOrgcode());
+		stu.setXueBu(schoolNewDO.getXuebu());
+		stu.setSchoolId(schoolId);
+		stu.setId(studentId.intValue());
+		studentDao.update(stu);
+		
 		JSONObject jsonObject =obj.getJSONObject("eyesight");//视力检查数据
-    	String lifeFarvisionOd = jsonObject.getString("lifeFarvisionOd");
-    	String lifeFarvisionOs = jsonObject.getString("lifeFarvisionOs");
+    	//String lifeFarvisionOd = jsonObject.getString("lifeFarvisionOd");
+    	//String lifeFarvisionOs = jsonObject.getString("lifeFarvisionOs");
     	String nakedFarvisionOd = jsonObject.getString("nakedFarvisionOd");
     	String nakedFarvisionOs = jsonObject.getString("nakedFarvisionOs");
     	String correctionFarvisionOd = jsonObject.getString("correctionFarvisionOd");
     	String correctionFarvisionOs = jsonObject.getString("correctionFarvisionOs");
-    	String lifeNearvisionOd = jsonObject.getString("lifeNearvisionOd");
-    	String lifeNearvisionOs = jsonObject.getString("lifeNearvisionOs");
-    	String nakedNearvisionOd = jsonObject.getString("nakedNearvisionOd");
-    	String nakedNearvisionOs = jsonObject.getString("nakedNearvisionOs");
-    	ResultEyesightDO resultEyesightDO = new ResultEyesightDO(studentId,chectorId, lifeFarvisionOd, lifeFarvisionOs, nakedFarvisionOd, nakedFarvisionOs, 
-    			correctionFarvisionOd, correctionFarvisionOs, lifeNearvisionOd, lifeNearvisionOs, nakedNearvisionOd, nakedNearvisionOs,date, 0,identityCard);
-    	if(		"".equals(lifeFarvisionOd) && 
-    			"".equals(lifeFarvisionOs)&& 
+    	//String lifeNearvisionOd = jsonObject.getString("lifeNearvisionOd");
+    	//String lifeNearvisionOs = jsonObject.getString("lifeNearvisionOs");
+    	//String nakedNearvisionOd = jsonObject.getString("nakedNearvisionOd");
+    	//String nakedNearvisionOs = jsonObject.getString("nakedNearvisionOs");
+    	ResultEyesightDO resultEyesightDO = new ResultEyesightDO(studentId,chectorId,  nakedFarvisionOd, nakedFarvisionOs, 
+    			correctionFarvisionOd, correctionFarvisionOs,date, 0,identityCard,activityId);
+    	if(		//"".equals(lifeFarvisionOd) && 
+    			//"".equals(lifeFarvisionOs)&& 
     			"".equals(nakedFarvisionOd) &&
     			"".equals(nakedFarvisionOs) &&
-    			"".equals(lifeNearvisionOd) &&
-    			"".equals(lifeNearvisionOs)&&
+    			//"".equals(lifeNearvisionOd) &&
+    			//"".equals(lifeNearvisionOs)&&
     			"".equals(correctionFarvisionOd)&&
-    			"".equals(correctionFarvisionOs)&& 
-    			"".equals(nakedNearvisionOd)&& 
-    			"".equals(nakedNearvisionOs)
+    			"".equals(correctionFarvisionOs) 
+    			//"".equals(nakedNearvisionOd)&& 
+    			//"".equals(nakedNearvisionOs)
     	   );
     	else	
     		addUpdate(studentId, resultEyesightDO);
     	jsonObject =obj.getJSONObject("eyeaxis");//眼轴检查数据
 		double firstCheckOd=jsonObject.getDouble("firstCheckOd");
 		double firstCheckOs=jsonObject.getDouble("firstCheckOs");
-		double secondCheckOd=jsonObject.getDouble("secondCheckOd");
-		double secondCheckOs=jsonObject.getDouble("secondCheckOs");
-		ResultEyeaxisDO  resultEyeaxisDO = new ResultEyeaxisDO(studentId,chectorId, firstCheckOd, firstCheckOs,date, secondCheckOd, secondCheckOs, 0,identityCard);
+		//double secondCheckOd=jsonObject.getDouble("secondCheckOd");
+		//double secondCheckOs=jsonObject.getDouble("secondCheckOs");
+		ResultEyeaxisDO  resultEyeaxisDO = new ResultEyeaxisDO(studentId,chectorId, firstCheckOd, firstCheckOs,date, 0,identityCard,activityId);
 		if(
 				firstCheckOd==0.0 && 
-				firstCheckOs==0.0 && 
-				secondCheckOd==0.0 && 
-				secondCheckOs==0.0
+				firstCheckOs==0.0 
+				//secondCheckOd==0.0 && 
+				//secondCheckOs==0.0
 		);
 		else
 			addUpdate(studentId, resultEyeaxisDO);
 		jsonObject =obj.getJSONObject("eyepressure");//眼内压检查数据
     	double eyePressureOd=jsonObject.getDouble("eyePressureOd");
     	double eyePressureOs=jsonObject.getDouble("eyePressureOs");
-    	ResultEyepressureDO resultEyepressureDO= new ResultEyepressureDO(studentId,chectorId, eyePressureOd, eyePressureOs, date, 0,identityCard);
+    	String cornealCurvatureOd=jsonObject.getString("cornealCurvatureOd");
+    	String cornealCurvatureOs=jsonObject.getString("cornealCurvatureOs");
+    	ResultEyepressureDO resultEyepressureDO= new ResultEyepressureDO(studentId,chectorId, eyePressureOd, eyePressureOs, date, 0,identityCard,activityId,cornealCurvatureOd,cornealCurvatureOs);
     	if( 
     			eyePressureOd==0.0 && 
-    			eyePressureOs==0.0
+    			eyePressureOs==0.0 &&
+    			"".equals(cornealCurvatureOd) && 
+    			"".equals(cornealCurvatureOs)
     	);
     	else
     		addUpdate(studentId, resultEyepressureDO);
-    	jsonObject =obj.getJSONObject("adjusting");//调节灵敏度检查数据
+    	/*jsonObject =obj.getJSONObject("adjusting");//调节灵敏度检查数据
     	double adjustingOd=jsonObject.getDouble("adjustingOd");
     	double adjustingOs=jsonObject.getDouble("adjustingOs");
     	double adjustingOu=jsonObject.getDouble("adjustingOu");
     	Integer jjOd=jsonObject.getInteger("jjOd");
     	Integer jjOs=jsonObject.getInteger("jjOs");
     	Integer jjOu=jsonObject.getInteger("jjOu");
-    	ResultAdjustingDO resultAdjustingDO=new ResultAdjustingDO(studentId,chectorId, adjustingOd, adjustingOs, adjustingOu, jjOd, jjOs, jjOu, date, 0,identityCard);
+    	ResultAdjustingDO resultAdjustingDO=new ResultAdjustingDO(studentId,chectorId, adjustingOd, adjustingOs, adjustingOu, jjOd, jjOs, jjOu, date, 0,identityCard,activityId);
     	if(
     		adjustingOd==0.0 && 
     		adjustingOs==0.0 && 
@@ -152,7 +202,7 @@ public class ResultServiceImpl implements ResultService{
 		Integer beforeAfterOsValue=jsonObject.getInteger("beforeAfterOsValue");
 		String beforeAfterOsDis=jsonObject.getString("beforeAfterOsDis");
 		ResultVisibilityDO resultVisibilityDO=new ResultVisibilityDO(studentId,chectorId, stereoscopicViewingValue, stereoscopicViewingDis, 
-				adjustmentRangeOd, adjustmentRangeOc, adjustmentRangeOu, gatherNearOd, gatherNearOc, gatherNearOu, obliqueValue, obliqueDis, beforeAfterOdValue, beforeAfterOdDis, beforeAfterOsValue, beforeAfterOsDis,date, 0,identityCard);
+				adjustmentRangeOd, adjustmentRangeOc, adjustmentRangeOu, gatherNearOd, gatherNearOc, gatherNearOu, obliqueValue, obliqueDis, beforeAfterOdValue, beforeAfterOdDis, beforeAfterOsValue, beforeAfterOsDis,date, 0,identityCard,activityId);
     	
 		if(
 				stereoscopicViewingValue==0 && 
@@ -172,7 +222,7 @@ public class ResultServiceImpl implements ResultService{
 		);
 		
 		else
-			addUpdate(studentId, resultVisibilityDO);
+			addUpdate(studentId, resultVisibilityDO);*/
     	jsonObject =obj.getJSONObject("optometry");//电脑验光检查数据
     	double firstCheckVd=jsonObject.getDouble("firstCheckVd");
     	double firstCheckRps=jsonObject.getDouble("firstCheckRps");
@@ -187,7 +237,7 @@ public class ResultServiceImpl implements ResultService{
     	double firstCheckPd=jsonObject.getDouble("firstCheckPd");
     	double secondCheckPd=jsonObject.getDouble("secondCheckPd");
     	ResultOptometryDO resultOptometryDO=new ResultOptometryDO(studentId, chectorId, firstCheckVd, firstCheckPd, secondCheckPd, firstCheckRps, firstCheckLps, firstCheckRcs, firstCheckLcs,date, 
-    			secondCheckVd, secondCheckRps, secondCheckLps, secondCheckRcs, secondCheckLcs, 0,identityCard);
+    			secondCheckVd, secondCheckRps, secondCheckLps, secondCheckRcs, secondCheckLcs, 0,identityCard,activityId);
     	int tOptometryId=0;
     	if(
 				firstCheckVd==0.0 &&
@@ -218,8 +268,8 @@ public class ResultServiceImpl implements ResultService{
     			Integer num=jb.getInteger("num");
     			String type=jb.getString("type");
     			String ifrl=jb.getString("ifrl");
-    			String firstSecond = jb.getString("firstSecond");
-    			ResultDiopterDO resultDiopterDO=new ResultDiopterDO(tOptometryId, diopterS, diopterC, diopterA, believe, num, type, ifrl, firstSecond,identityCard);
+    			//String firstSecond = jb.getString("firstSecond");
+    			ResultDiopterDO resultDiopterDO=new ResultDiopterDO(tOptometryId, diopterS, diopterC, diopterA, believe, num, type, ifrl, identityCard,activityId);
     			//计算等效球镜
     			resultDiopterDO.setDengxiaoqiujing(diopterS+1.0/2*diopterC);
     			System.out.println(resultDiopterDO);
@@ -232,8 +282,8 @@ public class ResultServiceImpl implements ResultService{
     					believe==0 &&
     					num==0 && 
     					"".equals(type) && 
-    					"".equals(ifrl) && 
-    					"".equals(firstSecond)
+    					"".equals(ifrl)
+    					//"".equals(firstSecond)
     					);
     			else
     				diopterDOs.add(resultDiopterDO);
@@ -251,8 +301,8 @@ public class ResultServiceImpl implements ResultService{
     			Integer cornealDeg=jb.getInteger("cornealDeg");
     			String type=jb.getString("type");
     			String ifrl=jb.getString("ifrl");
-    			String firstSecond = jb.getString("firstSecond");
-    			ResultCornealDO resultCornealDO = new ResultCornealDO(tOptometryId, cornealMm, cornealD, cornealDeg, type, ifrl, firstSecond,identityCard);
+    			//String firstSecond = jb.getString("firstSecond");
+    			ResultCornealDO resultCornealDO = new ResultCornealDO(tOptometryId, cornealMm, cornealD, cornealDeg, type, ifrl,identityCard,activityId);
     			resultCornealDO.setTOptometryId(tOptometryId);
     			resultCornealDO.setCheckDate(date);
     			System.out.println(resultCornealDO);
@@ -261,8 +311,8 @@ public class ResultServiceImpl implements ResultService{
     					cornealD==0.0&&
     					cornealDeg==0&&
     					"".equals(type)&&
-    					"".equals(ifrl)&&
-    					"".equals(firstSecond)
+    					"".equals(ifrl)
+    					//"".equals(firstSecond)
     					);
     			else 
     				cornealDOs.add(resultCornealDO);
@@ -310,7 +360,7 @@ public class ResultServiceImpl implements ResultService{
 		}
 		//向t_student表中更新nakedFarvisionOd nakedFarvisionOs
 		StudentDO studentDO = new StudentDO();
-		studentDO.setIdentityCard(resultEyesightDO.getIdentityCard());
+		studentDO.setId(studentId.intValue());
 		studentDO.setNakedFarvisionOd(resultEyesightDO.getNakedFarvisionOd());
 		studentDO.setNakedFarvisionOs(resultEyesightDO.getNakedFarvisionOs());
 		studentDao.updateStudentDOshi(studentDO);
@@ -423,11 +473,11 @@ public class ResultServiceImpl implements ResultService{
 			}
 			//向t_student表中更新 dengxiaoqiujingr，dengxiaoqiujingl
 			StudentDO studentDO = new StudentDO();
-			studentDO.setIdentityCard(diopterDOs.get(0).getIdentityCard());
+			studentDO.setId(studentId.intValue());
 			for(ResultDiopterDO d :diopterDOs){
-				if("AVG".equals(d.getType()) && "SECOND_CHECK".equals(d.getFirstSecond()) && "R".equals(d.getIfrl()))
+				if("AVG".equals(d.getType()) && "R".equals(d.getIfrl()))
 					studentDO.setDengxiaoqiujingr(d.getDengxiaoqiujing());
-				if("AVG".equals(d.getType()) && "SECOND_CHECK".equals(d.getFirstSecond()) && "L".equals(d.getIfrl()))
+				if("AVG".equals(d.getType()) && "L".equals(d.getIfrl()))
 					studentDO.setDengxiaoqiujingl(d.getDengxiaoqiujing());
 			}
 			studentDao.updateStudentDOshi(studentDO);	
@@ -442,12 +492,13 @@ public class ResultServiceImpl implements ResultService{
 			
 		}
 	}
-	
+
 
 	@Override
 	public Map<String, Object> getStudentInfo(String identityCard) {
+		String[] split = identityCard.split("JOIN");
 		Map<String,Object> resultMap  =new HashMap<String,Object>();
-		List<StudentDO>  list = studentDao.getStudentInfo(identityCard);
+		List<StudentDO>  list = studentDao.getStudentInfo(split[0],Integer.valueOf(split[1]));
 		if(list.size()==0){
 			resultMap.put("code", -1);
 			resultMap.put("msg", "数据缺失");
@@ -531,5 +582,10 @@ public class ResultServiceImpl implements ResultService{
 		resultMap.put("msg","数据获取成功...");
 
 		return resultMap;
+	}
+
+	@Override
+	public List<SchoolNewDO> list(Map<String, Object> map) {
+		return schoolNewDao.list(map);
 	}	
 }

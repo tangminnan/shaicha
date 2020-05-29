@@ -27,6 +27,8 @@ public class StudentDO implements Serializable {
 	private Date birthday;
 	//身份证号
 	private String identityCard;
+	//证件类型 SHEN_FENZHENG=身份证QITA=其他
+	private String  ideentityType;
 	//学校
 	private String school;
 	//年级
@@ -53,7 +55,42 @@ public class StudentDO implements Serializable {
 	private String nakedFarvisionOs;//左眼裸眼近视力
 	private Double dengxiaoqiujingr;
 	private Double dengxiaoqiujingl;
-
+	private Integer activityId;
+	private Integer schoolId;
+	private String schoolCode;
+	private String xueBu;
+	
+	
+	public String getSchoolCode() {
+		return schoolCode;
+	}
+	public void setSchoolCode(String schoolCode) {
+		this.schoolCode = schoolCode;
+	}
+	public String getXueBu() {
+		return xueBu;
+	}
+	public void setXueBu(String xueBu) {
+		this.xueBu = xueBu;
+	}
+	public Integer getSchoolId() {
+		return schoolId;
+	}
+	public void setSchoolId(Integer schoolId) {
+		this.schoolId = schoolId;
+	}
+	public String getIdeentityType() {
+		return ideentityType;
+	}
+	public void setIdeentityType(String ideentityType) {
+		this.ideentityType = ideentityType;
+	}
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public String getQRCode() {
 		return QRCode;
 	}

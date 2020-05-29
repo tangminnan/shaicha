@@ -18,40 +18,40 @@
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
 							 -->
-							<div class="columns pull-left">
-								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-default" onclick="importtemplate()">
+								<!-- <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-default" onclick="importtemplate()">
 									   模板导入
-								</button>
+								</button> -->
 								<!-- <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-default" onclick="datidaoru()">
 									  答题导入
 								</button> -->
-								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimaxiazai()">
+								<!-- <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimaxiazai()">
 									   二维码下载
 								</button>
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
 									   筛查结果导出
 								</button>
-								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="baogaoxuexiao()">
+								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="huodongbaogao()">
+									   活动报告
+								</button> -->
+								<!-- <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="baogaoxuexiao()">
 									   检测报告(学校)
 								</button>
 								 <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="jyjshaichabaogao()">
 									   教育局筛查报告
-								</button>
-								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="wxtuisong()">
+								</button> -->
+								<!-- <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="wxtuisong()">
 									 微信推送
-								</button>
-							</div>
+								</button> -->
 						</div>
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
-							<input id="studentName" type="text" class="form-control"
-								placeholder="姓名">
+							<input id="identityCard" name="identityCard" class="form-control" placeholder="身份证号" type="text">
 						</div>
-						<div class="columns pull-right col-md-2 nopadding">
+						<!-- <div class="columns pull-right col-md-2 nopadding">
 							<input id="phone" name="phone" class="form-control" placeholder="手机号" type="text">
-						</div>
+						</div> -->
 						<div class="columns pull-right col-md-2 nopadding">
 							<select class="form-control" name="studentSex" id="studentSex" >
                         		<option value="">性别</option>
@@ -59,14 +59,17 @@
                         		<option value="2">女</option>
                     		</select>
 						</div>
-						
 						<div class="columns pull-right col-md-2 nopadding">
-							<select class="form-control" name="school" id="school" >
-                        		<option value="">学校</option>
-                        		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
+							<input id="studentName" type="text" class="form-control"
+								placeholder="姓名">
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="5">
+                        		<option value="">请选择</option>
+                        		<option th:each="sc:${school}" th:value="${sc.orgname}" th:text="${sc.orgname}"></option>
                     		</select>
 						</div>
-						 		
+						<!--
 							<div class="columns pull-right col-md-2 nopadding">
 									<select class="form-control" name="studentClass" id="studentClass" >
                         			<option value="">班级</option>
@@ -96,7 +99,7 @@
                         		<option value="5年级">五年级</option>
                         		<option value="6年级">六年级</option>
                     		</select>
-						</div>
+						</div> -->
 						<!-- <div class="columns pull-right col-md-2 nopadding ">
 									<input id="startDate" name="startDate" class="form-control" placeholder="导出开始时间：" type="text">
 								</div>
@@ -150,6 +153,20 @@
 		elem: '#endDate',
 		type: 'date'
 	});
+	
+	//回车
+	$(document).bind('keyup', function(event) {
+		　if (event.keyCode == "13") {
+			　　reLoad();
+		　}
+	});
+	
+	$('#school').selectpicker({
+		title:"学校名称",
+		style:'btn-white',
+	});
+ 
+	 
 	</script>
 </body>
 </html>

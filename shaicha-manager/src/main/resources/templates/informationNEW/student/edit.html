@@ -57,7 +57,21 @@
 								<div class="col-sm-8">
 									<input id="birthday" name="birthday"
 										th:value="${student?.birthday} == null?'':${#dates.format(student.birthday, 'yyyy-MM-dd')}" class="form-control"
-										type="text">
+										type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">证件类型：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline"> <input type="radio"
+										th:field="*{student.ideentityType}" name="ideentityType" value="身份证" /> 身份证
+									</label> 
+									<label class="radio-inline"> <input type="radio" 
+										th:field="*{student.ideentityType}" name="ideentityType" value="护照" /> 护照
+									</label>
+									<label class="radio-inline"> <input type="radio" 
+										th:field="*{student.ideentityType}" name="ideentityType" value="其他" /> 其他
+									</label>
 								</div>
 							</div>
 							<div class="form-group">
@@ -88,14 +102,29 @@
 								<label class="col-sm-3 control-label">学部：</label>
 								<div class="col-sm-8">
 									<input id="xueBu" name="xueBu" class="form-control"
-										th:value="${student.xueBu}" type="text">
+										th:value="${student.xueBu}" type="text" readonly="readonly">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">年级：</label>
 								<div class="col-sm-8">
-									<input id="grade" name="grade" th:value="${student.grade}"
-										class="form-control" type="text">
+								<input id="nianji" name="nianji" th:value="${student.grade}" class="form-control" type="hidden">
+									<select class="form-control" name="grade" id="grade" >
+		                        		<option value="">年级</option>
+		                        		<option value="幼儿园">幼儿园</option>
+		                        		<option value="一年级">一年级</option>
+		                        		<option value="二年级">二年级</option>
+		                        		<option value="三年级">三年级</option>
+		                        		<option value="四年级">四年级</option>
+		                        		<option value="五年级">五年级</option>
+		                        		<option value="六年级">六年级</option>
+		                        		<option value="初一">初一</option>
+		                        		<option value="初二">初二</option>
+		                        		<option value="初三">初三</option>
+		                        		<option value="高一">高一</option>
+		                        		<option value="高二">高二</option>
+		                        		<option value="高三">高三</option>
+		                    		</select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -165,10 +194,10 @@
 		
 	</script>
 		<script type="text/javascript">
-		laydate.render({
+		/* laydate.render({
 			elem: '#birthday',
 			type: 'date'
-		});
+		}); */
 		
 		$(window).on('load', function () {
 	 		$('.selectpicker').selectpicker();
@@ -184,6 +213,10 @@
 			$("input[name='school']").val(school);
 		}
 		
+		$().ready(function(){
+			var nianji = $("input[name='nianji']").val();
+			$("#grade").find("[value="+nianji+"]").attr("selected",true);
+		})
 	</script>
 	
 </body>

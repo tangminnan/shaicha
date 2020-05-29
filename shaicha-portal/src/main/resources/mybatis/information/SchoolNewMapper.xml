@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.information.dao.SchoolNewDao">
+
+	<select id="get" resultType="com.shaicha.information.domain.SchoolNewDO">
+		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school_new where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.information.domain.SchoolNewDO">
+		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school_new
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="orgcode != null and orgcode != ''"> and OrgCode = #{orgcode} </if>
+		  		  <if test="orgname != null and orgname != ''"> and OrgName like concat('%', #{orgname},'%') </if>
+		  		  <if test="shortname != null and shortname != ''"> and ShortName = #{shortname} </if>
+		  		  <if test="spellname != null and spellname != ''"> and SpellName = #{spellname} </if>
+		  		  <if test="orgtype != null and orgtype != ''"> and OrgType = #{orgtype} </if>
+		  		  <if test="provincecode != null and provincecode != ''"> and ProvinceCode = #{provincecode} </if>
+		  		  <if test="provincename != null and provincename != ''"> and ProvinceName = #{provincename} </if>
+		  		  <if test="citycode != null and citycode != ''"> and CityCode = #{citycode} </if>
+		  		  <if test="cityname != null and cityname != ''"> and CityName = #{cityname} </if>
+		  		  <if test="areacode != null and areacode != ''"> and AreaCode = #{areacode} </if>
+		  		  <if test="areaname != null and areaname != ''"> and AreaName = #{areaname} </if>
+		  		  <if test="street != null and street != ''"> and Street = #{street} </if>
+		  		  <if test="address != null and address != ''"> and Address = #{address} </if>
+		  		  <if test="sortnumber != null and sortnumber != ''"> and SortNumber = #{sortnumber} </if>
+		  		  <if test="linker != null and linker != ''"> and Linker = #{linker} </if>
+		  		  <if test="linkphone != null and linkphone != ''"> and LinkPhone = #{linkphone} </if>
+		  		  <if test="enabledstatus != null and enabledstatus != ''"> and EnabledStatus = #{enabledstatus} </if>
+		  		  <if test="ispublic != null and ispublic != ''"> and IsPublic = #{ispublic} </if>
+		  		  <if test="createdate != null and createdate != ''"> and CreateDate = #{createdate} </if>
+		  		  <if test="xuebu != null and xuebu != ''"> and xuebu = #{xuebu} </if>
+		  		  and EnabledStatus = 1
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_school_new
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="orgcode != null and orgcode != ''"> and OrgCode = #{orgcode} </if>
+		  		  <if test="orgname != null and orgname != ''"> and OrgName = #{orgname} </if>
+		  		  <if test="shortname != null and shortname != ''"> and ShortName = #{shortname} </if>
+		  		  <if test="spellname != null and spellname != ''"> and SpellName = #{spellname} </if>
+		  		  <if test="orgtype != null and orgtype != ''"> and OrgType = #{orgtype} </if>
+		  		  <if test="provincecode != null and provincecode != ''"> and ProvinceCode = #{provincecode} </if>
+		  		  <if test="provincename != null and provincename != ''"> and ProvinceName = #{provincename} </if>
+		  		  <if test="citycode != null and citycode != ''"> and CityCode = #{citycode} </if>
+		  		  <if test="cityname != null and cityname != ''"> and CityName = #{cityname} </if>
+		  		  <if test="areacode != null and areacode != ''"> and AreaCode = #{areacode} </if>
+		  		  <if test="areaname != null and areaname != ''"> and AreaName = #{areaname} </if>
+		  		  <if test="street != null and street != ''"> and Street = #{street} </if>
+		  		  <if test="address != null and address != ''"> and Address = #{address} </if>
+		  		  <if test="sortnumber != null and sortnumber != ''"> and SortNumber = #{sortnumber} </if>
+		  		  <if test="linker != null and linker != ''"> and Linker = #{linker} </if>
+		  		  <if test="linkphone != null and linkphone != ''"> and LinkPhone = #{linkphone} </if>
+		  		  <if test="enabledstatus != null and enabledstatus != ''"> and EnabledStatus = #{enabledstatus} </if>
+		  		  <if test="ispublic != null and ispublic != ''"> and IsPublic = #{ispublic} </if>
+		  		  <if test="createdate != null and createdate != ''"> and CreateDate = #{createdate} </if>
+		  		  <if test="xuebu != null and xuebu != ''"> and xuebu = #{xuebu} </if>
+		  		  and EnabledStatus = 1
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.information.domain.SchoolNewDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_school_new
+		(
+			`OrgCode`, 
+			`OrgName`, 
+			`ShortName`, 
+			`SpellName`, 
+			`OrgType`, 
+			`ProvinceCode`, 
+			`ProvinceName`, 
+			`CityCode`, 
+			`CityName`, 
+			`AreaCode`, 
+			`AreaName`, 
+			`Street`, 
+			`Address`, 
+			`SortNumber`, 
+			`Linker`, 
+			`LinkPhone`, 
+			`EnabledStatus`, 
+			`IsPublic`, 
+			`CreateDate`, 
+			`xuebu`
+		)
+		values
+		(
+			#{orgcode}, 
+			#{orgname}, 
+			#{shortname}, 
+			#{spellname}, 
+			#{orgtype}, 
+			#{provincecode}, 
+			#{provincename}, 
+			#{citycode}, 
+			#{cityname}, 
+			#{areacode}, 
+			#{areaname}, 
+			#{street}, 
+			#{address}, 
+			#{sortnumber}, 
+			#{linker}, 
+			#{linkphone}, 
+			#{enabledstatus}, 
+			#{ispublic}, 
+			#{createdate}, 
+			#{xuebu}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.information.domain.SchoolNewDO">
+		update t_school_new
+		<set>
+			<if test="orgcode != null">`OrgCode` = #{orgcode}, </if>
+			<if test="orgname != null">`OrgName` = #{orgname}, </if>
+			<if test="shortname != null">`ShortName` = #{shortname}, </if>
+			<if test="spellname != null">`SpellName` = #{spellname}, </if>
+			<if test="orgtype != null">`OrgType` = #{orgtype}, </if>
+			<if test="provincecode != null">`ProvinceCode` = #{provincecode}, </if>
+			<if test="provincename != null">`ProvinceName` = #{provincename}, </if>
+			<if test="citycode != null">`CityCode` = #{citycode}, </if>
+			<if test="cityname != null">`CityName` = #{cityname}, </if>
+			<if test="areacode != null">`AreaCode` = #{areacode}, </if>
+			<if test="areaname != null">`AreaName` = #{areaname}, </if>
+			<if test="street != null">`Street` = #{street}, </if>
+			<if test="address != null">`Address` = #{address}, </if>
+			<if test="sortnumber != null">`SortNumber` = #{sortnumber}, </if>
+			<if test="linker != null">`Linker` = #{linker}, </if>
+			<if test="linkphone != null">`LinkPhone` = #{linkphone}, </if>
+			<if test="enabledstatus != null">`EnabledStatus` = #{enabledstatus}, </if>
+			<if test="ispublic != null">`IsPublic` = #{ispublic}, </if>
+			<if test="createdate != null">`CreateDate` = #{createdate}, </if>
+			<if test="xuebu != null">`xuebu` = #{xuebu}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_school_new where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_school_new where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

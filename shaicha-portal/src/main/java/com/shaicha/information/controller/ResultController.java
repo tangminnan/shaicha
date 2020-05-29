@@ -1,4 +1,6 @@
 package com.shaicha.information.controller;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shaicha.common.annotation.Log;
+import com.shaicha.information.domain.SchoolNewDO;
 import com.shaicha.information.service.ResultService;
 
 @RestController
@@ -35,5 +38,16 @@ public class ResultController {
 	@GetMapping("/getLastCheckResult")
 	public Map<String,Object> getLastCheckResult(Long id){
 		return resultService.getStudentInfo(id);
+	}
+	
+	@Log("获取学校的信息")
+	@GetMapping("/getSchoolList")
+	public Map<String,Object> getSchoolList(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		List<SchoolNewDO> list = resultService.list(map);
+		map.put("data",list);
+		map.put("code",0);
+		map.put("msg","数据获取成功...");
+		return map;
 	}
 }

@@ -52,6 +52,17 @@ public class ResultEyesightDO implements Serializable {
 				   
 	//戴镜视力左
 	private String glassvisionOs;
+	
+	private Integer activityId;
+	
+	
+	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public String getIdentityCard() {
 		return identityCard;
 	}
@@ -252,26 +263,28 @@ public class ResultEyesightDO implements Serializable {
 	public void setGlassvisionOs(String glassvisionOs) {
 		this.glassvisionOs = glassvisionOs;
 	}
-	public ResultEyesightDO(Long studentId, Long checkorId, String lifeFarvisionOd, String lifeFarvisionOs,
+	public ResultEyesightDO(Long studentId, Long checkorId, //String lifeFarvisionOd, String lifeFarvisionOs,
 			String nakedFarvisionOd, String nakedFarvisionOs, String correctionFarvisionOd,
-			String correctionFarvisionOs, String lifeNearvisionOd, String lifeNearvisionOs, String nakedNearvisionOd,
-			String nakedNearvisionOs, Date checkDate, Integer deleteFlag,String identityCard) {
+			String correctionFarvisionOs, 
+			//String lifeNearvisionOd, String lifeNearvisionOs, String nakedNearvisionOd,String nakedNearvisionOs, 
+			Date checkDate, Integer deleteFlag,String identityCard,Integer activityId) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
-		this.lifeFarvisionOd = lifeFarvisionOd;
-		this.lifeFarvisionOs = lifeFarvisionOs;
+		//this.lifeFarvisionOd = lifeFarvisionOd;
+		//this.lifeFarvisionOs = lifeFarvisionOs;
 		this.nakedFarvisionOd = nakedFarvisionOd;
 		this.nakedFarvisionOs = nakedFarvisionOs;
 		this.correctionFarvisionOd = correctionFarvisionOd;
 		this.correctionFarvisionOs = correctionFarvisionOs;
-		this.lifeNearvisionOd = lifeNearvisionOd;
-		this.lifeNearvisionOs = lifeNearvisionOs;
-		this.nakedNearvisionOd = nakedNearvisionOd;
-		this.nakedNearvisionOs = nakedNearvisionOs;
+		//this.lifeNearvisionOd = lifeNearvisionOd;
+		//this.lifeNearvisionOs = lifeNearvisionOs;
+		//this.nakedNearvisionOd = nakedNearvisionOd;
+		//this.nakedNearvisionOs = nakedNearvisionOs;
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
 	}
 	public ResultEyesightDO() {
 		super();

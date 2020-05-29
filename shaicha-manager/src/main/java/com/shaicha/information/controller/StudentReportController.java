@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,14 +27,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
+import com.shaicha.information.domain.ActivityListDO;
 import com.shaicha.information.domain.ChectorDO;
 import com.shaicha.information.domain.LinShiUrlDO;
 import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.StudentDO;
+import com.shaicha.information.service.ActivityListService;
 import com.shaicha.information.service.LinShiUrlService;
 import com.shaicha.information.service.ResultDiopterService;
-import com.shaicha.information.service.StudentReportService;
+import com.shaicha.information.service.SchoolReportService;
 import com.shaicha.information.service.StudentService;
+import com.shaicha.information.service.jiaoyujuReportService;
 
 @Controller
 public class StudentReportController {
@@ -41,43 +45,60 @@ public class StudentReportController {
 	@Autowired
 	StudentService studentService;
 	@Autowired
-	StudentReportService studentReportService;
+	SchoolReportService schoolReportService;
+	@Autowired
+	jiaoyujuReportService jiaoyujuReportService;
 	@Autowired
 	private ResultDiopterService resultDiopterService;
 	@Autowired
 	LinShiUrlService linShiUrlService;
+	@Autowired
+	ActivityListService activityListService;
 	
-	
+	/**
+	 * 跳转页面
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/studentReport/xuexiao")
 	public String xuexiao(Model model){
-		List<StudentDO> schoolName = studentService.querySchoolName();
+		List<ActivityListDO> activityList = activityListService.list(new HashMap<>());
+		model.addAttribute("activityList", activityList);
+		/*List<StudentDO> schoolName = studentService.querySchoolName();
 		List<ResultDiopterDO> jianchashijian = resultDiopterService.jianchashijian();
 		model.addAttribute("schoolName", schoolName);
-		model.addAttribute("jianchashijian", jianchashijian);
+		model.addAttribute("jianchashijian", jianchashijian);*/
 		return "information/student/xuexiao";
 	}
-	
+
+	/**
+	 * 学校报告图片生成
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
 	@ResponseBody
 	@PostMapping("/studentReport/baogaoimg")
 	public Map<String, Object> baogaoimg(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		Map<String, Object> map = new HashMap<>();
 		String school = request.getParameter("school");
-		String checkDate = request.getParameter("checkDate");
-		Map<String, Object> mapp = new HashMap<>();
+		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
+		/*Map<String, Object> mapp = new HashMap<>();
 		mapp.put("checkDate", checkDate);
 		List<ResultDiopterDO> list = resultDiopterService.list(mapp);
 		if(list.size()<=0){
 			map.put("code", "-1");
 		}else{
-			map.put("code", "0");
-		String schoolNum = request.getParameter("schoolNum");
-		Map<String, List<Object>> overYearMyopia = studentReportService.overYearMyopia(school);
-		Map<String, List<Object>> gradeMyopia = studentReportService.gradeMyopia(school,checkDate);
-		Map<String, List<Object>> overYearGradeMyopia = studentReportService.overYearGradeMyopia(school);
-		Map<String, List<Double>> studentSexMyopia = studentReportService.studentSexMyopia(school,checkDate);
-		Map<String, List<Object>> overYearSexNan = studentReportService.overYearSexNan(school);
-		Map<String, List<Object>> overYearSexNv = studentReportService.overYearSexNv(school);
-		Map<String, List<Object>> overYearGradeSex = studentReportService.overYearGradeSex(school,checkDate);
+			map.put("code", "0");*/
+		//String schoolNum = request.getParameter("schoolNum");
+		Map<String, List<Object>> overYearMyopia = schoolReportService.overYearMyopia(school);
+		Map<String, List<Object>> gradeMyopia = schoolReportService.gradeMyopia(school,activityId);
+		Map<String, List<Object>> overYearGradeMyopia = schoolReportService.overYearGradeMyopia(school);
+		Map<String, List<Double>> studentSexMyopia = schoolReportService.studentSexMyopia(school,activityId);
+		Map<String, List<Object>> overYearSexNan = schoolReportService.overYearSexNan(school);
+		Map<String, List<Object>> overYearSexNv = schoolReportService.overYearSexNv(school);
+		Map<String, List<Object>> overYearGradeSex = schoolReportService.overYearGradeSex(school,activityId);
 		
 		map.put("overYearMyopia", overYearMyopia.get("overYearMyopia"));
 		
@@ -98,11 +119,19 @@ public class StudentReportController {
 		
 		map.put("year", overYearMyopia.get("year"));
 		map.put("grade", gradeMyopia.get("grade"));
-		}
+		//}
 		return map;
 		
 		
 	}
+	
+	/**
+	 * 学校报告图片转码保存
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
 	
 	@ResponseBody
 	@PostMapping("/studentReport/xuexiaotu")
@@ -150,54 +179,79 @@ public class StudentReportController {
 
 	}
 	
-
+	/**
+	 * 学校报告导出
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	@GetMapping("/studentReport/baogaoxuexiao")
 	public void baogaoxuexiao(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		studentReportService.baogaoxuexiao(request, response);
+		schoolReportService.baogaoxuexiao(request, response);
 					
 	}
 	
-	@GetMapping("/studentReport/jiaoyuju")
-	public String jiaoyuju(Model model){
-		List<StudentDO> schoolName = studentService.querySchoolName();
-		List<ResultDiopterDO> jianchashijian = resultDiopterService.jianchashijian();
-		model.addAttribute("schoolName", schoolName);
-		return "information/student/jiaoyuju";
-	}
+//	/**
+//	 * 作废
+//	 * @param model
+//	 * @return
+//	 */
+//	@GetMapping("/studentReport/jiaoyuju")
+//	public String jiaoyuju(Model model){
+//		List<StudentDO> schoolName = studentService.querySchoolName();
+//		List<ResultDiopterDO> jianchashijian = resultDiopterService.jianchashijian();
+//		model.addAttribute("schoolName", schoolName);
+//		return "information/student/jiaoyuju";
+//	}
+	
+	/**
+	 * 教育局报告图片生成
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
 	@ResponseBody
 	@PostMapping("/studentReport/baogaojyjimg")
 	public Map<String, Object> baogaojyjimg(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String activityId = request.getParameter("activityId");
+		System.out.println(activityId);
+		String[] parameter = request.getParameterValues("school[]");
+		for (String string : parameter) {
+			System.out.println(string);
+		}
+		
 		Map<String, Object> map = new HashMap<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		try {
-			List<ResultDiopterDO> timeBetween = resultDiopterService.queryTimeBetween(sdf.parse(startDate), sdf.parse(endDate));
-			if(timeBetween.size()<=0){
-				map.put("code", "-1");
-			}else{
-				map.put("code", "0");
-				Map<String, List<Double>> jinshi = studentReportService.suoyounianjijinshi(sdf.parse(startDate),sdf.parse(endDate));
-				Map<String, List<Double>> buliang = studentReportService.suoyounianjibuliang(sdf.parse(startDate),sdf.parse(endDate));
-				Map<String, Object> nianling = studentReportService.genianlingjinshiyear(sdf.parse(startDate),sdf.parse(endDate));
-				Map<String, Object> nannv = studentReportService.nannvjinshiyear(sdf.parse(startDate),sdf.parse(endDate));
-				
-				map.put("jinshi", jinshi.get("jinshi"));
-				
-				map.put("buliang", buliang.get("buliang"));
-				
-				map.put("nianling", nianling.get("nianling"));
-				
-				map.put("nan", nannv.get("nan"));
-				map.put("nv", nannv.get("nv"));
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		/*List<ResultDiopterDO> timeBetween = resultDiopterService.queryTimeBetween(sdf.parse(startDate), sdf.parse(endDate));
+		if(timeBetween.size()<=0){
+			map.put("code", "-1");
+		}else{
+			map.put("code", "0");*/
+			Map<String, List<Double>> jinshi = jiaoyujuReportService.suoyounianjijinshi(request);
+			Map<String, List<Double>> buliang = jiaoyujuReportService.suoyounianjibuliang(request);
+			Map<String, Object> nianling = jiaoyujuReportService.genianlingjinshiyear(request);
+			Map<String, Object> nannv = jiaoyujuReportService.nannvjinshiyear(request);
+			
+			map.put("jinshi", jinshi.get("jinshi"));
+			
+			map.put("buliang", buliang.get("buliang"));
+			
+			map.put("nianling", nianling.get("nianling"));
+			
+			map.put("nan", nannv.get("nan"));
+			map.put("nv", nannv.get("nv"));
+		//}		
 		
 		return map;
 	}
+	
+	/**
+	 * 教育局报告图片转码保存
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
 	@ResponseBody
 	@PostMapping("/studentReport/jiaoyujutu")
 	public String jiaoyujutu(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -226,38 +280,124 @@ public class StudentReportController {
 		
 	}
 	
+	/**
+	 * 教育局报告导出
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
 	@GetMapping("/studentReport/baogaojiaoyuju")
 	public void baogaojiaoyuju(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		studentReportService.baogaojiaoyuju(request, response);
+		jiaoyujuReportService.baogaojiaoyuju(request, response);
 	}
 	
+	/**
+	 * 导出等待页面
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/studentReport/dengdaixuexiao")
 	public String dengdai(HttpServletRequest request, HttpServletResponse response,Model model){
 		String school = request.getParameter("school");
-		String checkDate = request.getParameter("checkDate");
+		String activityId = request.getParameter("activityId");
 		String date = request.getParameter("date");
-		String schoolNum = request.getParameter("schoolNum");		
 		model.addAttribute("school", school);
-		model.addAttribute("checkDate", checkDate);
 		model.addAttribute("date", date);
-		model.addAttribute("schoolNum", schoolNum);
+		model.addAttribute("activityId", activityId);
 		return "information/student/dengdaixuexiao";
 		
 			
 	}
 	
+	/**
+	 * 导出等待页
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/studentReport/dengdaijiaoyuju")
 	public String dengdaijiaoyuju(HttpServletRequest request, HttpServletResponse response,Model model){
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
+		String activityId = request.getParameter("activityId");
+		System.out.println(activityId);
+		String parameter = request.getParameter("school");
+		String[] split = parameter.split(",");
+		for (String string : split) {
+			System.out.println(string);
+		}
 		String date = request.getParameter("date");
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
+		model.addAttribute("activityId", activityId);
+		model.addAttribute("school", parameter);
 		model.addAttribute("date", date);
 		return "information/student/dengdajiaoyuju";
 		
 			
 	}
+	
+	
+	@ResponseBody
+	@GetMapping("/studentReport/schoolActivity")
+	public List<StudentDO> schoolActivity(Integer activityId){
+		List<StudentDO> schoolActivity = schoolReportService.schoolActivity(activityId);
+		
+		return schoolActivity;
+		
+	}
+	
+	@ResponseBody
+	@GetMapping("/studentReport/schoolGrade")
+	public List<StudentDO> schoolGrade(Integer activityId,String school){
+		List<StudentDO> schoolGrade = studentService.queryBySchoolGrade(activityId, school);
+		
+		return schoolGrade;
+		
+	}
+	
+	@ResponseBody
+	@GetMapping("/studentReport/schoolStuClass")
+	public List<StudentDO> schoolStuClass(Integer activityId,String school){
+		List<StudentDO> stuClass = studentService.queryBySchoolStudentClass(activityId, school);
+		
+		return stuClass;
+		
+	}
+	
+	/**
+	 * 年级报告导出
+	 * @throws IOException 
+	 */
+	@GetMapping("/studentReport/gradeBaogao")
+	public void gradeBaogao(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		schoolReportService.schoolGradeRep(request, response);
+	}
+	
+	@GetMapping("/studentReport/dengdaigrade")
+	public String dengdaigrade(HttpServletRequest request, HttpServletResponse response,Model model){
+		String school = request.getParameter("school");
+		String activityId = request.getParameter("activityId");
+		String grade = request.getParameter("grade");
+		String type = request.getParameter("type");
+		String stuclass = request.getParameter("stuclass");
+		model.addAttribute("school", school);
+		model.addAttribute("grade", grade);
+		model.addAttribute("activityId", activityId);
+		model.addAttribute("type", type);
+		model.addAttribute("stuclass", stuclass);
+		return "information/student/dengdaigrade";
+			
+	}
+	/**
+	 * 班级报告导出
+	 */
+	@GetMapping("/studentReport/stuClassBaogao")
+	public void stuClassBaogao(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		schoolReportService.schoolClassRep(request, response);
+	}
+
+	
+	
 	
 	
 }

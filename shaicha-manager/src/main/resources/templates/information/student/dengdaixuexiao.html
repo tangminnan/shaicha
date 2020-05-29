@@ -15,9 +15,10 @@
 				<div class="ibox-content">
 					<div>
 						<input id="school" name="school" th:value="${school}" type="hidden">
-						<input id="checkDate" name="checkDate" th:value="${checkDate}" type="hidden">
+						<input id="activityId" name="activityId" th:value="${activityId}" type="hidden">
+						<!-- <input id="checkDate" name="checkDate" th:value="${checkDate}" type="hidden">					
+						<input id="schoolNum" name="schoolNum" th:value="${schoolNum}" type="hidden"> -->
 						<input id="date" name="date" th:value="${date}" type="hidden">
-						<input id="schoolNum" name="schoolNum" th:value="${schoolNum}" type="hidden">
 						<div class="box">
 							  <h4>正在整理数据,请您稍候 ...</h4>   
 							  <p class="nowTurn">整理数据时间较长请您耐心等待 ...</p>
@@ -32,8 +33,9 @@
 	<script type="text/javascript">
 	 $(function(){
 		window.location.href="/studentReport/baogaoxuexiao?school="+$("#school").val()
-													+"&checkDate="+$("#checkDate").val()
-													+"&schoolNum="+$("#schoolNum").val()
+														+"&activityId="+$("#activityId").val()
+													//+"&checkDate="+$("#checkDate").val()
+													//+"&schoolNum="+$("#schoolNum").val()
 													+"&date="+$("#date").val();
 													
 	 })

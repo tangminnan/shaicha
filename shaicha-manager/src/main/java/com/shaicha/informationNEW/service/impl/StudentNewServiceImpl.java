@@ -21,15 +21,16 @@ import com.shaicha.common.utils.QRCodeUtil;
 import com.shaicha.common.utils.R;
 import com.shaicha.common.utils.ShiroUtils;
 import com.shaicha.common.utils.WordUtils;
-import com.shaicha.informationNEW.dao.SchoolDao;
+import com.shaicha.informationNEW.dao.SchoolNewDao;
 import com.shaicha.informationNEW.dao.StudentNewDao;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.StudentDO;
 import com.shaicha.informationNEW.domain.ResultCornealNewDO;
 import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
 import com.shaicha.informationNEW.domain.ResultEyeaxisNewDO;
 import com.shaicha.informationNEW.domain.ResultEyepressureNewDO;
 import com.shaicha.informationNEW.domain.ResultEyesightNewDO;
-import com.shaicha.informationNEW.domain.SchoolDO;
+import com.shaicha.informationNEW.domain.SchoolNewDO;
 import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.service.StudentNewService;
 import com.shaicha.system.config.ExcelUtils;
@@ -54,6 +55,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,7 +86,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 	@Autowired
 	private BootdoConfig bootdoConfig;
 	@Autowired
-	private SchoolDao schoolDao;
+	private SchoolNewDao schoolDao;
+	
 	
 	@Override
 	public StudentNewDO get(Integer id){
@@ -152,14 +155,12 @@ public class StudentNewServiceImpl implements StudentNewService {
 						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
 						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
 						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
-						String birthday =ExcelUtils.getCellFormatValue(row.getCell((short)4));	//生日
-						String xueBu = ExcelUtils.getCellFormatValue(row.getCell((short)5));		//学部
-						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//年级
-						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)7));	//班级
-						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)8));		//手机号
-						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)9));		//民族
+						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)4));		//年级
+						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)5));	//班级
+						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//手机号
+						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7));		//民族
 						StudentNewDO student = new StudentNewDO();
-						SchoolDO schoolDO = schoolDao.get(schoolId);
+						SchoolNewDO schoolDO = schoolDao.get(schoolId);
 						student.setSchoolId(schoolId);
 						student.setSchool(schoolDO.getOrgname());
 						student.setSchoolCode(schoolDO.getOrgcode());
@@ -174,7 +175,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 						student.setStudentClass(studentClass);
 						student.setStatus(0);
 						student.setIdeentityType(ideentityType);
-						student.setXueBu(xueBu);
+						student.setXueBu(schoolDO.getXuebu());
 						student.setSysId(ShiroUtils.getUserId());
 						//student.setSchoolCode(schoolCode);
 						student.setModelType("学校");
@@ -186,12 +187,24 @@ public class StudentNewServiceImpl implements StudentNewService {
 								student.setStudentSex(2);
 							}
 						}
-						if(birthday != null && birthday != ""){
+						if(ideentityType.equals("身份证")){
+							 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+								String year = identityCard.substring(6, 10);
+								String month = identityCard.substring(10, 12);
+								String day = identityCard.substring(12, 14);
+								String bir = year+"-"+month+"-"+day;
+								try {
+									student.setBirthday(sdf.parse(bir));
+								} catch (ParseException e) {
+									e.printStackTrace();
+								}
+						}
+						/*if(birthday != null && birthday != ""){
 							Calendar c = new GregorianCalendar(1900,0,-1);
 							Date d = c.getTime();
 							Date _d = DateUtils.addDays(d, Integer.parseInt(birthday));
 							student.setBirthday(_d);
-						}
+						}*/
 						else
 							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("1990-12-24"));
 						student.setAddTime(new Date());
@@ -246,7 +259,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 		}
 		return R.error();	
 	}
-
+	
+	
 	@Override
 	public List<StudentNewDO> getList() {
 		return studentNewDao.getList();
@@ -259,7 +273,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 		params.put("grade",studentDO.getGrade()==null?"":studentDO.getGrade());  
 		params.put("studentClass",studentDO.getStudentClass()==null?"":studentDO.getStudentClass());
 		String identityCard = studentDO.getIdentityCard();
-		String code = QRCodeUtil.creatRrCode(identityCard, 500,500);
+		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+ids, 500,500);
 		params.put("QRCode",code);
 		return params;
 	}
@@ -949,11 +963,11 @@ public class StudentNewServiceImpl implements StudentNewService {
 
 
 
-	@Override
-	public List<StudentNewDO> querySchoolName() {
-		
-		return studentNewDao.querySchoolName();
-	}
+//	@Override
+//	public List<StudentNewDO> querySchoolName() {
+//		
+//		return studentNewDao.querySchoolName();
+//	}
 
 	/*List<ResultEyesightDO> resultEyesightDOList11 = new ArrayList<ResultEyesightDO>();
 	List<ResultDiopterDO> resultDiopterDOListR11 = new ArrayList<ResultDiopterDO>();
@@ -1170,8 +1184,28 @@ public class StudentNewServiceImpl implements StudentNewService {
 				
 	         return Double.parseDouble(df.format(s));
 		}
-	
-	
+
+	@Override
+	public List<StudentNewDO> queryBySchoolGrade(Integer activityId, String school) {
+		return studentNewDao.queryBySchoolGrade(activityId, school);
+	}
+
+	@Override
+	public List<StudentNewDO> queryBySchoolStudentClass(Integer activityId, String school) {
+		return studentNewDao.queryBySchoolStudentClass(activityId, school);
+	}
+
+	@Override
+	public List<StudentNewDO> schoolGrade(String school) {
+		return studentNewDao.schoolGrade(school);
+	}
+
+	@Override
+	public List<StudentNewDO> schoolStudentClass(String school) {
+		return studentNewDao.schoolStudentClass(school);
+	}
+
+
 }
 
 

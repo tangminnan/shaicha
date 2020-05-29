@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultDiopterDO;
+import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
 
 /**
  * 曲光度详情
@@ -31,22 +32,15 @@ public interface ResultDiopterDao {
 	int remove(Integer t_diopter_id);
 	
 	int batchRemove(Integer[] tDiopterIds);
-	
-	List<ResultDiopterDO> ifExistData(@Param("school") String school,@Param("start") Date start,@Param("end") Date end);
-	
+		
 	List<ResultDiopterDO> getByToptometryId(Integer tOptometryId);
-				
-	ResultDiopterDO maxCheckDate();
 	
-	List<ResultDiopterDO> getStudentMyopia(Map<String,Object> map);
-	
-	List<ResultDiopterDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
+	List<ResultDiopterDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("activityId") Integer activityId);
 	
 	List<ResultDiopterDO> jianchashijian();
 	
 	List<ResultDiopterDO> queryTimeBetween(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
-
-	List<ResultDiopterDO> queryQiujing(@Param("identityCard") String identityCard,@Param("checkDate") Date checkDate);
 	
-	List<ResultDiopterDO> queryMyopia(@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
+	//int insertForeach(List<ResultDiopterNewDO> list);
+
 }

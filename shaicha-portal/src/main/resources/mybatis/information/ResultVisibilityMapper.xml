@@ -24,13 +24,13 @@
 	`check_date`,
 	`delete_flag`
 FROM
-	t_result_visibility
+	t_result_visibility_new
 WHERE
 	student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveVisibilityDO" parameterType="com.shaicha.information.domain.ResultVisibilityDO" useGeneratedKeys="true" keyProperty="tVisibilityId">
-		insert into t_result_visibility
+		insert into t_result_visibility_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -50,7 +50,8 @@ WHERE
 			`before_after_os_dis`, 
 			`check_date`, 
 			`delete_flag`,
-			 identity_card
+			 identity_card,
+			 activity_id
 		)
 		values
 		(
@@ -72,12 +73,13 @@ WHERE
 			#{beforeAfterOsDis}, 
 			#{checkDate}, 
 			#{deleteFlag},
-			#{identityCard}
+			#{identityCard},
+			#{activityId}
 		)
 	</insert>
 	
 	<update id="updateVisibilityDO" parameterType="com.shaicha.information.domain.ResultVisibilityDO">
-		update t_result_visibility 
+		update t_result_visibility_new 
 		<set>
 			<if test="studentId != null">`student_id` = #{studentId}, </if>
 			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>

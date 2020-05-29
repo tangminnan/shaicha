@@ -50,12 +50,46 @@
 		  		</where>
 	</select>
 	 
+	 	
+	<!-- <insert id="insertForeach" parameterType="java.util.List" useGeneratedKeys="false">
+    	insert into t_result_corneal
+		(
+			`t_optometry_id`, 
+			`corneal_mm`, 
+			`corneal_d`, 
+			`corneal_deg`, 
+			`type`, 
+			`ifRL`,
+			first_second,
+			activity_id,
+			Relation_Patient_Crf_Id,
+			identity_card,
+			`check_date`
+		)
+		values
+    	<foreach collection="list" item="item" index="index" separator=",">
+    				(
+    					#{item.tOptometryId}, 
+						#{item.cornealMm}, 
+						#{item.cornealD}, 
+						#{item.cornealDeg}, 
+						#{item.type}, 
+						#{item.ifrl},
+						#{item.firstSecond},
+						#{item.activityId},
+						#{item.RelationPatientCrfId},
+						#{item.identityCard},
+						#{item.checkDate}
+    				)
+    	 </foreach>		
+    </insert>  -->
+	 
 	<insert id="save" parameterType="com.shaicha.information.domain.ResultCornealDO" useGeneratedKeys="true" keyProperty="tCornealId">
 		insert into t_result_corneal
 		(
 			`t_optometry_id`, 
 			`corneal_mm`, 
-			`corneal_d`, 
+			`corneal_d`, t
 			`corneal_deg`, 
 			`type`, 
 			`ifRL`,
@@ -101,7 +135,7 @@
 	<select id="getCornealMm" resultType="com.shaicha.information.domain.ResultCornealDO">
 		select corneal_mm from t_result_corneal where first_second = 'FIRST_CHECK' 
 		and ifRL = #{ifRL} and identity_card = #{identityCard} and type = #{type} 
-		and check_date between #{start} and #{end}
+		and activity_id = #{activityId}
 	</select>
 
 </mapper>

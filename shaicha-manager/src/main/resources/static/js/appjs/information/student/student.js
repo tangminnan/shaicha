@@ -152,7 +152,7 @@ function load() {
 										var q = '<a class="btn btn-primary btn-xs" href="#" title="筛查打印"  mce_href="#" onclick="putongshaichadayin(\''
 											+ row.id
 											+ '\',\''+row.lastCheckTime+'\')" style="text-decoration: none;">筛查打印</a>';
-										return f + g + h + n+q;
+										return g + h;
 									}
 								} ]
 					});

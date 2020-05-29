@@ -98,9 +98,9 @@
 		</foreach>
 	</delete>
 	
-	<select id="getEyepressure" resultType="com.shaicha.informationNEW.domain.ResultEyepressureNewDO">
+	<select id="getEyepressure" resultType="com.shaicha.information.domain.ResultEyepressureDO">
 		select eye_pressure_od,eye_pressure_os from t_result_eyepressure_new
-		where identity_card = #{identityCard} and check_date between #{start} and #{end}
+		where student_id = #{studentId}
 	</select>
 
 </mapper>

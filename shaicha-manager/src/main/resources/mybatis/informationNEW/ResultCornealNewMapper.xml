@@ -51,6 +51,8 @@
 		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
 		  		</where>
 	</select>
+   
+
 	 
 	<insert id="save" parameterType="com.shaicha.informationNEW.domain.ResultCornealNewDO" useGeneratedKeys="true" keyProperty="tCornealId">
 		insert into t_result_corneal_new
@@ -62,7 +64,10 @@
 			`type`, 
 			`ifRL`,
 			first_second,
-			activity_id
+			activity_id,
+			Relation_Patient_Crf_Id,
+			identity_card,
+			`check_date`
 		)
 		values
 		(
@@ -73,7 +78,10 @@
 			#{type}, 
 			#{ifrl},
 			#{firstSecond},
-			#{activityId}
+			#{activityId},
+			#{RelationPatientCrfId},
+			#{identityCard},
+			#{checkDate}
 		)
 	</insert>
 	 
@@ -103,10 +111,10 @@
 		</foreach>
 	</delete>
 	
-	<select id="getCornealMm" resultType="com.shaicha.informationNEW.domain.ResultCornealNewDO">
+	<select id="getCornealMm" resultType="com.shaicha.information.domain.ResultCornealDO">
 		select corneal_mm from t_result_corneal_new where first_second = 'FIRST_CHECK' 
 		and ifRL = #{ifRL} and identity_card = #{identityCard} and type = #{type} 
-		and check_date between #{start} and #{end}
+		and activity_id = #{activityId}
 	</select>
 
 </mapper>

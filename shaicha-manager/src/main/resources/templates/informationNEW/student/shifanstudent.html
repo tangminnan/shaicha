@@ -13,12 +13,12 @@
 							<button shiro:hasPermission="information:student:add" type="button" class="btn  btn-primary" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<!--
+							
 							<button shiro:hasPermission="information:student:batchRemove" type="button" class="btn  btn-danger"
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
-							 -->
+							 
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-default" onclick="importtemplate()">
 									   模板导入
 								</button>
@@ -27,6 +27,9 @@
 								</button> -->
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimaxiazai()">
 									   二维码下载
+								</button>
+								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimadayin()">
+									  批量 打印二维码
 								</button>
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
 									   筛查结果导出
@@ -45,7 +48,7 @@
 								</button>
 						</div>
 						<div class="columns pull-right">
-							<button class="btn btn-info" onclick="myrefresh()">重置</button>
+							<!-- <button class="btn btn-info" onclick="myrefresh()">重置</button> -->
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
 						</div>
 						
@@ -60,60 +63,33 @@
                     		</select>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
-							<select name="studentName" id="studentName" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="5">
-									<!-- <option value="">请选择</option>
-									<option th:each="ls:${listSchool}"
-									 th:text="${ls.orgname}"
-									 th:value="${ls.id}"></option> -->
-								</select>
-							<!-- <input id="studentName" type="text" class="form-control"
-								placeholder="姓名"> -->
+							<input id="studentName" type="text" class="form-control"
+								placeholder="姓名">
 						</div>
+						
 						<div class="columns pull-right col-md-2 nopadding">
-							<select name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="5">
+								<select class="form-control" name="studentClass" id="studentClass" >
+                        		<option value="">班级</option>
+                    			</select>
+						</div>
+						
+						<div class="columns pull-right col-md-2 nopadding">
+							<select class="form-control" name="grade" id="grade" onchange="stugrade();">
+                        		<option value="">年级</option>
+                    		</select>
+						</div>
+						
+						<div class="columns pull-right col-md-2 nopadding">
+							<select onchange="stuschool();" name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
+								<option value="">学校</option>
+								<option th:each="sc:${school}" th:value="${sc.orgname}" th:text="${sc.orgname}"></option>
 							</select>
 							<!-- <select class="form-control" name="school" id="school" >
                         		<option value="">学校</option>
                         		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
                     		</select> -->
 						</div>
-						 	<!-- 	
-							<div class="columns pull-right col-md-2 nopadding">
-									<select class="form-control" name="studentClass" id="studentClass" >
-                        			<option value="">班级</option>
-                        			<option value="1">1</option>
-                        			<option value="2">2</option>
-                        			<option value="3">3</option>
-                        			<option value="4">4</option>
-                        			<option value="5">5</option>
-                        			<option value="6">6</option>
-                        			<option value="7">7</option>
-                        			<option value="8">8</option>
-                        			<option value="9">9</option>
-                        			<option value="10">10</option>
-                        			<option value="11">11</option>
-                    			</select>
-						</div>
-						<div class="columns pull-right col-md-2 nopadding">
-							<select class="form-control" name="grade" id="grade" >
-                        		<option value="">年级</option>
-                        		<option value="小班">小班</option>
-                        		<option value="中班">中班</option>
-                        		<option value="大班">大班</option>
-                        		<option value="1年级">一年级</option>
-                        		<option value="2年级">二年级</option>
-                        		<option value="3年级">三年级</option>
-                        		<option value="4年级">四年级</option>
-                        		<option value="5年级">五年级</option>
-                        		<option value="6年级">六年级</option>
-                    		</select>
-						</div> -->
-						<!-- <div class="columns pull-right col-md-2 nopadding ">
-									<input id="startDate" name="startDate" class="form-control" placeholder="导出开始时间：" type="text">
-								</div>
-								<div class="columns pull-right col-md-2 nopadding">
-									<input id="endDate" name="endDate" class="form-control" placeholder="导出结束时间：" type="text">
-								</div> -->
+						
 					</div>
 				 <table id="exampleTable" data-mobile-responsive="true"> 
 					</table>
@@ -153,34 +129,86 @@
 	<div th:include="include :: footer"></div>	
 	<script type="text/javascript" src="/js/appjs/informationNEW/student/shifanstudent.js"></script>	
 	<script type="text/javascript">
-	laydate.render({
-		elem: '#startDate',
-		type: 'date'
-	});
-	laydate.render({
-		elem: '#endDate',
-		type: 'date'
-	});
 	
 	//回车
-	$('#identityCard').bind('keyup', function(event) {
+	$(document).bind('keyup', function(event) {
 		　if (event.keyCode == "13") {
 			　　reLoad();
 		　}
 	});
 	
-	$('#studentName').selectpicker({
+/* 	$('#studentName').selectpicker({
 		title:"姓名",
 		style:'btn-white'
-	});
+	}); */
 	
 	$('#school').selectpicker({
 		title:"学校名称",
 		style:'btn-white'
 	});
 	
-	 $().ready(function(){
 		 
+		 function stuschool(){
+				
+				var school = $('#school option:selected').text();
+				$.ajax({
+					
+					cache : true,
+					type : "get",
+					url : "/informationNEW/student/schoolGrade",
+					data:{
+							school : school,
+						},
+					success:function(data){
+						//console.info(data);
+						$("#grade").empty();
+						if (data.length>0) {
+							var html = '';
+							html += '<option value="">年级</option>'
+							for(var i = 0; i < data.length; i++) {
+								html += '<option value="' + data[i].grade + '">' + data[i].grade + '</option>'
+	                       		//$("#school").append("<option value=\"" + data[i].activityId + "\">" + data[i].school + "</option>");
+	                       	 }
+							   $("#grade").html(html);
+							   $("#studentClass").empty();
+						}else{
+							$("#grade").empty();
+							$("#studentClass").empty();
+						}
+					}
+					
+				})
+			}
+			
+			function stugrade(){
+				var school = $('#school option:selected').text();
+				
+				$.ajax({
+					type : "get",
+					url : "/informationNEW/student/schoolStuClass",
+					data:{
+						school : school
+					},
+					success : function(data){
+						//console.info(data);
+						$("#studentClass").empty();
+						if (data.length>0) {
+							var html = '';
+							html += '<option value="">班级</option>'
+							for(var i = 0; i < data.length; i++) {
+								html += '<option value="' + data[i].studentClass + '">' + data[i].studentClass + '</option>'
+	                       		//$("#school").append("<option value=\"" + data[i].activityId + "\">" + data[i].school + "</option>");
+	                       	 }
+							   $("#studentClass").html(html);
+						}else{
+							$("#studentClass").empty();
+						}
+					}
+					
+				})
+			}
+			
+/* 		 
 		 $("#studentName").siblings().eq(1).children('.bs-searchbox').children().keyup(function(){
 			 var studentName =$("#studentName").siblings().eq(1).children('.bs-searchbox').children().val();
 			 if(studentName != ''){
@@ -189,15 +217,21 @@
                      type: 'get',
                      url: "/informationNEW/student/studentName",
                      data: {
-                    	 studentName: studentName
+                    	 studentName: studentName,
+                    	 offset : 0,
+    					 limit : 20
                      },
-                     success: function (data) {                   	 
+                     success: function (data) {      
                          $("#studentName").empty();
                          if (data.length>0) {
+                        	 var html = ''
+                        		 html+='<option value="">请选择</option> '
                         	 for(var i = 0; i < data.length; i++) {
-                        		 //console.info(data[i].studentName);
-                        		 $("#studentName").append(" <option value=\"" + data[i].studentName + "\">" + data[i].studentName + "</option>");
+                        		 console.info(data[i].studentName);
+                        		 html+=' <option value=' + data[i].studentName + '>' + data[i].studentName + '</option>'
+                        		//$("#studentName").append(" <option value=\"" + data[i].studentName + "\">" + data[i].studentName + "</option>");
                         	 }
+                        	 $("#studentName").html(html);
                              $("#studentName").selectpicker('refresh');
                          } 
                      }
@@ -206,41 +240,11 @@
 				 $("#studentName").empty();
                  $("#studentName").selectpicker('refresh');  
 			 }
-		 })
+		 }) */
 		 
-		 
-		 $("#school").siblings().eq(1).children('.bs-searchbox').children().keyup(function(){
-			 var school =$("#school").siblings().eq(1).children('.bs-searchbox').children().val();
-			 if(school != ''){
-				 //console.info(school);
-				 $.ajax({
-                     type: 'get',
-                     url: "/informationNEW/student/school",
-                     data: {
-                    	 school: school
-                     },
-                     success: function (data) {                   	 
-                         $("#school").empty();
-                         if (data.length>0) {
-                        	 for(var i = 0; i < data.length; i++) {
-                        		 //console.info(data[i].orgname);
-                        		 $("#school").append(" <option value=\"" + data[i].orgname + "\">" + data[i].orgname + "</option>");
-                        	 }
-                             $("#school").selectpicker('refresh');
-                         } 
-                     }
-               })
-			 }else{
-				 $("#school").empty();
-                 $("#school").selectpicker('refresh');  
-			 }
-		 })
-		 
-		 
-	 })
+		 	 
 	 
-	 
-	 function myrefresh(){
+	/*  function myrefresh(){
    		//window.location.reload();
    		$('#studentName').selectpicker('val',['noneSelectedText'])
    		$("#studentName").empty();
@@ -250,7 +254,7 @@
 		$("#school").selectpicker('refresh');
 		$("input[name='identityCard']").val('');
 		$("#studentSex option:first").prop("selected", 'selected')
-	}
+	} */
 	</script>
 </body>
 </html>

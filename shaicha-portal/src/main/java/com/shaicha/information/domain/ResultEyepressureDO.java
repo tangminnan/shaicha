@@ -31,7 +31,39 @@ public class ResultEyepressureDO implements Serializable {
 	private Integer deleteFlag;
 	//身份证号
 	private String identityCard;
+	private Integer activityId;
+	//角膜曲率（右）
+	private String cornealCurvatureOd;
+	//角膜曲率（左）
+	private String cornealCurvatureOs;
 	
+	
+	
+	
+	public Integer gettEyepressureId() {
+		return tEyepressureId;
+	}
+	public void settEyepressureId(Integer tEyepressureId) {
+		this.tEyepressureId = tEyepressureId;
+	}
+	public String getCornealCurvatureOd() {
+		return cornealCurvatureOd;
+	}
+	public void setCornealCurvatureOd(String cornealCurvatureOd) {
+		this.cornealCurvatureOd = cornealCurvatureOd;
+	}
+	public String getCornealCurvatureOs() {
+		return cornealCurvatureOs;
+	}
+	public void setCornealCurvatureOs(String cornealCurvatureOs) {
+		this.cornealCurvatureOs = cornealCurvatureOs;
+	}
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 
 	public String getIdentityCard() {
 		return identityCard;
@@ -128,7 +160,7 @@ public class ResultEyepressureDO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	public ResultEyepressureDO(Long studentId, Long checkorId, Double eyePressureOd, Double eyePressureOs,
-			Date checkDate, Integer deleteFlag,String identityCard) {
+			Date checkDate, Integer deleteFlag,String identityCard,Integer activityId,String cornealCurvatureOd,String cornealCurvatureOs) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -137,6 +169,9 @@ public class ResultEyepressureDO implements Serializable {
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
+		this.cornealCurvatureOd=cornealCurvatureOd;
+		this.cornealCurvatureOs=cornealCurvatureOs;
 	}
 	
 }

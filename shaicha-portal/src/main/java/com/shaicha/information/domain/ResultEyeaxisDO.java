@@ -34,7 +34,22 @@ public class ResultEyeaxisDO implements Serializable {
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
 	private String identityCard;
-
+	private Integer activityId;
+	
+	
+	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	/**
 	 * 设置：id
 	 */
@@ -136,17 +151,19 @@ public class ResultEyeaxisDO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	public ResultEyeaxisDO(Long studentId, Long checkorId, Double firstCheckOd, Double firstCheckOs, Date checkDate,
-			Double secondCheckOd, Double secondCheckOs, Integer deleteFlag,String identityCard) {
+			//Double secondCheckOd, Double secondCheckOs, 
+			Integer deleteFlag,String identityCard,Integer activityId) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
 		this.firstCheckOd = firstCheckOd;
 		this.firstCheckOs = firstCheckOs;
 		this.checkDate = checkDate;
-		this.secondCheckOd = secondCheckOd;
-		this.secondCheckOs = secondCheckOs;
+		//this.secondCheckOd = secondCheckOd;
+		//this.secondCheckOs = secondCheckOs;
 		this.deleteFlag = deleteFlag;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
 	}
 	
 	

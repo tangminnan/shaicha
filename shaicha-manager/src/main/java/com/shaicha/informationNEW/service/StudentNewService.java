@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
+import com.shaicha.information.domain.StudentDO;
 import com.shaicha.informationNEW.domain.ResultCornealNewDO;
 import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
 import com.shaicha.informationNEW.domain.ResultEyeaxisNewDO;
@@ -82,7 +83,7 @@ public interface StudentNewService {
 
 	List<ResultEyeaxisNewDO> getLatelestResultEyeaxisDO(Integer id);
 
-	List<StudentNewDO> querySchoolName();
+//	List<StudentNewDO> querySchoolName();
 
 	List<ResultCornealNewDO> getResultCornealDOList(Integer id, String string, String string2);
 
@@ -96,4 +97,12 @@ public interface StudentNewService {
 	 *首页真实数据展示
 	*/  
 	Map<String, Double> shouYeTrueData();
+		
+	List<StudentNewDO> queryBySchoolGrade(Integer activityId,String school);
+			
+	List<StudentNewDO> queryBySchoolStudentClass(Integer activityId,String school);
+	
+	List<StudentNewDO> schoolGrade(String school);
+	
+	List<StudentNewDO> schoolStudentClass(String school);
 }

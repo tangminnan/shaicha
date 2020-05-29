@@ -108,9 +108,9 @@
 		</foreach>
 	</delete>
 	
-	<select id="getEyeaxis" resultType="com.shaicha.informationNEW.domain.ResultEyeaxisNewDO">
+	<select id="getEyeaxis" resultType="com.shaicha.information.domain.ResultEyeaxisDO">
 		select first_check_od,first_check_os from t_result_eyeaxis_new
-		where identity_card = #{identityCard} and check_date between #{start} and #{end}
+		where student_id = #{studentId}
 	</select>
 
 </mapper>

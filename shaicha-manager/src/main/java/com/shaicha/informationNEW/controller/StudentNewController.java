@@ -1,15 +1,6 @@
 package com.shaicha.informationNEW.controller;
 
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,14 +13,6 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -59,13 +42,13 @@ import com.shaicha.informationNEW.domain.ResultEyeaxisNewDO;
 import com.shaicha.informationNEW.domain.ResultEyepressureNewDO;
 import com.shaicha.informationNEW.domain.ResultEyesightNewDO;
 import com.shaicha.informationNEW.domain.ResultOptometryNewDO;
-import com.shaicha.informationNEW.domain.SchoolDO;
+import com.shaicha.informationNEW.domain.SchoolNewDO;
 import com.shaicha.information.domain.ShiliJinShi;
 import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.service.ActivityListNewService;
 import com.shaicha.informationNEW.service.ResultEyesightNewService;
 import com.shaicha.informationNEW.service.ResultOptometryNewService;
-import com.shaicha.informationNEW.service.SchoolService;
+import com.shaicha.informationNEW.service.SchoolNewService;
 import com.shaicha.informationNEW.service.StudentNewService;
 
 
@@ -87,7 +70,7 @@ public class StudentNewController {
 	@Autowired
 	private ResultOptometryNewService resultOptometryNewService;
 	@Autowired
-	private SchoolService schoolService;
+	private SchoolNewService schoolService;
 	@Autowired
 	private ActivityListNewService activityListNewService;
 	
@@ -96,6 +79,9 @@ public class StudentNewController {
 	String Student(Model model){
 		List<StudentNewDO> studentList = studentNewService.getList();
 		model.addAttribute("studentList", studentList);
+		Map<String, Object> params = new HashMap<>();
+		List<SchoolNewDO> school = schoolService.list(params);
+		model.addAttribute("school", school);
 	    return "informationNEW/student/student";
 	}
 	
@@ -105,7 +91,11 @@ public class StudentNewController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
+        query.put("status", "0");
         query.put("checkType", "PU_TONG");
+        if(!ShiroUtils.getUser().getUsername().equals("admin")){
+        	query.put("sysId", ShiroUtils.getUserId());
+        }
         List<StudentNewDO> studentList = studentNewService.list(query);
 		int total = studentNewService.count(query);
 		PageUtils pageUtils = new PageUtils(studentList, total);
@@ -118,6 +108,9 @@ public class StudentNewController {
 	public String demonstration(Model model){
 		List<StudentNewDO> studentList = studentNewService.getList();
 		model.addAttribute("studentList", studentList);
+		Map<String, Object> params = new HashMap<>();
+		List<SchoolNewDO> school = schoolService.list(params);
+		model.addAttribute("school", school);
 	    return "informationNEW/student/shifanstudent";
 	}
 	
@@ -131,39 +124,22 @@ public class StudentNewController {
         Query query = new Query(params);
         query.put("status", "0");
         query.put("checkType", "SHI_FANXIAO");
+        if(!ShiroUtils.getUser().getUsername().equals("admin")){
+        	query.put("sysId", ShiroUtils.getUserId());
+        }
         List<StudentNewDO> studentList = studentNewService.list(query);
 		int total = studentNewService.count(query);
 		PageUtils pageUtils = new PageUtils(studentList, total);
 		return pageUtils;
 	}
-	
-	//模糊查询（姓名）
-	@ResponseBody
-	@GetMapping("/studentName")
-	List<StudentNewDO> studentName(String studentName){
-		Map<String, Object> params = new HashMap<>();
-		params.put("studentName", studentName);
-		params.put("status", "0");
-		List<StudentNewDO> list = studentNewService.list(params);
-		return list;
-	}
-	
-	//模糊查询（学校）
-	@ResponseBody
-	@GetMapping("/school")
-	List<SchoolDO> school(String school){
-		Map<String, Object> params = new HashMap<>();
-		params.put("orgname", school);
-		List<SchoolDO> list = schoolService.list(params);
-		return list;
-	}
+
 		
 	
 	@GetMapping("/add/{checkType}")
 	@RequiresPermissions("information:student:add")
 	String add(@PathVariable("checkType") String checkType,Model model){
 		model.addAttribute("checkType", checkType);
-		List<SchoolDO> listSchool = schoolService.list(new HashMap<String, Object>());
+		List<SchoolNewDO> listSchool = schoolService.list(new HashMap<String, Object>());
 		model.addAttribute("listSchool", listSchool);
 		List<ActivityListNewDO> huodong = activityListNewService.list(new HashMap<String, Object>());
 		model.addAttribute("huodong", huodong);
@@ -177,7 +153,7 @@ public class StudentNewController {
 		model.addAttribute("student", student);
 		ActivityListNewDO activityname = activityListNewService.get(student.getActivityId());
 		model.addAttribute("activityname", activityname.getActivityName());
-		List<SchoolDO> listSchool = schoolService.list(new HashMap<String, Object>());
+		List<SchoolNewDO> listSchool = schoolService.list(new HashMap<String, Object>());
 		model.addAttribute("listSchool", listSchool);
 		List<ActivityListNewDO> huodong = activityListNewService.list(new HashMap<String, Object>());
 		model.addAttribute("huodong", huodong);
@@ -189,7 +165,7 @@ public class StudentNewController {
 	String code(@PathVariable("id") Integer id,Model model){
 		StudentNewDO student = studentNewService.get(id);
 		String identityCard = student.getIdentityCard();
-		String code = QRCodeUtil.creatRrCode(identityCard, 200,200);
+		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
 		model.addAttribute("code", "data:image/png;base64,"+code);
 		model.addAttribute("student", student);
 	    return "informationNEW/student/QrCode";
@@ -226,15 +202,15 @@ public class StudentNewController {
 	@PostMapping("/save")
 	@RequiresPermissions("information:student:add")
 	public R save( StudentNewDO student){
-		SchoolDO schoolDO = schoolService.get(student.getSchoolId());
+		SchoolNewDO schoolDO = schoolService.get(student.getSchoolId());
 		student.setSchool(schoolDO.getOrgname());
 		student.setAddress(schoolDO.getCityname());
 		student.setAddTime(new Date());
 		student.setStatus(0);
 		student.setModelType("学校");
-		student.setIdeentityType("身份证");
 		student.setSchoolCode(schoolDO.getOrgcode());
 		student.setSysId(ShiroUtils.getUserId());
+		student.setXueBu(schoolDO.getXuebu());
 		if(studentNewService.save(student)>0){
 			return R.ok();
 		}
@@ -248,10 +224,11 @@ public class StudentNewController {
 	@RequiresPermissions("information:student:edit")
 	public R update( StudentNewDO student){
 		if(null !=  student.getSchoolId()){
-			SchoolDO schoolDO = schoolService.get(student.getSchoolId());
+			SchoolNewDO schoolDO = schoolService.get(student.getSchoolId());
 			student.setSchool(schoolDO.getOrgname());
 			student.setAddress(schoolDO.getCityname());
 			student.setSchoolCode(schoolDO.getOrgcode());
+			student.setXueBu(schoolDO.getXuebu());
 		}
 		StudentNewDO stu = studentNewService.get(student.getId());
 		if(!stu.getIdentityCard().equals(student.getIdentityCard())){
@@ -271,14 +248,10 @@ public class StudentNewController {
 	@ResponseBody
 	@RequiresPermissions("information:student:remove")
 	public R remove( Integer id){
-		StudentNewDO student = new StudentNewDO();
-		student.setStatus(1);
-		student.setId(id);
-		studentNewService.update(student);
-		//if(studentNewService.remove(id)>0){
-		return R.ok();
-		//}
-		//return R.error();
+		if(studentNewService.remove(id)>0){
+			return R.ok();
+		}
+		return R.error();
 	}
 	
 	/**
@@ -297,7 +270,7 @@ public class StudentNewController {
 	@RequiresPermissions("information:student:student")
 	public String importtemplate(Model model,@PathVariable("checkType") String checkType){
 		model.addAttribute("checkType", checkType);
-		List<SchoolDO> listSchool = schoolService.list(new HashMap<String, Object>());
+		List<SchoolNewDO> listSchool = schoolService.list(new HashMap<String, Object>());
 		model.addAttribute("listSchool", listSchool);
 		List<ActivityListNewDO> huodong = activityListNewService.list(new HashMap<String, Object>());
 		model.addAttribute("huodong", huodong);
@@ -412,7 +385,7 @@ public class StudentNewController {
 		model.addAttribute("grade",studentDO.getGrade());
 		model.addAttribute("studentClass",studentDO.getStudentClass());
 		String identityCard = studentDO.getIdentityCard();
-		String code = QRCodeUtil.creatRrCode(identityCard, 200,200);
+		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
 		model.addAttribute("QRCode", "data:image/png;base64,"+code);
 		//model.addAttribute("QRCode",studentDO.getQRCode());
 		return "informationNEW/student/二维码";
@@ -745,4 +718,43 @@ public class StudentNewController {
 	            return d.intValue();
 	        return d;
 	    }
+	
+	
+	
+	@GetMapping("/batchdayinerweima")
+	public String batchdayinerweima(Integer[] ids,Model model){
+		List<StudentNewDO> list = new ArrayList<>();
+		for (Integer id : ids) {
+			StudentNewDO studentDO = Optional.ofNullable(studentNewService.get(id)).orElseGet(StudentNewDO::new);
+			String identityCard = studentDO.getIdentityCard();
+			String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
+			studentDO.setQRCode("data:image/png;base64,"+code);
+			list.add(studentDO);
+		}
+		model.addAttribute("student", list);
+		return "informationNEW/student/batchdayinerweima";
+		
+	}
+	
+	
+	
+	@ResponseBody
+	@GetMapping("/schoolGrade")
+	public List<StudentNewDO> schoolGrade(String school){
+		List<StudentNewDO> schoolGrade = studentNewService.schoolGrade(school);
+		
+		return schoolGrade;
+		
+	}
+	
+	@ResponseBody
+	@GetMapping("/schoolStuClass")
+	public List<StudentNewDO> schoolStuClass(String school){
+		List<StudentNewDO> stuClass = studentNewService.schoolStudentClass(school);
+		
+		return stuClass;
+		
+	}
+	
+	
 }

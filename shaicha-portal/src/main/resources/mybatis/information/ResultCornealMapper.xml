@@ -4,14 +4,14 @@
 <mapper namespace="com.shaicha.information.dao.ResultCornealDao">
 
 	<select id="getByOptometryId" resultType="com.shaicha.information.domain.ResultCornealDO">
-		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal where t_optometry_id = #{tOptometryId} 
+		select `t_corneal_id`,`t_optometry_id`,`corneal_mm`,`corneal_d`,`corneal_deg`,`type`,`ifRL`,first_second from t_result_corneal_new where t_optometry_id = #{tOptometryId} 
 	</select>
 	<delete id="removeAll">
-		delete from t_result_corneal where t_optometry_id=#{value}
+		delete from t_result_corneal_new where t_optometry_id=#{value}
 	</delete>
 	
 	<insert id="saveCornealDO" parameterType="com.shaicha.information.domain.ResultCornealDO" useGeneratedKeys="true" keyProperty="tCornealId">
-		insert into t_result_corneal
+		insert into t_result_corneal_new
 		(
 			`t_optometry_id`, 
 			`corneal_mm`, 
@@ -21,7 +21,8 @@
 			`ifRL`,
 			first_second,
 			identity_card,
-			check_date
+			check_date,
+			activity_id
 		)
 		values
 		(
@@ -33,7 +34,8 @@
 			#{ifrl},
 			#{firstSecond},
 			#{identityCard},
-			#{checkDate}
+			#{checkDate},
+			#{activityId}
 		)
 	</insert>
 	

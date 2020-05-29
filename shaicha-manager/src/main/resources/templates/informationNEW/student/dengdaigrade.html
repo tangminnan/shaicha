@@ -14,13 +14,15 @@
 			<div class="ibox float-e-margins">
 				<div class="ibox-content">
 					<div>
-						<input id="startDate" name="startDate" th:value="${startDate}" type="hidden">
-						<input id="endDate" name="endDate" th:value="${endDate}" type="hidden">
-						<input id="date" name="date" th:value="${date}" type="hidden">
+						<input id="school" name="school" th:value="${school}" type="hidden">
+						<input id="activityId" name="activityId" th:value="${activityId}" type="hidden">
+						<input id="grade" name="grade" th:value="${grade}" type="hidden">					
+						<input id="type" name="type" th:value="${type}" type="hidden">
+						<input id="stuclass" name="stuclass" th:value="${stuclass}" type="hidden">
 						<div class="box">
-						   <h4>正在整理数据,请您稍候 ...</h4>   
-						   <p class="nowTurn">整理数据时间较长请您耐心等待 ...</p>
-	    				</div>
+							  <h4>正在整理数据,请您稍候 ...</h4>   
+							  <p class="nowTurn">整理数据时间较长请您耐心等待 ...</p>
+				    	</div>
 					</div>
 				</div>
 			</div>
@@ -30,10 +32,20 @@
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript">
 	 $(function(){
-		 window.location.href="/studentReportNEW/baogaojiaoyuju?startDate="+$("#startDate").val()
-																+"&endDate="+$("#endDate").val()
-																+"&date="+$("#date").val();
-
+		 
+		var type = $("input[name='type']").val();
+		if(type == 3){
+			window.location.href= "/studentReportNew/gradeBaogao?activityId="+$("#activityId").val()
+																+"&school="+$("#school").val()
+																+"&grade="+$("#grade").val()
+			
+		}
+		if(type == 4){
+			window.location.href= "/studentReportNew/stuClassBaogao?activityId="+$("#activityId").val()
+																	+"&school="+$("#school").val()
+																	+"&grade="+$("#grade").val()
+																	+"&stuclass="+$("#stuclass").val()
+		}
 													
 	 })
 	 
@@ -43,7 +55,7 @@
 		 if(getCookie("status")=="success"){
 			  clearInterval(timer1);//每隔一秒的判断操作停止
 			  delCookie("status");//删除cookie
-			  //window.location.href="/studentReport/jiaoyuju"
+			  //window.location.href="/studentReport/xuexiao"
 			  var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 			  parent.layer.close(index);
 		 }
@@ -78,7 +90,6 @@
 		  var cval = getCookie(name);
 		  if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 		}
-	 
 	 
 	</script>
 </body>

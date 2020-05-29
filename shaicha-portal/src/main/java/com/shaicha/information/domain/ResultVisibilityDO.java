@@ -54,7 +54,16 @@ public class ResultVisibilityDO implements Serializable {
 	//状态0：正常1：禁止
 	private Integer deleteFlag;
 
+	private Integer activityId;
 	
+	
+	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public String getIdentityCard() {
 		return identityCard;
 	}
@@ -306,7 +315,7 @@ public class ResultVisibilityDO implements Serializable {
 			Double gatherNearOd, Double gatherNearOc, Double gatherNearOu, String obliqueValue, Double obliqueDis,
 			Integer beforeAfterOdValue, String beforeAfterOdDis, Integer beforeAfterOsValue, String beforeAfterOsDis,
 			Date checkDate, Integer deleteFlag,
-			String identityCard) {
+			String identityCard,Integer activityId) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -327,6 +336,7 @@ public class ResultVisibilityDO implements Serializable {
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
 	}
 	
 	

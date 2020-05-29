@@ -40,7 +40,16 @@ public class ResultDiopterDO implements Serializable {
 	private Date checkDate;
 	//等效球镜
 	private Double dengxiaoqiujing;
+	private Integer activityId;
 	
+	
+	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public Date getCheckDate() {
 		return checkDate;
 	}
@@ -185,7 +194,8 @@ L_DATA=夜间视力检查
 		this.dengxiaoqiujing = dengxiaoqiujing;
 	}
 	public ResultDiopterDO(Integer tOptometryId, Double diopterS, Double diopterC, Double diopterA, Integer believe,
-			Integer num, String type, String ifrl, String firstSecond,String identityCard) {
+			Integer num, String type, String ifrl, //String firstSecond,
+			String identityCard,Integer activityId) {
 		super();
 		this.tOptometryId = tOptometryId;
 		this.diopterS = diopterS;
@@ -195,8 +205,9 @@ L_DATA=夜间视力检查
 		this.num = num;
 		this.type = type;
 		this.ifrl = ifrl;
-		this.firstSecond = firstSecond;
+		//this.firstSecond = firstSecond;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
 	}
 	
 	
