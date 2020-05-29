@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<!-- <div class="form-group">	
+								<label class="col-sm-3 control-label">学校：</label>
+								<div class="col-sm-8">
+										<select class="form-control" name="school" id="school" >
+			                        		<option value="">学校</option>
+			                        		<option th:each="list:${schoolName}" th:value="${list.school}" th:text="${list.school}"></option>
+			                    		</select>
+								</div>
+								
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">检查时间：</label>
+								<div class="col-sm-8">
+									<input id="checkDate" name="checkDate" class="form-control"
+										type="text">
+									<select class="form-control" name="checkDate" id="checkDate" >
+			                        	<option value="">检查时间</option>
+			                        	<option th:each="list:${jianchashijian}" th:value="${list.checkDate1}" th:text="${list.checkDate1}"></option>
+			                    	</select>
+								</div>
+								
+							</div> 
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">学校总人数：</label>
+								<div class="col-sm-8">
+									<input id="schoolNum" name="schoolNum" class="form-control"
+										type="text">
+								</div>
+								
+							</div>-->
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类型：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline"> <input type="radio"
+										name="type" value="1" /> 学校报告
+									</label> 
+									<label class="radio-inline"> <input type="radio" 
+										name="type" value="2" /> 教育局报告
+									</label>
+									<label class="radio-inline"> <input type="radio" 
+										name="type" value="3" /> 年级报告
+									</label>
+									<label class="radio-inline"> <input type="radio" 
+										name="type" value="4" /> 班级报告
+									</label>
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">活动名称：</label>
+								<div class="col-sm-8">								
+									<select class="form-control" name="activityId" id="activityId" onchange="sel();">
+			                        	<option value="">请选择</option>
+			                        	<option th:each="list:${activityList}" th:value="${list.id}" th:text="${list.activityName}"></option>
+			                    	</select>
+								</div>
+								
+							</div> 
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">活动学校：</label>
+								<div class="col-sm-8">	
+								<span id="select_choose_id">
+									<select name="school" id="school" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5">
+		                        		<option value="">请选择</option>
+		                    		</select>
+								</span>									
+								</div>
+								
+							</div> 
+							<div class="form-group" id="grade_div">	
+								<label class="col-sm-3 control-label">年级：</label>
+								<div class="col-sm-8">	
+								<span id="select_grade_choose_id">
+									<select class="form-control" name="grade" id="grade" onchange="stugrade();">
+		                        		<option value="">请选择</option>
+		                    		</select>
+								</span>									
+								</div>
+								
+							</div> 
+							<div class="form-group" id="class_div">	
+								<label class="col-sm-3 control-label">班级：</label>
+								<div class="col-sm-8">	
+								<span id="select_stuclass_choose_id">
+									<select class="form-control" name="stuclass" id="stuclass">
+		                        		<option value="">请选择</option>
+		                    		</select>
+								</span>									
+								</div>
+								
+							</div> 
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">导出</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	
+	<div id="overYear" style="width: 800px;height:400px;display: none;"></div>
+    
+ 	<div id="gradeMyopia" style="width: 800px;height:400px;display: none;"></div>
+ 	
+ 	<div id="overYearGradeMyopia" style="width: 800px;height:400px;display: none;"></div>
+    
+    <div id="studentSexMyopia" style="width: 800px;height:400px;display: none;"></div>
+    
+    <div id="overYearSexNan" style="width: 800px;height:400px;display: none;"></div>
+    
+    <div id="overYearSexNv" style="width: 800px;height:400px;display: none;"></div>
+    
+    <div id="overYearGradeSex" style="width: 800px;height:400px;display: none;"></div>
+    
+    <div id="gejinshi" style="width: 800px;height:400px;display: none;"></div>
+    
+ 	<div id="gebuliang" style="width: 800px;height:400px;display: none;"></div>
+ 	
+ 	<div id="nianling" style="width: 800px;height:400px;display: none;"></div>
+    
+    <div id="nannv" style="width: 800px;height:400px;display: none;"></div>
+	
+	
+	<div th:include="include::footer"></div>
+	<script src="/js/plugins/echarts/echarts.js"></script>
+	<script type="text/javascript" src="/js/appjs/informationNEW/student/xuexiao.js"></script>
+	<script type="text/javascript">
+		$('#school').selectpicker({
+			title:"学校",
+			style:'btn-white',
+		});
+		
+		$("input[name=type]").click(function(){
+		    var type = $(this).val();
+		    if(type == 1){
+		    	$("#activityId").val("");
+		    	$("#grade").empty();
+		    	$("#stuclass").empty();
+		    	$("#select_choose_id").empty();
+		    	var ii = $('<select name="school" id="school" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5"></select>');
+		    	$("#select_choose_id").append(ii);
+		    	$("#school").empty();
+		    	$("#school").selectpicker('refresh');
+		    	$('#grade_div').css("display","none");
+				$('#class_div').css("display","none");
+		    }
+			if(type == 2){
+				$("#activityId").val("");
+				$("#grade").empty();
+		    	$("#stuclass").empty();
+				$("#select_choose_id").empty();
+				var ii = $('<select name="school" id="school" multiple class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="true" data-size="5"></select>');
+		    	$("#select_choose_id").append(ii);
+		    	$("#school").empty();
+                $("#school").selectpicker('refresh');
+                $('#grade_div').css("display","none");
+        		$('#class_div').css("display","none");
+		    }
+			if(type == 3){
+				$("#activityId").val("");
+		    	$("#grade").empty();
+		    	$("#stuclass").empty();
+		    	$("#select_choose_id").empty();
+		    	var ii = $('<select name="school" id="school" onchange="stuschool();" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5"></select>');
+		    	$("#select_choose_id").append(ii);
+		    	$("#school").empty();
+		    	$("#school").selectpicker('refresh');
+				$('#grade_div').css("display","block");
+				$('#class_div').css("display","none");
+			}
+			if(type == 4){
+				$("#activityId").val("");
+		    	$("#grade").empty();
+		    	$("#stuclass").empty();
+		    	$("#select_choose_id").empty();
+		    	var ii = $('<select name="school" id="school" onchange="stuschool();" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5"></select>');
+		    	$("#select_choose_id").append(ii);
+		    	$("#school").empty();
+		    	$("#school").selectpicker('refresh');
+		    	$('#grade_div').css("display","block");
+				$('#class_div').css("display","block");
+			}
+			
+		});
+		$('input[name = "type"][value="1"]').attr("checked",true);
+		$('#school').attr("disabled",true);
+		$('#grade_div').css("display","none");
+		$('#class_div').css("display","none");
+		function sel(){
+			var activityId = $('#activityId').val();
+			if(activityId.length >0 && activityId != null){
+				$('#school').attr("disabled",false);
+				$.ajax({
+					type:'get',
+					url:'/studentReportNew/schoolActivity',
+					data:{activityId:activityId},
+					success:function(data){	
+						//console.info(data);
+						$("#school").empty();
+						if (data.length>0) {
+							var html = '';
+							html += '<option value="">请选择</option>'
+							for(var i = 0; i < data.length; i++) {
+								html += '<option value="' + data[i].activityId + '">' + data[i].school + '</option>'
+	                       		//$("#school").append("<option value=\"" + data[i].activityId + "\">" + data[i].school + "</option>");
+	                       	 }
+							   $("#school").html(html);
+	                           $("#school").selectpicker('refresh');
+	                           $("#grade").empty();
+	   						   $("#stuclass").empty();
+						}else{
+							$("#school").empty();
+							$("#school").selectpicker('refresh');
+							$("#grade").empty();
+							$("#stuclass").empty();
+						}
+					}
+					
+				}) 
+			}else{
+				$('#school').attr("disabled",true);
+				$("#school").empty();
+                $("#school").selectpicker('refresh');  
+                $("#grade").empty();
+                $("#stuclass").empty();
+			}
+			
+		}
+		
+		
+		function stuschool(){
+			var activityId = $('#school').val();
+			var school = $('#school option:selected').text();
+			$.ajax({
+				
+				cache : true,
+				type : "get",
+				url : "/studentReportNew/schoolGrade",
+				data:{
+						activityId : activityId,
+						school : school
+					},
+				success:function(data){
+					//console.info(data);
+					$("#grade").empty();
+					if (data.length>0) {
+						var html = '';
+						html += '<option value="">请选择</option>'
+						for(var i = 0; i < data.length; i++) {
+							html += '<option value="' + data[i].grade + '">' + data[i].grade + '</option>'
+                       		//$("#school").append("<option value=\"" + data[i].activityId + "\">" + data[i].school + "</option>");
+                       	 }
+						   $("#grade").html(html);
+						   $("#stuclass").empty();
+					}else{
+						$("#grade").empty();
+						$("#stuclass").empty();
+					}
+				}
+				
+			})
+		}
+		
+		function stugrade(){
+			var activityId = $('#school').val();
+			var school = $('#school option:selected').text();
+			
+			$.ajax({
+				type : "get",
+				url : "/studentReportNew/schoolStuClass",
+				data:{
+					activityId : activityId,
+					school : school
+				},
+				success : function(data){
+					//console.info(data);
+					$("#stuclass").empty();
+					if (data.length>0) {
+						var html = '';
+						html += '<option value="">请选择</option>'
+						for(var i = 0; i < data.length; i++) {
+							html += '<option value="' + data[i].studentClass + '">' + data[i].studentClass + '</option>'
+                       		//$("#school").append("<option value=\"" + data[i].activityId + "\">" + data[i].school + "</option>");
+                       	 }
+						   $("#stuclass").html(html);
+					}else{
+						$("#stuclass").empty();
+					}
+				}
+				
+			})
+		}
+		
+	</script>
+</body>
+</html>
