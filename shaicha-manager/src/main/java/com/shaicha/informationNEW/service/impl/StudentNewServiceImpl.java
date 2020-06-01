@@ -20,6 +20,7 @@ import com.shaicha.common.utils.QRCodeUtil;
 
 import com.shaicha.common.utils.R;
 import com.shaicha.common.utils.ShiroUtils;
+import com.shaicha.common.utils.TimeUtils;
 import com.shaicha.common.utils.WordUtils;
 import com.shaicha.informationNEW.dao.SchoolNewDao;
 import com.shaicha.informationNEW.dao.StudentNewDao;
@@ -741,9 +742,22 @@ public class StudentNewServiceImpl implements StudentNewService {
 		params.put("grade",studentDO.getGrade().toString());
 		params.put("studentClass",studentDO.getStudentClass().toString());
 		params.put("studentName",studentDO.getStudentName());
-		params.put("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "女":"男");
+		params.put("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "男":"女");
 		params.put("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
-		
+		Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
+		int birth = 0;
+		try {
+			birth = TimeUtils.getAgeByBirth(birthday);
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		if(birth>=3 && birth<=5){
+			params.put("ifStu",1);
+		}else{
+			params.put("ifStu",2);
+		}
+		   
 		//视力检查结果获取
 		List<ResultEyesightNewDO> resultEyesightDOList = studentNewDao.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();

@@ -29,8 +29,8 @@ function save() {
 			alert("出生天数应当小于32！！！");
 			return false;
 		}
-		var birthday = year+"-"+month+"-"+day
-		$("input[name='birthday']").val(birthday);
+		//var birthday = year+"-"+month+"-"+day
+		//$("input[name='birthday']").val(birthday);
 	}
 	
 	$.ajax({

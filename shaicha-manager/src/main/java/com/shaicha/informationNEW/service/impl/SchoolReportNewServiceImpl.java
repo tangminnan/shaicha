@@ -920,6 +920,62 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 						mapPP.put("眼压右眼", "");
 						mapPP.put("眼压左眼", "");
 					}
+					
+					double luo;
+					double jiao;
+					double deng;
+					Map<String,Object> pa = new HashMap<>();
+					pa.put("studentId", studentDO2.getId());
+					pa.put("activityId", activityId);
+					List<ResultEyesightNewDO> re = resultEyesightDao.list(pa);
+					if(re.size()>0){
+
+						double nfd = Double.valueOf(re.get(0).getNakedFarvisionOd()==null?"0":re.get(0).getNakedFarvisionOd());
+						double nfs = Double.valueOf(re.get(0).getNakedFarvisionOs()==null?"0":re.get(0).getNakedFarvisionOs());
+						if(nfd>nfs)luo=nfs;
+						else luo=nfs;
+						String cfd = re.get(0).getCorrectionFarvisionOd();
+						if(re.get(0).getCorrectionFarvisionOd().length()<=0 || re.get(0).getCorrectionFarvisionOd().equals(""))cfd="0";
+						String cfs = re.get(0).getCorrectionFarvisionOs();
+						if(re.get(0).getCorrectionFarvisionOs().length()<=0 || re.get(0).getCorrectionFarvisionOs().equals(""))cfs="0";
+						if(Double.valueOf(cfd)>Double.valueOf(cfs))jiao=Double.valueOf(cfs);
+						else jiao=Double.valueOf(cfd);
+						double dxql = studentDO2.getDengxiaoqiujingl()==null?0:studentDO2.getDengxiaoqiujingl();
+						double dxqr = studentDO2.getDengxiaoqiujingr()==null?0:studentDO2.getDengxiaoqiujingr();
+						if(dxql>dxqr)deng=dxqr;
+						else deng=dxql;
+						if(jiao == 0){
+							if(luo>= 5 && deng > 0.75){
+								mapPP.put("预警结果", "视力目前正常，无近视发生");
+							}else if(luo>= 5 && deng >= -0.5 && deng <= 0.75){
+								mapPP.put("预警结果", "视力目前正常,近视临床前期");
+							}else if(luo>= 5 && deng < -0.5){
+								mapPP.put("预警结果", "视力目前正常，属于假性近视");
+							}else if(luo< 5 && deng >= -0.5){
+								mapPP.put("预警结果", "视力异常");
+							}else if(luo< 5 && deng < -0.5){
+								mapPP.put("预警结果", "视力下降，近视");
+							}else{
+								mapPP.put("预警结果", "");
+							}
+						}else{
+							if(luo< 5 && deng >= -0.5 && jiao >=5){
+								mapPP.put("预警结果", "戴原镜视力正常");
+							}else if(luo< 5 && deng < -0.5 && jiao >=5){
+								mapPP.put("预警结果", "戴原镜视力正常，近视");
+							}else if(luo< 5 && deng >= -0.5 && jiao < 5){
+								mapPP.put("预警结果", "戴原镜视力异常");
+							}else if(luo< 5 && deng < -0.5 && jiao < 5){
+								mapPP.put("预警结果", "戴原镜视力异常，近视增长");
+							}else{
+								mapPP.put("预警结果", "");
+							}
+						}
+					}else{
+						mapPP.put("预警结果", "");
+					}
+					
+					
 					bb.add(mapPP);
 					
 				}
@@ -1058,6 +1114,61 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					mapPP.put("眼压右眼", "");
 					mapPP.put("眼压左眼", "");
 				}
+				
+				double luo;
+				double jiao;
+				double deng;
+				Map<String,Object> pa = new HashMap<>();
+				pa.put("studentId", studentDO2.getId());
+				pa.put("activityId", activityId);
+				List<ResultEyesightNewDO> re = resultEyesightDao.list(pa);
+				if(re.size()>0){
+
+					double nfd = Double.valueOf(re.get(0).getNakedFarvisionOd()==null?"0":re.get(0).getNakedFarvisionOd());
+					double nfs = Double.valueOf(re.get(0).getNakedFarvisionOs()==null?"0":re.get(0).getNakedFarvisionOs());
+					if(nfd>nfs)luo=nfs;
+					else luo=nfs;
+					String cfd = re.get(0).getCorrectionFarvisionOd();
+					if(re.get(0).getCorrectionFarvisionOd().length()<=0 || re.get(0).getCorrectionFarvisionOd().equals(""))cfd="0";
+					String cfs = re.get(0).getCorrectionFarvisionOs();
+					if(re.get(0).getCorrectionFarvisionOs().length()<=0 || re.get(0).getCorrectionFarvisionOs().equals(""))cfs="0";
+					if(Double.valueOf(cfd)>Double.valueOf(cfs))jiao=Double.valueOf(cfs);
+					else jiao=Double.valueOf(cfd);
+					double dxql = studentDO2.getDengxiaoqiujingl()==null?0:studentDO2.getDengxiaoqiujingl();
+					double dxqr = studentDO2.getDengxiaoqiujingr()==null?0:studentDO2.getDengxiaoqiujingr();
+					if(dxql>dxqr)deng=dxqr;
+					else deng=dxql;
+					if(jiao == 0){
+						if(luo>= 5 && deng > 0.75){
+							mapPP.put("预警结果", "视力目前正常，无近视发生");
+						}else if(luo>= 5 && deng >= -0.5 && deng <= 0.75){
+							mapPP.put("预警结果", "视力目前正常,近视临床前期");
+						}else if(luo>= 5 && deng < -0.5){
+							mapPP.put("预警结果", "视力目前正常，属于假性近视");
+						}else if(luo< 5 && deng >= -0.5){
+							mapPP.put("预警结果", "视力异常");
+						}else if(luo< 5 && deng < -0.5){
+							mapPP.put("预警结果", "视力下降，近视");
+						}else{
+							mapPP.put("预警结果", "");
+						}
+					}else{
+						if(luo< 5 && deng >= -0.5 && jiao >=5){
+							mapPP.put("预警结果", "戴原镜视力正常");
+						}else if(luo< 5 && deng < -0.5 && jiao >=5){
+							mapPP.put("预警结果", "戴原镜视力正常，近视");
+						}else if(luo< 5 && deng >= -0.5 && jiao < 5){
+							mapPP.put("预警结果", "戴原镜视力异常");
+						}else if(luo< 5 && deng < -0.5 && jiao < 5){
+							mapPP.put("预警结果", "戴原镜视力异常，近视增长");
+						}else{
+							mapPP.put("预警结果", "");
+						}
+					}
+				}else{
+					mapPP.put("预警结果", "");
+				}
+				
 				bb.add(mapPP);
 				
 			}

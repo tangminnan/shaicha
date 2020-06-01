@@ -161,6 +161,7 @@
 			<if test="nation != null">`nation` = #{nation}, </if>
 			<if test="birthday != null">`birthday` = #{birthday}, </if>
 			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
+			<if test="ideentityType != null">`ideentity_type` = #{ideentityType}, </if>
 			<if test="school != null">`school` = #{school}, </if>
 			<if test="grade != null">`grade` = #{grade}, </if>
 			<if test="studentClass != null">`student_class` = #{studentClass}, </if>

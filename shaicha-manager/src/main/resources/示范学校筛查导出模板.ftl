@@ -3586,7 +3586,1013 @@
           <w:t>mmhg</w:t>
         </w:r>
       </w:p>
-      <w:tbl>
+      
+      <#if ifStu == 1>
+      			<w:tbl>
+					<w:tblPr>
+						<w:tblW w:w="0" w:type="auto" />
+						<w:tblInd w:w="0" w:type="dxa" />
+						<w:tblBorders>
+							<w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+							w:space="0" w:color="auto" />
+							<w:left w:val="single" w:sz="4" wx:bdrwidth="10"
+							w:space="0" w:color="auto" />
+							<w:bottom w:val="single" w:sz="4" wx:bdrwidth="10"
+							w:space="0" w:color="auto" />
+							<w:right w:val="single" w:sz="4" wx:bdrwidth="10"
+							w:space="0" w:color="auto" />
+							<w:insideH w:val="single" w:sz="4" wx:bdrwidth="10"
+							w:space="0" w:color="auto" />
+							<w:insideV w:val="single" w:sz="4" wx:bdrwidth="10"
+							w:space="0" w:color="auto" /></w:tblBorders>
+						<w:tblCellMar>
+							<w:top w:w="0" w:type="dxa" />
+							<w:left w:w="108" w:type="dxa" />
+							<w:bottom w:w="0" w:type="dxa" />
+							<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
+					</w:tblPr>
+					<w:tblGrid>
+						<w:gridCol w:w="9854" /></w:tblGrid>
+					<w:tr>
+						<w:tblPrEx>
+							<w:tblBorders>
+								<w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:left w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:bottom w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:right w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideH w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideV w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" /></w:tblBorders>
+							<w:tblCellMar>
+								<w:top w:w="0" w:type="dxa" />
+								<w:left w:w="108" w:type="dxa" />
+								<w:bottom w:w="0" w:type="dxa" />
+								<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
+						</w:tblPrEx>
+						<w:trPr/>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="9854" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto"
+								/>
+								<w:noWrap w:val="0" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:tabs>
+										<w:tab w:val="center" w:pos="4153" /></w:tabs>
+									<w:ind w:right="440" />
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+									<w:t>左眼初步</w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+									<w:t>诊断与预警提示</w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+									<w:t>：</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+					</w:tr>
+					<w:tr>
+						<w:tblPrEx>
+							<w:tblBorders>
+								<w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:left w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:bottom w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:right w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideH w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideV w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" /></w:tblBorders>
+							<w:tblCellMar>
+								<w:top w:w="0" w:type="dxa" />
+								<w:left w:w="108" w:type="dxa" />
+								<w:bottom w:w="0" w:type="dxa" />
+								<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
+						</w:tblPrEx>
+						<w:trPr/>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="9854" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto"
+								/>
+								<w:noWrap w:val="0" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<w:binData w:name="wordml://1.png">iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+											AAAOxAAADsQBlSsOGwAAA55JREFUKBUBkwNs/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAP8AAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA////AAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAIAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+											AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOTdBRuYlyseAAAAAElFTkSuQmCC
+										</w:binData>
+										<v:shape id="_x0000_s1026" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>1、视力目前正常，建议每3个月进行一次视力检查</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1027" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>2、视力目前正常，但是有发生近视的可能性，建议2周内到正规医院进行详细眼科检查</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1028" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>3、视力下降，建议到正规医院进行详细眼科检查，查明原因</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1029" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>4、戴镜视力正常，建议每3个月进行一次医学验光检查</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1030" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>5、戴镜视力下降，建议2周内到正规医院进行医学验光检查，更换眼镜筛查结果不具有诊断意义，应到具备有效的医疗机构执业许可证的医疗机构进一步检查以确诊。</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:tabs>
+										<w:tab w:val="center" w:pos="4153" /></w:tabs>
+									<w:ind w:right="440" />
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:color w:val="FF0000" />
+										<w:sz w:val="22" />
+										<w:sz-cs w:val="22" /></w:rPr>
+								</w:pPr>
+							</w:p>
+						</w:tc>
+					</w:tr>
+					<w:tr>
+						<w:tblPrEx>
+							<w:tblBorders>
+								<w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:left w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:bottom w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:right w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideH w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideV w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" /></w:tblBorders>
+							<w:tblCellMar>
+								<w:top w:w="0" w:type="dxa" />
+								<w:left w:w="108" w:type="dxa" />
+								<w:bottom w:w="0" w:type="dxa" />
+								<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
+						</w:tblPrEx>
+						<w:trPr/>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="9854" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto"
+								/>
+								<w:noWrap w:val="0" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:tabs>
+										<w:tab w:val="center" w:pos="4153" /></w:tabs>
+									<w:ind w:right="440" />
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+									<w:t>右眼初步</w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+									<w:t>诊断与预警提示</w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:b/>
+										<w:sz w:val="24" /></w:rPr>
+									<w:t>：</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+					</w:tr>
+					<w:tr>
+						<w:tblPrEx>
+							<w:tblBorders>
+								<w:top w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:left w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:bottom w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:right w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideH w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" />
+								<w:insideV w:val="single" w:sz="4" wx:bdrwidth="10"
+								w:space="0" w:color="auto" /></w:tblBorders>
+							<w:tblCellMar>
+								<w:top w:w="0" w:type="dxa" />
+								<w:left w:w="108" w:type="dxa" />
+								<w:bottom w:w="0" w:type="dxa" />
+								<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
+						</w:tblPrEx>
+						<w:trPr/>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="9854" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto"
+								/>
+								<w:noWrap w:val="0" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1031" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>1、视力目前正常，建议每3个月进行一次视力检查</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1032" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>2、视力目前正常，但是有发生近视的可能性，建议2周内到正规医院进行详细眼科检查</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1033" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>3、视力下降，建议到正规医院进行详细眼科检查，查明原因</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="000000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1034" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>4、戴镜视力正常，建议每3个月进行一次医学验光检查</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a4" />
+									<w:keepNext w:val="off" />
+									<w:keepLines w:val="off" />
+									<w:widowControl/>
+									<w:supressLineNumbers w:val="off" />
+									<w:spacing w:before="0" w:before-autospacing="off"
+									w:after="0" w:after-autospacing="off"
+									/>
+									<w:ind w:left="0" w:right="440" w:first-line="0"
+									/>
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:color w:val="FF0000" />
+										<w:sz w:val="22" />
+										<w:sz-cs w:val="22" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:pict>
+										<v:shape id="_x0000_s1035" o:spt="75" alt="kong"
+										type="#_x0000_t75" style="height:11.25pt;width:11.25pt;"
+										filled="f" o:preferrelative="t"
+										stroked="f" coordsize="21600,21600">
+											<v:path/>
+											<v:fill on="f" focussize="0,0" />
+											<v:stroke on="f" />
+											<v:imagedata src="wordml://1.png" o:title="kong"
+											/>
+											<o:lock v:ext="edit" aspectratio="t" />
+											<w10:wrap type="none" />
+											<w10:anchorlock/>
+										</v:shape>
+									</w:pict>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体"
+										w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体"
+										w:cs="宋体" w:hint="fareast" />
+										<w:i w:val="off" />
+										<w:caps w:val="off" />
+										<w:color w:val="FF0000" />
+										<w:spacing w:val="0" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" /></w:rPr>
+									<w:t>5、戴镜视力下降，建议2周内到正规医院进行医学验光检查，更换眼镜筛查结果不具有诊断意义，应到具备有效的医疗机构执业许可证的医疗机构进一步检查以确诊。</w:t>
+								</w:r>
+							</w:p>
+							<w:p>
+								<w:pPr>
+									<w:tabs>
+										<w:tab w:val="center" w:pos="4153" /></w:tabs>
+									<w:ind w:right="440" />
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:color w:val="FF0000" />
+										<w:sz w:val="22" />
+										<w:sz-cs w:val="22" /></w:rPr>
+								</w:pPr>
+							</w:p>
+						</w:tc>
+					</w:tr>
+				</w:tbl>
+      
+      
+      <#else>
+      
+            <w:tbl>
         <w:tblPr>
           <w:tblW w:w="0" w:type="auto"/>
           <w:tblInd w:w="0" w:type="dxa"/>
@@ -4027,28 +5033,14 @@
           </w:tc>
         </w:tr>
        
-      </w:tbl>   
+      </w:tbl>  
+      
+      </#if>
+ 
       
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+   
       <w:p>
         <w:pPr>
           <w:tabs>

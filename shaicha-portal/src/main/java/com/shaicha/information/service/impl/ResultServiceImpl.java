@@ -85,8 +85,8 @@ public class ResultServiceImpl implements ResultService{
 		String grade=studentDetails.getString("grade");
 		String studentClass=studentDetails.getString("studentClass");
 		String phone=studentDetails.getString("phone");
-		String ideentityType=studentDetails.getString("ideentityType");
-		if(ideentityType.equals("身份证") && identityCard.length() == 18){
+		//String ideentityType=studentDetails.getString("ideentityType");
+		/*if(ideentityType.equals("身份证") && identityCard.length() == 18){
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			String year = identityCard.substring(6, 10);
 			String month = identityCard.substring(10, 12);
@@ -97,14 +97,14 @@ public class ResultServiceImpl implements ResultService{
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 		stu.setStudentName(studentName);
 		stu.setStudentSex(studentSex);
 		stu.setNation(nation);
 		stu.setGrade(grade);
 		stu.setStudentClass(studentClass);
 		stu.setPhone(phone);
-		stu.setIdeentityType(ideentityType);
+		//stu.setIdeentityType(ideentityType);
 		SchoolNewDO schoolNewDO = schoolNewDao.get(schoolId);
 		stu.setSchool(schoolNewDO.getOrgname());
 		stu.setAddress(schoolNewDO.getCityname());
