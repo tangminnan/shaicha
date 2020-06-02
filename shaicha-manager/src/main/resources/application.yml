@@ -5,6 +5,7 @@ server:
 #        min-spare-threads: 30
   port: 8066
 #    uri-encoding: utf-8
+  max-http-header-size: 4048576
 security:
   basic:
     enabled: false
@@ -23,7 +24,7 @@ spring:
       max-request-size: 30Mb
   devtools:
     restart:
-      enabled: true    
+      enabled: true   
 mybatis: 
   configuration:
     map-underscore-to-camel-case: true
