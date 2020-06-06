@@ -98,11 +98,11 @@ public interface StudentNewService {
 	*/  
 	Map<String, Double> shouYeTrueData();
 		
-	List<StudentNewDO> queryBySchoolGrade(Integer activityId,String school);
+	List<StudentNewDO> queryBySchoolGrade(Integer activityId,String school,Long sysId);
 			
-	List<StudentNewDO> queryBySchoolStudentClass(Integer activityId,String school);
+	List<StudentNewDO> queryBySchoolStudentClass(Integer activityId,String school,Long sysId);
 	
-	List<StudentNewDO> schoolGrade(String school);
+	List<StudentNewDO> schoolGrade(String school,Long sysId);
 	
-	List<StudentNewDO> schoolStudentClass(String school);
+	List<StudentNewDO> schoolStudentClass(String school,Long sysId);
 }

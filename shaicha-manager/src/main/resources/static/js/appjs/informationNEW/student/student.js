@@ -249,7 +249,7 @@ function importtemplate(){
 		title : '导入会员',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '300px' ],
+		area : [ '800px', '520px' ],
 		content : prefix + '/importtemplate/'+checkType // iframe的url
 	});
 }
@@ -452,3 +452,18 @@ function erweimadayin(){
 	});
 	window.open("/informationNEW/student/batchdayinerweima?ids="+ids);
 }
+
+//活动报告
+function huodongbaogao(){
+	
+	var page = layer.open({
+		type : 2,
+		title : '报告',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '300px' ],
+		content : '/studentReportNew/xuexiao' // iframe的url
+	});
+	layer.full(page);	
+}
+

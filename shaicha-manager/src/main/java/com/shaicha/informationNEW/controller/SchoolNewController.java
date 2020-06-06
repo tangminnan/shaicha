@@ -1,7 +1,5 @@
 package com.shaicha.informationNEW.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +24,7 @@ import com.shaicha.informationNEW.service.SchoolNewService;
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
+import com.shaicha.common.utils.ShiroUtils;
 
 /**
  * 
@@ -53,6 +52,9 @@ public class SchoolNewController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
+        if(!ShiroUtils.getUser().getUsername().equals("admin")){
+        	query.put("sysId", ShiroUtils.getUserId());
+        }
 		List<SchoolNewDO> schoolList = schoolService.list(query);
 		int total = schoolService.count(query);
 		PageUtils pageUtils = new PageUtils(schoolList, total);
@@ -84,6 +86,7 @@ public class SchoolNewController {
 		school.setCreatedate(new Date());
 		school.setOrgtype(2);
 		school.setIspublic(0);
+		school.setSysId(ShiroUtils.getUserId().intValue());
 		if(schoolService.save(school)>0){
 			return R.ok();
 		}

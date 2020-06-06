@@ -4,17 +4,18 @@
 <mapper namespace="com.shaicha.informationNEW.dao.ActivityListNewDao">
 
 	<select id="get" resultType="com.shaicha.informationNEW.domain.ActivityListNewDO">
-		select `id`,`activity_name`,`del_flag`,`add_time`,`update_date` from t_activity_list_new where id = #{value}
+		select `id`,`activity_name`,`del_flag`,`add_time`,`update_date`,sys_id from t_activity_list_new where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.informationNEW.domain.ActivityListNewDO">
-		select `id`,`activity_name`,`del_flag`,`add_time`,`update_date` from t_activity_list_new
+		select `id`,`activity_name`,`del_flag`,`add_time`,`update_date`,sys_id from t_activity_list_new
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="activityName != null and activityName != ''"> and activity_name = #{activityName} </if>
 		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
 		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
 		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		<if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -37,6 +38,7 @@
 		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
 		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
 		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		<if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
 		  		</where>
 	</select>
 	 
@@ -46,14 +48,16 @@
 			`activity_name`, 
 			`del_flag`, 
 			`add_time`, 
-			`update_date`
+			`update_date`,
+			sys_id
 		)
 		values
 		(
 			#{activityName}, 
 			#{delFlag}, 
 			#{addTime}, 
-			#{updateDate}
+			#{updateDate},
+			#{sysId}
 		)
 	</insert>
 	 
@@ -63,7 +67,8 @@
 			<if test="activityName != null">`activity_name` = #{activityName}, </if>
 			<if test="delFlag != null">`del_flag` = #{delFlag}, </if>
 			<if test="addTime != null">`add_time` = #{addTime}, </if>
-			<if test="updateDate != null">`update_date` = #{updateDate}</if>
+			<if test="updateDate != null">`update_date` = #{updateDate},</if>
+			<if test="sysId != null">`sys_id` = #{sysId}</if>
 		</set>
 		where id = #{id}
 	</update>

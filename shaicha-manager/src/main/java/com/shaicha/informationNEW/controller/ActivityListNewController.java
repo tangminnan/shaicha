@@ -21,6 +21,7 @@ import com.shaicha.informationNEW.service.ActivityListNewService;
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
+import com.shaicha.common.utils.ShiroUtils;
 
 /**
  * 活动表---新
@@ -48,6 +49,9 @@ public class ActivityListNewController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
+        if(!ShiroUtils.getUser().getUsername().equals("admin")){
+        	query.put("sysId", ShiroUtils.getUserId());
+        }
 		List<ActivityListNewDO> activityListNewList = activityListNewService.list(query);
 		int total = activityListNewService.count(query);
 		PageUtils pageUtils = new PageUtils(activityListNewList, total);
@@ -77,6 +81,7 @@ public class ActivityListNewController {
 	public R save( ActivityListNewDO activityListNew){
 		activityListNew.setAddTime(new Date());
 		activityListNew.setDelFlag(0);
+		activityListNew.setSysId(ShiroUtils.getUserId().intValue());
 		if(activityListNewService.save(activityListNew)>0){
 			return R.ok();
 		}

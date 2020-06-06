@@ -92,12 +92,12 @@ public interface StudentNewDao {
 
 	List<StudentNewDO> getAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
 		
-	List<StudentNewDO> queryBySchoolGrade(@Param("activityId") Integer activityId,@Param("school") String school);
+	List<StudentNewDO> queryBySchoolGrade(@Param("activityId") Integer activityId,@Param("school") String school,@Param("sysId") Long sysId);
 	
-	List<StudentNewDO> queryBySchoolStudentClass(@Param("activityId") Integer activityId,@Param("school") String school);
+	List<StudentNewDO> queryBySchoolStudentClass(@Param("activityId") Integer activityId,@Param("school") String school,@Param("sysId") Long sysId);
 
-	List<StudentNewDO> schoolGrade(String school);
+	List<StudentNewDO> schoolGrade(@Param("school") String school,@Param("sysId") Long sysId);
 	
-	List<StudentNewDO> schoolStudentClass(String school);
+	List<StudentNewDO> schoolStudentClass(@Param("school") String school,@Param("sysId") Long sysId);
 
 }

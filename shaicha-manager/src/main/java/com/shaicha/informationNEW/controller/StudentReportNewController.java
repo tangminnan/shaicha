@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
+import com.shaicha.common.utils.ShiroUtils;
 import com.shaicha.informationNEW.domain.ActivityListNewDO;
 import com.shaicha.information.domain.ChectorDO;
 import com.shaicha.information.domain.LinShiUrlDO;
@@ -62,7 +63,11 @@ public class StudentReportNewController {
 	 */
 	@GetMapping("/studentReportNew/xuexiao")
 	public String xuexiao(Model model){
-		List<ActivityListNewDO> activityList = activityListService.list(new HashMap<>());
+		Map<String,Object> map = new HashMap<>();
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			 map.put("sysId", ShiroUtils.getUserId());
+	    }
+		List<ActivityListNewDO> activityList = activityListService.list(map);
 		model.addAttribute("activityList", activityList);
 		/*List<StudentDO> schoolName = studentService.querySchoolName();
 		List<ResultDiopterDO> jianchashijian = resultDiopterService.jianchashijian();
@@ -342,7 +347,11 @@ public class StudentReportNewController {
 	@ResponseBody
 	@GetMapping("/studentReportNew/schoolActivity")
 	public List<StudentNewDO> schoolActivity(Integer activityId){
-		List<StudentNewDO> schoolActivity = schoolReportService.schoolActivity(activityId);
+		Long sysId = null;
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			sysId = ShiroUtils.getUserId();
+        }
+		List<StudentNewDO> schoolActivity = schoolReportService.schoolActivity(activityId,sysId);
 		
 		return schoolActivity;
 		
@@ -351,7 +360,11 @@ public class StudentReportNewController {
 	@ResponseBody
 	@GetMapping("/studentReportNew/schoolGrade")
 	public List<StudentNewDO> schoolGrade(Integer activityId,String school){
-		List<StudentNewDO> schoolGrade = studentService.queryBySchoolGrade(activityId, school);
+		Long sysId = null;
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			sysId = ShiroUtils.getUserId();
+        }
+		List<StudentNewDO> schoolGrade = studentService.queryBySchoolGrade(activityId, school,sysId);
 		
 		return schoolGrade;
 		
@@ -360,7 +373,11 @@ public class StudentReportNewController {
 	@ResponseBody
 	@GetMapping("/studentReportNew/schoolStuClass")
 	public List<StudentNewDO> schoolStuClass(Integer activityId,String school){
-		List<StudentNewDO> stuClass = studentService.queryBySchoolStudentClass(activityId, school);
+		Long sysId = null;
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			sysId = ShiroUtils.getUserId();
+        }
+		List<StudentNewDO> stuClass = studentService.queryBySchoolStudentClass(activityId, school,sysId);
 		
 		return stuClass;
 		

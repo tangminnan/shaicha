@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shaicha.common.annotation.Log;
+import com.shaicha.common.config.BootdoConfig;
 import com.shaicha.common.config.Constant;
 import com.shaicha.common.controller.BaseController;
 import com.shaicha.common.domain.Tree;
@@ -36,6 +37,10 @@ public class UserController extends BaseController {
 	RoleService roleService;
 	@Autowired
 	DictService dictService;
+	@Autowired
+	private BootdoConfig bootdoConfig;
+	
+	
 	@RequiresPermissions("sys:user:user")
 	@GetMapping("")
 	String user(Model model) {
@@ -246,5 +251,37 @@ public class UserController extends BaseController {
 		}else {
 			return R.error("更新图像失败！");
 		}
+	}
+	
+	@RequiresPermissions("sys:user:edit")
+	@Log("编辑用户")
+	@GetMapping("/sysedit")
+	String sysedit(Model model) {
+		UserDO userDO = userService.get(ShiroUtils.getUserId());
+		model.addAttribute("user", userDO);
+		
+		return prefix+"/sysedit";
+	}
+	
+	@RequiresPermissions("sys:user:edit")
+	@Log("更新用户")
+	@PostMapping("/sysupdate")
+	@ResponseBody
+	R sysupdate(UserDO user) {
+		System.out.println(user.getZhongxinName());
+		try {
+			MultipartFile imgFile = user.getImgFile();
+			if(imgFile!=null && imgFile.getSize()>0){
+				String fileName = FileUtil.renameToUUID(imgFile.getOriginalFilename());
+				FileUtil.uploadFile(imgFile.getBytes(), bootdoConfig.getUploadPath()+"zhongxin/", fileName);
+				user.setZhongxinImg("/files/zhongxin/"+fileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (userService.sysupdate(user) > 0) {
+			return R.ok();
+		}
+		return R.error();
 	}
 }

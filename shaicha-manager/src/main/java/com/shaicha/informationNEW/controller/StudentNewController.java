@@ -1,6 +1,7 @@
 package com.shaicha.informationNEW.controller;
 
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ import com.shaicha.informationNEW.service.ResultEyesightNewService;
 import com.shaicha.informationNEW.service.ResultOptometryNewService;
 import com.shaicha.informationNEW.service.SchoolNewService;
 import com.shaicha.informationNEW.service.StudentNewService;
+import com.shaicha.system.dao.UserDao;
+import com.shaicha.system.domain.UserDO;
 
 
 /**
@@ -76,13 +79,18 @@ public class StudentNewController {
 	private SchoolNewService schoolService;
 	@Autowired
 	private ActivityListNewService activityListNewService;
+	@Autowired
+	UserDao userMapper;
 	
 	@GetMapping()
 	@RequiresPermissions("information:student:student")
 	String Student(Model model){
-		List<StudentNewDO> studentList = studentNewService.getList();
-		model.addAttribute("studentList", studentList);
+		//List<StudentNewDO> studentList = studentNewService.getList();
+		//model.addAttribute("studentList", studentList);
 		Map<String, Object> params = new HashMap<>();
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			params.put("sysId", ShiroUtils.getUserId());
+	    }
 		List<SchoolNewDO> school = schoolService.list(params);
 		model.addAttribute("school", school);
 	    return "informationNEW/student/student";
@@ -109,9 +117,12 @@ public class StudentNewController {
 	 */
 	@GetMapping("/demonstration")
 	public String demonstration(Model model){
-		List<StudentNewDO> studentList = studentNewService.getList();
-		model.addAttribute("studentList", studentList);
+		//List<StudentNewDO> studentList = studentNewService.getList();
+		//model.addAttribute("studentList", studentList);
 		Map<String, Object> params = new HashMap<>();
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			params.put("sysId", ShiroUtils.getUserId());
+	    }
 		List<SchoolNewDO> school = schoolService.list(params);
 		model.addAttribute("school", school);
 	    return "informationNEW/student/shifanstudent";
@@ -273,9 +284,13 @@ public class StudentNewController {
 	@RequiresPermissions("information:student:student")
 	public String importtemplate(Model model,@PathVariable("checkType") String checkType){
 		model.addAttribute("checkType", checkType);
-		List<SchoolNewDO> listSchool = schoolService.list(new HashMap<String, Object>());
+		Map<String, Object> params = new HashMap<>();
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			params.put("sysId", ShiroUtils.getUserId());
+	    }
+		List<SchoolNewDO> listSchool = schoolService.list(params);
 		model.addAttribute("listSchool", listSchool);
-		List<ActivityListNewDO> huodong = activityListNewService.list(new HashMap<String, Object>());
+		List<ActivityListNewDO> huodong = activityListNewService.list(params);
 		model.addAttribute("huodong", huodong);
 		if("PU_TONG".equals(checkType)){
 			return "informationNEW/student/importtemplate";
@@ -381,6 +396,7 @@ public class StudentNewController {
 	@GetMapping("/downLoadErWeiMaByBrower")
 	public String downLoadErWeiMaByBrower(Integer id,Model model){
 		StudentNewDO studentDO = Optional.ofNullable(studentNewService.get(id)).orElseGet(StudentNewDO::new);
+		model.addAttribute("id",studentDO.getId());
 		model.addAttribute("studentName",studentDO.getStudentName());
 		model.addAttribute("identityCard",studentDO.getIdentityCard());
 		model.addAttribute("studentSex",studentDO.getStudentSex());
@@ -403,50 +419,244 @@ public class StudentNewController {
 	public String putongshaichadayin(Integer id,Model model){
 		
 		//基本信息获取
-		StudentNewDO studentDO = studentNewService.get(id);
-		if(studentDO==null || studentDO.getLastCheckTime()==null)
-			studentDO = new StudentNewDO();
-		model.addAttribute("school", studentDO.getSchool());
-		model.addAttribute("grade",  studentDO.getGrade());
-		model.addAttribute("studentClass",studentDO.getStudentClass());
-		model.addAttribute("studentName",studentDO.getStudentName());
-		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "男":"女");
-		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
-		
-		//视力检查结果获取
-		List<ResultEyesightNewDO> resultEyesightDOList = studentNewService.getLatestResultEyesightDO(studentDO.getId());
-		ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
-		if(resultEyesightDOList.size()>0)
-			resultEyesightDO=resultEyesightDOList.get(0);
-		model.addAttribute("nakedFarvisionOd",resultEyesightDO.getNakedFarvisionOd()==null? "":resultEyesightDO.getNakedFarvisionOd().toString());
-		model.addAttribute("nakedFarvisionOs",resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString());
-		model.addAttribute("correctionFarvisionOd",resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString());
-		model.addAttribute("correctionFarvisionOs",resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString());
-		
-		//自动电脑验光结果(左眼) 
-		List<ResultDiopterNewDO> resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
-		ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
-		if(resultDiopterDOList.size()>0)
-			resultDiopterDO=resultDiopterDOList.get(0);
-		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
-		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
-		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());;
-		
-		
-		
-		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList =studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"R");
-		 resultDiopterDO = new ResultDiopterNewDO();
-		if(resultDiopterDOList.size()>0)
-			resultDiopterDO=resultDiopterDOList.get(0);
-		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS().toString());
-		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC().toString());
-		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA().toString());
-		//医生的建议（临时数据）
-		model.addAttribute("doctorchubu","注意用眼卫生");
-		model.addAttribute("doctortebie","注意用眼卫生，养成良好的用眼习惯");
-		System.out.println("===========================");
-		System.out.println("===========================");
+				StudentNewDO studentDO = studentNewService.get(id);
+				if(studentDO==null || studentDO.getLastCheckTime()==null) return "information/student/示范校筛查打印";
+				model.addAttribute("school", studentDO.getSchool());
+				model.addAttribute("grade",studentDO.getGrade().toString());
+				model.addAttribute("studentClass",studentDO.getStudentClass().toString());
+				model.addAttribute("studentName",studentDO.getStudentName());
+				model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "男":"女");
+				model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
+				DecimalFormat df = new DecimalFormat("0.00");
+				DecimalFormat df1 = new DecimalFormat("0.0");
+				UserDO userDO ;
+				if(ShiroUtils.getUser().getUsername().equals("admin")){
+					 userDO = userMapper.get(studentDO.getSysId());
+				}else{
+					 userDO = userMapper.get(ShiroUtils.getUserId());
+				}
+				model.addAttribute("zhongxin",userDO);
+				//视力检查结果获取
+				List<ResultEyesightNewDO> resultEyesightDOList = studentNewService.getLatestResultEyesightDO(studentDO.getId());
+				ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
+				String nakedFarvisionOd="";
+				String nakedFarvisionOs="";
+				String correctionFarvisionOd="";
+				String correctionFarvisionOs="";
+				if(resultEyesightDOList.size()>0){
+					resultEyesightDO=resultEyesightDOList.get(0);
+					nakedFarvisionOd=resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString();
+					nakedFarvisionOs=resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString();
+					correctionFarvisionOd=resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString();
+					correctionFarvisionOs=resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString();
+				}
+				model.addAttribute("nakedFarvisionOd",zhuanhuan1(nakedFarvisionOd)==""?"":zhuanhuan1(nakedFarvisionOd));
+				model.addAttribute("nakedFarvisionOs",zhuanhuan1(nakedFarvisionOs)==""?"":zhuanhuan1(nakedFarvisionOs));
+				model.addAttribute("glassvisionOd",zhuanhuan1(correctionFarvisionOd)==""?"":zhuanhuan1(correctionFarvisionOd));
+				model.addAttribute("glassvisionOs",zhuanhuan1(correctionFarvisionOd)==""?"":zhuanhuan1(correctionFarvisionOs));
+				
+				
+				//自动电脑验光结果(左眼) 
+				double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
+				List<ResultDiopterNewDO> resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
+				ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
+				if(resultDiopterDOList.size()>0)
+					resultDiopterDO=resultDiopterDOList.get(0);
+
+					String diopterSL="";
+					if(resultDiopterDO.getDiopterS()!=null){
+						diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+						if(Double.valueOf(diopterSL)>0){
+							diopterSL="+"+diopterSL;
+						}
+					}
+					
+				model.addAttribute("diopterSL",diopterSL);
+				model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
+				model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
+				dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+				
+				
+				//自动电脑验光结果(右眼) 
+				 resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"R");
+				 resultDiopterDO = new ResultDiopterNewDO();
+				if(resultDiopterDOList.size()>0)
+					resultDiopterDO=resultDiopterDOList.get(0);
+					String diopterSR="";
+					if(resultDiopterDO.getDiopterS()!=null){
+						diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+						if(Double.valueOf(diopterSR)>0){
+							diopterSR="+"+diopterSR;
+						}
+					}
+					
+				model.addAttribute("diopterSR",diopterSR);
+				model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
+				model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
+				dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+				
+				//眼内压结果拼装
+				List<ResultEyepressureNewDO> ResultEyepressureDOList = studentNewService.getLatestResultEyepressureDO(studentDO.getId());
+				ResultEyepressureNewDO resultEyepressureDO = new ResultEyepressureNewDO();
+				if(ResultEyepressureDOList.size()>0)
+					resultEyepressureDO=ResultEyepressureDOList.get(0);
+				model.addAttribute("eyePressureOd",resultEyepressureDO.getEyePressureOd()==null?"":zhuanhuan(resultEyepressureDO.getEyePressureOd().toString()));
+				model.addAttribute("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":zhuanhuan(resultEyepressureDO.getEyePressureOs().toString()));
+				//眼轴长度数据拼装
+				List<ResultEyeaxisNewDO> resultEyeaxisDOList = studentNewService.getLatelestResultEyeaxisDO(studentDO.getId());
+				ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
+				if(resultEyeaxisDOList.size()>0)
+					resultEyeaxisDO=resultEyeaxisDOList.get(0);
+				model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOd().toString()));
+				model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOs().toString()));
+				
+				System.out.println("===========================");
+				System.out.println("===========================");
+				//角膜验光拼装
+				ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
+				List<ResultCornealNewDO> resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R1");
+				if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+				model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+				model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+				resultCornealDO = new ResultCornealNewDO();
+				resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R2");
+				if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+				model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+				model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+				
+				resultCornealDO = new ResultCornealNewDO();
+			    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R1");
+			    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+			    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+			    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+				
+				
+			    
+			    resultCornealDO = new ResultCornealNewDO();
+			    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R2");
+			    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+
+			   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+			   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+				//医生的建议
+			   Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
+			   int birth = 0;
+			   try {
+				   birth = TimeUtils.getAgeByBirth(birthday);
+				
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			   
+			   if(birth>=3 && birth<=5){
+				   model.addAttribute("ifStu","1");
+			   }else{
+				   model.addAttribute("ifStu","2");
+			   }
+			   double od=0.0,os=0.0;
+			   if(!StringUtils.isBlank(nakedFarvisionOd) && isDouble(nakedFarvisionOd)){
+			    	od=Double.parseDouble(nakedFarvisionOd);
+			    }
+			    if(!StringUtils.isBlank(nakedFarvisionOs) && isDouble(nakedFarvisionOs)){
+			    	os=Double.parseDouble(nakedFarvisionOs);
+			    }
+//			    od=od<os?od:os;
+//			    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
+			    double yuanjingshiliL=0,yuanjingshiliR=0;//原镜视力
+			    String ssL="ss",ssR="ss";
+			    if(!StringUtils.isBlank(correctionFarvisionOd) && isDouble(correctionFarvisionOd)){
+//			    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
+			    	yuanjingshiliR=Double.parseDouble(correctionFarvisionOd);
+			    }
+			    if(!StringUtils.isBlank(correctionFarvisionOs) && isDouble(correctionFarvisionOs)){
+//			    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
+			    	yuanjingshiliL=Double.parseDouble(correctionFarvisionOs);
+			    }
+			    if(yuanjingshiliL==0)
+			    	ssL="wuyuanjing";
+			    if(yuanjingshiliR==0)
+			    	ssR="wuyuanjing";
+			    if(od>=5.0 && dengxiaoqiujingR>0.75){
+			    	model.addAttribute("ydoctorchubu","视力目前正常 。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
+			//    	model.addAttribute("yujing","无");
+			    }
+			    if(os>=5.0 && dengxiaoqiujingL>0.75){
+			    	model.addAttribute("zdoctorchubu","视力目前正常 。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
+			//    	model.addAttribute("yujing","无");
+			    }
+			    
+				if(od>=5.0 && dengxiaoqiujingR>=-0.5 && dengxiaoqiujingR<=0.75){
+					model.addAttribute("ydoctorchubu","视力目前正常，近视临床前期。 请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
+			//    	model.addAttribute("yujing","近视临床前期");
+				}
+				if(os>=5.0 && dengxiaoqiujingL>=-0.5 && dengxiaoqiujingL<=0.75){
+					model.addAttribute("zdoctorchubu","视力目前正常，近视临床前期。 请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，避免近视的发生，更好地进行近视发生的预警。");
+			//    	model.addAttribute("yujing","近视临床前期");
+				}
+				
+				if(od>=5.0 && dengxiaoqiujingR<-0.5){
+					model.addAttribute("ydoctorchubu","视力目前正常，假性近视，但有发生近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
+			//    	model.addAttribute("yujing","假性近视");
+				}
+				if(os>=5.0 && dengxiaoqiujingL<-0.5){
+					model.addAttribute("zdoctorchubu","视力目前正常，假性近视，但有发生近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
+			//    	model.addAttribute("yujing","假性近视");
+				}
+				
+				if(od<5.0 &&dengxiaoqiujingR>=-0.5 && yuanjingshiliR==0 && ssR.equals("wuyuanjing")){
+					model.addAttribute("ydoctorchubu","视力异常。建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
+			//    	model.addAttribute("yujing","无");
+				}
+				if(os<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshiliL==0 && ssL.equals("wuyuanjing")){
+					model.addAttribute("zdoctorchubu","视力异常。建议及时到医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼病，并及时采取相应治疗措施。");
+			//    	model.addAttribute("yujing","无");
+				}
+				
+				if(od<5.0 && dengxiaoqiujingR<-0.5 && yuanjingshiliR==0 && ssR.equals("wuyuanjing")){
+					model.addAttribute("ydoctorchubu","视力下降，近视。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
+			//    	model.addAttribute("yujing","近视");
+				}
+				if(os<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshiliL==0 && ssL.equals("wuyuanjing")){
+					model.addAttribute("zdoctorchubu","视力下降，近视。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生");
+			//    	model.addAttribute("yujing","近视");
+				}
+			
+				if(od<5.0 && dengxiaoqiujingR>=-0.5 && yuanjingshiliR>=5.0){
+					model.addAttribute("ydoctorchubu","戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。");
+			//    	model.addAttribute("yujing","无");
+				}
+				if(os<5.0 && dengxiaoqiujingL>=-0.5 && yuanjingshiliL>=5.0){
+					model.addAttribute("zdoctorchubu","戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。");
+			//    	model.addAttribute("yujing","无");
+				}
+				
+				if(od<5.0 && dengxiaoqiujingR<-0.5 && yuanjingshiliR>=5.0){
+					model.addAttribute("ydoctorchubu","戴原镜视力正常，近视。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的发生；采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
+			//    	model.addAttribute("yujing","近视");
+				}
+				if(os<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshiliL>=5.0){
+					model.addAttribute("zdoctorchubu","戴原镜视力正常，近视。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的发生；采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
+			//    	model.addAttribute("yujing","近视");
+				}
+				
+				if(od<5.0 &&dengxiaoqiujingR>=-0.5 && yuanjingshiliR<5.0 && ssR.equals("ss")){
+					model.addAttribute("ydoctorchubu","戴原镜视力异常。 请遵医嘱及时定期复查。");
+			//    	model.addAttribute("yujing","无");
+				}
+				if(os<5.0 &&dengxiaoqiujingL>=-0.5 && yuanjingshiliL<5.0 && ssL.equals("ss")){
+					model.addAttribute("zdoctorchubu","戴原镜视力异常。 请遵医嘱及时定期复查。");
+			//    	model.addAttribute("yujing","无");
+				}
+				
+				if(od<5.0 && dengxiaoqiujingR<-0.5 && yuanjingshiliR<5.0 && ssR.equals("ss")){
+					model.addAttribute("ydoctorchubu","戴原镜视力异常，近视增长。 请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
+			//    	model.addAttribute("yujing","近视增长");
+				}
+				if(os<5.0 && dengxiaoqiujingL<-0.5 && yuanjingshiliL<5.0 && ssL.equals("ss")){
+					model.addAttribute("zdoctorchubu","戴原镜视力异常，近视增长。 请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
+			//    	model.addAttribute("yujing","近视增长");
+				}
 		return "informationNEW/student/普通筛查打印";
 	}
 	
@@ -465,7 +675,15 @@ public class StudentNewController {
 		model.addAttribute("studentName",studentDO.getStudentName());
 		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "男":"女");
 		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
-		
+		DecimalFormat df = new DecimalFormat("0.00");
+		DecimalFormat df1 = new DecimalFormat("0.0");
+		UserDO userDO ;
+		if(ShiroUtils.getUser().getUsername().equals("admin")){
+			 userDO = userMapper.get(studentDO.getSysId());
+		}else{
+			 userDO = userMapper.get(ShiroUtils.getUserId());
+		}
+		model.addAttribute("zhongxin",userDO);
 		//视力检查结果获取
 		List<ResultEyesightNewDO> resultEyesightDOList = studentNewService.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
@@ -480,19 +698,30 @@ public class StudentNewController {
 			correctionFarvisionOd=resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString();
 			correctionFarvisionOs=resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString();
 		}
-		model.addAttribute("nakedFarvisionOd",zhuanhuan(nakedFarvisionOd));
-		model.addAttribute("nakedFarvisionOs",zhuanhuan(nakedFarvisionOs));
-		model.addAttribute("glassvisionOd",zhuanhuan(correctionFarvisionOd));
-		model.addAttribute("glassvisionOs",zhuanhuan(correctionFarvisionOs));
+		model.addAttribute("nakedFarvisionOd",zhuanhuan1(nakedFarvisionOd)==""?"":zhuanhuan1(nakedFarvisionOd));
+		model.addAttribute("nakedFarvisionOs",zhuanhuan1(nakedFarvisionOs)==""?"":zhuanhuan1(nakedFarvisionOs));
+		model.addAttribute("glassvisionOd",zhuanhuan1(correctionFarvisionOd)==""?"":zhuanhuan1(correctionFarvisionOd));
+		model.addAttribute("glassvisionOs",zhuanhuan1(correctionFarvisionOd)==""?"":zhuanhuan1(correctionFarvisionOs));
+		
+		
 		//自动电脑验光结果(左眼) 
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		List<ResultDiopterNewDO> resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		model.addAttribute("diopterSL",resultDiopterDO.getDiopterS()==null?"":zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":zhuanhuan(resultDiopterDO.getDiopterC().toString()));
-		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));;
+
+			String diopterSL="";
+			if(resultDiopterDO.getDiopterS()!=null){
+				diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+				if(Double.valueOf(diopterSL)>0){
+					diopterSL="+"+diopterSL;
+				}
+			}
+			
+		model.addAttribute("diopterSL",diopterSL);
+		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
+		model.addAttribute("diopterAL",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
 		dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
 		
 		
@@ -501,9 +730,17 @@ public class StudentNewController {
 		 resultDiopterDO = new ResultDiopterNewDO();
 		if(resultDiopterDOList.size()>0)
 			resultDiopterDO=resultDiopterDOList.get(0);
-		model.addAttribute("diopterSR",resultDiopterDO.getDiopterS()==null?"":zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":zhuanhuan(resultDiopterDO.getDiopterC().toString()));
-		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));;
+			String diopterSR="";
+			if(resultDiopterDO.getDiopterS()!=null){
+				diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+				if(Double.valueOf(diopterSR)>0){
+					diopterSR="+"+diopterSR;
+				}
+			}
+			
+		model.addAttribute("diopterSR",diopterSR);
+		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
+		model.addAttribute("diopterAR",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
 		dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
 		
 		//眼内压结果拼装
@@ -566,21 +803,21 @@ public class StudentNewController {
 		   model.addAttribute("ifStu","2");
 	   }
 	   double od=0.0,os=0.0;
-	   if(!StringUtils.isBlank(nakedFarvisionOd)){
+	   if(!StringUtils.isBlank(nakedFarvisionOd) && isDouble(nakedFarvisionOd)){
 	    	od=Double.parseDouble(nakedFarvisionOd);
 	    }
-	    if(!StringUtils.isBlank(nakedFarvisionOs)){
+	    if(!StringUtils.isBlank(nakedFarvisionOs) && isDouble(nakedFarvisionOs)){
 	    	os=Double.parseDouble(nakedFarvisionOs);
 	    }
 //	    od=od<os?od:os;
 //	    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
 	    double yuanjingshiliL=0,yuanjingshiliR=0;//原镜视力
 	    String ssL="ss",ssR="ss";
-	    if(!StringUtils.isBlank(correctionFarvisionOd)){
+	    if(!StringUtils.isBlank(correctionFarvisionOd) && isDouble(correctionFarvisionOd)){
 //	    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
 	    	yuanjingshiliR=Double.parseDouble(correctionFarvisionOd);
 	    }
-	    if(!StringUtils.isBlank(correctionFarvisionOs)){
+	    if(!StringUtils.isBlank(correctionFarvisionOs) && isDouble(correctionFarvisionOs)){
 //	    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
 	    	yuanjingshiliL=Double.parseDouble(correctionFarvisionOs);
 	    }
@@ -737,7 +974,30 @@ public class StudentNewController {
 	        return d;
 	    }
 	
+	private static Object zhuanhuan1(Object s){
+		DecimalFormat df1 = new DecimalFormat("0.0");
+	       String d=null;
+	        if(s instanceof String){
+	        	if("".equals((String)s))
+	        		return "";
+	        	d = (String)s;
+	        }
+	        if(s instanceof Double)
+	            d = df1.format(s);
+	        System.out.println("d:"+d+" s:"+s);
+	        
+	        return d;
+	    }
 	
+
+	public boolean isDouble( String s ){
+		
+        boolean matches = s.matches("-?[0-9]+.*[0-9]*");	
+        
+        return matches;
+
+	}
+
 	
 	@GetMapping("/batchdayinerweima")
 	public String batchdayinerweima(Integer[] ids,Model model){
@@ -759,7 +1019,11 @@ public class StudentNewController {
 	@ResponseBody
 	@GetMapping("/schoolGrade")
 	public List<StudentNewDO> schoolGrade(String school){
-		List<StudentNewDO> schoolGrade = studentNewService.schoolGrade(school);
+		Long sysId = null;
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			sysId = ShiroUtils.getUserId();
+        }
+		List<StudentNewDO> schoolGrade = studentNewService.schoolGrade(school,sysId);
 		
 		return schoolGrade;
 		
@@ -768,7 +1032,11 @@ public class StudentNewController {
 	@ResponseBody
 	@GetMapping("/schoolStuClass")
 	public List<StudentNewDO> schoolStuClass(String school){
-		List<StudentNewDO> stuClass = studentNewService.schoolStudentClass(school);
+		Long sysId = null;
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			sysId = ShiroUtils.getUserId();
+        }
+		List<StudentNewDO> stuClass = studentNewService.schoolStudentClass(school,sysId);
 		
 		return stuClass;
 		

@@ -117,7 +117,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		DecimalFormat df = new DecimalFormat("0.0");
 		List<StudentNewDO> gegradejs = studentDao.querySchoolGrade(school);
 		for (StudentNewDO studentDO : gegradejs) {
-			int gradeCheck = schoolReportDao.gradeCheck(activityId, school, studentDO.getGrade());
+			int gradeCheck = schoolReportDao.activityGradeByCheckNum(activityId, school, studentDO.getGrade());
 			int gradeCheckjinshi = schoolReportDao.gradeCheckjinshi(activityId, school, studentDO.getGrade());
 			da.add(gradeCheck==0?0:Double.parseDouble(df.format((double)gradeCheckjinshi/(double)gradeCheck*100)));
 			ye.add(studentDO.getGrade());
@@ -167,10 +167,10 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Map<String, List<Double>> map = new HashMap<String, List<Double>>();
 		List<Double> myt = new ArrayList<Double>();
 		DecimalFormat df = new DecimalFormat("0.0");
-		int nanCheckNum = schoolReportDao.sexCheckNum(activityId, school, 1);//男
+		int nanCheckNum = schoolReportDao.activitySexByCheckNum(activityId, school, 1);//男
 		int nanCheckjinshi = schoolReportDao.sexCheckjinshi(activityId, school, 1);
 		myt.add(nanCheckNum==0?0:Double.parseDouble(df.format((double)nanCheckjinshi/(double)nanCheckNum*100)));
-		int nvCheckNum = schoolReportDao.sexCheckNum(activityId, school, 2);
+		int nvCheckNum = schoolReportDao.activitySexByCheckNum(activityId, school, 2);
 		int nvCheckjinshi = schoolReportDao.sexCheckjinshi(activityId, school, 2);
 		myt.add(nvCheckNum==0?0:Double.parseDouble(df.format((double)nvCheckjinshi/(double)nvCheckNum*100)));
 		map.put("studentSexMyopia",myt);
@@ -238,11 +238,11 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		List<Object> myt2 = new ArrayList<Object>();
 		List<StudentNewDO> gegradejs = studentDao.querySchoolGrade(school);
 		for (StudentNewDO studentDO : gegradejs) {
-			int nanGradeCheckNum = schoolReportDao.sexGradeCheckNum(activityId,school,studentDO.getGrade(),1);//男
+			int nanGradeCheckNum = schoolReportDao.activityGradeSexByCheckNum(activityId,school,studentDO.getGrade(),1);//男
 			int nanGradeCheckjinshi = schoolReportDao.sexGradeCheckjinshi(activityId,school,studentDO.getGrade(),1);
 			myt1.add(nanGradeCheckNum==0?0:Double.parseDouble(df.format((double)nanGradeCheckjinshi/(double)nanGradeCheckNum*100)));
 		
-			int nvGradeCheckNum = schoolReportDao.sexGradeCheckNum(activityId,school,studentDO.getGrade(),2);
+			int nvGradeCheckNum = schoolReportDao.activityGradeSexByCheckNum(activityId,school,studentDO.getGrade(),2);
 			int nvGradeCheckjinshi = schoolReportDao.sexGradeCheckjinshi(activityId,school,studentDO.getGrade(),2);
 			myt2.add(nvGradeCheckNum==0?0:Double.parseDouble(df.format((double)nvGradeCheckjinshi/(double)nvGradeCheckNum*100)));
 		
@@ -317,12 +317,12 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		params.put("nianjice", listg);
 		
 		//男女近视
-		int nanCheckNum = schoolReportDao.schoolSexCheckNum(activityId,school,1);
+		int nanCheckNum = schoolReportDao.activitySexByCheckNum(activityId,school,1);
 		int nanjinshi = schoolReportDao.schoolSexjinshi(activityId,school,1);
 		params.put("checkNanNum", nanCheckNum);
 		params.put("myopiaNanRate", nanCheckNum==0?0:df.format(((double)nanjinshi/(double)nanCheckNum)*100));
 		params.put("myopiaNanNum", nanjinshi);	
-		int nvCheckNum = schoolReportDao.schoolSexCheckNum(activityId,school,2);
+		int nvCheckNum = schoolReportDao.activitySexByCheckNum(activityId,school,2);
 		int nvjinshi = schoolReportDao.schoolSexjinshi(activityId,school,2);
 		params.put("checkNvNum", nvCheckNum);
 		params.put("myopiaNvRate", nvCheckNum==0?0:df.format(((double)nvjinshi/(double)nvCheckNum)*100));
@@ -333,7 +333,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		List<StudentNewDO> gradenn = studentDao.querySchoolGrade(school);
 		for (StudentNewDO studentDO : gradenn) {
 			Map<String,Object> nnNum = new HashMap<>();
-			int nanGradeCheckNum = schoolReportDao.sexGradeCheckNum(activityId,school,studentDO.getGrade(),1);
+			int nanGradeCheckNum = schoolReportDao.activityGradeSexByCheckNum(activityId,school,studentDO.getGrade(),1);
 			int nanGradeCheckjinshi = schoolReportDao.sexGradeCheckjinshi(activityId,school,studentDO.getGrade(),1);
 			nnNum.put("checkNanNum", nanGradeCheckNum);
 			nnNum.put("myopiaNanRate", nanGradeCheckNum==0?0:df.format(((double)nanGradeCheckjinshi/(double)nanGradeCheckNum)*100));
@@ -348,7 +348,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		List<StudentNewDO> grademm = studentDao.querySchoolGrade(school);
 		for (StudentNewDO studentDO : grademm) {
 			Map<String,Object> mmNum = new HashMap<>();
-			int nvGradeCheckNum = schoolReportDao.sexGradeCheckNum(activityId,school,studentDO.getGrade(),2);
+			int nvGradeCheckNum = schoolReportDao.activityGradeSexByCheckNum(activityId,school,studentDO.getGrade(),2);
 			int nvGradeCheckjinshi = schoolReportDao.sexGradeCheckjinshi(activityId,school,studentDO.getGrade(),2);
 			mmNum.put("checkNvNum", nvGradeCheckNum);
 			mmNum.put("myopiaNvRate", nvGradeCheckNum==0?0:df.format(((double)nvGradeCheckjinshi/(double)nvGradeCheckNum)*100));
@@ -373,7 +373,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			for(StudentNewDO stu : classCountyi){
 				Map<String,Object> classyi = new HashMap<String,Object>();
 				classyi.put("class", stu.getStudentClass());
-				int jcyi = schoolReportDao.schoolGradeClassCheckNum(activityId,school,studentDO.getGrade(),stu.getStudentClass());
+				int jcyi = schoolReportDao.activityGradeClassByCheckNum(activityId,school,studentDO.getGrade(),stu.getStudentClass());
 				int jsyi = schoolReportDao.schoolGradeClassjinshi(activityId,school,studentDO.getGrade(),stu.getStudentClass());
 				classyi.put("classNum", jcyi);
 				classyi.put("classMyopiaRate", jcyi==0?0:df.format(((double)jsyi/(double)jcyi*100)));
@@ -400,7 +400,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			String zhongduyiR= "0";
 			String zzhongduyiR= "0";
 			String buliangyiR= "0";
-			int gradeCheckNum = schoolReportDao.gradeCheckNum(activityId,school,studentDO.getGrade());
+			int gradeCheckNum = schoolReportDao.activityGradeByCheckNum(activityId,school,studentDO.getGrade());
 			qingduyi = schoolReportDao.qingdubuliang(activityId,school,studentDO.getGrade());
 			zhongduyi = schoolReportDao.zhongdubuliang(activityId,school,studentDO.getGrade());
 			zzhongduyi = schoolReportDao.gaodubuliang(activityId,school,studentDO.getGrade());
@@ -481,7 +481,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			String dir = "0";
 			String zhongr = "0";
 			String gaor = "0";
-			int gradeCheckNum = schoolReportDao.gradeCheckNum(activityId,school,studentDO.getGrade());
+			int gradeCheckNum = schoolReportDao.activityGradeByCheckNum(activityId,school,studentDO.getGrade());
 			linchuangy = schoolReportDao.jinshiqianqi(activityId,school,studentDO.getGrade());
 			jiajinshiy = schoolReportDao.jiaxingjinshi(activityId,school,studentDO.getGrade());
 			diy = schoolReportDao.didujinshi(activityId,school,studentDO.getGrade());
@@ -803,8 +803,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
     }
 
 	@Override
-	public List<StudentNewDO> schoolActivity(Integer activityId) {
-		return schoolReportDao.schoolActivity(activityId);
+	public List<StudentNewDO> schoolActivity(Integer activityId,Long sysId) {
+		return schoolReportDao.schoolActivity(activityId,sysId);
 	}
 
 	@Override
@@ -930,14 +930,16 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					List<ResultEyesightNewDO> re = resultEyesightDao.list(pa);
 					if(re.size()>0){
 
-						double nfd = Double.valueOf(re.get(0).getNakedFarvisionOd()==null?"0":re.get(0).getNakedFarvisionOd());
-						double nfs = Double.valueOf(re.get(0).getNakedFarvisionOs()==null?"0":re.get(0).getNakedFarvisionOs());
-						if(nfd>nfs)luo=nfs;
-						else luo=nfs;
+						String nfd = re.get(0).getNakedFarvisionOd();
+						if(re.get(0).getNakedFarvisionOd().length()<=0 ||!isDouble(re.get(0).getNakedFarvisionOd())|| re.get(0).getNakedFarvisionOd().equals(""))nfd="0";
+						String nfs = re.get(0).getNakedFarvisionOs();
+						if(re.get(0).getNakedFarvisionOs().length()<=0 ||!isDouble(re.get(0).getNakedFarvisionOs())|| re.get(0).getNakedFarvisionOs().equals(""))nfs="0";
+						if(Double.valueOf(nfd)>Double.valueOf(nfs))luo=Double.valueOf(nfs);
+						else luo=Double.valueOf(nfs);
 						String cfd = re.get(0).getCorrectionFarvisionOd();
-						if(re.get(0).getCorrectionFarvisionOd().length()<=0 || re.get(0).getCorrectionFarvisionOd().equals(""))cfd="0";
+						if(re.get(0).getCorrectionFarvisionOd().length()<=0 ||!isDouble(re.get(0).getCorrectionFarvisionOd())|| re.get(0).getCorrectionFarvisionOd().equals(""))cfd="0";
 						String cfs = re.get(0).getCorrectionFarvisionOs();
-						if(re.get(0).getCorrectionFarvisionOs().length()<=0 || re.get(0).getCorrectionFarvisionOs().equals(""))cfs="0";
+						if(re.get(0).getCorrectionFarvisionOs().length()<=0 ||!isDouble(re.get(0).getCorrectionFarvisionOs())|| re.get(0).getCorrectionFarvisionOs().equals(""))cfs="0";
 						if(Double.valueOf(cfd)>Double.valueOf(cfs))jiao=Double.valueOf(cfs);
 						else jiao=Double.valueOf(cfd);
 						double dxql = studentDO2.getDengxiaoqiujingl()==null?0:studentDO2.getDengxiaoqiujingl();
@@ -1123,15 +1125,16 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				pa.put("activityId", activityId);
 				List<ResultEyesightNewDO> re = resultEyesightDao.list(pa);
 				if(re.size()>0){
-
-					double nfd = Double.valueOf(re.get(0).getNakedFarvisionOd()==null?"0":re.get(0).getNakedFarvisionOd());
-					double nfs = Double.valueOf(re.get(0).getNakedFarvisionOs()==null?"0":re.get(0).getNakedFarvisionOs());
-					if(nfd>nfs)luo=nfs;
-					else luo=nfs;
+					String nfd = re.get(0).getNakedFarvisionOd();
+					if(re.get(0).getNakedFarvisionOd().length()<=0 ||!isDouble(re.get(0).getNakedFarvisionOd())|| re.get(0).getNakedFarvisionOd().equals(""))nfd="0";
+					String nfs = re.get(0).getNakedFarvisionOs();
+					if(re.get(0).getNakedFarvisionOs().length()<=0 ||!isDouble(re.get(0).getNakedFarvisionOs())|| re.get(0).getNakedFarvisionOs().equals(""))nfs="0";
+					if(Double.valueOf(nfd)>Double.valueOf(nfs))luo=Double.valueOf(nfs);
+					else luo=Double.valueOf(nfs);
 					String cfd = re.get(0).getCorrectionFarvisionOd();
-					if(re.get(0).getCorrectionFarvisionOd().length()<=0 || re.get(0).getCorrectionFarvisionOd().equals(""))cfd="0";
+					if(re.get(0).getCorrectionFarvisionOd().length()<=0 ||!isDouble(re.get(0).getCorrectionFarvisionOd())|| re.get(0).getCorrectionFarvisionOd().equals(""))cfd="0";
 					String cfs = re.get(0).getCorrectionFarvisionOs();
-					if(re.get(0).getCorrectionFarvisionOs().length()<=0 || re.get(0).getCorrectionFarvisionOs().equals(""))cfs="0";
+					if(re.get(0).getCorrectionFarvisionOs().length()<=0 ||!isDouble(re.get(0).getCorrectionFarvisionOs())|| re.get(0).getCorrectionFarvisionOs().equals(""))cfs="0";
 					if(Double.valueOf(cfd)>Double.valueOf(cfs))jiao=Double.valueOf(cfs);
 					else jiao=Double.valueOf(cfd);
 					double dxql = studentDO2.getDengxiaoqiujingl()==null?0:studentDO2.getDengxiaoqiujingl();
@@ -1197,5 +1200,12 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		}
 	}
 
+	public boolean isDouble( String s ){
+		
+        boolean matches = s.matches("-?[0-9]+.*[0-9]*");	
+        
+        return matches;
+
+	}
 	
 }

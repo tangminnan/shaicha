@@ -73,5 +73,12 @@ public interface SchoolReportNewDao {
 	
 	int sexGradeCheckjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentSex") Integer studentSex);
 
-	List<StudentNewDO> schoolActivity(Integer activityId);
+	List<StudentNewDO> schoolActivity(@Param("activityId") Integer activityId,@Param("sysId") Long sysId);
+	
+	int activitySexByCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("studentSex") Integer studentSex);
+	
+	int activityGradeSexByCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentSex") Integer studentSex);
+	
+	int activityGradeClassByCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentClass") String studentClass);
+
 }

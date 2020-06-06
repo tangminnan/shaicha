@@ -25,7 +25,15 @@ public class ActivityListNewDO implements Serializable {
 	private Date addTime;
 	//更新时间
 	private Date updateDate;
+	private Integer sysId;
 
+	
+	public Integer getSysId() {
+		return sysId;
+	}
+	public void setSysId(Integer sysId) {
+		this.sysId = sysId;
+	}
 	/**
 	 * 设置：活动id
 	 */

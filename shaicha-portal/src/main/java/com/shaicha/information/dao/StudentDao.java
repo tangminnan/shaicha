@@ -31,7 +31,7 @@ public interface StudentDao {
 
 	void updateLastCheckTime(@Param("studentId") Long studentId, @Param("date") Date date);
 
-	List<StudentDO> getStudentInfo(@Param("identityCard") String identityCard , @Param("id") Integer id);
+	List<StudentDO> getStudentInfo(Integer id);
 
 	void updateStudentDOshi(StudentDO studentDO);
 	

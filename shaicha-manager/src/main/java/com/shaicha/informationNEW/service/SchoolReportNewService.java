@@ -28,7 +28,7 @@ public interface SchoolReportNewService {
 
 	void baogaoxuexiao(HttpServletRequest request, HttpServletResponse response);
 	
-	List<StudentNewDO> schoolActivity(Integer activityId);
+	List<StudentNewDO> schoolActivity(Integer activityId,Long sysId);
 	
 	void schoolGradeRep(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	

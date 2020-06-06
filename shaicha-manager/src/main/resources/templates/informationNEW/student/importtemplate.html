@@ -10,6 +10,28 @@
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
 						  <input name="checkType" th:value="${checkType}" type="hidden">
+						   <div class="form-group">
+								<label class="col-sm-3 control-label">活动名称：</label>
+								<div class="col-sm-8">
+								<select name="activityId" id="activityId" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="5" required>
+									<option value="">请选择活动名称</option>
+									<option th:each="hd:${huodong}"
+									 th:text="${hd.activityName}"
+									 th:value="${hd.id}"></option>
+								</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">学校：</label>
+								<div class="col-sm-8">
+								<select name="schoolId" id="schoolId" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="5" required>
+									<option value="">请选择学校</option>
+									<option th:each="ls:${listSchool}"
+									 th:text="${ls.orgname}"
+									 th:value="${ls.id}"></option>
+								</select>
+								</div>
+							</div>
 						   <div class="form-group">	
 						   		<label class="col-sm-3 control-label">选择模板</label>
 							   	<div class="col-sm-8">
@@ -26,7 +48,7 @@
 																																		
 							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
-									<button onclick="daoru()" class="btn btn-primary">导入</button>
+									<button type="submit" class="btn btn-primary">导入</button>
 								</div>
 							</div>
 						</form>
@@ -36,7 +58,7 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/informationNEW/student/student.js"></script>
+	<script type="text/javascript" src="/js/appjs/informationNEW/student/shifanimporttemplate.js"></script>
 	</script>
 </body>
 </html>

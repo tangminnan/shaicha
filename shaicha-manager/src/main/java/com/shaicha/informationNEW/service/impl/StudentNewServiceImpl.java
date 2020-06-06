@@ -160,6 +160,17 @@ public class StudentNewServiceImpl implements StudentNewService {
 						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)5));	//班级
 						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//手机号
 						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7));		//民族
+						if(ideentityType == null && 
+								identityCard == null &&
+								name == null &&
+								sex == null &&
+								grade == null &&
+								studentClass == null &&
+								phone == null &&
+								nation == null){
+							continue;
+						}
+						
 						StudentNewDO student = new StudentNewDO();
 						SchoolNewDO schoolDO = schoolDao.get(schoolId);
 						student.setSchoolId(schoolId);
@@ -188,18 +199,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 								student.setStudentSex(2);
 							}
 						}
-						if(ideentityType.equals("身份证")){
-							 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-								String year = identityCard.substring(6, 10);
-								String month = identityCard.substring(10, 12);
-								String day = identityCard.substring(12, 14);
-								String bir = year+"-"+month+"-"+day;
-								try {
-									student.setBirthday(sdf.parse(bir));
-								} catch (ParseException e) {
-									e.printStackTrace();
-								}
-						}
+						
 						/*if(birthday != null && birthday != ""){
 							Calendar c = new GregorianCalendar(1900,0,-1);
 							Date d = c.getTime();
@@ -210,6 +210,20 @@ public class StudentNewServiceImpl implements StudentNewService {
 						*/
 						student.setAddTime(new Date());
 						if(identityCard != null && identityCard != ""){
+							
+							if(ideentityType.equals("身份证") && identityCard.length() == 18){
+								 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+									String year = identityCard.substring(6, 10);
+									String month = identityCard.substring(10, 12);
+									String day = identityCard.substring(12, 14);
+									String bir = year+"-"+month+"-"+day;
+									try {
+										student.setBirthday(sdf.parse(bir));
+									} catch (ParseException e) {
+										e.printStackTrace();
+									}
+							}
+							
 							/*Map<String,Object> map = new HashMap<String,Object>();
 							map.put("identityCard", identityCard);
 							List<StudentNewDO> list = studentNewDao.list(map);
@@ -227,13 +241,16 @@ public class StudentNewServiceImpl implements StudentNewService {
 							list.add(rowNum+1);
 							continue;
 						}
-							studentNewDao.save(student);
-							num++;
+						
+						studentNewDao.save(student);
+						num++;
+							
+							
 					//}
 					} catch (Exception e) {
 						System.out.println("导入失败======第"+(rowNum+1)+"条==================");
 						e.printStackTrace();
-						return R.error("导入失败！第"+(rowNum+1)+"行");
+						//return R.error("导入失败！第"+(rowNum+1)+"行");
 					}
 						
 				}
@@ -1200,23 +1217,23 @@ public class StudentNewServiceImpl implements StudentNewService {
 		}
 
 	@Override
-	public List<StudentNewDO> queryBySchoolGrade(Integer activityId, String school) {
-		return studentNewDao.queryBySchoolGrade(activityId, school);
+	public List<StudentNewDO> queryBySchoolGrade(Integer activityId, String school,Long sysId) {
+		return studentNewDao.queryBySchoolGrade(activityId, school,sysId);
 	}
 
 	@Override
-	public List<StudentNewDO> queryBySchoolStudentClass(Integer activityId, String school) {
-		return studentNewDao.queryBySchoolStudentClass(activityId, school);
+	public List<StudentNewDO> queryBySchoolStudentClass(Integer activityId, String school,Long sysId) {
+		return studentNewDao.queryBySchoolStudentClass(activityId, school,sysId);
 	}
 
 	@Override
-	public List<StudentNewDO> schoolGrade(String school) {
-		return studentNewDao.schoolGrade(school);
+	public List<StudentNewDO> schoolGrade(String school,Long sysId) {
+		return studentNewDao.schoolGrade(school,sysId);
 	}
 
 	@Override
-	public List<StudentNewDO> schoolStudentClass(String school) {
-		return studentNewDao.schoolStudentClass(school);
+	public List<StudentNewDO> schoolStudentClass(String school,Long sysId) {
+		return studentNewDao.schoolStudentClass(school,sysId);
 	}
 
 

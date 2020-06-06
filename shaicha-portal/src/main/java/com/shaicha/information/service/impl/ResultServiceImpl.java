@@ -498,7 +498,7 @@ public class ResultServiceImpl implements ResultService{
 	public Map<String, Object> getStudentInfo(String identityCard) {
 		String[] split = identityCard.split("JOIN");
 		Map<String,Object> resultMap  =new HashMap<String,Object>();
-		List<StudentDO>  list = studentDao.getStudentInfo(split[0],Integer.valueOf(split[1]));
+		List<StudentDO>  list = studentDao.getStudentInfo(Integer.valueOf(split[1]));
 		if(list.size()==0){
 			resultMap.put("code", -1);
 			resultMap.put("msg", "数据缺失");

@@ -4,11 +4,11 @@
 <mapper namespace="com.shaicha.informationNEW.dao.SchoolNewDao">
 
 	<select id="get" resultType="com.shaicha.informationNEW.domain.SchoolNewDO">
-		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school_new where id = #{value}
+		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu`,sys_id from t_school_new where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.informationNEW.domain.SchoolNewDO">
-		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school_new
+		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu`,sys_id from t_school_new
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="orgcode != null and orgcode != ''"> and OrgCode = #{orgcode} </if>
@@ -31,6 +31,7 @@
 		  		  <if test="ispublic != null and ispublic != ''"> and IsPublic = #{ispublic} </if>
 		  		  <if test="createdate != null and createdate != ''"> and CreateDate = #{createdate} </if>
 		  		  <if test="xuebu != null and xuebu != ''"> and xuebu = #{xuebu} </if>
+		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
 		  		  and EnabledStatus = 1
 		  		</where>
         <choose>
@@ -70,6 +71,7 @@
 		  		  <if test="ispublic != null and ispublic != ''"> and IsPublic = #{ispublic} </if>
 		  		  <if test="createdate != null and createdate != ''"> and CreateDate = #{createdate} </if>
 		  		  <if test="xuebu != null and xuebu != ''"> and xuebu = #{xuebu} </if>
+		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
 		  		  and EnabledStatus = 1
 		  		</where>
 	</select>
@@ -96,7 +98,8 @@
 			`EnabledStatus`, 
 			`IsPublic`, 
 			`CreateDate`, 
-			`xuebu`
+			`xuebu`,
+			sys_id
 		)
 		values
 		(
@@ -119,7 +122,8 @@
 			#{enabledstatus}, 
 			#{ispublic}, 
 			#{createdate}, 
-			#{xuebu}
+			#{xuebu},
+			#{sysId}
 		)
 	</insert>
 	 
@@ -145,7 +149,8 @@
 			<if test="enabledstatus != null">`EnabledStatus` = #{enabledstatus}, </if>
 			<if test="ispublic != null">`IsPublic` = #{ispublic}, </if>
 			<if test="createdate != null">`CreateDate` = #{createdate}, </if>
-			<if test="xuebu != null">`xuebu` = #{xuebu}</if>
+			<if test="xuebu != null">`xuebu` = #{xuebu},</if>
+			<if test="sysId != null">`sys_id` = #{sysId}</if>
 		</set>
 		where id = #{id}
 	</update>

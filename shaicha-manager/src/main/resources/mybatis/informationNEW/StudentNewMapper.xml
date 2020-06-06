@@ -679,21 +679,29 @@ LIMIT #{i},#{j}
 </select>
 
 	<select id="queryBySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select activity_id,school,grade from t_student_new where activity_id = #{activityId} and school = #{school} GROUP BY grade
-		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','高一','高二','高三')
+		select activity_id,school,grade from t_student_new where activity_id = #{activityId} and school = #{school} 
+		 <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+ 		GROUP BY grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
 	</select>
 	
 	<select id="queryBySchoolStudentClass" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select activity_id,school,grade,student_class from t_student_new where activity_id = #{activityId} and school = #{school} GROUP BY student_class
+		select activity_id,school,grade,student_class from t_student_new where activity_id = #{activityId} and school = #{school} 
+		 <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+ 		GROUP BY student_class
 	</select>
 	
 	<select id="schoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select activity_id,school,grade from t_student_new where school = #{school} GROUP BY grade
-		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','高一','高二','高三')
+		select activity_id,school,grade from t_student_new where school = #{school} 
+		<if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+		GROUP BY grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
 	</select>
 	
 	<select id="schoolStudentClass" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select activity_id,school,grade,student_class from t_student_new where school = #{school} GROUP BY student_class
+		select activity_id,school,grade,student_class from t_student_new where school = #{school} 
+		<if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>		
+		GROUP BY student_class
 	</select>
 	
 </mapper>
