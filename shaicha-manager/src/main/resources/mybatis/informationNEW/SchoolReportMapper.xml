@@ -44,7 +44,7 @@
 	<select id="schoolCheckJinshi" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school})a where a.jinshi < 5.0) b 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school})a where a.jinshi < 5.0) b 
 		where b.dengxiaoqiujing < -0.5 ]]>
 	</select>
 	<!-- 男女生近视率 -->
@@ -67,62 +67,67 @@
 	<select id="schoolGradeClassjinshi" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} and student_class =  #{studentClass})a where a.jinshi < 5.0) b 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} and student_class =  #{studentClass})a where a.jinshi < 5.0) b 
 		where b.dengxiaoqiujing < -0.5 ]]>
+	</select>	
+	<select id="schoolGradeClassbuliang" resultType="int">
+		<![CDATA[ SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school}  and grade = #{grade} and student_class =  #{studentClass})a 
+		where a.jinshi < 5.0 ]]>
 	</select>	
 	<!-- 近视情况 -->
 	<!-- 前期 -->
 	<select id="jinshiqianqi" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a where a.jinshi = 5.0) b 
-		where b.dengxiaoqiujing >= -0.5 and b.dengxiaoqiujing <= 0.75 ]]>
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a where a.jinshi >= 5.0) b 
+		where b.dengxiaoqiujing >= -0.5 and b.dengxiaoqiujing <= 0.75  and b.dengxiaoqiujing != 0 ]]>
 	</select>	
 	<!-- 假性 -->
 	<select id="jiaxingjinshi" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a where a.jinshi = 5.0) b 
-		where b.dengxiaoqiujing < -0.5 ]]>
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a where a.jinshi >= 5.0) b 
+		where b.dengxiaoqiujing < -0.5  and b.dengxiaoqiujing != 0 ]]>
 	</select>	
 	<!-- #低度-->
 	<select id="didujinshi" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a where a.jinshi < 5.0) b 
-		where b.dengxiaoqiujing < -0.5 and b.dengxiaoqiujing > -3.0 ]]>
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5 and b.dengxiaoqiujing >= -3.0 ]]>
 	</select>	
 	<!--中度 -->
 	<select id="zhongdujinshi" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a where a.jinshi < 5.0) b 
-		where b.dengxiaoqiujing < -3.25 and b.dengxiaoqiujing > -6.0 ]]>
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -3.0 and b.dengxiaoqiujing > -6.0 ]]>
 	</select>	
 	<!-- 高度 -->
 	<select id="gaodujinshi" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a where a.jinshi < 5.0) b 
-		where b.dengxiaoqiujing < -6.0 ]]>
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing <= -6.0 ]]>
 	</select>	
 	<!-- 不良 -->
 	<!-- 轻度 -->
 	<select id="qingdubuliang" resultType="int">
 		SELECT count(*) from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
 		where a.jinshi = 4.9
 	</select>	
 	<!-- 中度 -->
 	<select id="zhongdubuliang" resultType="int">
 		<![CDATA[ SELECT count(*) from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
 		where a.jinshi >=4.6 and a.jinshi <= 4.9 ]]>
 	</select>	
 	<!-- 重度 -->
 	<select id="gaodubuliang" resultType="int">
 		<![CDATA[ SELECT count(*) from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = school = #{school} and grade = #{grade} )a 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
 		where a.jinshi <= 4.5 ]]>
 	</select>	
 	<!-- 总计 -->

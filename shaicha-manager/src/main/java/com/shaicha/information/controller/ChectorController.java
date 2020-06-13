@@ -104,7 +104,7 @@ public class ChectorController {
 		chector.setUpdateTime(new Date());
 		chector.setUsername(chector.getPhone());
 		chector.setDeleted(0);
-		chector.setSysId(ShiroUtils.getUserId().intValue());
+		chector.setSysId(ShiroUtils.getUserId());
 		if(chectorService.save(chector)>0){
 			return R.ok();
 		}

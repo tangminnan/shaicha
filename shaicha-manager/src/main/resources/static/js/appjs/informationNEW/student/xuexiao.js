@@ -453,7 +453,7 @@ function jiaoyujubaogao(){
      $('#school option:selected').each(function(){
     	 choosess.push($(this).text());
      })
-     //console.log(choosess); 
+     console.log(choosess); 
      $.ajax({
 		type : 'POST',
 		dataType: 'json',

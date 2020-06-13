@@ -57,13 +57,13 @@ public class SchoolNewDO implements Serializable {
 	private Date createdate;
 	//学部
 	private String xuebu;
-	private Integer sysId;
+	private Long sysId;
 
 	
-	public Integer getSysId() {
+	public Long getSysId() {
 		return sysId;
 	}
-	public void setSysId(Integer sysId) {
+	public void setSysId(Long sysId) {
 		this.sysId = sysId;
 	}
 	/**

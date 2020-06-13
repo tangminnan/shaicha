@@ -107,7 +107,7 @@ public class ResultServiceImpl implements ResultService{
 		//stu.setIdeentityType(ideentityType);
 		SchoolNewDO schoolNewDO = schoolNewDao.get(schoolId);
 		stu.setSchool(schoolNewDO.getOrgname());
-		stu.setAddress(schoolNewDO.getCityname());
+		stu.setAddress(schoolNewDO.getAreaname());
 		stu.setSchoolCode(schoolNewDO.getOrgcode());
 		stu.setXueBu(schoolNewDO.getXuebu());
 		stu.setSchoolId(schoolId);
@@ -157,14 +157,14 @@ public class ResultServiceImpl implements ResultService{
 		jsonObject =obj.getJSONObject("eyepressure");//眼内压检查数据
     	double eyePressureOd=jsonObject.getDouble("eyePressureOd");
     	double eyePressureOs=jsonObject.getDouble("eyePressureOs");
-    	String cornealCurvatureOd=jsonObject.getString("cornealCurvatureOd");
-    	String cornealCurvatureOs=jsonObject.getString("cornealCurvatureOs");
-    	ResultEyepressureDO resultEyepressureDO= new ResultEyepressureDO(studentId,chectorId, eyePressureOd, eyePressureOs, date, 0,identityCard,activityId,cornealCurvatureOd,cornealCurvatureOs);
+    	//String cornealCurvatureOd=jsonObject.getString("cornealCurvatureOd");
+    	//String cornealCurvatureOs=jsonObject.getString("cornealCurvatureOs");
+    	ResultEyepressureDO resultEyepressureDO= new ResultEyepressureDO(studentId,chectorId, eyePressureOd, eyePressureOs, date, 0,identityCard,activityId,"0","0");
     	if( 
     			eyePressureOd==0.0 && 
-    			eyePressureOs==0.0 &&
-    			"".equals(cornealCurvatureOd) && 
-    			"".equals(cornealCurvatureOs)
+    			eyePressureOs==0.0
+    			//"".equals(cornealCurvatureOd) && 
+    			//"".equals(cornealCurvatureOs)
     	);
     	else
     		addUpdate(studentId, resultEyepressureDO);

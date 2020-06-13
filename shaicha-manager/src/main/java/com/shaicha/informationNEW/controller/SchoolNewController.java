@@ -82,11 +82,12 @@ public class SchoolNewController {
 	@PostMapping("/save")
 	@RequiresPermissions("information:school:add")
 	public R save( SchoolNewDO school){
+		school.setOrgcode("00000");
 		school.setEnabledstatus(1);
 		school.setCreatedate(new Date());
 		school.setOrgtype(2);
 		school.setIspublic(0);
-		school.setSysId(ShiroUtils.getUserId().intValue());
+		school.setSysId(ShiroUtils.getUserId());
 		if(schoolService.save(school)>0){
 			return R.ok();
 		}

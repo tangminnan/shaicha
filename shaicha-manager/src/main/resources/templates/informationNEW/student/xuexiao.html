@@ -278,13 +278,14 @@
 		function stugrade(){
 			var activityId = $('#school').val();
 			var school = $('#school option:selected').text();
-			
+			var grade = $('#grade option:selected').text();
 			$.ajax({
 				type : "get",
 				url : "/studentReportNew/schoolStuClass",
 				data:{
 					activityId : activityId,
-					school : school
+					school : school,
+					grade : grade
 				},
 				success : function(data){
 					//console.info(data);

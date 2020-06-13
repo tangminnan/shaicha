@@ -72,8 +72,8 @@ public interface StudentNewDao {
 
 	void saveResultDiopterDO(ResultDiopterNewDO resultDiopterDO);
 	
-	List<StudentNewDO> querySchoolGrade(String school);
-		
+	List<StudentNewDO> querySchoolGrade(@Param("school") String school,@Param("activityId") Integer activityId);
+	List<StudentNewDO> querySchoolGradeLiNian(String school);
 	List<StudentNewDO> queryGradeClassCount(Map<String,Object> map);
 		
 	List<StudentNewDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("activityId") Integer activityId,@Param("studentClass") String studentClass);	
@@ -94,10 +94,19 @@ public interface StudentNewDao {
 		
 	List<StudentNewDO> queryBySchoolGrade(@Param("activityId") Integer activityId,@Param("school") String school,@Param("sysId") Long sysId);
 	
-	List<StudentNewDO> queryBySchoolStudentClass(@Param("activityId") Integer activityId,@Param("school") String school,@Param("sysId") Long sysId);
+	List<StudentNewDO> queryBySchoolStudentClass(@Param("activityId") Integer activityId,@Param("school") String school,@Param("sysId") Long sysId,@Param("grade") String grade);
 
 	List<StudentNewDO> schoolGrade(@Param("school") String school,@Param("sysId") Long sysId);
 	
-	List<StudentNewDO> schoolStudentClass(@Param("school") String school,@Param("sysId") Long sysId);
+	List<StudentNewDO> schoolStudentClass(@Param("school") String school,@Param("sysId") Long sysId,@Param("grade") String grade);
 
+	int activityNum(@Param("activityId") Integer activityId);
+	
+	int activityCheckNum(@Param("activityId") Integer activityId);
+	
+	List<StudentNewDO> activityIdBySchool(@Param("activityId") Integer activityId);
+	
+	int activitySchoolNum(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
+	
+	int activitySchoolCheckNum(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
 }

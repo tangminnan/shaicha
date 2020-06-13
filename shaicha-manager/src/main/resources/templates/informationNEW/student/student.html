@@ -152,12 +152,13 @@
 		
 		function stugrade(){
 			var school = $('#school option:selected').text();
-			
+			var grade = $("#grade option:selected").val();
 			$.ajax({
 				type : "get",
 				url : "/informationNEW/student/schoolStuClass",
 				data:{
-					school : school
+					school : school,
+					grade : grade
 				},
 				success : function(data){
 					//console.info(data);

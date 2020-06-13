@@ -30,11 +30,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shaicha.common.config.BootdoConfig;
+import com.shaicha.common.utils.ShiroUtils;
 import com.shaicha.information.dao.LinShiUrlDao;
+import com.shaicha.informationNEW.dao.ActivityListNewDao;
 import com.shaicha.informationNEW.dao.jiaoyujuReportNewDao;
 import com.shaicha.information.domain.LinShiUrlDO;
 import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.service.jiaoyujuReportNewService;
+import com.shaicha.system.dao.UserDao;
+import com.shaicha.system.domain.UserDO;
+import com.shaicha.system.service.UserService;
 import com.shaicha.informationNEW.domain.SchoolNewDO;
 
 import freemarker.template.Configuration;
@@ -49,6 +54,10 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 	private BootdoConfig bootdoConfig;
 	@Autowired
 	private LinShiUrlDao linShiUrlDao;
+	@Autowired
+	UserDao userMapper;
+	@Autowired
+	ActivityListNewDao activityListNewDao;
 	
 	//教育局报告
 	@Override
@@ -75,7 +84,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		String parameter = request.getParameter("school");
 		String[] split1 = parameter.split(",");
 		String date = request.getParameter("date");
-		String cityname = jiaoyujuReportDao.getAddress(split1[0]).getCityname();
+		String cityname = jiaoyujuReportDao.getAddress(split1[0]).getAreaname();
 		System.out.println(cityname);
 		params.put("address", cityname);
 		StudentNewDO maxMin = jiaoyujuReportDao.getMaxMinCheckDate(activityId);
@@ -91,6 +100,9 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 			
 			linShiUrlDao.remove(linShiUrlDO.getId());
 		}
+		
+		UserDO userDO = userMapper.get(activityListNewDao.get(activityId).getSysId());
+		params.put("zhongxin", userDO.getZhongxinName());
 		
 		List<Map<String, Integer>> list1 = new ArrayList<Map<String, Integer>>();
 		List<Integer> list2 = new ArrayList<>();
@@ -167,7 +179,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 			int gaodujinshi = jiaoyujuReportDao.gaodujinshi(activityId,string);
 			double double5 = gaodujinshi==0?0:Double.parseDouble(df.format((double)gaodujinshi/(double)checkNum*100));
 			Integer jinzongy = didujinshi+zhongdujinshi+gaodujinshi;
-			double jinzongr = double3+double4+double5;
+			String jinzongr = df.format(double3+double4+double5);
 			map.put("xuexiao", string);
 			map.put("xuebu", jiaoyujuReportDao.getAddress(string).getXuebu());
 			map.put("jiancha", String.valueOf(checkNum));
@@ -182,7 +194,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 			map.put("zdr", String.valueOf(double4));
 			map.put("gdr", String.valueOf(double5));
 			map.put("zz", String.valueOf(jinzongy));
-			map.put("zzr", String.valueOf(jinzongr));
+			map.put("zzr", jinzongr);
 			list3.add(map);
 			map2.put(jiaoyujuReportDao.getAddress(string).getXuebu(), checkNum);
 			list4.add(map2);
@@ -326,10 +338,18 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		params.put("UU", bulingNT);
 		params.put("VV", checkT==0?0:df.format(((double)bulingNT/(double)checkT)*100));		
 		
-		int daijingNum = jiaoyujuReportDao.daijingrenshu(activityId);
+		int daijingNum = 0;
+		int jiaozhengNum = 0;
+		for (String string : split) {
+			daijingNum += jiaoyujuReportDao.daijingrenshu(activityId,string);
+			jiaozhengNum += jiaoyujuReportDao.jiaozhengbuzurenshu(activityId, string);
+		}
 		String format = checkT==0?"0":df.format(((double)daijingNum/(double)checkT)*100);
+		String jiaozheng = daijingNum==0?"0":df.format(((double)jiaozhengNum/(double)daijingNum)*100);
 		params.put("dj", daijingNum);
 		params.put("djr", format);
+		params.put("jz", jiaozhengNum);
+		params.put("jzr", jiaozheng);
 		
 		double yo = 0;
 		double xi = 0;
@@ -381,21 +401,24 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 	@Override
 	public Map<String, List<Double>> suoyounianjijinshi(HttpServletRequest request) {
 		Map<String, List<Double>> jinshi = new HashMap<String, List<Double>>();
-		List<Double> myt = new ArrayList<Double>();		
-		Integer activityId = Integer.valueOf(request.getParameter("activityId"));		
-		double double1 = suoyounianjijinshi2(activityId,"幼儿园");		
-		double double2 = suoyounianjijinshi2(activityId,"一年级");		
-		double double3 = suoyounianjijinshi2(activityId,"二年级");		
-		double double4 = suoyounianjijinshi2(activityId,"三年级");		
-		double double5 = suoyounianjijinshi2(activityId,"四年级");		
-		double double6 = suoyounianjijinshi2(activityId,"五年级");		
-		double double7 = suoyounianjijinshi2(activityId,"六年级");		
-		double double8 = suoyounianjijinshi2(activityId,"初一");		
-		double double9 = suoyounianjijinshi2(activityId,"初二");		
-		double double11 = suoyounianjijinshi2(activityId,"初三");		
-		double double21 = suoyounianjijinshi2(activityId,"高一");
-		double double31 = suoyounianjijinshi2(activityId,"高二");
-		double double41 = suoyounianjijinshi2(activityId,"高三");
+		List<Double> myt = new ArrayList<Double>();				
+		Integer activityId = Integer.valueOf(request.getParameter("activityId"));	
+		String[] parameter = request.getParameterValues("school[]");
+		
+		double double1 = suoyounianjijinshi2(activityId,parameter,"幼儿园");
+		double double2 = suoyounianjijinshi2(activityId,parameter,"一年级");
+		double double3 = suoyounianjijinshi2(activityId,parameter,"二年级");
+		double double4 = suoyounianjijinshi2(activityId,parameter,"三年级");
+		double double5 = suoyounianjijinshi2(activityId,parameter,"四年级");
+		double double6 = suoyounianjijinshi2(activityId,parameter,"五年级");
+		double double7 = suoyounianjijinshi2(activityId,parameter,"六年级");
+		double double8 = suoyounianjijinshi2(activityId,parameter,"初一");
+		double double9 = suoyounianjijinshi2(activityId,parameter,"初二");
+		double double11 = suoyounianjijinshi2(activityId,parameter,"初三");
+		double double21 = suoyounianjijinshi2(activityId,parameter,"高一");
+		double double31 = suoyounianjijinshi2(activityId,parameter,"高二");
+		double double41 = suoyounianjijinshi2(activityId,parameter,"高三");
+		
 		myt.add(double1); myt.add(double2); myt.add(double3);
 		myt.add(double4); myt.add(double5); myt.add(double6);
 		myt.add(double7); myt.add(double8); myt.add(double9);
@@ -404,10 +427,14 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		return jinshi;
 	}
 	
-	public double suoyounianjijinshi2(Integer activityId,String grade){
+	public double suoyounianjijinshi2(Integer activityId,String[] school,String grade){
 		DecimalFormat df = new DecimalFormat("0.0");
-		int renshu = jiaoyujuReportDao.nowCheckNum(activityId,grade);
-		int jinshi = jiaoyujuReportDao.nowgradejinshi(activityId,grade);
+		int renshu = 0;
+		int jinshi = 0;
+		for (String string : school) {
+			 renshu += jiaoyujuReportDao.nowCheckNum(activityId,string,grade);	
+			 jinshi += jiaoyujuReportDao.nowgradejinshi(activityId,string,grade);
+		}
 		double double1 = renshu==0?0:Double.parseDouble(df.format((double)jinshi/(double)renshu*100));
 		return double1;
 		
@@ -419,19 +446,20 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		Map<String, List<Double>> jinshi = new HashMap<String, List<Double>>();
 		List<Double> myt = new ArrayList<Double>();
 		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
-		double double1 = suoyounianjibuliang2(activityId,"幼儿园");		
-		double double2 = suoyounianjibuliang2(activityId,"一年级");		
-		double double3 = suoyounianjibuliang2(activityId,"二年级");		
-		double double4 = suoyounianjibuliang2(activityId,"三年级");		
-		double double5 = suoyounianjibuliang2(activityId,"四年级");		
-		double double6 = suoyounianjibuliang2(activityId,"五年级");		
-		double double7 = suoyounianjibuliang2(activityId,"六年级");		
-		double double8 = suoyounianjibuliang2(activityId,"初一");		
-		double double9 = suoyounianjibuliang2(activityId,"初二");		
-		double double11 = suoyounianjibuliang2(activityId,"初三");		
-		double double21 = suoyounianjibuliang2(activityId,"高一");
-		double double31 = suoyounianjibuliang2(activityId,"高二");
-		double double41 = suoyounianjibuliang2(activityId,"高三");
+		String[] parameter = request.getParameterValues("school[]");
+		double double1 = suoyounianjibuliang2(activityId,parameter,"幼儿园");		
+		double double2 = suoyounianjibuliang2(activityId,parameter,"一年级");		
+		double double3 = suoyounianjibuliang2(activityId,parameter,"二年级");		
+		double double4 = suoyounianjibuliang2(activityId,parameter,"三年级");		
+		double double5 = suoyounianjibuliang2(activityId,parameter,"四年级");		
+		double double6 = suoyounianjibuliang2(activityId,parameter,"五年级");		
+		double double7 = suoyounianjibuliang2(activityId,parameter,"六年级");		
+		double double8 = suoyounianjibuliang2(activityId,parameter,"初一");		
+		double double9 = suoyounianjibuliang2(activityId,parameter,"初二");		
+		double double11 = suoyounianjibuliang2(activityId,parameter,"初三");		
+		double double21 = suoyounianjibuliang2(activityId,parameter,"高一");
+		double double31 = suoyounianjibuliang2(activityId,parameter,"高二");
+		double double41 = suoyounianjibuliang2(activityId,parameter,"高三");
 		myt.add(double1); myt.add(double2); myt.add(double3);
 		myt.add(double4); myt.add(double5); myt.add(double6);
 		myt.add(double7); myt.add(double8); myt.add(double9);
@@ -440,10 +468,14 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		return jinshi;
 	}
 	
-	public double suoyounianjibuliang2(Integer activityId,String grade){
+	public double suoyounianjibuliang2(Integer activityId,String[] school,String grade){
 		DecimalFormat df = new DecimalFormat("0.0");
-		int renshu = jiaoyujuReportDao.nowCheckNum(activityId,grade);
-		int jinshi = jiaoyujuReportDao.nowgradebuliang(activityId,grade);
+		int renshu = 0;
+		int jinshi = 0;
+		for (String string : school) {
+			 renshu += jiaoyujuReportDao.nowCheckNum(activityId,string,grade);
+			 jinshi += jiaoyujuReportDao.nowgradebuliang(activityId,string,grade);
+		}
 		double double1 = renshu==0?0:Double.parseDouble(df.format((double)jinshi/(double)renshu*100));
 		return double1;
 		
@@ -454,8 +486,10 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 	public Map<String, Object> genianlingjinshiyear(HttpServletRequest request) {
 		Map<String, Object> jinshi2 = new HashMap<String, Object>();
 		Map<String, List<Double>> jinshi = new HashMap<String, List<Double>>();
+		//String[] parameter = request.getParameterValues("school[]");
+		//String cityname = jiaoyujuReportDao.getAddress(parameter[0]).getAreaname();
+		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
 		String[] parameter = request.getParameterValues("school[]");
-		String cityname = jiaoyujuReportDao.getAddress(parameter[0]).getCityname();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		Calendar cal = Calendar.getInstance();
 		Date xian = cal.getTime();
@@ -464,30 +498,30 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		cal.add(Calendar.YEAR, -1); 
 		Date qian = cal.getTime();
 		List<Double> myt1 = new ArrayList<Double>();
-		double youer1 = genianlingjinshiyear2("幼儿园",cityname,sdf.format(xian));
-		double xiaoxue1 = genianlingjinshiyear2("小学",cityname,sdf.format(xian));
-		double chuzhong1 = genianlingjinshiyear2("初中",cityname,sdf.format(xian));
-		double gaozhong1 = genianlingjinshiyear2("高中",cityname,sdf.format(xian));
+		double youer1 = genianlingjinshiyear2("幼儿园",activityId , parameter,sdf.format(xian));
+		double xiaoxue1 = genianlingjinshiyear2("小学",activityId , parameter,sdf.format(xian));
+		double chuzhong1 = genianlingjinshiyear2("初中",activityId , parameter,sdf.format(xian));
+		double gaozhong1 = genianlingjinshiyear2("高中",activityId , parameter,sdf.format(xian));
 		myt1.add(youer1);
 		myt1.add(xiaoxue1);
 		myt1.add(chuzhong1);
 		myt1.add(gaozhong1);
 		jinshi.put(sdf.format(xian), myt1);
 		List<Double> myt2 = new ArrayList<Double>();
-		double youer2 = genianlingjinshiyear2("幼儿园",cityname,sdf.format(qu));
-		double xiaoxue2 = genianlingjinshiyear2("小学",cityname,sdf.format(qu));
-		double chuzhong2 = genianlingjinshiyear2("初中",cityname,sdf.format(qu));
-		double gaozhong2 = genianlingjinshiyear2("高中",cityname,sdf.format(qu));
+		double youer2 = genianlingjinshiyear2("幼儿园",activityId , parameter,sdf.format(qu));
+		double xiaoxue2 = genianlingjinshiyear2("小学",activityId , parameter,sdf.format(qu));
+		double chuzhong2 = genianlingjinshiyear2("初中",activityId , parameter,sdf.format(qu));
+		double gaozhong2 = genianlingjinshiyear2("高中",activityId , parameter,sdf.format(qu));
 		myt2.add(youer2);
 		myt2.add(xiaoxue2);
 		myt2.add(chuzhong2);
 		myt2.add(gaozhong2);
 		jinshi.put(sdf.format(qu), myt2);
 		List<Double> myt3 = new ArrayList<Double>();
-		double youer3 = genianlingjinshiyear2("幼儿园",cityname,sdf.format(qian));
-		double xiaoxue3 = genianlingjinshiyear2("小学",cityname,sdf.format(qian));
-		double chuzhong3 = genianlingjinshiyear2("初中",cityname,sdf.format(qian));
-		double gaozhong3 = genianlingjinshiyear2("高中",cityname,sdf.format(qian));
+		double youer3 = genianlingjinshiyear2("幼儿园",activityId , parameter,sdf.format(qian));
+		double xiaoxue3 = genianlingjinshiyear2("小学",activityId , parameter,sdf.format(qian));
+		double chuzhong3 = genianlingjinshiyear2("初中",activityId , parameter,sdf.format(qian));
+		double gaozhong3 = genianlingjinshiyear2("高中",activityId , parameter,sdf.format(qian));
 		myt3.add(youer3);
 		myt3.add(xiaoxue3);
 		myt3.add(chuzhong3);
@@ -497,10 +531,15 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		return jinshi2;
 	}
 	
-	public double genianlingjinshiyear2(String xueBu,String cityname,String checkDate){
+	public double genianlingjinshiyear2(String xueBu,Integer activityId ,String[] school,String checkDate){
 		DecimalFormat df = new DecimalFormat("0.0");
-		int renshu = jiaoyujuReportDao.linianXuebuRenshu(xueBu,cityname,checkDate);
-		int jinshi = jiaoyujuReportDao.linianXueBujinshi(xueBu,cityname,checkDate);
+		int renshu = 0;
+		int jinshi = 0;
+		for (String string : school) {
+			 renshu += jiaoyujuReportDao.linianXuebuRenshu(xueBu,activityId,string,checkDate);
+			 jinshi += jiaoyujuReportDao.linianXueBujinshi(xueBu,activityId,string,checkDate);
+		}
+		
 		double double1 = renshu==0?0:Double.parseDouble(df.format((double)jinshi/(double)renshu*100));
 		return double1;
 		
@@ -512,8 +551,10 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		Map<String, Object> jinshi = new HashMap<String, Object>();
 		Map<String, Object> map1 = new HashMap<String,Object>();
 		Map<String, Object> map2 = new HashMap<String,Object>();
+		//String[] parameter = request.getParameterValues("school[]");
+		//String cityname = jiaoyujuReportDao.getAddress(parameter[0]).getAreaname();
+		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
 		String[] parameter = request.getParameterValues("school[]");
-		String cityname = jiaoyujuReportDao.getAddress(parameter[0]).getCityname();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		Calendar cal = Calendar.getInstance();
 		Date xian = cal.getTime();
@@ -521,15 +562,15 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		Date qu = cal.getTime();
 		cal.add(Calendar.YEAR, -1); 
 		Date qian = cal.getTime();
-		double nan1 = nannvjinshiyear2(1,cityname,sdf.format(xian));
-		double nan2 = nannvjinshiyear2(1,cityname,sdf.format(qu));
-		double nan3 = nannvjinshiyear2(1,cityname,sdf.format(qian));
+		double nan1 = nannvjinshiyear2(1,activityId,parameter,sdf.format(xian));
+		double nan2 = nannvjinshiyear2(1,activityId,parameter,sdf.format(qu));
+		double nan3 = nannvjinshiyear2(1,activityId,parameter,sdf.format(qian));
 		map1.put(sdf.format(xian), nan1);
 		map1.put(sdf.format(qu), nan2);
 		map1.put(sdf.format(qian), nan3);
-		double nv1 = nannvjinshiyear2(2,cityname,sdf.format(xian));
-		double nv2 = nannvjinshiyear2(2,cityname,sdf.format(qu));
-		double nv3 = nannvjinshiyear2(2,cityname,sdf.format(qian));
+		double nv1 = nannvjinshiyear2(2,activityId,parameter,sdf.format(xian));
+		double nv2 = nannvjinshiyear2(2,activityId,parameter,sdf.format(qu));
+		double nv3 = nannvjinshiyear2(2,activityId,parameter,sdf.format(qian));
 		map2.put(sdf.format(xian), nv1);
 		map2.put(sdf.format(qu), nv2);
 		map2.put(sdf.format(qian), nv3);
@@ -538,10 +579,15 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		return jinshi;
 	}
 	
-	public double nannvjinshiyear2(Integer studentSex,String cityname,String checkDate) {
+	public double nannvjinshiyear2(Integer studentSex,Integer activityId ,String[] school,String checkDate) {
 		DecimalFormat df = new DecimalFormat("0.0");
-		int renshu = jiaoyujuReportDao.linianSexrenshu(studentSex,cityname,checkDate);
-		int jinshi = jiaoyujuReportDao.linianSexjinshi(studentSex,cityname,checkDate);
+		int renshu = 0;
+		int jinshi = 0;
+		for (String string : school) {
+			 renshu += jiaoyujuReportDao.linianSexrenshu(studentSex,activityId,string,checkDate);
+			 jinshi += jiaoyujuReportDao.linianSexjinshi(studentSex,activityId,string,checkDate);
+		}
+		
 		double double1 = renshu==0?0:Double.parseDouble(df.format((double)jinshi/(double)renshu*100));
 		return double1;
 		

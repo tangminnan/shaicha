@@ -372,12 +372,12 @@ public class StudentReportNewController {
 	
 	@ResponseBody
 	@GetMapping("/studentReportNew/schoolStuClass")
-	public List<StudentNewDO> schoolStuClass(Integer activityId,String school){
+	public List<StudentNewDO> schoolStuClass(Integer activityId,String school,String grade){
 		Long sysId = null;
 		if(!ShiroUtils.getUser().getUsername().equals("admin")){
 			sysId = ShiroUtils.getUserId();
         }
-		List<StudentNewDO> stuClass = studentService.queryBySchoolStudentClass(activityId, school,sysId);
+		List<StudentNewDO> stuClass = studentService.queryBySchoolStudentClass(activityId, school,sysId,grade);
 		
 		return stuClass;
 		

@@ -1,5 +1,6 @@
 package com.shaicha.informationNEW.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shaicha.informationNEW.domain.ActivityListNewDO;
+import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.service.ActivityListNewService;
+import com.shaicha.informationNEW.service.StudentNewService;
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
@@ -36,6 +39,8 @@ import com.shaicha.common.utils.ShiroUtils;
 public class ActivityListNewController {
 	@Autowired
 	private ActivityListNewService activityListNewService;
+	@Autowired
+	private StudentNewService studentNewService;
 	
 	@GetMapping()
 	@RequiresPermissions("information:activityListNew:activityListNew")
@@ -53,9 +58,32 @@ public class ActivityListNewController {
         	query.put("sysId", ShiroUtils.getUserId());
         }
 		List<ActivityListNewDO> activityListNewList = activityListNewService.list(query);
+		for (ActivityListNewDO activityListNewDO : activityListNewList) {
+			Integer id = activityListNewDO.getId();
+			activityListNewDO.setYingjian(studentNewService.activityNum(id));
+			activityListNewDO.setShoujian(studentNewService.activityCheckNum(id));
+		}
 		int total = activityListNewService.count(query);
 		PageUtils pageUtils = new PageUtils(activityListNewList, total);
 		return pageUtils;
+	}
+	
+	@GetMapping("/schoolshuju")
+	@ResponseBody
+	List<ActivityListNewDO> schoolshuju(Integer id){
+		List<ActivityListNewDO> al = new ArrayList<>();
+		List<StudentNewDO> activityIdBySchool = studentNewService.activityIdBySchool(id);
+		if(activityIdBySchool.size()>0){
+			for (StudentNewDO studentNewDO : activityIdBySchool) {
+				ActivityListNewDO aln = new ActivityListNewDO();
+				Integer schoolId = studentNewDO.getSchoolId();
+				aln.setActivityName(studentNewDO.getSchool());
+				aln.setYingjian(studentNewService.activitySchoolNum(id, schoolId));
+				aln.setShoujian(studentNewService.activitySchoolCheckNum(id, schoolId));
+				al.add(aln);
+			}
+		}
+		return al;
 	}
 	
 	@GetMapping("/add")
@@ -81,7 +109,7 @@ public class ActivityListNewController {
 	public R save( ActivityListNewDO activityListNew){
 		activityListNew.setAddTime(new Date());
 		activityListNew.setDelFlag(0);
-		activityListNew.setSysId(ShiroUtils.getUserId().intValue());
+		activityListNew.setSysId(ShiroUtils.getUserId());
 		if(activityListNewService.save(activityListNew)>0){
 			return R.ok();
 		}

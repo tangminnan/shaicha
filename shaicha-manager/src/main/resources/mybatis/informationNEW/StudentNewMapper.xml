@@ -573,7 +573,7 @@
 						ifnull(corneal_d, '') cornealD,
 						ifnull(corneal_deg, '') cornealDeg
 					FROM
-						t_result_corneal d,
+						t_result_corneal_new d,
 						(
 							SELECT
 								`t_optometry_id`,
@@ -653,17 +653,24 @@ LIMIT #{i},#{j}
 </select>
 
 	
-	<select id="querySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+	<select id="querySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">		
+		select id, school,student_name,grade ,xue_bu from t_student_new where school = #{school} and activity_id = #{activityId} group by grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
+	</select>
+	
+	<select id="querySchoolGradeLiNian" resultType="com.shaicha.informationNEW.domain.StudentNewDO">		
 		select id, school,student_name,grade ,xue_bu from t_student_new where school = #{school} group by grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
 	</select>	
 	
 	<select id="queryGradeClassCount" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 		select id ,student_class,school,student_name from t_student_new
 		 where school = #{school} and activity_id = #{activityId} and grade = #{grade} GROUP BY student_class
+		  ORDER BY CAST(student_class AS UNSIGNED) asc
 	</select>
 
 	<select id="queryStudentGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,ts.identity_card from t_student_new ts 
+		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,ts.identity_card,ts.phone,ts.birthday from t_student_new ts 
 		where ts.grade = #{grade} and ts.school = #{school} and  ts.activity_id = #{activityId}
 		and ts.student_class = #{studentClass}
 	</select>
@@ -686,7 +693,7 @@ LIMIT #{i},#{j}
 	</select>
 	
 	<select id="queryBySchoolStudentClass" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select activity_id,school,grade,student_class from t_student_new where activity_id = #{activityId} and school = #{school} 
+		select activity_id,school,grade,student_class from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade}
 		 <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
  		GROUP BY student_class
 	</select>
@@ -699,9 +706,30 @@ LIMIT #{i},#{j}
 	</select>
 	
 	<select id="schoolStudentClass" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-		select activity_id,school,grade,student_class from t_student_new where school = #{school} 
+		select activity_id,school,grade,student_class from t_student_new where school = #{school} and grade = #{grade}
 		<if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>		
 		GROUP BY student_class
 	</select>
+	
+	<select id="activityNum" resultType="int">
+		SELECT COUNT(*) from t_student_new where activity_id = #{activityId}
+	</select>
+	
+	<select id="activityCheckNum" resultType="int">
+		select COUNT(*) from t_student_new where activity_id = #{activityId} and last_check_time is not null
+	</select>
+	
+	<select id="activityIdBySchool" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select school, school_id from t_student_new where activity_id = #{activityId} GROUP BY school_id
+	</select>
+	
+	<select id="activitySchoolNum" resultType="int">
+		select COUNT(*) from t_student_new where activity_id = #{activityId} and school_id = #{schoolId}
+	</select>
+	
+	<select id="activitySchoolCheckNum" resultType="int">
+		select COUNT(*) from t_student_new where activity_id = #{activityId} and school_id = #{schoolId} and last_check_time is not null
+	</select>
+	
 	
 </mapper>

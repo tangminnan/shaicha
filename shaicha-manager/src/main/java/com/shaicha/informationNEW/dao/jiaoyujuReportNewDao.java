@@ -43,21 +43,23 @@ public interface jiaoyujuReportNewDao {
 	
 	int sexJinshiNum(@Param("activityId") Integer activityId,@Param("studentSex") Integer studentSex,@Param("school") String school);
 	
-	int daijingrenshu(@Param("activityId") Integer activityId);
+	int daijingrenshu(@Param("activityId") Integer activityId,@Param("school") String school);
 	
-	int nowCheckNum(@Param("activityId") Integer activityId,@Param("grade") String grade);
+	int jiaozhengbuzurenshu(@Param("activityId") Integer activityId,@Param("school") String school);
 	
-	int nowgradejinshi(@Param("activityId") Integer activityId,@Param("grade") String grade);
+	int nowCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);
 	
-	int nowgradebuliang(@Param("activityId") Integer activityId,@Param("grade") String grade);
+	int nowgradejinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);
 	
-	int linianXuebuRenshu(@Param("xueBu") String xueBu,@Param("address") String address,@Param("lastCheckTime") String lastCheckTime);
+	int nowgradebuliang(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);
 	
-	int linianXueBujinshi(@Param("xueBu") String xueBu,@Param("address") String address,@Param("lastCheckTime") String lastCheckTime);
+	int linianXuebuRenshu(@Param("xueBu") String xueBu,@Param("activityId") Integer activityId,@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
 	
-	int linianSexrenshu(@Param("studentSex") Integer studentSex,@Param("address") String address,@Param("lastCheckTime") String lastCheckTime);
+	int linianXueBujinshi(@Param("xueBu") String xueBu,@Param("activityId") Integer activityId,@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
 	
-	int linianSexjinshi(@Param("studentSex") Integer studentSex,@Param("address") String address,@Param("lastCheckTime") String lastCheckTime);
+	int linianSexrenshu(@Param("studentSex") Integer studentSex,@Param("activityId") Integer activityId,@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
+	
+	int linianSexjinshi(@Param("studentSex") Integer studentSex,@Param("activityId") Integer activityId,@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
 	
 
 }

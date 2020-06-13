@@ -23,7 +23,7 @@
 						FROM
 							t_result_optometry_new
 						WHERE
-							student_id = #{studentId} order by check_date limit 1
+							student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	<insert id="saveOptometryDO" parameterType="com.shaicha.information.domain.ResultOptometryDO" useGeneratedKeys="true" keyProperty="tOptometryId">
 		insert into t_result_optometry_new

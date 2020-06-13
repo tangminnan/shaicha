@@ -56,6 +56,7 @@ import com.shaicha.informationNEW.service.SchoolNewService;
 import com.shaicha.informationNEW.service.StudentNewService;
 import com.shaicha.system.dao.UserDao;
 import com.shaicha.system.domain.UserDO;
+import com.shaicha.system.service.UserService;
 
 
 /**
@@ -80,7 +81,7 @@ public class StudentNewController {
 	@Autowired
 	private ActivityListNewService activityListNewService;
 	@Autowired
-	UserDao userMapper;
+	UserService userMapper;
 	
 	@GetMapping()
 	@RequiresPermissions("information:student:student")
@@ -153,9 +154,13 @@ public class StudentNewController {
 	@RequiresPermissions("information:student:add")
 	String add(@PathVariable("checkType") String checkType,Model model){
 		model.addAttribute("checkType", checkType);
-		List<SchoolNewDO> listSchool = schoolService.list(new HashMap<String, Object>());
+		Map<String,Object> map = new HashMap<String, Object>();
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			map.put("sysId", ShiroUtils.getUserId());
+        }
+		List<SchoolNewDO> listSchool = schoolService.list(map);
 		model.addAttribute("listSchool", listSchool);
-		List<ActivityListNewDO> huodong = activityListNewService.list(new HashMap<String, Object>());
+		List<ActivityListNewDO> huodong = activityListNewService.list(map);
 		model.addAttribute("huodong", huodong);
 	    return "informationNEW/student/add";
 	}
@@ -165,11 +170,15 @@ public class StudentNewController {
 	String edit(@PathVariable("id") Integer id,Model model){
 		StudentNewDO student = studentNewService.get(id);
 		model.addAttribute("student", student);
+		Map<String,Object> map = new HashMap<String, Object>();
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			map.put("sysId", ShiroUtils.getUserId());
+        }
 		ActivityListNewDO activityname = activityListNewService.get(student.getActivityId());
 		model.addAttribute("activityname", activityname.getActivityName());
-		List<SchoolNewDO> listSchool = schoolService.list(new HashMap<String, Object>());
+		List<SchoolNewDO> listSchool = schoolService.list(map);
 		model.addAttribute("listSchool", listSchool);
-		List<ActivityListNewDO> huodong = activityListNewService.list(new HashMap<String, Object>());
+		List<ActivityListNewDO> huodong = activityListNewService.list(map);
 		model.addAttribute("huodong", huodong);
 	    return "informationNEW/student/edit";
 	}
@@ -218,7 +227,7 @@ public class StudentNewController {
 	public R save( StudentNewDO student){
 		SchoolNewDO schoolDO = schoolService.get(student.getSchoolId());
 		student.setSchool(schoolDO.getOrgname());
-		student.setAddress(schoolDO.getCityname());
+		student.setAddress(schoolDO.getAreaname());
 		student.setAddTime(new Date());
 		student.setStatus(0);
 		student.setModelType("学校");
@@ -240,7 +249,7 @@ public class StudentNewController {
 		if(null !=  student.getSchoolId()){
 			SchoolNewDO schoolDO = schoolService.get(student.getSchoolId());
 			student.setSchool(schoolDO.getOrgname());
-			student.setAddress(schoolDO.getCityname());
+			student.setAddress(schoolDO.getAreaname());
 			student.setSchoolCode(schoolDO.getOrgcode());
 			student.setXueBu(schoolDO.getXuebu());
 		}
@@ -764,18 +773,18 @@ public class StudentNewController {
 		ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 		List<ResultCornealNewDO> resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
 		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealNewDO();
 		resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
 		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		
 		resultCornealDO = new ResultCornealNewDO();
 	    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R1");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
 	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		
 		
@@ -784,7 +793,7 @@ public class StudentNewController {
 	    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R2");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
 	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		//医生的建议
 	   Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
@@ -1031,12 +1040,12 @@ public class StudentNewController {
 	
 	@ResponseBody
 	@GetMapping("/schoolStuClass")
-	public List<StudentNewDO> schoolStuClass(String school){
+	public List<StudentNewDO> schoolStuClass(String school,String grade){
 		Long sysId = null;
 		if(!ShiroUtils.getUser().getUsername().equals("admin")){
 			sysId = ShiroUtils.getUserId();
         }
-		List<StudentNewDO> stuClass = studentNewService.schoolStudentClass(school,sysId);
+		List<StudentNewDO> stuClass = studentNewService.schoolStudentClass(school,sysId,grade);
 		
 		return stuClass;
 		

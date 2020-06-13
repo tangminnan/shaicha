@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
 import com.shaicha.information.domain.AnswerResultDO;
-import com.shaicha.information.domain.StudentDO;
 import com.shaicha.informationNEW.domain.ResultCornealNewDO;
 import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
 import com.shaicha.informationNEW.domain.ResultEyeaxisNewDO;
@@ -100,9 +99,19 @@ public interface StudentNewService {
 		
 	List<StudentNewDO> queryBySchoolGrade(Integer activityId,String school,Long sysId);
 			
-	List<StudentNewDO> queryBySchoolStudentClass(Integer activityId,String school,Long sysId);
+	List<StudentNewDO> queryBySchoolStudentClass(Integer activityId,String school,Long sysId,String grade);
 	
 	List<StudentNewDO> schoolGrade(String school,Long sysId);
 	
-	List<StudentNewDO> schoolStudentClass(String school,Long sysId);
+	List<StudentNewDO> schoolStudentClass(String school,Long sysId,String grade);
+	
+	int activityNum(Integer activityId);
+	
+	int activityCheckNum(Integer activityId);
+	
+	List<StudentNewDO> activityIdBySchool(Integer activityId);
+	
+	int activitySchoolNum(Integer activityId, Integer schoolId);
+	
+	int activitySchoolCheckNum( Integer activityId, Integer schoolId);
 }

@@ -493,7 +493,7 @@
 							<w:sz w:val="24" />
 							<w:u w:val="none" />
 							<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-						<w:t>山东中医药大学附属眼科医院</w:t>
+						<w:t>${zhongxin!''}</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
@@ -3360,7 +3360,7 @@
 							<w:color w:val="auto" />
 							<w:sz-cs w:val="21" />
 							<w:u w:val="none" /></w:rPr>
-						<w:t>近视临床前期：</w:t>
+						<w:t>筛查性近视临床前期：</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
@@ -3373,7 +3373,7 @@
 						<w:rPr>
 							<w:color w:val="auto" />
 							<w:u w:val="none" /></w:rPr>
-						<w:t>=5.0</w:t>
+						<w:t>≥5.0</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
@@ -3427,7 +3427,7 @@
 						<w:rPr>
 							<w:color w:val="auto" />
 							<w:u w:val="none" /></w:rPr>
-						<w:t>=5.0</w:t>
+						<w:t>≥5.0</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
@@ -3468,7 +3468,7 @@
 							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
 							<w:color w:val="auto" />
 							<w:sz-cs w:val="21" /></w:rPr>
-						<w:t>.0），等效球镜﹥-6.00D为高度近视、等效球镜-3.25D～-6.00D为中度近视、等效球镜-0.50D～-3.00D为低度近视</w:t>
+						<w:t>.0），等效球镜＜-6.00D为高度近视、-6.00D≤等效球镜＜-3.00D为中度近视、-3.00D≤等效球镜＜-0.50D为低度近视</w:t>
 					</w:r>
 				</w:p>
 				<w:p>
@@ -5154,7 +5154,7 @@
 							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast" />
 							<w:color w:val="000000" />
 							<w:sz w:val="24" /></w:rPr>
-						<w:t>人（不包括部分学生未将眼镜带入检查现场），原眼镜矫正不足者</w:t>
+						<w:t>人（不包括部分学生未将眼镜带入检查现场），占总人数的${djr!''}%，原眼镜矫正不足者</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
@@ -5163,7 +5163,7 @@
 							<w:kern w:val="0" />
 							<w:sz-cs w:val="21" />
 							<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-						<w:t>0</w:t>
+						<w:t>${jz!''}</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
@@ -5178,7 +5178,7 @@
 							<w:color w:val="000000" />
 							<w:sz w:val="24" />
 							<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-						<w:t>${djr!''}</w:t>
+						<w:t>${jzr!''}</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
@@ -6221,13 +6221,13 @@
 							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default" />
 							<w:sz w:val="24" />
 							<w:sz-cs w:val="24" /></w:rPr>
-						<w:t>山东省</w:t>
+						<w:t>${zhongxin!''}</w:t>
 					</w:r>
 					<w:r>
 						<w:rPr>
 							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast" />
 							<w:sz w:val="24" /></w:rPr>
-						<w:t>青少年视力低下防治中心</w:t>
+						<w:t></w:t>
 					</w:r>
 				</w:p>
 				<w:p>

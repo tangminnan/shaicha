@@ -28,6 +28,7 @@ function load() {
 						//search : true, // 是否显示搜索框
 						showColumns : false, // 是否显示内容下拉框（选择显示的列）
 						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
+						//detailView:true,
 						queryParams : function(params) {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
@@ -59,6 +60,16 @@ function load() {
 									field : 'delFlag', 
 									title : '0未删除  1已删除' 
 								},*/
+								
+								{
+									field : 'yingjian', 
+									title : '应检人数'
+								},
+								
+								{
+									field:'shoujian',
+									title:'受检人数'
+								},
 																{
 									field : 'addTime', 
 									title : '添加时间' 
@@ -74,18 +85,65 @@ function load() {
 									formatter : function(value, row, index) {
 										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
 												+ row.id
-												+ '\')"><i class="fa fa-edit"></i></a> ';
+												+ '\')">编辑</a> ';
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
-												+ '\')"><i class="fa fa-remove"></i></a> ';
+												+ '\')">删除</a> ';
 										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
 												+ row.id
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										return e + d ;
+										var g =  "<a href='javascript:' class='detail-icon btn btn-success btn-sm' >更多</a> ";
+
+										return e + d + g;
 									}
-								} ]
+								} ],
+						
+								onExpandRow: function (index, row, $detail) {
+									var last = JSON.stringify(row);
+					                onclick = row.id;
+					                var parentId = row.id;
+					                var prjLogBookProblemTable = $detail.html('<table></table>').find('table');
+					                $(prjLogBookProblemTable).bootstrapTable({
+					                    columns: [
+											{
+												field : 'activityName', 
+												title : '学校名称',
+												width : 500
+											},
+											
+											{
+												field : 'yingjian', 
+												title : '应检人数'
+											},
+											
+											{
+												field:'shoujian',
+												title:'受检人数'
+											}
+					                    ],
+					                    url: prefix + "/schoolshuju",
+					                    method: 'get',
+					                    queryParams:{id:parentId},
+					                    ajaxOptions:{id:parentId},
+					                    /*queryParams : function(params) {
+											return {
+												//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+												
+												id: parentId
+									          
+											};
+					                    },*/
+					                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					                    onLoadError: function () {  //加载失败时执行
+					                        alert('失败')
+					                    },
+									})
+								}
+						
 					});
 }
+
+
 function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }

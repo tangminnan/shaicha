@@ -31,6 +31,8 @@ public interface SchoolReportNewDao {
 	
 	int schoolGradeClassjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentClass") String studentClass);
 	
+	int schoolGradeClassbuliang(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentClass") String studentClass);
+	
 	int jinshiqianqi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);
 	
 	int jiaxingjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);

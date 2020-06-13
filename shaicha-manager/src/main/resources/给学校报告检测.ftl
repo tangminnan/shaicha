@@ -1190,90 +1190,6 @@
 				<w:p>
 					<w:pPr>
 						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
 							<w:sz w:val="28" />
 							<w:sz-cs w:val="28" /></w:rPr>
 					</w:pPr>
@@ -4818,6 +4734,154 @@
 				</w:p>
 				<w:p>
 					<w:pPr>
+						<w:spacing w:line="460" w:line-rule="exact" />
+						<w:rPr>
+							<w:rFonts w:ascii="Times New Roman" w:h-ansi="Times New Roman" w:cs="Times New Roman" w:hint="default" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="24" /></w:rPr>
+					</w:pPr>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>注：</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>筛查性近视临床前期：</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>裸眼视力</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>≥5.0</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>，散前电脑验光</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>&gt;=-0.5D</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>，</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>&lt;=0.75D</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>；</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>假性近视：</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>裸眼视力</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>≥5.0</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>，散前电脑验光</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>&lt;-0.5D</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>；筛查性</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>近视的分类及屈光度分布：（视力</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="default" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>＜5</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>.0），等效球镜＜-6.00D为高度近视、-6.00D≤等效球镜＜-3.00D为中度近视、-3.00D≤等效球镜＜-0.50D为低度近视</w:t>
+					</w:r>
+				</w:p>
+				<w:p>
+					<w:pPr>
+						<w:spacing w:line="460" w:line-rule="exact" />
+						<w:ind w:first-line="420" />
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="default" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+					</w:pPr>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>屈光度分布以等效球镜计算，以双眼中屈光度较低眼划分等级</w:t>
+					</w:r>
+				</w:p>
+				<w:p>
+					<w:pPr>
 						<w:jc w:val="both" /></w:pPr>
 				</w:p>
 				<w:p>
@@ -5769,7 +5833,7 @@
 				<w:tbl>
 					<w:tblPr>
 						<w:tblStyle w:val="a4" />
-						<w:tblW w:w="8647" w:type="dxa" />
+						<w:tblW w:w="8662" w:type="dxa" />
 						<w:tblInd w:w="-5" w:type="dxa" />
 						<w:tblBorders>
 							<w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
@@ -5786,10 +5850,12 @@
 							<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
 					</w:tblPr>
 					<w:tblGrid>
-						<w:gridCol w:w="1276" />
-						<w:gridCol w:w="1559" />
-						<w:gridCol w:w="1985" />
-						<w:gridCol w:w="3827" /></w:tblGrid>
+						<w:gridCol w:w="1216" />
+						<w:gridCol w:w="1318" />
+						<w:gridCol w:w="1478" />
+						<w:gridCol w:w="1511" />
+						<w:gridCol w:w="1479" />
+						<w:gridCol w:w="1660" /></w:tblGrid>
 					<w:tr>
 						<w:tblPrEx>
 							<w:tblBorders>
@@ -5808,7 +5874,7 @@
 						<w:trPr/>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1276" w:type="dxa" />
+								<w:tcW w:w="1216" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5828,7 +5894,7 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1559" w:type="dxa" />
+								<w:tcW w:w="1318" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5841,7 +5907,7 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1985" w:type="dxa" />
+								<w:tcW w:w="1478" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5854,7 +5920,7 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="3827" w:type="dxa" />
+								<w:tcW w:w="1511" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5862,6 +5928,46 @@
 									<w:jc w:val="both" /></w:pPr>
 								<w:r>
 									<w:t>近视率</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1479" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>不良人数</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1660" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="default" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>视力不良率</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5885,26 +5991,20 @@
 						<w:trPr/>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1276" w:type="dxa" />
+								<w:tcW w:w="1216" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
 									<w:widowControl w:val="off" />
 									<w:jc w:val="both" /></w:pPr>
 								<w:r>
-									<w:rPr>
-										<w:rFonts w:hint="fareast" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${yi.class!''}</w:t>
-								</w:r>
-								<w:r>
-									<w:t>班</w:t>
+									<w:t>${yi.class!''}班</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1559" w:type="dxa" />
+								<w:tcW w:w="1318" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5924,7 +6024,7 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1985" w:type="dxa" />
+								<w:tcW w:w="1478" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
 								<w:vAlign w:val="top" /></w:tcPr>
 							<w:p>
@@ -5945,7 +6045,7 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="3827" w:type="dxa" />
+								<w:tcW w:w="1511" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
 								<w:vAlign w:val="top" /></w:tcPr>
 							<w:p>
@@ -5964,12 +6064,55 @@
 								</w:r>
 							</w:p>
 						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1479" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="center" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="default" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>${yi.classbuliang!''}</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1660" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="center" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="default" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>${yi.classbuliangRate!''}%</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
 					</w:tr>
 					</#list>
 				</w:tbl>
 				<w:p/>
 				<w:p/>
 				</#list>
+
 				<w:p/>
 				<w:p/>
 				<w:p>

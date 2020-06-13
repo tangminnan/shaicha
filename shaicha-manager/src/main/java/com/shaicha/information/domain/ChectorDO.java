@@ -50,13 +50,13 @@ public class ChectorDO implements Serializable {
 	private String remark;
 	//用户名
 	private String username;
-	private Integer sysId;
+	private Long sysId;
 
 	
-	public Integer getSysId() {
+	public Long getSysId() {
 		return sysId;
 	}
-	public void setSysId(Integer sysId) {
+	public void setSysId(Long sysId) {
 		this.sysId = sysId;
 	}
 
