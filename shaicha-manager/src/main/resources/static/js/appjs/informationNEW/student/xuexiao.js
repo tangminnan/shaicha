@@ -400,6 +400,41 @@ function xuexiaobaogao(){
 		 				};
 		 			
 		 			overYearGradeSex.setOption(option);
+		 			
+		 			var shangcibulingjinshi = echarts.init(document.getElementById('shangcibulingjinshi'));	
+
+		 			var option = {
+		 					color: ['#61a0a8'],
+				 			animation:false,
+				 				    legend: { 
+				 				    	data : ['上次', '本次'],
+				 				    	bottom : "1%"
+				 				    	},
+				 				    //tooltip: {},
+				 				    xAxis: {
+				 				    	type: 'category',
+				 				    	data: ["上次不良率","本次不良率","上次近视率","本次近视率"],
+				 				    	},
+				 				    yAxis: {type: 'value'},
+				 				    series: [
+				 				             {
+				 				            	 label: {
+				 				        			normal: {
+				 				        				show: true,
+				 				        				position: "top",
+				 				        				formatter:'{c}%'			                                
+
+				 				        			},
+				 				        		},
+				 				        		name:'不良',
+				 				                type:'bar',
+				 				                data:[result.blshujus,result.blshujuz,result.jsshujus,result.jsshujuz]
+				 				             },
+				 				           
+				 				    ]
+				 				};
+		 			
+		 			shangcibulingjinshi.setOption(option);
 					
 		 			/*console.info(overYear.getDataURL()); 
 					console.info(gradeMyopia.getDataURL()); 
@@ -423,6 +458,7 @@ function xuexiaobaogao(){
 		 					"overYearSexNan" : overYearSexNan.getDataURL(),
 		 					"overYearSexNv" : overYearSexNv.getDataURL(),
 		 					"overYearGradeSex" : overYearGradeSex.getDataURL(),
+		 					"shangcibulingjinshi" : shangcibulingjinshi.getDataURL(),
 		 				},
 		 				url : '/studentReportNew/xuexiaotu',
 		 				success : function(result) {

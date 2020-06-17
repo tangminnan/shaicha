@@ -47,6 +47,12 @@
 		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school})a where a.jinshi < 5.0) b 
 		where b.dengxiaoqiujing < -0.5 ]]>
 	</select>
+	<!-- 检查不良人数 -->
+	<select id="schoolCheckBuliang" resultType="int">
+		<![CDATA[ SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a 
+		where a.jinshi < 5.0 ]]>
+	</select>
 	<!-- 男女生近视率 -->
 	<!-- 检查 -->
 	<select id="schoolSexCheckNum" resultType="int">
@@ -209,6 +215,29 @@
 		 from t_student_new where activity_id = #{activityId} 
 		 <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
 		 and school is not null GROUP BY school
+	</select>
+	
+	
+	<select id="getLastActivity" resultType="com.shaicha.informationNEW.domain.ActivityListNewDO">
+		<![CDATA[ SELECT `id`,`activity_name`,`del_flag`,`add_time`,`update_date`,sys_id from t_activity_list_new where sys_id = #{sysId} and add_time < #{addTime} ORDER BY add_time desc LIMIT 1 ]]>
+	</select>
+	
+	<!-- 外海（单独） -->
+	<select id="waihaijiancharenshu" resultType="int">
+		SELECT count(*) from t_student where school = '济南市外海实验学校' and last_check_time = DATE_FORMAT('2019-12-11','%Y-%m-%d')
+	</select>
+	
+	<select id="waihaijinshirenshu" resultType="int">
+		<![CDATA[ SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student where  school = '济南市外海实验学校' and last_check_time = DATE_FORMAT('2019-12-11','%Y-%m-%d') )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5  ]]>
+	</select>
+	
+	<select id="waihaibuliangrenshu" resultType="int">
+		<![CDATA[ SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student where school = '济南市外海实验学校' and last_check_time = DATE_FORMAT('2019-12-11','%Y-%m-%d') )a 
+		where a.jinshi < 5.0 ]]>
 	</select>
 	
 </mapper>

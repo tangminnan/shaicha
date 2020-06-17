@@ -1,11 +1,13 @@
 package com.shaicha.informationNEW.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.informationNEW.domain.StudentNewDO;
+import com.shaicha.informationNEW.domain.ActivityListNewDO;
 import com.shaicha.informationNEW.domain.SchoolNewDO;
 
 @Mapper
@@ -22,6 +24,8 @@ public interface SchoolReportNewDao {
 	SchoolNewDO schoolXuebu(@Param("OrgName") String OrgName);
 	
 	int schoolCheckJinshi(@Param("activityId") Integer activityId,@Param("school") String school);
+	
+	int schoolCheckBuliang(@Param("activityId") Integer activityId,@Param("school") String school);
 	
 	int schoolSexCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("studentSex") Integer studentSex);
 	
@@ -83,4 +87,11 @@ public interface SchoolReportNewDao {
 	
 	int activityGradeClassByCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentClass") String studentClass);
 
+	List<ActivityListNewDO> getLastActivity(@Param("sysId")Integer sysId,@Param("addTime")Date addTime);
+	
+	int waihaijiancharenshu();
+	
+	int waihaijinshirenshu();
+	
+	int waihaibuliangrenshu();
 }

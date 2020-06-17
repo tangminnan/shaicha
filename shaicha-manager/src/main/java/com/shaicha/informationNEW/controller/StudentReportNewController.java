@@ -104,6 +104,7 @@ public class StudentReportNewController {
 		Map<String, List<Object>> overYearSexNan = schoolReportService.overYearSexNan(school);
 		Map<String, List<Object>> overYearSexNv = schoolReportService.overYearSexNv(school);
 		Map<String, List<Object>> overYearGradeSex = schoolReportService.overYearGradeSex(school,activityId);
+		Map<String, Object> shangcibulingjinshi = schoolReportService.shangcibulingjinshi(school,activityId);
 		
 		map.put("overYearMyopia", overYearMyopia.get("overYearMyopia"));
 		
@@ -124,6 +125,11 @@ public class StudentReportNewController {
 		
 		map.put("year", overYearMyopia.get("year"));
 		map.put("grade", gradeMyopia.get("grade"));
+		
+		map.put("blshujus", shangcibulingjinshi.get("blshujus"));
+		map.put("blshujuz", shangcibulingjinshi.get("blshujuz"));
+		map.put("jsshujus", shangcibulingjinshi.get("jsshujus"));
+		map.put("jsshujuz", shangcibulingjinshi.get("jsshujuz"));
 		//}
 		return map;
 		
@@ -158,6 +164,8 @@ public class StudentReportNewController {
 		String overYearSexNv1 = baseString(overYearSexNv);
 		String overYearGradeSex=request.getParameter("overYearGradeSex");
 		String overYearGradeSex1 = baseString(overYearGradeSex);
+		String shangcibulingjinshi=request.getParameter("shangcibulingjinshi");
+		String shangcibulingjinshi1 = baseString(shangcibulingjinshi);
 		map.put("overYear", overYear1);
 		map.put("gradeMyopia", gradeMyopia1);
 		map.put("overYearGradeMyopia",overYearGradeMyopia1 );
@@ -165,6 +173,7 @@ public class StudentReportNewController {
 		map.put("overYearSexNan", overYearSexNan1);
 		map.put("overYearSexNv",overYearSexNv1 );
 		map.put("overYearGradeSex", overYearGradeSex1);
+		map.put("shangcibulingjinshi", shangcibulingjinshi1);
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			LinShiUrlDO ls = new LinShiUrlDO();
 			ls.setName(entry.getKey());

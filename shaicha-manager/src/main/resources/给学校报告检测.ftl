@@ -4905,6 +4905,43 @@
 				</w:p>
 				<w:p/>
 				<w:p/>
+				
+				<w:p>
+					<w:r>
+						<w:rPr>
+							<w:sz w:val="28" />
+							<w:sz-cs w:val="28" /></w:rPr>
+						<w:t>上次本次不良近视图</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:sz w:val="28" />
+							<w:sz-cs w:val="28" /></w:rPr>
+						<w:t>：</w:t>
+					</w:r>
+				</w:p>
+				<w:p>
+					<w:pPr>
+						<w:jc w:val="both" /></w:pPr>
+					<w:r>
+						<w:pict>
+							<w:binData w:name="wordml://8.png">${shangcibulingjinshi}
+							</w:binData>
+							<v:shape id="_x0000_s1028" o:spt="75" alt="wordml://3.png" type="#_x0000_t75" style="height:186.6pt;width:348.95pt;" filled="f" o:preferrelative="t" stroked="f" coordsize="21600,21600">
+								<v:path/>
+								<v:fill on="f" focussize="0,0" />
+								<v:stroke on="f" />
+								<v:imagedata src="wordml://8.png" o:title="" />
+								<o:lock v:ext="edit" aspectratio="f" />
+								<w10:wrap type="none" />
+								<w10:anchorlock/>
+							</v:shape>
+						</w:pict>
+					</w:r>
+				</w:p>
+				<w:p/>
+				<w:p/>
 				<w:p>
 					<w:r>
 						<w:rPr>

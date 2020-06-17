@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shaicha.common.utils.ExcelExportUtil4DIY;
+import com.shaicha.common.utils.ShiroUtils;
 import com.shaicha.common.config.BootdoConfig;
 import com.shaicha.information.dao.LinShiUrlDao;
 import com.shaicha.informationNEW.dao.ResultCornealNewDao;
@@ -41,6 +42,7 @@ import com.shaicha.informationNEW.dao.ResultEyesightNewDao;
 import com.shaicha.informationNEW.dao.SchoolReportNewDao;
 import com.shaicha.informationNEW.dao.StudentNewDao;
 import com.shaicha.information.domain.LinShiUrlDO;
+import com.shaicha.informationNEW.domain.ActivityListNewDO;
 import com.shaicha.informationNEW.domain.ResultCornealNewDO;
 import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
 import com.shaicha.informationNEW.domain.ResultEyeaxisNewDO;
@@ -107,7 +109,69 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		map.put("year", ye);
 		return map;
 	}
+	
+	
+	//近视不良对比
+	@Override
+	public Map<String, Object> shangcibulingjinshi(String school, Integer activityId) {
+		DecimalFormat df = new DecimalFormat("0.0");
+		Map<String, Object> map = new HashMap<String, Object>();
 
+		int zongNum = 0;
+		int jinshinow = 0;
+		int buliangnow = 0;			
+		int zongNumshang = 0;
+		int jinshilast = 0;
+		int bulianglast = 0;
+		double blshujus = 0;
+		double jsshujus = 0;			
+		double blshujuz = 0;
+		double jsshujuz = 0;
+		Date addTime = activityListDao.get(activityId).getAddTime();
+		List<ActivityListNewDO> lastActivity = schoolReportDao.getLastActivity(ShiroUtils.getUserId().intValue(),addTime);
+		if(lastActivity.size()<=0 && school.equals("济南市外海实验学校")){
+			 zongNum = schoolReportDao.zongNum(activityId,school);
+			 jinshinow = schoolReportDao.schoolCheckJinshi(activityId,school);
+			 buliangnow = schoolReportDao.schoolCheckBuliang(activityId,school);			
+			 zongNumshang = schoolReportDao.waihaijiancharenshu();
+			 jinshilast = schoolReportDao.waihaijinshirenshu();
+			 bulianglast  = schoolReportDao.waihaibuliangrenshu();
+			//myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100)));
+			//myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100)));			
+			//myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100)));
+			//myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)jinshinow/(double)zongNum*100)));
+			 blshujus = zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100));
+			 jsshujus = zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100));			
+			 blshujuz = zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100));
+			 jsshujuz = zongNum==0?0:Double.parseDouble(df.format((double)jinshinow/(double)zongNum*100));
+		}else{
+			 zongNum = schoolReportDao.zongNum(activityId,school);
+			 jinshinow = schoolReportDao.schoolCheckJinshi(activityId,school);
+			 buliangnow  = schoolReportDao.schoolCheckBuliang(activityId,school);
+			 if(lastActivity.size()<=0){
+				 jinshilast =0;
+				 bulianglast =0;
+			 }else{
+				 jinshilast = schoolReportDao.schoolCheckJinshi(lastActivity.get(0).getId(),school);
+				 bulianglast  = schoolReportDao.schoolCheckBuliang(lastActivity.get(0).getId(),school);
+			 }
+			 
+			 
+			 blshujus = zongNum==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNum*100));
+			 jsshujus = zongNum==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNum*100));			
+			 blshujuz = zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100));
+			 jsshujuz = zongNum==0?0:Double.parseDouble(df.format((double)jinshinow/(double)zongNum*100));
+			
+		}
+		map.put("blshujus", blshujus);
+		map.put("blshujuz", blshujuz);
+		map.put("jsshujus", jsshujus);
+		map.put("jsshujuz", jsshujuz);
+		return map;
+	}
+	
+	
+	
 	//各年级近视
 	@Override
 	public Map<String, List<Object>> gradeMyopia(String school, Integer activityId) {
@@ -1339,7 +1403,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
             e.printStackTrace();
         } 
     }
-	
+
+
 	
 	
 	

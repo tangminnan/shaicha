@@ -25,6 +25,8 @@ public interface SchoolReportNewService {
 	Map<String,List<Object>> overYearSexNv(String school);
 	
 	Map<String,List<Object>> overYearGradeSex(String school,Integer activityId);
+	
+	Map<String,Object> shangcibulingjinshi(String school,Integer activityId);
 
 	void baogaoxuexiao(HttpServletRequest request, HttpServletResponse response);
 	
