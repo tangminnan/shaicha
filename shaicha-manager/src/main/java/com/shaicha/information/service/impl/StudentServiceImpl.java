@@ -1,6 +1,7 @@
 package com.shaicha.information.service.impl;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -9,6 +10,8 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,8 +27,15 @@ import com.shaicha.information.domain.ResultDiopterDO;
 import com.shaicha.information.domain.ResultEyeaxisDO;
 import com.shaicha.information.domain.ResultEyepressureDO;
 import com.shaicha.information.domain.ResultEyesightDO;
+import com.shaicha.information.domain.ResultOptometryDO;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.StudentService;
+import com.shaicha.information.dao.ResultCornealDao;
+import com.shaicha.information.dao.ResultDiopterDao;
+import com.shaicha.information.dao.ResultOptometryDao;
+import com.shaicha.informationNEW.domain.ResultCornealNewDO;
+import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
+import com.shaicha.informationNEW.domain.ResultOptometryNewDO;
 import com.shaicha.system.config.ExcelUtils;
 
 import freemarker.template.Configuration;
@@ -52,7 +62,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +87,12 @@ public class StudentServiceImpl implements StudentService {
 	private StudentDao studentDao;
 	@Autowired
 	private BootdoConfig bootdoConfig;
+	@Autowired
+	private ResultOptometryDao resultOptometryDao;
+	@Autowired
+	private ResultCornealDao resultCornealDao;
+	@Autowired
+	private ResultDiopterDao resultDiopterDao;
 	
 	@Override
 	public StudentDO get(Integer id){
@@ -112,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
 	public int batchRemove(Integer[] ids){
 		return studentDao.batchRemove(ids);
 	}
-
+	
 	/**
 	 * excel数据导入
 	 */
@@ -181,11 +197,11 @@ public class StudentServiceImpl implements StudentService {
 								continue;
 							}else{
 								student.setIdentityCard(identityCard);
-								/*String destPath = bootdoConfig.getUploadPath();
+								String destPath = bootdoConfig.getUploadPath();
 								String rand = new Random().nextInt(99999999)+".jpg";
 								//生成二维码
 								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
-								student.setQRCode("/files/"+rand);*/
+								student.setQRCode("/files/"+rand);
 							}
 						}else{
 							continue;
@@ -218,6 +234,7 @@ public class StudentServiceImpl implements StudentService {
 		return R.error();	
 	}
 
+	
 	@Override
 	public List<StudentDO> getList() {
 		return studentDao.getList();
@@ -919,12 +936,12 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 
-
-	@Override
-	public List<StudentDO> querySchoolName() {
-		
-		return studentDao.querySchoolName();
-	}
+//
+//	@Override
+//	public List<StudentDO> querySchoolName() {
+//		
+//		return studentDao.querySchoolName();
+//	}
 
 	/*List<ResultEyesightDO> resultEyesightDOList11 = new ArrayList<ResultEyesightDO>();
 	List<ResultDiopterDO> resultDiopterDOListR11 = new ArrayList<ResultDiopterDO>();
@@ -1141,6 +1158,22 @@ public class StudentServiceImpl implements StudentService {
 				
 	         return Double.parseDouble(df.format(s));
 		}
+
+	@Override
+	public List<StudentDO> querylistStudentName(String studentname, Integer offset, Integer limit) {
+		return studentDao.querylistStudentName(studentname,offset,limit);
+	}
+
+	@Override
+	public List<StudentDO> queryBySchoolGrade(Integer activityId, String school) {
+		return studentDao.queryBySchoolGrade(activityId, school);
+	}
+
+	@Override
+	public List<StudentDO> queryBySchoolStudentClass(Integer activityId, String school) {
+		return studentDao.queryBySchoolStudentClass(activityId, school);
+	}
+
 	
 	
 }

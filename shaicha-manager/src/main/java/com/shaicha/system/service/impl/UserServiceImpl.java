@@ -240,5 +240,10 @@ public class UserServiceImpl implements UserService {
 		}
 		return result;
     }
+    
+	@Override
+	public int sysupdate(UserDO user) {
+		return userMapper.update(user);
+	}
 
 }

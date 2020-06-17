@@ -14,8 +14,8 @@
 			<div class="ibox float-e-margins">
 				<div class="ibox-content">
 					<div>
-						<input id="startDate" name="startDate" th:value="${startDate}" type="hidden">
-						<input id="endDate" name="endDate" th:value="${endDate}" type="hidden">
+						<input id="activityId" name="activityId" th:value="${activityId}" type="hidden">
+						<input id="school" name="school" th:value="${school}" type="hidden">
 						<input id="date" name="date" th:value="${date}" type="hidden">
 						<div class="box">
 						   <h4>正在整理数据,请您稍候 ...</h4>   
@@ -29,13 +29,13 @@
 
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript">
-	 $(function(){
-		 window.location.href="/studentReport/baogaojiaoyuju?startDate="+$("#startDate").val()
-																+"&endDate="+$("#endDate").val()
+	  $(function(){
+		 window.location.href="/studentReport/baogaojiaoyuju?activityId="+$("#activityId").val()
+																+"&school="+$("#school").val()
 																+"&date="+$("#date").val();
 
 													
-	 })
+	 }) 
 	 
 	 var timer1 = setInterval(refeshPage,1000);//每隔一秒判断下cookie是否已经写回，如果写回，则进行页面刷新
 

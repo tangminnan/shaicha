@@ -31,18 +31,18 @@ public interface StudentDao {
 
 	void updateLastCheckTime(@Param("studentId") Long studentId, @Param("date") Date date);
 
-	List<StudentDO> getStudentInfo(String identityCard);
+	List<StudentDO> getStudentInfo(Integer id);
 
 	void updateStudentDOshi(StudentDO studentDO);
+	
+	int update(StudentDO student);
 	
 	/*List<StudentDO> list(Map<String,Object> map);
 	
 	int count(Map<String,Object> map);
 	
 	int save(StudentDO student);
-	
-	int update(StudentDO student);
-	
+		
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);

@@ -1,6 +1,7 @@
 package com.shaicha.system.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -52,8 +53,58 @@ public class UserDO implements Serializable {
     private String city;
     //所在地区
     private String district;
+    //中心名称
+    private String zhongxinName ;
+    //中心地址
+    private String zhongxinAddress;
+    //中心手机号
+    private String zhongxinPhone;
+    //中心图片(公众号二维码)
+    private String zhongxinImg;
+    private MultipartFile imgFile;
+   
+    
+    public MultipartFile getImgFile() {
+		return imgFile;
+	}
 
-    public Long getUserId() {
+	public void setImgFile(MultipartFile imgFile) {
+		this.imgFile = imgFile;
+	}
+
+	public String getZhongxinName() {
+		return zhongxinName;
+	}
+
+	public void setZhongxinName(String zhongxinName) {
+		this.zhongxinName = zhongxinName;
+	}
+
+	public String getZhongxinAddress() {
+		return zhongxinAddress;
+	}
+
+	public void setZhongxinAddress(String zhongxinAddress) {
+		this.zhongxinAddress = zhongxinAddress;
+	}
+
+	public String getZhongxinPhone() {
+		return zhongxinPhone;
+	}
+
+	public void setZhongxinPhone(String zhongxinPhone) {
+		this.zhongxinPhone = zhongxinPhone;
+	}
+
+	public String getZhongxinImg() {
+		return zhongxinImg;
+	}
+
+	public void setZhongxinImg(String zhongxinImg) {
+		this.zhongxinImg = zhongxinImg;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 

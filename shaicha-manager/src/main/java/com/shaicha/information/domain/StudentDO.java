@@ -53,9 +53,49 @@ public class StudentDO implements Serializable {
 	private Double dengxiaoqiujingl;
 	private String nakedFarvisionOd;//右眼裸眼近视力
 	private String nakedFarvisionOs;//左眼裸眼近视力
+
+	//联系地址
+	private String address;
+	//身高
+	private Double height;
+	//体重
+	private Double weight;
+	//添加时间
+	private Date addTime;
+	//状态0：正常1：禁止
+	private Integer status;
+	//二维码url
+	private String QRCode;
+	
+	//模板类型  XUE_XIAO=学校
+	private String  modelType;
+	//证件类型 SHEN_FENZHENG=身份证
+	private String  ideentityType;
+	//学校编码
+	private String schoolCode;
+	//学部
+	private String xueBu;
+	//检查类型 PU_TONG=普通筛查 SHI_FANXIAO=示范校筛查
+	private String checkType;
+	private Integer activityId;
+	private Date mincheckdate;
+	private Date maxcheckdate;
 	
 	
 	
+	
+	public Date getMincheckdate() {
+		return mincheckdate;
+	}
+	public void setMincheckdate(Date mincheckdate) {
+		this.mincheckdate = mincheckdate;
+	}
+	public Date getMaxcheckdate() {
+		return maxcheckdate;
+	}
+	public void setMaxcheckdate(Date maxcheckdate) {
+		this.maxcheckdate = maxcheckdate;
+	}
 	public Double getDengxiaoqiujingr() {
 		return dengxiaoqiujingr;
 	}
@@ -86,31 +126,12 @@ public class StudentDO implements Serializable {
 	public void setStudentNumber(String studentNumber) {
 		this.studentNumber = studentNumber;
 	}
-	//联系地址
-	private String address;
-	//身高
-	private Double height;
-	//体重
-	private Double weight;
-	//添加时间
-	private Date addTime;
-	//状态0：正常1：禁止
-	private Integer status;
-	//二维码url
-	private String QRCode;
-	
-	//模板类型  XUE_XIAO=学校
-	private String  modelType;
-	//证件类型 SHEN_FENZHENG=身份证
-	private String  ideentityType;
-	//学校编码
-	private String schoolCode;
-	//学部
-	private String xueBu;
-	//检查类型 PU_TONG=普通筛查 SHI_FANXIAO=示范校筛查
-	private String checkType;
-
-	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public Date getLastCheckTime() {
 		return lastCheckTime;
 	}

@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
  <head>
   <style>
   p{margin-top:0pt;margin-bottom:1pt;}p.X1{text-align:justified;}span.X1{font-family:'Calibri';font-size:10.0pt;}</style>
@@ -9,9 +9,9 @@
    <p><br /></p>
    <p><br /></p>
    <p><span style="font-family:'Calibri';font-size:10.0pt;">姓名： </span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${studentName}"></span></p>
-  <!--  <p><span style="font-family:'Calibri';font-size:10.0pt;">身份证号：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${identityCard}"></span></p> -->
- <!--   <p><span style="font-family:'Calibri';font-size:10.0pt;">性别：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${studentSex}"></span></p>
-   <p><span style="font-family:'Calibri';font-size:10.0pt;">学校：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${school}"></span></p> -->
+   <p><span style="font-family:'Calibri';font-size:10.0pt;">身份证号：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${identityCard}"></span></p>
+   <p><span style="font-family:'Calibri';font-size:10.0pt;">性别：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${studentSex}"></span></p>
+   <p><span style="font-family:'Calibri';font-size:10.0pt;">学校：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${school}"></span></p>
    <p><span style="font-family:'Calibri';font-size:10.0pt;">年级：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${grade}"></span></p>
    <p><span style="font-family:'Calibri';font-size:10.0pt;">班级：</span><span style="font-family:'Courier New';font-size:10.0pt;background-color:#ffffff;" th:text="${studentClass}"></span><span id="_GoBack"></span></p>
    <p><br /></p>
@@ -19,4 +19,33 @@
    <p><span style="font-family:'Calibri';font-size:10.0pt;"></span><img th:src="${QRCode}" alt="图像数据缺失"></p>
   </div>
  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head></head>
+<body style="width: 224px; border:1px solid #000000;">
+
+	<div style="float: left;width:90%; margin-left: 8px; margin-top: 30px;position: relative;border:2px solid #000000;"">
+		<img alt="" th:src="${QRCode}" style="width: 100% !important; height: auto !important;">
+		<table cellspacing="0" cellpadding="0" style=" width: 100%;border-top: 1px solid #000000;">
+			<tbody>
+				<tr>
+					<td>学生id：<span th:text="${id}" ></span></td>
+				</tr>
+				<tr>
+					<td>姓名：<span th:text="${studentName}" ></span></td>
+				</tr>
+				<tr>
+					<td>年级：<span th:text="${grade}" ></span></td>
+				</tr>
+				<tr>
+					<td>班级：<span th:text="${studentClass}" ></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
 </html>

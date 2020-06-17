@@ -9,16 +9,15 @@
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<!-- 
-							<button shiro:hasPermission="information:student:add" type="button" class="btn  btn-primary" onclick="add()">
-								<i class="fa fa-plus" aria-hidden="true"></i>添加
-							</button>
-							<button shiro:hasPermission="information:student:batchRemove" type="button" class="btn  btn-danger"
-								onclick="batchRemove()">
-								<i class="fa fa-trash" aria-hidden="true"></i>删除
-							</button>
-							 -->
-							<div class="columns pull-left">
+													
+								<button shiro:hasPermission="information:student:add" type="button" class="btn  btn-primary" onclick="add()">
+									<i class="fa fa-plus" aria-hidden="true"></i>添加
+								</button>
+								<button shiro:hasPermission="information:student:batchRemove" type="button" class="btn  btn-danger"
+									onclick="batchRemove()">
+									<i class="fa fa-trash" aria-hidden="true"></i>删除
+								</button>
+							
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-default" onclick="importtemplate()">
 									   模板导入
 								</button>
@@ -28,10 +27,15 @@
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimaxiazai()">
 									   二维码下载
 								</button>
+								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimadayin()">
+									  批量 打印二维码
+								</button>
 								 <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
 									   筛查结果导出
 								</button>
-							</div>
+								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="huodongbaogao()">
+									   活动报告
+								</button>
 						</div>
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
@@ -41,7 +45,7 @@
 								placeholder="姓名">
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
-							<input id="phone" name="phone" class="form-control" placeholder="手机号" type="text">
+							<input id="identityCard" name="identityCard" class="form-control" placeholder="身份证号" type="text">
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<select class="form-control" name="studentSex" id="studentSex" >
@@ -50,18 +54,23 @@
                         		<option value="2">女</option>
                     		</select>
 						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+								<select class="form-control" name="studentClass" id="studentClass" >
+                        		<option value="">班级</option>
+                    			</select>
+						</div>
 						
-								
-								<div class="columns pull-right col-md-2 nopadding">
-									<input id="lastCheckTime" name="lastCheckTime" class="form-control" type="text" placeholder="筛查日期">
-								</div>
-							
-						<!-- <div class="columns pull-right col-md-2 nopadding">
-							<select class="form-control" name="school" id="school" >
-                        		<option value="">学校</option>
-                        		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select class="form-control" name="grade" id="grade" onchange="stugrade();">
+                        		<option value="">年级</option>
                     		</select>
-						</div> -->
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select onchange="stuschool();" name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
+								<option value="">请选择</option>
+								<option th:each="sc:${school}" th:value="${sc.orgname}" th:text="${sc.orgname}"></option>
+							</select>
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -96,10 +105,80 @@
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript" src="/js/appjs/informationNEW/student/student.js"></script>
 	<script type="text/javascript">
-	laydate.render({
-		elem: '#lastCheckTime',
-		type: 'date'
-	});
+		
+		//回车
+		$(document).bind('keyup', function(event) {
+			　if (event.keyCode == "13") {
+				　　reLoad();
+			　}
+		});
+		
+		$('#school').selectpicker({
+			title:"学校名称",
+			style:'btn-white'
+		});
+		
+		function stuschool(){
+			
+			var school = $('#school option:selected').text();
+			$.ajax({
+				
+				cache : true,
+				type : "get",
+				url : "/informationNEW/student/schoolGrade",
+				data:{
+						school : school,
+					},
+				success:function(data){
+					//console.info(data);
+					$("#grade").empty();
+					if (data.length>0) {
+						var html = '';
+						html += '<option value="">年级</option>'
+						for(var i = 0; i < data.length; i++) {
+							html += '<option value="' + data[i].grade + '">' + data[i].grade + '</option>'
+                       		//$("#school").append("<option value=\"" + data[i].activityId + "\">" + data[i].school + "</option>");
+                       	 }
+						   $("#grade").html(html);
+						   $("#studentClass").empty();
+					}else{
+						$("#grade").empty();
+						$("#studentClass").empty();
+					}
+				}
+				
+			})
+		}
+		
+		function stugrade(){
+			var school = $('#school option:selected').text();
+			var grade = $("#grade option:selected").val();
+			$.ajax({
+				type : "get",
+				url : "/informationNEW/student/schoolStuClass",
+				data:{
+					school : school,
+					grade : grade
+				},
+				success : function(data){
+					//console.info(data);
+					$("#studentClass").empty();
+					if (data.length>0) {
+						var html = '';
+						html += '<option value="">班级</option>'
+						for(var i = 0; i < data.length; i++) {
+							html += '<option value="' + data[i].studentClass + '">' + data[i].studentClass + '</option>'
+                       		//$("#school").append("<option value=\"" + data[i].activityId + "\">" + data[i].school + "</option>");
+                       	 }
+						   $("#studentClass").html(html);
+					}else{
+						$("#studentClass").empty();
+					}
+				}
+				
+			})
+		}
+	
 	</script>
 </body>
 </html>

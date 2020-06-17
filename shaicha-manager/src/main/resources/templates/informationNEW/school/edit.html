@@ -10,13 +10,13 @@
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
 							<input id="id" name="id" th:value="${school.id}" type="hidden">
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label class="col-sm-3 control-label">学校编码：</label>
 								<div class="col-sm-8">
 									<input id="orgcode" name="orgcode" th:value="${school.orgcode}"
 										class="form-control" type="text">
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<label class="col-sm-3 control-label">学校名称：</label>
 								<div class="col-sm-8">
@@ -171,8 +171,15 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label">学部：</label>
 								<div class="col-sm-8">
-									<input id="xuebu" name="xuebu" th:value="${school.xuebu}"
-										class="form-control" type="text">
+									<select class="form-control" name="xuebu" id="xuebu" >
+		                        		<option value="">学部</option>
+		                        		<option value="幼儿园">幼儿园</option>
+		                        		<option value="小学">小学</option>
+		                        		<option value="初中">初中</option>
+		                        		<option value="高中">高中</option>
+		                    		</select>
+									<input id="xuebuu" name="xuebuu" th:value="${school.xuebu}"
+										class="form-control" type="hidden">
 								</div>
 							</div>
 							<div class="form-group">
@@ -201,6 +208,9 @@
 		var citycode = $("input[name='citycode']").val();
 		var areaname = $("input[name='areaname']").val();
 		var areacode = $("input[name='areacode']").val();
+		
+		var xuebuu = $("input[name='xuebuu']").val();
+		$("#xuebu").find("[value="+xuebuu+"]").attr("selected",true);
 		
 		$("#eprovinceName").find("[value="+provincename+"]").attr("selected",true);
 		$("#eprovinceName").trigger("change");

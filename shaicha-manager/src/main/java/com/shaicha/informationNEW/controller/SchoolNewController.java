@@ -1,7 +1,5 @@
 package com.shaicha.informationNEW.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.shaicha.informationNEW.domain.SchoolDO;
-import com.shaicha.informationNEW.service.SchoolService;
+import com.shaicha.informationNEW.domain.SchoolNewDO;
+import com.shaicha.informationNEW.service.SchoolNewService;
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
+import com.shaicha.common.utils.ShiroUtils;
 
 /**
  * 
@@ -37,9 +36,9 @@ import com.shaicha.common.utils.R;
  
 @Controller
 @RequestMapping("/information/school")
-public class SchoolController {
+public class SchoolNewController {
 	@Autowired
-	private SchoolService schoolService;
+	private SchoolNewService schoolService;
 	
 	@GetMapping()
 	@RequiresPermissions("information:school:school")
@@ -53,7 +52,10 @@ public class SchoolController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		List<SchoolDO> schoolList = schoolService.list(query);
+        if(!ShiroUtils.getUser().getUsername().equals("admin")){
+        	query.put("sysId", ShiroUtils.getUserId());
+        }
+		List<SchoolNewDO> schoolList = schoolService.list(query);
 		int total = schoolService.count(query);
 		PageUtils pageUtils = new PageUtils(schoolList, total);
 		return pageUtils;
@@ -68,7 +70,7 @@ public class SchoolController {
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("information:school:edit")
 	String edit(@PathVariable("id") Integer id,Model model){
-		SchoolDO school = schoolService.get(id);
+		SchoolNewDO school = schoolService.get(id);
 		model.addAttribute("school", school);
 	    return "informationNEW/school/edit";
 	}
@@ -79,11 +81,13 @@ public class SchoolController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("information:school:add")
-	public R save( SchoolDO school){
+	public R save( SchoolNewDO school){
+		school.setOrgcode("00000");
 		school.setEnabledstatus(1);
 		school.setCreatedate(new Date());
 		school.setOrgtype(2);
 		school.setIspublic(0);
+		school.setSysId(ShiroUtils.getUserId());
 		if(schoolService.save(school)>0){
 			return R.ok();
 		}
@@ -95,7 +99,7 @@ public class SchoolController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("information:school:edit")
-	public R update( SchoolDO school){
+	public R update( SchoolNewDO school){
 		schoolService.update(school);
 		return R.ok();
 	}
@@ -107,7 +111,7 @@ public class SchoolController {
 	@ResponseBody
 	@RequiresPermissions("information:school:remove")
 	public R remove( Integer id){
-		SchoolDO school = new SchoolDO();
+		SchoolNewDO school = new SchoolNewDO();
 		school.setId(id);
 		school.setEnabledstatus(0);
 		schoolService.update(school);

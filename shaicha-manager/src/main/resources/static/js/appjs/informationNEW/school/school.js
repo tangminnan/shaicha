@@ -50,11 +50,11 @@ function load() {
 								/*								{
 									field : 'id', 
 									title : '' 
-								},*/
+								},
 																{
 									field : 'orgcode', 
 									title : '学校编码' 
-								},
+								},*/
 																{
 									field : 'orgname', 
 									title : '学校名称' 

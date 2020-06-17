@@ -4,14 +4,14 @@
 <mapper namespace="com.shaicha.system.dao.UserDao">
 
 	<select id="get" resultType="com.shaicha.system.domain.UserDO">
-		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user where user_id = #{value}
+		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,zhongxin_name ,zhongxin_address ,zhongxin_phone,zhongxin_img from sys_user where user_id = #{value}
 	</select>
 	<select id="getbyphone" resultType="com.shaicha.system.domain.UserDO">
-		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user where mobile = #{value}
+		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,zhongxin_name ,zhongxin_address ,zhongxin_phone,zhongxin_img from sys_user where mobile = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.system.domain.UserDO">
-		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district` from sys_user
+		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,zhongxin_name ,zhongxin_address ,zhongxin_phone,zhongxin_img from sys_user
         <where>  
 		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
 		  		  <if test="username != null and username != ''"> and username = #{username} </if>
@@ -91,7 +91,11 @@
 			`hobby`, 
 			`province`, 
 			`city`, 
-			`district`
+			`district`,
+			zhongxin_name ,
+			zhongxin_address ,
+			zhongxin_phone,
+			zhongxin_img
 		)
 		values
 		(
@@ -112,7 +116,11 @@
 			#{hobby}, 
 			#{province}, 
 			#{city}, 
-			#{district}
+			#{district},
+			#{zhongxinName},
+			#{zhongxinAddress},
+			#{zhongxinPhone},
+			#{zhongxinImg}
 		)
 	</insert>
 	 
@@ -136,7 +144,11 @@
 			<if test="hobby != null">`hobby` = #{hobby}, </if>
 			<if test="province != null">`province` = #{province}, </if>
 			<if test="city != null">`city` = #{city}, </if>
-			<if test="district != null">`district` = #{district}</if>
+			<if test="district != null">`district` = #{district},</if>
+			<if test="zhongxinName != null">`zhongxin_name` = #{zhongxinName}, </if>
+			<if test="zhongxinAddress != null">`zhongxin_address` = #{zhongxinAddress}, </if>
+			<if test="zhongxinPhone != null">`zhongxin_phone` = #{zhongxinPhone}, </if>
+			<if test="zhongxinImg != null">`zhongxin_img` = #{zhongxinImg}</if>
 		</set>
 		where user_id = #{userId}
 	</update>

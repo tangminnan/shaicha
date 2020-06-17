@@ -50,9 +50,9 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			orgcode : {
+			/*orgcode : {
 				required : true
-			},
+			},*/
 			orgname : {
 				required : true
 			},

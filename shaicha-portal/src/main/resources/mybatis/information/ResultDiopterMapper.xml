@@ -4,10 +4,10 @@
 <mapper namespace="com.shaicha.information.dao.ResultDiopterDao">
 
 	<select id="getByOptometryId" resultType="com.shaicha.information.domain.ResultDiopterDO">
-		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,`ifRL`,first_second from t_result_diopter where t_optometry_id = #{tOptometryId} 
+		select `t_diopter_id`,`t_optometry_id`,`diopter_s`,`diopter_c`,`diopter_a`,`believe`,`num`,`type`,`ifRL`,first_second from t_result_diopter_new where t_optometry_id = #{tOptometryId} 
 	</select>
 	<insert id="saveDiopterDO" parameterType="com.shaicha.information.domain.ResultDiopterDO" useGeneratedKeys="true" keyProperty="tDiopterId">
-		insert into t_result_diopter
+		insert into t_result_diopter_new
 		(
 			`t_optometry_id`, 
 			`diopter_s`, 
@@ -20,7 +20,8 @@
 			first_second,
 			identity_card,
 			check_date,
-			dengxiaoqiujing
+			dengxiaoqiujing,
+			activity_id
 		)
 		values
 		(
@@ -35,13 +36,14 @@
 			#{firstSecond},
 			#{identityCard},
 			#{checkDate},
-			#{dengxiaoqiujing}
+			#{dengxiaoqiujing},
+			#{activityId}
 		)
 	</insert>
 	
 	
 	<delete id="removeAll">
-		delete from t_result_diopter where t_optometry_id=#{value}
+		delete from t_result_diopter_new where t_optometry_id=#{value}
 	</delete>
 	
 

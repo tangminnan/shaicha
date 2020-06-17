@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head></head>
+<body style="width: 224px; border:1px solid #000000;">
+
+	<div th:each="stu:${student}" style="float: left;width:90%; margin-left: 8px; margin-top: 30px;position: relative;border:2px solid #000000;"">
+		<img alt="" th:src="${stu.QRCode}" style="width: 100% !important; height: auto !important;">
+		<table cellspacing="0" cellpadding="0" style=" width: 100%;border-top: 1px solid #000000;">
+			<tbody>
+				<tr>
+					<td>学生id：<span th:text="${stu.id}" ></span></td>
+				</tr>
+				<tr>
+					<td>姓名：<span th:text="${stu.studentName}" ></span></td>
+				</tr>
+				<tr>
+					<td>年级：<span th:text="${stu.grade}" ></span></td>
+				</tr>
+				<tr>
+					<td>班级：<span th:text="${stu.studentClass}" ></span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+					
+	<!-- <div style="float: left;width:30%; margin-left: 18px; margin-top: 50px;position: relative;">
+		<img alt="" src="/img/tousu-pic1.jpg" style="width: 100% !important; height: auto !important;">
+		<table cellspacing="0" cellpadding="0" style=" width: 100%;border: 1px solid #000000;">
+			<tbody>
+				<tr>
+					<td>姓名：张三</td>
+				</tr>
+				<tr>
+					<td>年级：一年级</td>
+				</tr>
+				<tr>
+					<td>姓名：班级</td>
+				</tr>
+			</tbody>
+		</table>
+	</div> -->
+
+
+</body>
+</html>

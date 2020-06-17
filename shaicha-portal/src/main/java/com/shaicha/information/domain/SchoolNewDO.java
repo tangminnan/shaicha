@@ -1,4 +1,4 @@
-package com.shaicha.informationNEW.domain;
+package com.shaicha.information.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Date;
  * @email bushuo@163.com
  * @date 2020-04-17 11:44:53
  */
-public class SchoolDO implements Serializable {
+public class SchoolNewDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//

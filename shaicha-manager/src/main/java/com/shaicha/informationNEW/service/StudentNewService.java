@@ -82,7 +82,7 @@ public interface StudentNewService {
 
 	List<ResultEyeaxisNewDO> getLatelestResultEyeaxisDO(Integer id);
 
-	List<StudentNewDO> querySchoolName();
+//	List<StudentNewDO> querySchoolName();
 
 	List<ResultCornealNewDO> getResultCornealDOList(Integer id, String string, String string2);
 
@@ -96,4 +96,22 @@ public interface StudentNewService {
 	 *首页真实数据展示
 	*/  
 	Map<String, Double> shouYeTrueData();
+		
+	List<StudentNewDO> queryBySchoolGrade(Integer activityId,String school,Long sysId);
+			
+	List<StudentNewDO> queryBySchoolStudentClass(Integer activityId,String school,Long sysId,String grade);
+	
+	List<StudentNewDO> schoolGrade(String school,Long sysId);
+	
+	List<StudentNewDO> schoolStudentClass(String school,Long sysId,String grade);
+	
+	int activityNum(Integer activityId);
+	
+	int activityCheckNum(Integer activityId);
+	
+	List<StudentNewDO> activityIdBySchool(Integer activityId);
+	
+	int activitySchoolNum(Integer activityId, Integer schoolId);
+	
+	int activitySchoolCheckNum( Integer activityId, Integer schoolId);
 }

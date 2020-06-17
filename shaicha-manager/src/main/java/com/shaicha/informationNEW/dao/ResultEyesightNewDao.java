@@ -32,24 +32,7 @@ public interface ResultEyesightNewDao {
 	
 	int batchRemove(Integer[] tEyesightIds);
 	
-	List<ResultEyesightNewDO> queryLuoYanShiLi(Map<String,Object> map);
-	
-	List<ResultEyesightNewDO> liNian(Map<String,Object> map);
-	
-	List<ResultEyesightNewDO> jinShi(Map<String,Object> map);
-	
-	List<ResultEyesightNewDO> getLifeShili(@Param("identityCard") String identityCard,@Param("start") Date start,@Param("end") Date end);
+	List<ResultEyesightNewDO> getLifeShili(@Param("studentId") Integer studentId);
 
-	ResultEyesightNewDO queryMinMaxDate(@Param("start") Date start,@Param("end") Date end);
 	
-	List<ResultEyesightNewDO> queryDushu(@Param("identityCard") String identityCard,@Param("checkDate") Date checkDate);
-	
-	int queryDaijingNum(@Param("start") Date start,@Param("end") Date end);
-	
-	List<ResultEyesightNewDO> getcheckDate(@Param("start") Date start,@Param("end") Date end);
-	
-	List<ResultEyesightNewDO> getgenianlingjinshi(@Param("checkDate") Date checkDate,@Param("xueBu") String xueBu);
-	
-	List<ResultEyesightNewDO> getnannvjinshi(@Param("checkDate") Date checkDate,@Param("studentSex") Integer studentSex);
-
 }

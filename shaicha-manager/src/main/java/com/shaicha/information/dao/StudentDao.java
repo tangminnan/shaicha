@@ -73,35 +73,16 @@ public interface StudentDao {
 	void saveResultDiopterDO(ResultDiopterDO resultDiopterDO);
 	
 	List<StudentDO> querySchoolGrade(String school);
-	
-	List<StudentDO> querySchoolName();
-			
-	List<StudentDO> queryGradeNum(@Param("grade") String grade,@Param("school") String school);
-	
-	List<StudentDO> getCheckUserNum(Map<String,Object> map);
-	
+		
 	List<StudentDO> queryGradeClassCount(Map<String,Object> map);
-	
-	List<StudentDO> getGradeClassCheck(Map<String,Object> map);
-	
-	List<StudentDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("start") Date start,@Param("end") Date end,@Param("studentClass") String studentClass);
-	
-	List<StudentDO> getCheckNianjiNum(@Param("school") String school,@Param("grade") String grade,@Param("checkDate") String checkDate);
-
+		
+	List<StudentDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("activityId") Integer activityId,@Param("studentClass") String studentClass);	
 
 	List<ResultCornealDO> getResultCornealDOList(@Param("studentId") Integer studentId,@Param("ifrl") String ifrl,@Param("type") String type);
 
 	List<ResultEyesightDO> getJInShiLv(@Param("i") int i,@Param("j") int j);
 
 	List<ResultDiopterDO> getResultDiopterDO(@Param("i") int i,@Param("j") int j,@Param("ifRL") String ifRL);
-	
-	List<StudentDO> getSchool(@Param("start") Date start,@Param("end") Date end);
-	
-	List<StudentDO> getLastCheckStudent(@Param("school") String school,@Param("start") Date start,@Param("end") Date end);
-
-	List<StudentDO> getCheckAllStudent(@Param("start") Date start,@Param("end") Date end,@Param("grade") String grade);
-
-	List<StudentDO> jiancharenshu(Map<String,Object> map);
 
 	List<StudentDO> getStudentDOshou(@Param("i") int i,@Param("j") int j);
 
@@ -110,6 +91,11 @@ public interface StudentDao {
 	void updateS(StudentDO studentDO);
 
 	List<StudentDO> getAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
-
+	
+	List<StudentDO> querylistStudentName(@Param("studentName") String studentname,@Param("offset") Integer offset, @Param("limit") Integer limit );
+	
+	List<StudentDO> queryBySchoolGrade(@Param("activityId") Integer activityId,@Param("school") String school);
+	
+	List<StudentDO> queryBySchoolStudentClass(@Param("activityId") Integer activityId,@Param("school") String school);
 
 }

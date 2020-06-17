@@ -22,13 +22,13 @@
 						`check_date`,
 						`delete_flag`
 					FROM
-						t_result_eyesight
+						t_result_eyesight_new
 					WHERE
 						student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	
 	<insert id="saveEyesightDO" parameterType="com.shaicha.information.domain.ResultEyesightDO" useGeneratedKeys="true" keyProperty="tEyesightId">
-		insert into t_result_eyesight
+		insert into t_result_eyesight_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -44,7 +44,8 @@
 			`naked_nearvision_os`, 
 			`check_date`, 
 			`delete_flag`,
-			identity_card
+			identity_card,
+			activity_id
 		)
 		values
 		(
@@ -62,12 +63,13 @@
 			#{nakedNearvisionOs}, 
 			#{checkDate}, 
 			#{deleteFlag},
-			#{identityCard}
+			#{identityCard},
+			#{activityId}
 		)
 	</insert>
 	
 	<update id="updateEyesightDO" parameterType="com.shaicha.information.domain.ResultEyesightDO">
-		update t_result_eyesight 
+		update t_result_eyesight_new 
 		<set>
 			<if test="studentId != null">`student_id` = #{studentId}, </if>
 			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>

@@ -4,11 +4,11 @@
 <mapper namespace="com.shaicha.information.dao.ChectorDao">
 
 	<select id="get" resultType="com.shaicha.information.domain.ChectorDO">
-		select `chector_id`,username,hospital,section,`deleted`,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,ifnull(`headshot`,'/img/tousu-pic1.jpg') headshot,`add_time`,`update_time`,`remark` from t_chector where chector_id = #{value}
+		select `chector_id`,username,hospital,section,`deleted`,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,ifnull(`headshot`,'/img/tousu-pic1.jpg') headshot,`add_time`,`update_time`,`remark`,sys_id from t_chector where chector_id = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.ChectorDO">
-		select `chector_id`,username,`deleted`,hospital,section,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,`headshot`,`add_time`,`update_time`,`remark` from t_chector
+		select `chector_id`,username,`deleted`,hospital,section,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,`headshot`,`add_time`,`update_time`,`remark`,sys_id from t_chector
         where deleted=0  
 		  		  <if test="chectorId != null and chectorId != ''"> and chector_id = #{chectorId} </if>
 		  		  <if test="deleted != null and deleted != ''"> and deleted = #{deleted} </if>
@@ -23,7 +23,7 @@
 		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
 		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
-		  	
+		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -53,6 +53,7 @@
 		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
 		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
 		  		
 	</select>
 	 
@@ -73,7 +74,8 @@
 			`remark`,
 			hospital,
 			section,
-			username
+			username,
+			sys_id
 		)
 		values
 		(
@@ -91,7 +93,8 @@
 			#{remark},
 			#{hospital},
 			#{section},
-			#{username}	
+			#{username}	,
+			#{sysId}
 		)
 	</insert>
 	 

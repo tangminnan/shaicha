@@ -15,12 +15,12 @@
 						`second_check_os`,
 						`delete_flag`
 					FROM
-						t_result_eyeaxis
+						t_result_eyeaxis_new
 					WHERE
 						student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	<insert id="saveEyeaxisDO" parameterType="com.shaicha.information.domain.ResultEyeaxisDO" useGeneratedKeys="true" keyProperty="tEyeaxisId">
-		insert into t_result_eyeaxis
+		insert into t_result_eyeaxis_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -30,7 +30,8 @@
 			`second_check_od`, 
 			`second_check_os`, 
 			`delete_flag`,
-			identity_card
+			identity_card,
+			activity_id
 		)
 		values
 		(
@@ -42,12 +43,13 @@
 			#{secondCheckOd}, 
 			#{secondCheckOs}, 
 			#{deleteFlag},
-			#{identityCard}
+			#{identityCard},
+			#{activityId}
 		)
 	</insert>
 	
 	<update id="updateEyeaxisDO" parameterType="com.shaicha.information.domain.ResultEyeaxisDO">
-		update t_result_eyeaxis 
+		update t_result_eyeaxis_new 
 		<set>
 			<if test="studentId != null">`student_id` = #{studentId}, </if>
 			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>

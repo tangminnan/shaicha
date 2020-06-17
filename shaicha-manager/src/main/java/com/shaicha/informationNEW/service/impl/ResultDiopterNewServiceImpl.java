@@ -70,10 +70,5 @@ public class ResultDiopterNewServiceImpl implements ResultDiopterNewService {
 		return resultDiopterNewDao.queryTimeBetween(startDate, endDate);
 	}
 
-	@Override
-	public List<ResultDiopterNewDO> ifExistData(String school, Date start, Date end) {
-		// TODO Auto-generated method stub
-		return resultDiopterNewDao.ifExistData(school, start, end);
-	}
 	
 }

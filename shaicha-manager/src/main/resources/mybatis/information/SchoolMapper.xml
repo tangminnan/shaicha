@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.shaicha.informationNEW.dao.SchoolDao">
+<mapper namespace="com.shaicha.information.dao.SchoolDao">
 
-	<select id="get" resultType="com.shaicha.informationNEW.domain.SchoolDO">
+	<select id="get" resultType="com.shaicha.information.domain.SchoolDO">
 		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.shaicha.informationNEW.domain.SchoolDO">
+	<select id="list" resultType="com.shaicha.information.domain.SchoolDO">
 		select `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -74,7 +74,7 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.shaicha.informationNEW.domain.SchoolDO" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" parameterType="com.shaicha.information.domain.SchoolDO" useGeneratedKeys="true" keyProperty="id">
 		insert into t_school
 		(
 			`OrgCode`, 
@@ -123,7 +123,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.shaicha.informationNEW.domain.SchoolDO">
+	<update id="update" parameterType="com.shaicha.information.domain.SchoolDO">
 		update t_school 
 		<set>
 			<if test="orgcode != null">`OrgCode` = #{orgcode}, </if>

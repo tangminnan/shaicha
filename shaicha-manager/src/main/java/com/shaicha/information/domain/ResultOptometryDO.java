@@ -54,8 +54,29 @@ public class ResultOptometryDO implements Serializable {
 	//第二次验光PD
 	private Double secondCheckPd;
 
+	private String identityCard;
+	private String activityId;
+	private String RelationPatientCrfId;
 	
 	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+	public String getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(String activityId) {
+		this.activityId = activityId;
+	}
+	public String getRelationPatientCrfId() {
+		return RelationPatientCrfId;
+	}
+	public void setRelationPatientCrfId(String relationPatientCrfId) {
+		RelationPatientCrfId = relationPatientCrfId;
+	}
 	public String getCheckDate1() {
 		return checkDate1;
 	}

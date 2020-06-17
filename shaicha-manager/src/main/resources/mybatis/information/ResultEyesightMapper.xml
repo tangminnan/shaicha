@@ -134,74 +134,10 @@
 		</foreach>
 	</delete>
 	
-	<select id="queryLuoYanShiLi" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select *, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
-			where tre.identity_card = ts.identity_card 
-			and ts.school = #{school} and tre.check_date between #{start} and #{end}
-			<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
-			group by tre.identity_card
-	</select>
-	
-	<select id="liNian" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select *, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
-			where tre.identity_card = ts.identity_card
-			and ts.school = #{school}
-			<if test="checkDate != null and checkDate != ''"> and date_format(tre.check_date,'%Y') = #{checkDate} </if>
-			<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
-			<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
-			GROUP BY  tre.identity_card
-	</select>
-	
-	<select id="jinShi" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select *, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
-			where tre.identity_card = ts.identity_card 
-			and ts.school = #{school} and tre.check_date between #{start} and #{end}
-			<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
-			<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
-			<if test="studentClass != null and studentClass != ''"> and ts.student_class = #{studentClass} </if>
-			<if test="identityCard != null and identityCard != ''"> and tre.identity_card = #{identityCard} </if>
-			group by tre.identity_card
-	</select>
-	
 	<select id="getLifeShili" resultType="com.shaicha.information.domain.ResultEyesightDO">
 		select ifnull(`correction_farvision_od`,'') correctionFarvisionOd,ifnull(`correction_farvision_os`,'') correctionFarvisionOs
 		,ifnull(`naked_farvision_od`,'') nakedFarvisionOd,ifnull(`naked_farvision_os`,'') nakedFarvisionOs
-		 from t_result_eyesight where identity_card = #{identityCard}
-		and check_date between #{start} and #{end}
+		 from t_result_eyesight where student_id = #{studentId}
 	</select>
 	
-	<select id="queryMinMaxDate" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select MIN(check_date) minCheckDate , MAX(check_date) maxCheckDate from t_result_eyesight
-		where check_date between #{start} and #{end}
-	</select>
-	
-	<select id="queryDushu" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select tre.identity_card, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre 
-			where tre.identity_card = #{identityCard} and tre.check_date = #{checkDate}
-			and tre.naked_farvision_od is not null and tre.naked_farvision_os is not null
-	</select>
-	
-	<select id="queryDaijingNum" resultType="int">
-		<![CDATA[select count(*) from t_result_eyesight where correction_farvision_od <> "" and correction_farvision_os <> "" and check_date between #{start} and #{end}]]>
-	</select>
-	
-	<select id="getcheckDate" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select check_date from t_result_eyesight where check_date between #{start} and #{end}
-		group by check_date ORDER BY check_date desc
-	</select>
-	
-	<select id="getgenianlingjinshi" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select tre.identity_card, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
-			where tre.identity_card = ts.identity_card and tre.check_date = #{checkDate}
-			and ts.xue_bu = #{xueBu}
-			group by tre.identity_card
-	</select>
-	
-	<select id="getnannvjinshi" resultType="com.shaicha.information.domain.ResultEyesightDO">
-		select tre.identity_card, LEAST(tre.naked_farvision_od,tre.naked_farvision_os) dushu from t_result_eyesight tre , t_student ts
-			where tre.identity_card = ts.identity_card and tre.check_date = #{checkDate}
-			and ts.student_sex = #{studentSex}
-			group by tre.identity_card
-	</select>
-
 </mapper>

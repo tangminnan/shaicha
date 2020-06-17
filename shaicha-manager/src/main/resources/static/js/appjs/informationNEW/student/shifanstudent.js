@@ -25,20 +25,23 @@ function load() {
 						// //发送到服务器的数据编码类型
 						pageSize : 10, // 如果设置了分页，每页数据条数
 						pageNumber : 1, // 如果设置了分布，首页页码
+						pageList: [10, 25, 50, 100,500,1000],
+						smartDisplay:false,
 						//search : true, // 是否显示搜索框
 						showColumns : false, // 是否显示内容下拉框（选择显示的列）
 						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
 						queryParams : function(params) {
+							
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
 								offset:params.offset,
-								studentName:$("#studentName option:selected").val(),
+								studentName:$("#studentName").val(),
 								identityCard:$("#identityCard").val(),
 								school:$("#school option:selected").val(),
 								studentSex:$("#studentSex option:selected").val(),
-								//grade:$("#grade").val(),
-								//studentClass:$("#studentClass").val()
+								grade:$("#grade option:selected").val(),
+								studentClass:$("#studentClass option:selected").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -188,6 +191,9 @@ function load() {
 					});
 }
 function reLoad() {
+	var identityCard = $("#identityCard").val();
+	var idc = identityCard.split("JOIN")[0];
+	$("#identityCard").val(idc);
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
@@ -417,6 +423,21 @@ function erweimaxiazai(){
 	
 	window.location.href="/informationNEW/student/downloadErweima?ids="+ids
 }
+/*
+ * 批量打印二维码
+ */
+function erweimadayin(){
+	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	if (rows.length == 0) {
+		layer.msg("选择要打印的二维码");
+		return;
+	}
+	var ids=[];
+	$.each(rows, function(i, row) {
+		ids[i] = row['id'];
+	});
+	window.open("/informationNEW/student/batchdayinerweima?ids="+ids);
+}
 
 
 /**
@@ -456,7 +477,22 @@ function checkdetail(identityCard){
 	window.location.href="/informationNEW/student/shifanshaichadetail?identityCard="+identityCard;
 }
 
-function baogaoxuexiao(){
+
+//活动报告
+function huodongbaogao(){
+	
+	var page = layer.open({
+		type : 2,
+		title : '报告',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '300px' ],
+		content : '/studentReportNew/xuexiao' // iframe的url
+	});
+	layer.full(page);	
+}
+
+/*function baogaoxuexiao(){
 	
 	var page = layer.open({
 		type : 2,
@@ -468,9 +504,9 @@ function baogaoxuexiao(){
 	});
 	layer.full(page);	
 }
-/**
+*//**
  * 教育局的筛查报告
- */
+ *//*
 function jyjshaichabaogao(){
 	var page = layer.open({
 		type : 2,
@@ -481,127 +517,8 @@ function jyjshaichabaogao(){
 		content : '/studentReportNEW/jiaoyuju' // iframe的url
 	});
 	layer.full(page);	
-	
-	/*var myChart =  echarts.init(document.getElementById('genianlingduanjinshilvfazhanqushi'));
-	var myChart1 =  echarts.init(document.getElementById('nannvshengjinshilvfazhanqushi'));  
-	option = {
-		    tooltip: {
-		        trigger: 'axis'
-		    },
-		    legend: {
-		        data:[]
-		    },
-		    grid: {
-		        left: '3%',
-		        right: '4%',
-		        bottom: '3%',
-		        containLabel: true
-		    },
-		    toolbox: {
-		        feature: {
-		            saveAsImage: {}
-		        }
-		    },
-		    xAxis: {
-		        type: 'category',
-		        boundaryGap: false,
-		        data: ['幼儿园','小学','初中','高中']
-		    },
-		    yAxis: {
-		        type: 'value',
-		      
-		        axisLabel: {  
-                    show: true,  
-                  
-                    formatter: '{value} %' 
-                    },  
-                show: true
-		    },
-		    series: []
-		};
-	
-	   var startDate=$("#startDate").val();
-	   if(startDate==''){alert("开始日期不可为空");return;}
-	   var endDate = $("#endDate").val();
-	   if(endDate==''){alert("结束日期不可为空");return;}
-	   
-	   $.ajax({
-			cache : true,
-			async:false,
-			type : "GET",
-			url : "/informationNEW/student/getJInShiLv",
-			data : {startDate:startDate,endDate:endDate},
-			async : false,
-			error : function(request) {
-				parent.layer.alert("Connection error");
-			},
-			success : function(data) {
-				if(data!=null){
-					console.info("----------");
-					console.info(data);
-				   var legend = {'data':[],bottom:'-1.5%'};
-				   var series=[];
-				    for(var key in data){
-				    	legend.data.push(key);
-						var obj =  {
-								
-					            name:key,
-					            smooth:true,
-					            type:'line',
-					            data:data[key]
-					        }
-						series.push(obj);
-					}
-				    
-				    option.legend=legend;
-				    option.series=series;
-				    console.info(option.series);
-				}
-			}
-		});
-
-	   myChart.setOption(option);
-	   
-	   $.ajax({
-			cache : true,
-			async:false,
-			type : "GET",
-			url : "/informationNEW/student/getJInShiLvSex",
-			data : {startDate:startDate,endDate:endDate},
-			async : false,
-			error : function(request) {
-				parent.layer.alert("Connection error");
-			},
-			success : function(data) {
-				console.info(data);
-				if(data!=null){
-					
-				   var legend = {'data':[],bottom:'-1%'};
-				   var series=[];
-				   var xAxis={'data':data.time};
-				    for(var key in data){
-				    	if(key!='time'){
-				    		legend.data.push(key);
-				    		var obj =  {
-					            name:key,
-					            smooth:true,
-					            type:'line',
-					          
-					            data:data[key]
-					        }
-				    		series.push(obj);
-				    	}
-					}
-				    
-				    option.legend=legend;
-				    option.series=series;
-				    option.xAxis=xAxis;
-				}
-			}
-		});
-	   myChart1.setOption(option);*/
 	  
-}
+}*/
 
 //微信推送功能
 function wxtuisong(){

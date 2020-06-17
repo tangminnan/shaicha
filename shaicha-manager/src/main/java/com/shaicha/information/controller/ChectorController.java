@@ -23,6 +23,7 @@ import com.shaicha.common.utils.FileUtil;
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
+import com.shaicha.common.utils.ShiroUtils;
 import com.shaicha.information.domain.ChectorDO;
 import com.shaicha.information.service.ChectorService;
 /**
@@ -53,6 +54,9 @@ public class ChectorController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
+        if(!ShiroUtils.getUser().getUsername().equals("admin")){
+        	query.put("sysId", ShiroUtils.getUserId());
+        }
 		List<ChectorDO> chectorList = chectorService.list(query);
 		int total = chectorService.count(query);
 		PageUtils pageUtils = new PageUtils(chectorList, total);
@@ -100,6 +104,7 @@ public class ChectorController {
 		chector.setUpdateTime(new Date());
 		chector.setUsername(chector.getPhone());
 		chector.setDeleted(0);
+		chector.setSysId(ShiroUtils.getUserId());
 		if(chectorService.save(chector)>0){
 			return R.ok();
 		}

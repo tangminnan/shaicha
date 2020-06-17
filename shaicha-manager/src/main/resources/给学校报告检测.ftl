@@ -499,7 +499,7 @@
 						<w:rPr>
 							<w:rFonts w:fareast="宋体" w:hint="fareast" />
 							<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-						<w:t>${schoolName}</w:t>
+						<w:t>${schoolName!''}</w:t>
 					</w:r>
 				</w:p>
 				<w:p>
@@ -540,7 +540,7 @@
 							<w:rFonts w:hint="fareast" />
 							<w:sz w:val="60" />
 							<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-						<w:t>${newDate}</w:t>
+						<w:t>${newDate!''}</w:t>
 					</w:r>
 				</w:p>
 				<w:p/>
@@ -698,7 +698,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${schoolNum}</w:t>
+									<w:t>${schoolNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -718,7 +718,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${checkNum}</w:t>
+									<w:t>${checkNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -738,7 +738,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${checkRate}%</w:t>
+									<w:t>${checkRate!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -878,7 +878,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${first.nianji}</w:t>
+									<w:t>${first.nianji!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -898,7 +898,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${first.gradeNum}</w:t>
+									<w:t>${first.gradeNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -918,7 +918,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${first.gradeCheckNum}</w:t>
+									<w:t>${first.gradeCheckNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -938,7 +938,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${first.gradeCheckRate}%</w:t>
+									<w:t>${first.gradeCheckRate!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -1091,7 +1091,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${checkNum}</w:t>
+									<w:t>${checkNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -1110,7 +1110,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numJSTotal}</w:t>
+									<w:t>${numJSTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -1126,7 +1126,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateJSTotal}%</w:t>
+									<w:t>${rateJSTotal!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -1175,90 +1175,6 @@
 					</w:r>
 				</w:p>
 				<w:p/>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
-				<w:p>
-					<w:pPr>
-						<w:rPr>
-							<w:rFonts w:hint="fareast" /></w:rPr>
-					</w:pPr>
-				</w:p>
 				<w:p>
 					<w:pPr>
 						<w:rPr>
@@ -2009,7 +1925,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.grade}</w:t>
+									<w:t>${bl.grade!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2040,7 +1956,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.xuebu}</w:t>
+									<w:t>${bl.xuebu!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -2080,7 +1996,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.gradeCheckNum}</w:t>
+									<w:t>${bl.gradeCheckNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2112,7 +2028,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.numQDSLBL}</w:t>
+									<w:t>${bl.numQDSLBL!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2144,7 +2060,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.rateQDSLBL}%</w:t>
+									<w:t>${bl.rateQDSLBL!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2176,7 +2092,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.numZDSLBL}</w:t>
+									<w:t>${bl.numZDSLBL!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2208,7 +2124,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.rateZDSLBL}%</w:t>
+									<w:t>${bl.rateZDSLBL!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2240,7 +2156,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.numZZDSLBL}</w:t>
+									<w:t>${bl.numZZDSLBL!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2272,7 +2188,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.rateZZDSLBL}%</w:t>
+									<w:t>${bl.rateZZDSLBL!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2304,7 +2220,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.numSLBL}</w:t>
+									<w:t>${bl.numSLBL!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2336,7 +2252,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${bl.rateSLBL}%</w:t>
+									<w:t>${bl.rateSLBL!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2413,7 +2329,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${xuebu}</w:t>
+									<w:t>${xuebu!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -2453,7 +2369,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${gradeCheckTotal}</w:t>
+									<w:t>${gradeCheckTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2485,7 +2401,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numQDSLBLTotal}</w:t>
+									<w:t>${numQDSLBLTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2514,7 +2430,7 @@
 									<w:rPr>
 										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateQDSLBLTotal}%</w:t>
+									<w:t>${rateQDSLBLTotal!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2546,7 +2462,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numZDSLBLTotal}</w:t>
+									<w:t>${numZDSLBLTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2574,7 +2490,7 @@
 									<w:rPr>
 										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateZDSLBLTotal}%</w:t>
+									<w:t>${rateZDSLBLTotal!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2606,7 +2522,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numZZDSLBLTotal}</w:t>
+									<w:t>${numZZDSLBLTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2634,7 +2550,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateZZDSLBLTotal}%</w:t>
+									<w:t>${rateZZDSLBLTotal!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2666,7 +2582,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numSLBLTotal}</w:t>
+									<w:t>${numSLBLTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -2694,7 +2610,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateSLBLTotal}%</w:t>
+									<w:t>${rateSLBLTotal!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3760,7 +3676,7 @@
 										<w:kern w:val="0" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.grade}</w:t>
+									<w:t>${js.grade!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3793,7 +3709,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.xuebu}</w:t>
+									<w:t>${js.xuebu!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -3836,7 +3752,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.gradeCheckNum}</w:t>
+									<w:t>${js.gradeCheckNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3870,7 +3786,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.numJSQQ}</w:t>
+									<w:t>${js.numJSQQ!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3904,7 +3820,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.rateJSQQ}%</w:t>
+									<w:t>${js.rateJSQQ!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3938,7 +3854,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.numJXJS}</w:t>
+									<w:t>${js.numJXJS!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3972,7 +3888,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.rateJXJS}%</w:t>
+									<w:t>${js.rateJXJS!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4007,7 +3923,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.numDDJS}</w:t>
+									<w:t>${js.numDDJS!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4041,7 +3957,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.rateDDJS}%</w:t>
+									<w:t>${js.rateDDJS!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4075,7 +3991,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.numZDJS}</w:t>
+									<w:t>${js.numZDJS!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4109,7 +4025,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.rateZDJS}%</w:t>
+									<w:t>${js.rateZDJS!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4143,7 +4059,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.numGDJS}</w:t>
+									<w:t>${js.numGDJS!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4177,7 +4093,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.rateGDJS}%</w:t>
+									<w:t>${js.rateGDJS!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4211,7 +4127,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.numJS}</w:t>
+									<w:t>${js.numJS!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4245,7 +4161,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${js.rateJS}%</w:t>
+									<w:t>${js.rateJS!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4324,7 +4240,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${xuebu}</w:t>
+									<w:t>${xuebu!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4367,7 +4283,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${gradeCheckTotal}</w:t>
+									<w:t>${gradeCheckTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4401,7 +4317,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numJSQQTotal}</w:t>
+									<w:t>${numJSQQTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4432,7 +4348,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateJSQQTotal}</w:t>
+									<w:t>${rateJSQQTotal!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4474,7 +4390,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numJXJSTotal}</w:t>
+									<w:t>${numJXJSTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4505,7 +4421,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateJXJSTotal}</w:t>
+									<w:t>${rateJXJSTotal!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4547,7 +4463,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numDDJSTotal}</w:t>
+									<w:t>${numDDJSTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4578,7 +4494,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateDDJSTotal}</w:t>
+									<w:t>${rateDDJSTotal!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4620,7 +4536,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numZDJSTotal}</w:t>
+									<w:t>${numZDJSTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4651,7 +4567,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateZDJSTotal}</w:t>
+									<w:t>${rateZDJSTotal!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4693,7 +4609,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numGDJSTotal}</w:t>
+									<w:t>${numGDJSTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4724,7 +4640,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateGDJSTotal}</w:t>
+									<w:t>${rateGDJSTotal!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4766,7 +4682,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${numJSTotal}</w:t>
+									<w:t>${numJSTotal!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -4797,7 +4713,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${rateJSTotal}</w:t>
+									<w:t>${rateJSTotal!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -4818,6 +4734,154 @@
 				</w:p>
 				<w:p>
 					<w:pPr>
+						<w:spacing w:line="460" w:line-rule="exact" />
+						<w:rPr>
+							<w:rFonts w:ascii="Times New Roman" w:h-ansi="Times New Roman" w:cs="Times New Roman" w:hint="default" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="24" /></w:rPr>
+					</w:pPr>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>注：</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>筛查性近视临床前期：</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>裸眼视力</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>≥5.0</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>，散前电脑验光</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>&gt;=-0.5D</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>，</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>&lt;=0.75D</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>；</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>假性近视：</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>裸眼视力</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>≥5.0</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>，散前电脑验光</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>&lt;-0.5D</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:u w:val="none" /></w:rPr>
+						<w:t>；筛查性</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>近视的分类及屈光度分布：（视力</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="default" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>＜5</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>.0），等效球镜＜-6.00D为高度近视、-6.00D≤等效球镜＜-3.00D为中度近视、-3.00D≤等效球镜＜-0.50D为低度近视</w:t>
+					</w:r>
+				</w:p>
+				<w:p>
+					<w:pPr>
+						<w:spacing w:line="460" w:line-rule="exact" />
+						<w:ind w:first-line="420" />
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="default" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+					</w:pPr>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+							<w:color w:val="auto" />
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>屈光度分布以等效球镜计算，以双眼中屈光度较低眼划分等级</w:t>
+					</w:r>
+				</w:p>
+				<w:p>
+					<w:pPr>
 						<w:jc w:val="both" /></w:pPr>
 				</w:p>
 				<w:p>
@@ -4832,6 +4896,43 @@
 								<v:fill on="f" focussize="0,0" />
 								<v:stroke on="f" />
 								<v:imagedata src="wordml://2.png" o:title="" />
+								<o:lock v:ext="edit" aspectratio="f" />
+								<w10:wrap type="none" />
+								<w10:anchorlock/>
+							</v:shape>
+						</w:pict>
+					</w:r>
+				</w:p>
+				<w:p/>
+				<w:p/>
+				
+				<w:p>
+					<w:r>
+						<w:rPr>
+							<w:sz w:val="28" />
+							<w:sz-cs w:val="28" /></w:rPr>
+						<w:t>上次本次不良近视图</w:t>
+					</w:r>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:hint="fareast" />
+							<w:sz w:val="28" />
+							<w:sz-cs w:val="28" /></w:rPr>
+						<w:t>：</w:t>
+					</w:r>
+				</w:p>
+				<w:p>
+					<w:pPr>
+						<w:jc w:val="both" /></w:pPr>
+					<w:r>
+						<w:pict>
+							<w:binData w:name="wordml://8.png">${shangcibulingjinshi}
+							</w:binData>
+							<v:shape id="_x0000_s1028" o:spt="75" alt="wordml://3.png" type="#_x0000_t75" style="height:186.6pt;width:348.95pt;" filled="f" o:preferrelative="t" stroked="f" coordsize="21600,21600">
+								<v:path/>
+								<v:fill on="f" focussize="0,0" />
+								<v:stroke on="f" />
+								<v:imagedata src="wordml://8.png" o:title="" />
 								<o:lock v:ext="edit" aspectratio="f" />
 								<w10:wrap type="none" />
 								<w10:anchorlock/>
@@ -5048,7 +5149,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${checkNanNum}</w:t>
+									<w:t>${checkNanNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5068,7 +5169,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${myopiaNanNum}</w:t>
+									<w:t>${myopiaNanNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5084,7 +5185,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${myopiaNanRate}%</w:t>
+									<w:t>${myopiaNanRate!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5134,7 +5235,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${checkNvNum}</w:t>
+									<w:t>${checkNvNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5154,7 +5255,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${myopiaNvNum}</w:t>
+									<w:t>${myopiaNvNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5170,7 +5271,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${myopiaNvRate}%</w:t>
+									<w:t>${myopiaNvRate!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5436,7 +5537,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${nn.nj}</w:t>
+									<w:t>${nn.nj!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5456,7 +5557,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${nn.checkNanNum}</w:t>
+									<w:t>${nn.checkNanNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5476,7 +5577,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${nn.myopiaNanNum}</w:t>
+									<w:t>${nn.myopiaNanNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5496,7 +5597,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${nn.myopiaNanRate}%</w:t>
+									<w:t>${nn.myopiaNanRate!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5650,7 +5751,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${mm.nj}</w:t>
+									<w:t>${mm.nj!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5671,7 +5772,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${mm.checkNvNum}</w:t>
+									<w:t>${mm.checkNvNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5692,7 +5793,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${mm.myopiaNvNum}</w:t>
+									<w:t>${mm.myopiaNvNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5713,7 +5814,7 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${mm.myopiaNvRate}%</w:t>
+									<w:t>${mm.myopiaNvRate!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5769,7 +5870,7 @@
 				<w:tbl>
 					<w:tblPr>
 						<w:tblStyle w:val="a4" />
-						<w:tblW w:w="8647" w:type="dxa" />
+						<w:tblW w:w="8662" w:type="dxa" />
 						<w:tblInd w:w="-5" w:type="dxa" />
 						<w:tblBorders>
 							<w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
@@ -5786,10 +5887,12 @@
 							<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
 					</w:tblPr>
 					<w:tblGrid>
-						<w:gridCol w:w="1276" />
-						<w:gridCol w:w="1559" />
-						<w:gridCol w:w="1985" />
-						<w:gridCol w:w="3827" /></w:tblGrid>
+						<w:gridCol w:w="1216" />
+						<w:gridCol w:w="1318" />
+						<w:gridCol w:w="1478" />
+						<w:gridCol w:w="1511" />
+						<w:gridCol w:w="1479" />
+						<w:gridCol w:w="1660" /></w:tblGrid>
 					<w:tr>
 						<w:tblPrEx>
 							<w:tblBorders>
@@ -5808,7 +5911,7 @@
 						<w:trPr/>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1276" w:type="dxa" />
+								<w:tcW w:w="1216" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5822,13 +5925,13 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${cla.grade}</w:t>
+									<w:t>${cla.grade!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1559" w:type="dxa" />
+								<w:tcW w:w="1318" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5841,7 +5944,7 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1985" w:type="dxa" />
+								<w:tcW w:w="1478" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5854,7 +5957,7 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="3827" w:type="dxa" />
+								<w:tcW w:w="1511" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5862,6 +5965,46 @@
 									<w:jc w:val="both" /></w:pPr>
 								<w:r>
 									<w:t>近视率</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1479" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>不良人数</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1660" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="both" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="default" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>视力不良率</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5885,26 +6028,20 @@
 						<w:trPr/>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1276" w:type="dxa" />
+								<w:tcW w:w="1216" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
 									<w:widowControl w:val="off" />
 									<w:jc w:val="both" /></w:pPr>
 								<w:r>
-									<w:rPr>
-										<w:rFonts w:hint="fareast" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${yi.class}</w:t>
-								</w:r>
-								<w:r>
-									<w:t>班</w:t>
+									<w:t>${yi.class!''}班</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1559" w:type="dxa" />
+								<w:tcW w:w="1318" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -5918,13 +6055,13 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${yi.classNum}</w:t>
+									<w:t>${yi.classNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="1985" w:type="dxa" />
+								<w:tcW w:w="1478" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
 								<w:vAlign w:val="top" /></w:tcPr>
 							<w:p>
@@ -5939,13 +6076,13 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${yi.classMyopiaNum}</w:t>
+									<w:t>${yi.classMyopiaNum!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="3827" w:type="dxa" />
+								<w:tcW w:w="1511" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
 								<w:vAlign w:val="top" /></w:tcPr>
 							<w:p>
@@ -5960,7 +6097,49 @@
 									<w:rPr>
 										<w:rFonts w:hint="fareast" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${yi.classMyopiaRate}%</w:t>
+									<w:t>${yi.classMyopiaRate!''}%</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1479" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="center" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="default" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>${yi.classbuliang!''}</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="1660" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
+								<w:vAlign w:val="top" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:widowControl w:val="off" />
+									<w:jc w:val="center" />
+									<w:rPr>
+										<w:rFonts w:fareast="宋体" w:hint="default" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:hint="fareast" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>${yi.classbuliangRate!''}%</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -5970,6 +6149,7 @@
 				<w:p/>
 				<w:p/>
 				</#list>
+
 				<w:p/>
 				<w:p/>
 				<w:p>
@@ -6123,7 +6303,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${xs.grade}${xs.class}</w:t>
+									<w:t>${xs.grade!''}${xs.class!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -6204,7 +6384,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${xs.chaDate}</w:t>
+									<w:t>${xs.chaDate!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -6881,7 +7061,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.studentName}</w:t>
+									<w:t>${jg.studentName!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -6977,7 +7157,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.nakedNearvisionOd}</w:t>
+									<w:t>${jg.nakedNearvisionOd!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7006,7 +7186,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.lifeNearvisionOd}</w:t>
+									<w:t>${jg.lifeNearvisionOd!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7035,7 +7215,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.diopterSOd}</w:t>
+									<w:t>${jg.diopterSOd!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7063,7 +7243,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.diopterCOd}</w:t>
+									<w:t>${jg.diopterCOd!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7092,36 +7272,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.diopterAOd}</w:t>
-								</w:r>
-							</w:p>
-						</w:tc>
-						<w:tc>
-							<w:tcPr>
-								<w:tcW w:w="850" w:type="dxa" />
-								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
-							<w:p>
-								<w:pPr>
-									<w:pStyle w:val="a6" />
-									<w:widowControl w:val="off" />
-									<w:autoSpaceDE w:val="off" />
-									<w:autoSpaceDN w:val="off" />
-									<w:spacing w:line="220" w:line-rule="exact" />
-									<w:ind w:left="130" w:right="110" />
-									<w:jc w:val="center" />
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-								</w:pPr>
-								<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR1Od}</w:t>
+									<w:t>${jg.diopterAOd!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7150,7 +7301,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR2Od}</w:t>
+									<w:t>${jg.cornealR1Od!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7179,7 +7330,36 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.secondCheckOd}</w:t>
+									<w:t>${jg.cornealR2Od!''}</w:t>
+								</w:r>
+							</w:p>
+						</w:tc>
+						<w:tc>
+							<w:tcPr>
+								<w:tcW w:w="850" w:type="dxa" />
+								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
+							<w:p>
+								<w:pPr>
+									<w:pStyle w:val="a6" />
+									<w:widowControl w:val="off" />
+									<w:autoSpaceDE w:val="off" />
+									<w:autoSpaceDN w:val="off" />
+									<w:spacing w:line="220" w:line-rule="exact" />
+									<w:ind w:left="130" w:right="110" />
+									<w:jc w:val="center" />
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+								</w:pPr>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
+										<w:sz w:val="20" />
+										<w:sz-cs w:val="20" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>${jg.secondCheckOd!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7207,7 +7387,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.eyePressureOd}</w:t>
+									<w:t>${jg.eyePressureOd!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7330,7 +7510,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.nakedNearvisionOs}</w:t>
+									<w:t>${jg.nakedNearvisionOs!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7358,7 +7538,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.lifeNearvisionOs}</w:t>
+									<w:t>${jg.lifeNearvisionOs!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7386,7 +7566,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.diopterSOs}</w:t>
+									<w:t>${jg.diopterSOs!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7414,7 +7594,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.diopterCOs}</w:t>
+									<w:t>${jg.diopterCOs!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7443,7 +7623,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.diopterAOs}</w:t>
+									<w:t>${jg.diopterAOs!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7472,7 +7652,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR1Os}</w:t>
+									<w:t>${jg.cornealR1Os!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7501,7 +7681,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR2Os}</w:t>
+									<w:t>${jg.cornealR2Os!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7530,7 +7710,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.secondCheckOs}</w:t>
+									<w:t>${jg.secondCheckOs!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -7558,7 +7738,7 @@
 										<w:sz w:val="20" />
 										<w:sz-cs w:val="20" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.eyePressureOs}</w:t>
+									<w:t>${jg.eyePressureOs!''}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>

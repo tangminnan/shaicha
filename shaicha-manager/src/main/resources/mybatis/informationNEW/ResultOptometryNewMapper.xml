@@ -83,7 +83,9 @@
 			`delete_flag`,
 			first_check_pd ,
 			second_check_pd,
-			activity_id
+			activity_id,
+			Relation_Patient_Crf_Id,
+			identity_card
 		)
 		values
 		(
@@ -103,7 +105,9 @@
 			#{deleteFlag},
 			#{firstCheckPd},
 			#{secondCheckPd},
-			#{activityId}
+			#{activityId},
+			#{RelationPatientCrfId},
+			#{identityCard}
 		)
 	</insert>
 	 

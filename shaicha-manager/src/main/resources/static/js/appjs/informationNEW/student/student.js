@@ -25,6 +25,8 @@ function load() {
 						// //发送到服务器的数据编码类型
 						pageSize : 10, // 如果设置了分页，每页数据条数
 						pageNumber : 1, // 如果设置了分布，首页页码
+						pageList: [10, 25, 50, 100,500,1000],
+						smartDisplay:false,
 						//search : true, // 是否显示搜索框
 						showColumns : false, // 是否显示内容下拉框（选择显示的列）
 						sidePagination : "server", // 设置在哪里进行分页，可选值为"client" 或者 "server"
@@ -34,10 +36,12 @@ function load() {
 								limit: params.limit,
 								offset:params.offset,
 								studentName:$("#studentName").val(),
-								phone:$("#phone").val(),
+								identityCard:$("#identityCard").val(),
 								school:$("#school option:selected").val(),
 								studentSex:$("#studentSex option:selected").val(),
-								lastCheckTime:$("#lastCheckTime").val()
+								grade:$("#grade option:selected").val(),
+								studentClass:$("#studentClass option:selected").val(),
+								//lastCheckTime:$("#lastCheckTime").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -77,10 +81,10 @@ function load() {
 									field : 'nation', 
 									title : '民族' 
 								},
-																{
+								/*								{
 									field : 'birthday', 
 									title : '出生年月' 
-								},
+								},*/
 																{
 									field : 'identityCard', 
 									title : '身份证号' 
@@ -121,6 +125,20 @@ function load() {
 									field : 'status', 
 									title : '状态0：正常1：禁止' 
 								},*/
+								{
+									title : '操作',
+									field : 'id',
+									align : 'center',
+									formatter : function(value, row, index) {
+										var e = '<a class="btn btn-primary btn-xs '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
+												+ row.id
+												+ '\')" style="text-decoration: none;">编辑</a>';
+										var d = '<a class="btn btn-warning btn-xs '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+												+ row.id
+												+ '\')" style="text-decoration: none;">删除</a>';
+										return e + d;
+									}
+								},
 																{
 									title : '操作',
 									field : 'id',
@@ -158,20 +176,25 @@ function load() {
 					});
 }
 function reLoad() {
+	var identityCard = $("#identityCard").val();
+	var idc = identityCard.split("JOIN")[0];
+	$("#identityCard").val(idc);
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
-	layer.open({
+	var checkType='PU_TONG';
+	var page = layer.open({
 		type : 2,
 		title : '增加',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
-		content : prefix + '/add' // iframe的url
+		content : prefix + '/add/'+checkType // iframe的url
 	});
+	layer.full(page);
 }
 function edit(id) {
-	layer.open({
+	var page = layer.open({
 		type : 2,
 		title : '编辑',
 		maxmin : true,
@@ -179,6 +202,7 @@ function edit(id) {
 		area : [ '800px', '520px' ],
 		content : prefix + '/edit/' + id // iframe的url
 	});
+	layer.full(page);
 }
 function code(id) {
 	layer.open({
@@ -229,7 +253,7 @@ function importtemplate(){
 		title : '导入会员',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '300px' ],
+		area : [ '800px', '520px' ],
 		content : prefix + '/importtemplate/'+checkType // iframe的url
 	});
 }
@@ -416,3 +440,34 @@ function putongshaichadayin(id,lastCheckTime){
 	}
 	window.open("/informationNEW/student/putongshaichadayin?id="+id);
 }
+
+/*
+ * 批量打印二维码
+ */
+function erweimadayin(){
+	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	if (rows.length == 0) {
+		layer.msg("选择要打印的二维码");
+		return;
+	}
+	var ids=[];
+	$.each(rows, function(i, row) {
+		ids[i] = row['id'];
+	});
+	window.open("/informationNEW/student/batchdayinerweima?ids="+ids);
+}
+
+//活动报告
+function huodongbaogao(){
+	
+	var page = layer.open({
+		type : 2,
+		title : '报告',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '300px' ],
+		content : '/studentReportNew/xuexiao' // iframe的url
+	});
+	layer.full(page);	
+}
+

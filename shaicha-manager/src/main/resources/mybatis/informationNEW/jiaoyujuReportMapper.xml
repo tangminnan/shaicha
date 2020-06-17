@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.jiaoyujuReportNewDao">
+
+	<!--  -->
+	<select id="getAddress" resultType="com.shaicha.informationNEW.domain.SchoolNewDO">
+		SELECT `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school_new where OrgName = #{value}
+	</select>
+	<!-- 检测时间 -->
+	<select id="getMaxMinCheckDate" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		SELECT MIN(last_check_time) mincheckdate, max(last_check_time) maxcheckdate from t_student_new where activity_id = #{activityId}
+	</select>
+	<!--  -->
+	<select id="getXuebuNum" resultType="int">
+		SELECT count(*) from (
+		SELECT count(*) ,xue_bu from t_student_new where activity_id = #{activityId}  GROUP BY school) a where a.xue_bu = #{xueBu}
+	</select>
+	<!--  -->
+	<select id="activityByCheckNum" resultType="int">
+		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
+		where 
+		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school}
+	</select>
+	<!--  -->
+	<select id="schoolByCheckNum" resultType="int">
+		SELECT count(*) FROM t_student_new where activity_id = #{activityId} and school = #{school}
+	</select>
+	<!-- #前期 -->
+	<select id="jinshiqianqi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a where a.jinshi >= 5.0) b 
+		where b.dengxiaoqiujing >= -0.5 and b.dengxiaoqiujing <= 0.75 and b.dengxiaoqiujing != 0  ]]>
+	</select>
+	<!-- #假性 -->
+	<select id="jiaxingjinshi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a where a.jinshi >= 5.0) b 
+		where b.dengxiaoqiujing < -0.5 and b.dengxiaoqiujing != 0 ]]>
+	</select>
+	<!-- 低度 -->
+	<select id="didujinshi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5 and b.dengxiaoqiujing >= -3.0]]>
+	</select>
+	<!-- 中度 -->
+	<select id="zhongdujinshi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -3.0 and b.dengxiaoqiujing > -6.0]]>
+	</select>
+	<!-- 高度 -->
+	<select id="gaodujinshi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing <= -6.0]]>
+	</select>
+	<!--不良  -->
+	<!--轻度  -->
+	<select id="qingdubuliang" resultType="int">
+		SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a 
+		where a.jinshi = 4.9
+	</select>
+	<!-- 中度 -->
+	<select id="zhongdubuliang" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a 
+		where a.jinshi >=4.6 and a.jinshi <= 4.9]]>
+	</select>
+	<!--重度  -->
+	<select id="gaodubuliang" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a 
+		where a.jinshi <= 4.5]]>
+	</select>
+	<!-- 总计 -->
+	<select id="buliangtotal" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} )a 
+		where a.jinshi < 5.0]]>
+	</select>
+	<!-- 学部近视 -->
+	<select id="nowXuebuJinshi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and xue_bu = #{xueBu} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5]]>
+	</select>
+	<!--男女近视人数  -->
+	<select id="sexCheckNum" resultType="int">
+		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
+		where 
+		s.id = r.student_id and r.activity_id = #{activityId}  and s.student_sex = #{studentSex} and s.school = #{school}
+	</select>
+	<!-- 近视 -->
+	<select id="sexJinshiNum" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and student_sex = #{studentSex} and school = #{school} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5]]>
+	</select>
+	<!-- 戴镜 -->
+	<select id="daijingrenshu" resultType="int">
+		select count(*) from t_result_eyesight_new re,t_student_new t where t.id = re.student_id and re.correction_farvision_od != 0 and t.activity_id = #{activityId} and t.school = #{school}	
+	</select>
+	<!-- 原眼镜矫正不足 -->
+	<select id="jiaozhengbuzurenshu" resultType="int">
+		<![CDATA[ SELECT count(*) from (
+		SELECT least(re.correction_farvision_od,re.correction_farvision_os) as jinshi from t_student_new t ,t_result_eyesight_new re 
+		where t.id = re.student_id and t.activity_id = #{activityId} and t.school = #{school} and re.correction_farvision_od != 0 )a 
+		where a.jinshi < 4.9 ]]>
+	</select>
+	<!-- 图 -->
+	<select id="nowCheckNum" resultType="int">
+		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
+		where 
+		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school} and s.grade = #{grade}
+	</select>
+	<!-- 近视 -->
+	<select id="nowgradejinshi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5]]>
+	</select>
+	<!-- 不良 -->
+	<select id="nowgradebuliang" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
+		where a.jinshi < 5.0]]>
+	</select>
+	<!--  -->
+	<select id="linianXuebuRenshu" resultType="int">
+		SELECT count(*) from t_student_new t , t_school_new s
+ 		where t.school_id = s.id and s.xuebu = #{xueBu} and t.activity_id = #{activityId} and t.school = #{school} and date_format(t.last_check_time,'%Y') = #{lastCheckTime}
+	</select>
+	<!-- 学部近视 历年-->
+	<select id="linianXueBujinshi" resultType="int">
+		<![CDATA[ SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT t.dengxiaoqiujingr,t.dengxiaoqiujingl ,t.last_check_time,least(t.naked_farvision_od,t.naked_farvision_os) jinshi from t_student_new t,t_school_new s
+  		where t.school_id = s.id and s.xuebu = #{xueBu} and t.activity_id = #{activityId} and t.school = #{school} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5 and date_format(b.last_check_time,'%Y') = #{lastCheckTime} ]]>
+		<!-- 
+		SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where xue_bu = #{xueBu} and activity_id = #{activityId} and school = #{school} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5 and date_format(b.last_check_time,'%Y') =#{lastCheckTime}  -->
+	</select>
+	<!--  -->
+	<select id="linianSexrenshu" resultType="int">
+		SELECT count(*) from t_student_new where student_sex = #{studentSex} and activity_id = #{activityId} and school = #{school} and date_format(last_check_time,'%Y') =#{lastCheckTime}
+	</select>
+	<!--男女  历年-->
+	<select id="linianSexjinshi" resultType="int">
+		<![CDATA[SELECT count(*) from (
+		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where student_sex = #{studentSex} and activity_id = #{activityId} and school = #{school} )a where a.jinshi < 5.0) b 
+		where b.dengxiaoqiujing < -0.5 and date_format(b.last_check_time,'%Y') =#{lastCheckTime}  ]]>
+	</select>
+
+</mapper>

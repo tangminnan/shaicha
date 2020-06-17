@@ -174,6 +174,7 @@ public class QRCodeUtil {
         String binary = null;
         Hashtable hints = new Hashtable();
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         try {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(
                     contents, BarcodeFormat.QR_CODE, width, height, hints);

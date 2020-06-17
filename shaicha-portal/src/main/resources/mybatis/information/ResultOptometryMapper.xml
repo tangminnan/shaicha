@@ -21,12 +21,12 @@
 						 second_check_pd,
 						 `delete_flag`
 						FROM
-							t_result_optometry
+							t_result_optometry_new
 						WHERE
-							student_id = #{studentId} order by check_date limit 1
+							student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	<insert id="saveOptometryDO" parameterType="com.shaicha.information.domain.ResultOptometryDO" useGeneratedKeys="true" keyProperty="tOptometryId">
-		insert into t_result_optometry
+		insert into t_result_optometry_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -44,7 +44,8 @@
 			`delete_flag`,
 			first_check_pd,
 			second_check_pd,
-			identity_card
+			identity_card,
+			activity_id
 		)
 		values
 		(
@@ -64,11 +65,12 @@
 			#{deleteFlag},
 			#{firstCheckPd},
 			#{secondCheckPd},
-			#{identityCard}
+			#{identityCard},
+			#{activityId}
 		)
 	</insert>
 	<update id="updateOptometryDO" parameterType="com.shaicha.information.domain.ResultOptometryDO">
-		update t_result_optometry 
+		update t_result_optometry_new 
 		<set>
 			<if test="studentId != null">`student_id` = #{studentId}, </if>
 			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>

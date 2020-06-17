@@ -35,5 +35,6 @@ public interface ResultCornealNewDao {
 	List<ResultCornealNewDO> queryByToptometryTd(Integer tOptometryId);
 	
 	List<ResultCornealNewDO> getCornealMm(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard
-			,@Param("type") String type,@Param("start") Date start,@Param("end") Date end);
+			,@Param("type") String type,@Param("activityId") Integer activityId);
+		
 }

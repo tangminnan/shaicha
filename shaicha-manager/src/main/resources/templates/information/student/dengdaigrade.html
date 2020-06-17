@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header">
+<style type="text/css">
+	.layui-layer-setwin{display: none;}
+	.box{width: 50%;height: 50%;margin-left: 40%;margin-top: 5%;}
+</style>
+
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<div>
+						<input id="school" name="school" th:value="${school}" type="hidden">
+						<input id="activityId" name="activityId" th:value="${activityId}" type="hidden">
+						<input id="grade" name="grade" th:value="${grade}" type="hidden">					
+						<input id="type" name="type" th:value="${type}" type="hidden">
+						<input id="stuclass" name="stuclass" th:value="${stuclass}" type="hidden">
+						<div class="box">
+							  <h4>正在整理数据,请您稍候 ...</h4>   
+							  <p class="nowTurn">整理数据时间较长请您耐心等待 ...</p>
+				    	</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript">
+	 $(function(){
+		 
+		var type = $("input[name='type']").val();
+		if(type == 3){
+			window.location.href= "/studentReport/gradeBaogao?activityId="+$("#activityId").val()
+																+"&school="+$("#school").val()
+																+"&grade="+$("#grade").val()
+			
+		}
+		if(type == 4){
+			window.location.href= "/studentReport/stuClassBaogao?activityId="+$("#activityId").val()
+																	+"&school="+$("#school").val()
+																	+"&grade="+$("#grade").val()
+																	+"&stuclass="+$("#stuclass").val()
+		}
+													
+	 })
+	 
+	 var timer1 = setInterval(refeshPage,1000);//每隔一秒判断下cookie是否已经写回，如果写回，则进行页面刷新
+
+	 function refeshPage(){
+		 if(getCookie("status")=="success"){
+			  clearInterval(timer1);//每隔一秒的判断操作停止
+			  delCookie("status");//删除cookie
+			  //window.location.href="/studentReport/xuexiao"
+			  var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+			  parent.layer.close(index);
+		 }
+	 }
+
+	 function getCookie(cookie_name) {
+	        var allcookies = document.cookie;
+			//索引长度，开始索引的位置
+	        var cookie_pos = allcookies.indexOf(cookie_name);
+
+	        // 如果找到了索引，就代表cookie存在,否则不存在
+	        if (cookie_pos != -1) {
+	            // 把cookie_pos放在值的开始，只要给值加1即可
+	            //计算取cookie值得开始索引，加的1为“=”
+	            cookie_pos = cookie_pos + cookie_name.length + 1; 
+	            //计算取cookie值得结束索引
+	            var cookie_end = allcookies.indexOf(";", cookie_pos);
+	            
+	            if (cookie_end == -1) {
+	                cookie_end = allcookies.length;
+
+	            }
+	            //得到想要的cookie的值
+	            var value = unescape(allcookies.substring(cookie_pos, cookie_end)); 
+	        }
+	        return value;
+	    }
+	 
+	 	function delCookie(name){
+		  var exp = new Date();
+		  exp.setTime(exp.getTime() - 1);
+		  var cval = getCookie(name);
+		  if (cval != null) document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+		}
+	 
+	</script>
+</body>
+</html>

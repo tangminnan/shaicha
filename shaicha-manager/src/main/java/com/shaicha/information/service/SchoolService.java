@@ -1,6 +1,6 @@
-package com.shaicha.informationNEW.service;
+package com.shaicha.information.service;
 
-import com.shaicha.informationNEW.domain.SchoolDO;
+import com.shaicha.information.domain.SchoolDO;
 import com.shaicha.informationNEW.domain.TArea;
 
 import java.util.List;

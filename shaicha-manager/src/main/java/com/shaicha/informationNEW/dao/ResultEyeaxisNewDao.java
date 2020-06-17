@@ -32,5 +32,5 @@ public interface ResultEyeaxisNewDao {
 	
 	int batchRemove(Integer[] tEyeaxisIds);
 	
-	List<ResultEyeaxisNewDO> getEyeaxis(@Param("identityCard")String identityCard,@Param("start") Date start,@Param("end") Date end);
+	List<ResultEyeaxisNewDO> getEyeaxis(@Param("studentId")Integer studentId);
 }

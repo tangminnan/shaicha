@@ -25,7 +25,33 @@ public class ActivityListNewDO implements Serializable {
 	private Date addTime;
 	//更新时间
 	private Date updateDate;
+	private Long sysId;
+	
+	private Integer yingjian;
+	
+	private Integer shoujian;
 
+	
+	
+	
+	public Integer getYingjian() {
+		return yingjian;
+	}
+	public void setYingjian(Integer yingjian) {
+		this.yingjian = yingjian;
+	}
+	public Integer getShoujian() {
+		return shoujian;
+	}
+	public void setShoujian(Integer shoujian) {
+		this.shoujian = shoujian;
+	}
+	public Long getSysId() {
+		return sysId;
+	}
+	public void setSysId(Long sysId) {
+		this.sysId = sysId;
+	}
 	/**
 	 * 设置：活动id
 	 */

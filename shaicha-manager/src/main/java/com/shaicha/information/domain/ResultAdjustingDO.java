@@ -45,7 +45,14 @@ public class ResultAdjustingDO implements Serializable {
 	private Date endTime;
 	private Date startTime;
 	
+	private Integer activityId;
 	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public Date getEndTime() {
 		return endTime;
 	}

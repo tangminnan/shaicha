@@ -1,4 +1,4 @@
-package com.shaicha.informationNEW.service.impl;
+package com.shaicha.information.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
-import com.shaicha.informationNEW.dao.SchoolDao;
-import com.shaicha.informationNEW.domain.SchoolDO;
-import com.shaicha.informationNEW.service.SchoolService;
-import com.shaicha.informationNEW.domain.TArea;
+import com.shaicha.information.dao.SchoolDao;
+import com.shaicha.information.domain.SchoolDO;
+import com.shaicha.information.service.SchoolService;
 
 
 

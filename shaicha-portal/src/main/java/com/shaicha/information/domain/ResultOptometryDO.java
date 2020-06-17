@@ -51,7 +51,16 @@ public class ResultOptometryDO implements Serializable {
 	private Integer deleteFlag;
 	//身份证号
 	private String identityCard;
+	private Integer activityId;
 	
+	
+	
+	public Integer getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
 	public String getIdentityCard() {
 		return identityCard;
 	}
@@ -247,7 +256,7 @@ public class ResultOptometryDO implements Serializable {
 			Double secondCheckPd, Double firstCheckRps, Double firstCheckLps, Double firstCheckRcs,
 			Double firstCheckLcs, Date checkDate, Double secondCheckVd, Double secondCheckRps, Double secondCheckLps,
 			Double secondCheckRcs, Double secondCheckLcs, Integer deleteFlag,
-			String identityCard) {
+			String identityCard,Integer activityId) {
 		super();
 		this.studentId = studentId;
 		this.checkorId = checkorId;
@@ -266,6 +275,7 @@ public class ResultOptometryDO implements Serializable {
 		this.secondCheckLcs = secondCheckLcs;
 		this.deleteFlag = deleteFlag;
 		this.identityCard=identityCard;
+		this.activityId=activityId;
 	}
 	
 	

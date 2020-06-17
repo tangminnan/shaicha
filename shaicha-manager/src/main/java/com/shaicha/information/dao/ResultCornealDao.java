@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.shaicha.information.domain.ResultCornealDO;
+import com.shaicha.informationNEW.domain.ResultCornealNewDO;
 
 /**
  * 角膜曲率详情
@@ -35,5 +36,7 @@ public interface ResultCornealDao {
 	List<ResultCornealDO> queryByToptometryTd(Integer tOptometryId);
 	
 	List<ResultCornealDO> getCornealMm(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard
-			,@Param("type") String type,@Param("start") Date start,@Param("end") Date end);
+			,@Param("type") String type,@Param("activityId") Integer activityId);
+	
+	//int insertForeach(List<ResultCornealNewDO> list);
 }

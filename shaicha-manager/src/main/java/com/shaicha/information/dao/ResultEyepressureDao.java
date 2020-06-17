@@ -32,5 +32,5 @@ public interface ResultEyepressureDao {
 	
 	int batchRemove(Integer[] tEyepressureIds);
 	
-	List<ResultEyepressureDO> getEyepressure(@Param("identityCard")String identityCard, @Param("start") Date start,@Param("end") Date end);
+	List<ResultEyepressureDO> getEyepressure(@Param("studentId")Integer studentId);
 }

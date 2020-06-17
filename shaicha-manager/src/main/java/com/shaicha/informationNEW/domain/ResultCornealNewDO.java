@@ -32,15 +32,28 @@ public class ResultCornealNewDO implements Serializable {
 	//两周内的第几次检查  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查'
 	private String firstSecond;
 	private Date checkDate;
+	private String identityCard;
+	private String activityId;
+	private String RelationPatientCrfId;
 	
-	private Integer activityId;
 	
 	
-	
-	public Integer getActivityId() {
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
+	public String getRelationPatientCrfId() {
+		return RelationPatientCrfId;
+	}
+	public void setRelationPatientCrfId(String relationPatientCrfId) {
+		RelationPatientCrfId = relationPatientCrfId;
+	}
+	public String getActivityId() {
 		return activityId;
 	}
-	public void setActivityId(Integer activityId) {
+	public void setActivityId(String activityId) {
 		this.activityId = activityId;
 	}
 	public Date getCheckDate() {

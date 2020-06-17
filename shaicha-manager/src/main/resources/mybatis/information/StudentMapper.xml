@@ -11,6 +11,11 @@
 		select `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time from t_student
 		GROUP BY school
 	</select>
+	
+	<select id="querylistStudentName" resultType="com.shaicha.information.domain.StudentDO">
+		select DISTINCT student_name from t_student where check_type = 'SHI_FANXIAO' and student_name like concat('%', #{studentName},'%')
+		limit #{offset}, #{limit}
+	</select>
 
 	<select id="list" resultType="com.shaicha.information.domain.StudentDO">
 		select `id`,model_type,ideentity_type,school_code,xue_bu,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time from t_student
@@ -630,77 +635,23 @@ FROM
 	t_student
 LIMIT #{i},#{j}
 </select>
-	<select id="querySchoolName" resultType="com.shaicha.information.domain.StudentDO">
-		select id, school from t_student group by school
-	</select>
+
 	
 	<select id="querySchoolGrade" resultType="com.shaicha.information.domain.StudentDO">
 		select id, school,student_name,grade ,xue_bu from t_student where school = #{school} group by grade
 	</select>	
 	
-	<select id="queryGradeNum" resultType="com.shaicha.information.domain.StudentDO">
-		select id, school,student_name from t_student where grade = #{grade} and school = #{school} group by identity_card
-	</select>
-	
-	<select id="getCheckUserNum" resultType="com.shaicha.information.domain.StudentDO">
-		select ts.id, ts.school,ts.student_name from t_student ts,t_result_diopter trd
-		where trd.identity_card = ts.identity_card and ts.school = #{school}
-		and trd.check_date between #{start} and #{end}
-		<if test="studentSex != null and studentSex != ''"> and ts.student_sex = #{studentSex} </if>
-		<if test="grade != null and grade != ''"> and ts.grade = #{grade} </if>
-		  group by ts.identity_card
-	</select>
-	
-	<select id="getGradeClassCheck" resultType="com.shaicha.information.domain.StudentDO">
-		select ts.id, ts.school,ts.student_name from t_student ts,t_result_diopter trd
-		where trd.identity_card = ts.identity_card and ts.school = #{school}
-		and trd.check_date between #{start} and #{end}
-		and ts.student_class = #{studentClass}
-		and ts.grade = #{grade}
-		  group by ts.identity_card
-	</select>
-	
 	<select id="queryGradeClassCount" resultType="com.shaicha.information.domain.StudentDO">
 		select id ,student_class,school,student_name from t_student
-		 where school = #{school} and grade = #{grade} GROUP BY student_class
-	</select>
-	
-	<select id="getCheckNianjiNum" resultType="com.shaicha.information.domain.StudentDO">
-		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex from t_result_diopter trd , t_student ts 
-		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and date_format(trd.check_date,'%Y-%m-%d') = #{checkDate}
-		GROUP BY ts.student_class
-	</select>
-	
-	<select id="queryStudentGrade" resultType="com.shaicha.information.domain.StudentDO">
-		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,trd.identity_card from t_result_diopter trd , t_student ts 
-		where trd.identity_card = ts.identity_card and ts.grade = #{grade} and ts.school = #{school} and trd.check_date between #{start} and #{end}
-		and ts.student_class = #{studentClass}
-		GROUP BY trd.identity_card
-	</select>
-	
-	<select id="getSchool" resultType="com.shaicha.information.domain.StudentDO">
-		select ts.student_class,ts.school,ts.xue_bu from t_student ts , t_result_eyesight tre 
-		where ts.identity_card = tre.identity_card and check_date between #{start} and #{end}
-		group by ts.school
-	</select>
-	
-	<select id="getLastCheckStudent" resultType="com.shaicha.information.domain.StudentDO">
-		select school ,student_sex ,identity_card ,last_check_time ,xue_bu from t_student where school =  #{school} and last_check_time between #{start} and #{end}
-	</select>
-	
-	<select id="getCheckAllStudent" resultType="com.shaicha.information.domain.StudentDO">
-		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
-		from t_student where last_check_time between #{start} and #{end} and grade = #{grade}
+		 where school = #{school} and activity_id = #{activityId} and grade = #{grade} GROUP BY student_class
 	</select>
 
-	<select id="jiancharenshu" resultType="com.shaicha.information.domain.StudentDO">
-		select school ,student_sex ,identity_card ,last_check_time ,xue_bu,student_class,grade 
-		from t_student where last_check_time between #{start} and #{end} and school = #{school}
-		<if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
-		<if test="grade != null and grade != ''"> and grade = #{grade} </if>
-		<if test="studentClass != null and studentClass != ''"> and student_class = #{studentClass}</if>
-		  group by identity_card
+	<select id="queryStudentGrade" resultType="com.shaicha.information.domain.StudentDO">
+		select ts.id ,ts.student_class,ts.school,ts.student_name,ts.student_sex,ts.identity_card from t_student ts 
+		where ts.grade = #{grade} and ts.school = #{school} and  ts.activity_id = #{activityId}
+		and ts.student_class = #{studentClass}
 	</select>
+
 
 <select id="getAllCheckStudentDO"  resultType="com.shaicha.information.domain.StudentDO">
 	select ifnull(dengxiaoqiujingr,-10) dengxiaoqiujingr,
@@ -710,5 +661,14 @@ LIMIT #{i},#{j}
 		   
 		   from t_student  where last_check_time is not null   limit #{i},#{j}  
 </select>
+
+	<select id="queryBySchoolGrade" resultType="com.shaicha.information.domain.StudentDO">
+		select activity_id,school,grade from t_student where activity_id = #{activityId} and school = #{school} GROUP BY grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','高一','高二','高三')
+	</select>
+	
+	<select id="queryBySchoolStudentClass" resultType="com.shaicha.information.domain.StudentDO">
+		select activity_id,school,grade,student_class from t_student where activity_id = #{activityId} and school = #{school} GROUP BY student_class
+	</select>
 	
 </mapper>

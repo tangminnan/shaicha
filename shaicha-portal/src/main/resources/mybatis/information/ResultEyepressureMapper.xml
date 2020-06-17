@@ -11,14 +11,16 @@
 					`eye_pressure_od`,
 					`eye_pressure_os`,
 					`check_date`,
-					`delete_flag`
+					`delete_flag`,
+					corneal_curvature_od,
+					corneal_curvature_os
 				FROM
-					t_result_eyepressure
+					t_result_eyepressure_new
 				WHERE
 					student_id = #{studentId} order by check_date desc limit 1
 	</select>
 	<insert id="saveEyepressureDO" parameterType="com.shaicha.information.domain.ResultEyepressureDO" useGeneratedKeys="true" keyProperty="tEyepressureId">
-		insert into t_result_eyepressure
+		insert into t_result_eyepressure_new
 		(
 			`student_id`, 
 			`checkor_id`, 
@@ -26,7 +28,10 @@
 			`eye_pressure_os`, 
 			`check_date`, 
 			`delete_flag`,
-			identity_card
+			identity_card,
+			activity_id,
+			corneal_curvature_od,
+			corneal_curvature_os
 		)
 		values
 		(
@@ -36,20 +41,25 @@
 			#{eyePressureOs}, 
 			#{checkDate}, 
 			#{deleteFlag},
-			#{identityCard}
+			#{identityCard},
+			#{activityId},
+			#{cornealCurvatureOd},
+			#{cornealCurvatureOs}
 			
 		)
 	</insert>
 	
 	<update id="updateEyepressureDO" parameterType="com.shaicha.information.domain.ResultEyepressureDO">
-		update t_result_eyepressure 
+		update t_result_eyepressure_new 
 		<set>
 			<if test="studentId != null">`student_id` = #{studentId}, </if>
 			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
 			<if test="eyePressureOd != null">`eye_pressure_od` = #{eyePressureOd}, </if>
 			<if test="eyePressureOs != null">`eye_pressure_os` = #{eyePressureOs}, </if>
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
-			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag}</if>
+			<if test="deleteFlag != null">`delete_flag` = #{deleteFlag},</if>
+			<if test="cornealCurvatureOd != null">`corneal_curvature_od` = #{cornealCurvatureOd},</if>
+			<if test="cornealCurvatureOs != null">`corneal_curvature_os` = #{cornealCurvatureOs}</if>
 		</set>
 		where t_eyepressure_id = #{tEyepressureId}
 	</update>

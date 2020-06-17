@@ -8,6 +8,31 @@ $.validator.setDefaults({
 	}
 });
 function save() {
+	
+	var ideentityType = $("input[name='ideentityType']:checked").val();
+	var identityCard = $("input[name='identityCard']").val();
+	if(ideentityType=="身份证"){
+		var date = new Date();
+		var nowyear = date.getFullYear();
+		var year = identityCard.substring(6, 10);
+		var month = identityCard.substring(10, 12);
+		var day = identityCard.substring(12, 14);
+		if(year>=nowyear){
+			alert("出生年份应当小于当前年份！！！");
+			return false;
+		}
+		if(month>=13){
+			alert("出生月份应当小于13！！！");
+			return false;
+		}
+		if(day>=32){
+			alert("出生天数应当小于32！！！");
+			return false;
+		}
+		//var birthday = year+"-"+month+"-"+day
+		//$("input[name='birthday']").val(birthday);
+	}
+	
 	$.ajax({
 		cache : true,
 		type : "POST",
@@ -48,7 +73,7 @@ function validateRule() {
 			nation : {
 				required : true
 			},
-			birthday : {
+			ideentityType : {
 				required : true
 			},
 			identityCard : {
@@ -66,9 +91,7 @@ function validateRule() {
 			phone : {
 				required : true
 			},
-			xueBu: {
-				required : true
-			},
+			
 		},
 		messages : {
 			activityId : {
@@ -83,8 +106,8 @@ function validateRule() {
 			nation : {
 				required : icon + "请输入民族"
 			},
-			birthday : {
-				required : icon + "请输入出生年月"
+			ideentityType : {
+				required : icon + "请选择证件类型"
 			},
 			identityCard : {
 				required : icon + "请输入身份证号"
@@ -101,9 +124,7 @@ function validateRule() {
 			phone : {
 				required : icon + "请输入联系方式"
 			},
-			xueBu : {
-				required : icon + "请输入学部"
-			},
+			
 		}
 	})
 }

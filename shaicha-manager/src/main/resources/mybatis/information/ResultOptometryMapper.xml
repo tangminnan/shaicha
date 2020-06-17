@@ -62,6 +62,8 @@
 		  		</where>
 	</select>
 	 
+	 	
+	 
 	<insert id="save" parameterType="com.shaicha.information.domain.ResultOptometryDO" useGeneratedKeys="true" keyProperty="tOptometryId">
 		insert into t_result_optometry
 		(
