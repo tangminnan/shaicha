@@ -496,18 +496,24 @@ public class ResultServiceImpl implements ResultService{
 
 	@Override
 	public Map<String, Object> getStudentInfo(String identityCard) {
-		String[] split = identityCard.split("JOIN");
 		Map<String,Object> resultMap  =new HashMap<String,Object>();
-		List<StudentDO>  list = studentDao.getStudentInfo(Integer.valueOf(split[1]));
-		if(list.size()==0){
-			resultMap.put("code", -1);
-			resultMap.put("msg", "数据缺失");
+		if(identityCard.length() <= 0 || identityCard.trim() == "" || identityCard.indexOf("JOIN") == -1){
+			resultMap.put("code", 1);
+			resultMap.put("msg", "请重新扫描二维码");
 			resultMap.put("data", null);
-		}
-		else{
-			resultMap.put("code", 0);
-			resultMap.put("msg", "获取到数据...");
-			resultMap.put("data",list.get(0));
+		}else{
+			String[] split = identityCard.split("JOIN");
+			List<StudentDO>  list = studentDao.getStudentInfo(Integer.valueOf(split[1]));
+			if(list.size()==0){
+				resultMap.put("code", -1);
+				resultMap.put("msg", "数据缺失");
+				resultMap.put("data", null);
+			}
+			else{
+				resultMap.put("code", 0);
+				resultMap.put("msg", "获取到数据...");
+				resultMap.put("data",list.get(0));
+			}
 		}
 		return resultMap;
 	}

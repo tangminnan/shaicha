@@ -7,7 +7,7 @@
  </head>
  <body>
   <div>
-  <span style="font-family:宋体; font-size:18pt; margin-left:120; font-weight:bold">山东省儿童青少年视觉健康档案</span>
+  <span style="font-family:宋体; font-size:18pt; margin-left:120; font-weight:bold">山东省儿童青少年近视防控调查视觉健康档案</span>
    <table cellspacing="0" cellpadding="0" style="border-collapse:collapse;  margin-left:0pt">
     <tbody>
      <tr style="height:38.65pt">
@@ -229,12 +229,12 @@
    <table cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin-left:0pt">
     <tbody>
      <tr style="height:20.45pt">
-      <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:481.9pt"><p style="font-size:12pt; line-height:150%; margin:0pt; orphans:0; padding-bottom:1pt; padding-left:4pt; padding-right:4pt; padding-top:1pt; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:bold">持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)</span></p></td>
+      <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:481.9pt"><p style="font-size:12pt; line-height:150%; margin:0pt; orphans:0; padding-bottom:1pt; padding-left:4pt; padding-right:4pt; padding-top:1pt; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt; font-weight:bold" th:text="${zhongxin?.biaogeBiaoti}">持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)</span></p></td>
      </tr>
      <tr>
       <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top; width:481.9pt">
        <div style="border-top-width:0.75pt; clear:both; margin:0pt">
-        <p style="font-size:12pt; line-height:150%; margin:0pt; orphans:0; padding-left:4pt; padding-right:4pt; padding-top:1pt; text-align:justify; widows:0"><span style="font-family:宋体; font-size:12pt">&nbsp; 通过三级视功能检查可以评定双眼单视功能、集合功能、立体视功能、调节功能、眼位等，排除有无功能性异常、眼位异常的情况，有无加速近视进展的诱因。并根据检查结果制定个性化近视防控方案，有效控制近视进展、缓解视疲劳，解决视物困难、重影、模糊、丢字、串行等学习效率低下问题。</span></p>
+        <p style="font-size:12pt; line-height:150%; margin:0pt; orphans:0; padding-left:4pt; padding-right:4pt; padding-top:1pt; text-align:justify; widows:0">&nbsp;&nbsp;<span style="font-family:宋体; font-size:12pt" th:text="${zhongxin?.biaogeNeirong}">&nbsp; 通过三级视功能检查可以评定双眼单视功能、集合功能、立体视功能、调节功能、眼位等，排除有无功能性异常、眼位异常的情况，有无加速近视进展的诱因。并根据检查结果制定个性化近视防控方案，有效控制近视进展、缓解视疲劳，解决视物困难、重影、模糊、丢字、串行等学习效率低下问题。</span></p>
         
        </div></td>
      </tr>
@@ -249,12 +249,13 @@
  <!-- <p style="font-size:12pt; line-height:150%; margin:0pt 84pt 0pt 0pt; orphans:0; text-align:justify;text-indent:231pt; widows:0"><span style="font-family:宋体; font-size:12pt">山东中医药大学附属眼科医院</span></p>
    <p style="font-size:12pt; line-height:150%; margin:0pt 78pt 0pt 0pt; orphans:0; text-align:justify; text-indent:231pt; widows:0"><span style="font-family:宋体; font-size:12pt">山东省青少年视力低下防治中心</span></p> -->
    <div style="position: relative; height: 75pt;">
-   <p style="position:absolute;font-size:12pt;top:10pt; line-height:150%; margin:0pt 84pt 0pt 0pt; orphans:0; text-align:justify;text-indent:200pt; widows:0"><span style="font-family:宋体; font-size:12pt" th:text="${zhongxin?.zhongxinName}" >蓬莱市人民医院视光中心</span></p>
-   <p style="position:absolute;font-size:12pt;top:30pt; line-height:150%; margin:0pt 78pt 0pt 0pt; orphans:0; text-align:justify; text-indent:200pt; widows:0"><span style="font-family:宋体; font-size:12pt" th:text="${zhongxin?.zhongxinAddress}" >电话：0535-5632686</span></p>
-   <p style="position:absolute;font-size:12pt;top:50pt; line-height:150%; margin:0pt 84pt 0pt 0pt; orphans:0; text-align:justify;text-indent:200pt; widows:0"><span style="font-family:宋体; font-size:12pt" th:text="${zhongxin?.zhongxinPhone}" >地址：蓬莱市人民医院大门东侧</span></p>
+   <p style="position:absolute;font-size:12pt;top:10pt; line-height:150%; margin:0pt 84pt 0pt 0pt; orphans:0; text-align:justify;text-indent:150pt; widows:0;white-space:pre"><span style="font-family:宋体; font-size:12pt" th:text="${zhongxin?.zhongxinName}" >蓬莱市人民医院视光中心</span></p>
+   <p style="position:absolute;font-size:12pt;top:30pt; line-height:150%; margin:0pt 78pt 0pt 0pt; orphans:0; text-align:justify; text-indent:150pt; widows:0;white-space:pre"><span style="font-family:宋体; font-size:12pt" th:text="${zhongxin?.zhongxinAddress}" >电话：0535-5632686</span></p>
+   <p style="position:absolute;font-size:12pt;top:50pt; line-height:150%; margin:0pt 84pt 0pt 0pt; orphans:0; text-align:justify;text-indent:150pt; widows:0;white-space:pre"><span style="font-family:宋体; font-size:12pt" th:text="${zhongxin?.zhongxinPhone}" >地址：蓬莱市人民医院大门东侧</span></p>
    <div th:if="${zhongxin.zhongxinImg} != null">
    <div th:if="${zhongxin.zhongxinImg} != ''">
-   <img alt="" th:src="${zhongxin?.zhongxinImg}"  src="/img/penglai.jpg" style="position:absolute;top: 1pt;right: 5%;" width="100pt;" height="100pt;">
+   	<img alt="" th:src="${zhongxin?.zhongxinImg}"  src="/img/penglai.jpg" style="position:absolute;top: 1pt;right: 10%;" width="100pt;" height="100pt;">
+   	<div style="position: absolute;top: 1pt;right: 5%;width: 20pt;height: 70pt;">扫码查询</div>
    </div>
    </div>
   </div>

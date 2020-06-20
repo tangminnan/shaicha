@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.ChanpinDetailsDao">
+
+	<select id="get" resultType="com.shaicha.informationNEW.domain.ChanpinDetailsDO">
+		select `id`,`chanpin_id`,`timu_name`,`type`,`add_time`,`del_flag`,`sort` from t_chanpin_details where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.informationNEW.domain.ChanpinDetailsDO">
+		select `id`,`chanpin_id`,`timu_name`,`type`,`add_time`,`del_flag`,`sort` from t_chanpin_details
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="chanpinId != null and chanpinId != ''"> and chanpin_id = #{chanpinId} </if>
+		  		  <if test="timuName != null and timuName != ''"> and timu_name = #{timuName} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_chanpin_details
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="chanpinId != null and chanpinId != ''"> and chanpin_id = #{chanpinId} </if>
+		  		  <if test="timuName != null and timuName != ''"> and timu_name = #{timuName} </if>
+		  		  <if test="type != null and type != ''"> and type = #{type} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.informationNEW.domain.ChanpinDetailsDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_chanpin_details
+		(
+			`chanpin_id`, 
+			`timu_name`, 
+			`type`, 
+			`add_time`, 
+			`del_flag`, 
+			`sort`
+		)
+		values
+		(
+			#{chanpinId}, 
+			#{timuName}, 
+			#{type}, 
+			#{addTime}, 
+			#{delFlag}, 
+			#{sort}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.informationNEW.domain.ChanpinDetailsDO">
+		update t_chanpin_details 
+		<set>
+			<if test="chanpinId != null">`chanpin_id` = #{chanpinId}, </if>
+			<if test="timuName != null">`timu_name` = #{timuName}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}, </if>
+			<if test="sort != null">`sort` = #{sort}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_chanpin_details where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_chanpin_details where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

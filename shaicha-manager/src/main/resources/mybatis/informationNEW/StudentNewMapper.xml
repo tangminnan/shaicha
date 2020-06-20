@@ -175,6 +175,7 @@
 			<if test="lastCheckTime != null">`last_check_time` = #{lastCheckTime},</if>
 			<if test="activityId != null"> activity_id = #{activityId}, </if>
 		  	<if test="sysId != null"> sys_id = #{sysId}, </if>
+		  	<if test="xueBu != null"> xue_bu = #{xueBu}, </if>
 		  	<if test="schoolId != null"> school_id = #{schoolId} </if>
 		</set>
 		where id = #{id}
