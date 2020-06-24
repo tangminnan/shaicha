@@ -88,8 +88,8 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		System.out.println(cityname);
 		params.put("address", cityname);
 		StudentNewDO maxMin = jiaoyujuReportDao.getMaxMinCheckDate(activityId);
-		params.put("kai", sdf.format(maxMin.getMincheckdate()));
-		params.put("jie", sdf.format(maxMin.getMaxcheckdate()));
+		params.put("kai", maxMin.getMincheckdate()==null?"":sdf.format(maxMin.getMincheckdate()));
+		params.put("jie", maxMin.getMaxcheckdate()==null?"":sdf.format(maxMin.getMaxcheckdate()));
 		params.put("newDate", sdf2.format(new Date()));
 		//图
 		Map<String,Object> ls = new HashMap<>();

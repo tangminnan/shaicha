@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+																																			<div class="form-group">	
+								<label class="col-sm-3 control-label">记录id：</label>
+								<div class="col-sm-8">
+									<input id="recordId" name="recordId" class="form-control" type="text">
+								</div>
+							</div>
+																												<div class="form-group">	
+								<label class="col-sm-3 control-label">题目id：</label>
+								<div class="col-sm-8">
+									<input id="titleId" name="titleId" class="form-control" type="text">
+								</div>
+							</div>
+																												<div class="form-group">	
+								<label class="col-sm-3 control-label">题目类型：</label>
+								<div class="col-sm-8">
+									<input id="titleType" name="titleType" class="form-control" type="text">
+								</div>
+							</div>
+																												<div class="form-group">	
+								<label class="col-sm-3 control-label">备注：</label>
+								<div class="col-sm-8">
+									<input id="remarks" name="remarks" class="form-control" type="text">
+								</div>
+							</div>
+																												<div class="form-group">	
+								<label class="col-sm-3 control-label">添加时间：</label>
+								<div class="col-sm-8">
+									<input id="addTime" name="addTime" class="form-control" type="text">
+								</div>
+							</div>
+																												<div class="form-group">	
+								<label class="col-sm-3 control-label">状态1：正常2：禁止：</label>
+								<div class="col-sm-8">
+									<input id="delFlag" name="delFlag" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/informationNEW/chanpinRecordDetails/add.js">
+	</script>
+</body>
+</html>

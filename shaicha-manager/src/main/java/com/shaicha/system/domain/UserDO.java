@@ -62,9 +62,31 @@ public class UserDO implements Serializable {
     //中心图片(公众号二维码)
     private String zhongxinImg;
     private MultipartFile imgFile;
+    //表格标题
+    private String biaogeBiaoti;
+    //表格内容
+    private String biaogeNeirong;
    
     
-    public MultipartFile getImgFile() {
+    
+    
+    public String getBiaogeBiaoti() {
+		return biaogeBiaoti;
+	}
+
+	public void setBiaogeBiaoti(String biaogeBiaoti) {
+		this.biaogeBiaoti = biaogeBiaoti;
+	}
+
+	public String getBiaogeNeirong() {
+		return biaogeNeirong;
+	}
+
+	public void setBiaogeNeirong(String biaogeNeirong) {
+		this.biaogeNeirong = biaogeNeirong;
+	}
+
+	public MultipartFile getImgFile() {
 		return imgFile;
 	}
 
