@@ -69,7 +69,7 @@
 	</insert>
 	
 	<update id="updateEyesightDO" parameterType="com.shaicha.information.domain.ResultEyesightDO">
-		update t_result_eyesight_new 
+		update t_result_eyesight_new
 		<set>
 			<if test="studentId != null">`student_id` = #{studentId}, </if>
 			<if test="checkorId != null">`checkor_id` = #{checkorId}, </if>
@@ -88,5 +88,5 @@
 		</set>
 		where t_eyesight_id = #{tEyesightId}
 	</update>
-	
+
 </mapper>
