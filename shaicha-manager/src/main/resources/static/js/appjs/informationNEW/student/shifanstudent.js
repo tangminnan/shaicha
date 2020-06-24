@@ -537,7 +537,7 @@ function wxtuisong(){
 	
 	 $.ajax({
 			type : "GET",
-			url : "http://39.98.218.125:8072/app/WxPushReport",
+			url : "http://121.36.74.148:8070/app/WxPushReport",
 			data : {school:encodeURIComponent(school),grade:encodeURIComponent(grade),studentClass:studentClass},
 			async : false,
 			success : function(data) {
