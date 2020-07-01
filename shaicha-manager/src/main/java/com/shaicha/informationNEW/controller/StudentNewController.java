@@ -462,7 +462,7 @@ public class StudentNewController {
 				model.addAttribute("nakedFarvisionOd",zhuanhuan1(nakedFarvisionOd)==""?"":zhuanhuan1(nakedFarvisionOd));
 				model.addAttribute("nakedFarvisionOs",zhuanhuan1(nakedFarvisionOs)==""?"":zhuanhuan1(nakedFarvisionOs));
 				model.addAttribute("glassvisionOd",zhuanhuan1(correctionFarvisionOd)==""?"":zhuanhuan1(correctionFarvisionOd));
-				model.addAttribute("glassvisionOs",zhuanhuan1(correctionFarvisionOd)==""?"":zhuanhuan1(correctionFarvisionOs));
+				model.addAttribute("glassvisionOs",zhuanhuan1(correctionFarvisionOs)==""?"":zhuanhuan1(correctionFarvisionOs));
 				
 				
 				//自动电脑验光结果(左眼) 

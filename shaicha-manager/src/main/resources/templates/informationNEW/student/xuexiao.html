@@ -48,12 +48,14 @@
 									<label class="radio-inline"> <input type="radio" 
 										name="type" value="2" /> 教育局报告
 									</label>
+									<span th:if="${sysId} == 'admin'">
 									<label class="radio-inline"> <input type="radio" 
 										name="type" value="3" /> 年级报告
 									</label>
 									<label class="radio-inline"> <input type="radio" 
 										name="type" value="4" /> 班级报告
 									</label>
+									</span>
 								</div>
 							</div>
 							<div class="form-group">	

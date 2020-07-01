@@ -69,6 +69,7 @@ public class StudentReportNewController {
 	    }
 		List<ActivityListNewDO> activityList = activityListService.list(map);
 		model.addAttribute("activityList", activityList);
+		model.addAttribute("sysId", ShiroUtils.getUser().getUsername());
 		/*List<StudentDO> schoolName = studentService.querySchoolName();
 		List<ResultDiopterDO> jianchashijian = resultDiopterService.jianchashijian();
 		model.addAttribute("schoolName", schoolName);

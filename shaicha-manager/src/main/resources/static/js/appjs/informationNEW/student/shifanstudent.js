@@ -41,7 +41,8 @@ function load() {
 								school:$("#school option:selected").val(),
 								studentSex:$("#studentSex option:selected").val(),
 								grade:$("#grade option:selected").val(),
-								studentClass:$("#studentClass option:selected").val()
+								studentClass:$("#studentClass option:selected").val(),
+								id:$("#xueshengid").val(),
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};

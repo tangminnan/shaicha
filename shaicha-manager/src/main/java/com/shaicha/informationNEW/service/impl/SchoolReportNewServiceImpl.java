@@ -99,6 +99,10 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		int xianjinshi = schoolReportDao.linianjinshi(school,sdf.format(xian));
 		da.add(qianrenshu==0?0:Double.parseDouble(df.format((double)qianjinshi/(double)qianrenshu*100)));
 		da.add(qurenshu==0?0:Double.parseDouble(df.format((double)qujinshi/(double)qurenshu*100)));
+		//da.add(36.8);
+		//da.add(35.6);
+		//da.add(22.2);
+		//da.add(15.3);
 		da.add(xianrenshu==0?0:Double.parseDouble(df.format((double)xianjinshi/(double)xianrenshu*100)));
 		List<Object> ye = new ArrayList<>();
 		ye.add(sdf.format(qian));
@@ -136,10 +140,10 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			 zongNumshang = schoolReportDao.waihaijiancharenshu();
 			 jinshilast = schoolReportDao.waihaijinshirenshu();
 			 bulianglast  = schoolReportDao.waihaibuliangrenshu();
-			//myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100)));
-			//myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100)));			
-			//myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100)));
-			//myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)jinshinow/(double)zongNum*100)));
+			 //myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100)));
+			 //myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100)));			
+			 //myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100)));
+			 //myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)jinshinow/(double)zongNum*100)));
 			 blshujus = zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100));
 			 jsshujus = zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100));			
 			 blshujuz = zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100));
@@ -165,7 +169,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		}
 		map.put("blshujus", blshujus);
 		map.put("blshujuz", blshujuz);
-		map.put("jsshujus", jsshujus);
+		map.put("jsshujus", blshujus);
 		map.put("jsshujuz", jsshujuz);
 		return map;
 	}
@@ -219,6 +223,26 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			int xianjinshi = schoolReportDao.liniangradeCheckjinshi(school,studentDO.getGrade(),sdf.format(xian));
 			myt3.add(xianrenshu==0?0:Double.parseDouble(df.format((double)xianjinshi/(double)xianrenshu*100)));
 		}
+		/*myt1.add(22.2);
+		myt1.add(0);
+		myt1.add(0);
+		
+		myt2.add(12.8);
+		myt2.add(16.2);
+		myt2.add(20.8);*/
+		/*myt2.add(12.6);
+		myt2.add(12.3);
+		myt2.add(30.1);
+		myt2.add(39.1);
+		myt2.add(54.7);
+		myt2.add(71.5);
+		
+		myt1.add(15.0);
+		myt1.add(24.2);
+		myt1.add(43.1);
+		myt1.add(42.5);
+		myt1.add(48.6);
+		myt1.add(49.3);*/
 		map.put("seventeen", myt1);
 		map.put("eighteen", myt2);
 		map.put("nineteen", myt3);
@@ -256,9 +280,13 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Date qian = cal.getTime();
 		int qianrenshu = schoolReportDao.linianSexCheckNum(school,1,sdf.format(qian));
 		int qianjinshi = schoolReportDao.linianSexCheckjinshi(school,1,sdf.format(qian));
+		//myt.add(32.9);
+		//myt.add(16.7);
 		myt.add(qianrenshu==0?0:Double.parseDouble(df.format((double)qianjinshi/(double)qianrenshu*100)));
 		int qurenshu = schoolReportDao.linianSexCheckNum(school,1,sdf.format(qu));
 		int qujinshi = schoolReportDao.linianSexCheckjinshi(school,1,sdf.format(qu));
+		//myt.add(32.9);
+		//myt.add(16.3);
 		myt.add(qurenshu==0?0:Double.parseDouble(df.format((double)qujinshi/(double)qurenshu*100)));
 		int xianrenshu = schoolReportDao.linianSexCheckNum(school,1,sdf.format(xian));
 		int xianjinshi = schoolReportDao.linianSexCheckjinshi(school,1,sdf.format(xian));
@@ -282,9 +310,13 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Date qian = cal.getTime();
 		int qianrenshu = schoolReportDao.linianSexCheckNum(school,2,sdf.format(qian));
 		int qianjinshi = schoolReportDao.linianSexCheckjinshi(school,2,sdf.format(qian));
+		//myt.add(41.4);
+		//myt.add(29.6);
 		myt.add(qianrenshu==0?0:Double.parseDouble(df.format((double)qianjinshi/(double)qianrenshu*100)));
 		int qurenshu = schoolReportDao.linianSexCheckNum(school,2,sdf.format(qu));
 		int qujinshi = schoolReportDao.linianSexCheckjinshi(school,2,sdf.format(qu));
+		//myt.add(38.6);
+		//myt.add(14.3);
 		myt.add(qurenshu==0?0:Double.parseDouble(df.format((double)qujinshi/(double)qurenshu*100)));
 		int xianrenshu = schoolReportDao.linianSexCheckNum(school,2,sdf.format(xian));
 		int xianjinshi = schoolReportDao.linianSexCheckjinshi(school,2,sdf.format(xian));
