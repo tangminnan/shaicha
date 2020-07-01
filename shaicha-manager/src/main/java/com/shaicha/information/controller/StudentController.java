@@ -313,7 +313,7 @@ public class StudentController {
 	 * 普通筛查导出（freemarker导出模式）
 	 */
 	@GetMapping("/shaichajieguodaochu")
-	public void exportWordPByFreemarker(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
+	public void exportWordPByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response){
 		studentService.exportWordPByFreemarker(ids,request,response);
 	}
 	
@@ -419,10 +419,10 @@ public class StudentController {
 		//视力检查结果获取
 		List<ResultEyesightDO> resultEyesightDOList = studentService.getLatestResultEyesightDO(studentDO.getId());
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
-		String nakedFarvisionOd="";
-		String nakedFarvisionOs="";
-		String correctionFarvisionOd="";
-		String correctionFarvisionOs="";
+		String nakedFarvisionOd="";//右眼裸眼视力
+		String nakedFarvisionOs="";//左眼裸眼视力
+		String correctionFarvisionOd="";//右眼戴镜视力
+		String correctionFarvisionOs="";//左眼戴镜视力
 		if(resultEyesightDOList.size()>0){
 			resultEyesightDO=resultEyesightDOList.get(0);
 			nakedFarvisionOd=resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString();
@@ -434,7 +434,7 @@ public class StudentController {
 		model.addAttribute("nakedFarvisionOs",zhuanhuan(nakedFarvisionOs));
 		model.addAttribute("glassvisionOd",zhuanhuan(correctionFarvisionOd));
 		model.addAttribute("glassvisionOs",zhuanhuan(correctionFarvisionOs));
-		//自动电脑验光结果(左眼) 
+		//自动电脑验光结果(左眼)
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		List<ResultDiopterDO> resultDiopterDOList = studentService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
 		ResultDiopterDO resultDiopterDO = new ResultDiopterDO();
@@ -614,40 +614,6 @@ public class StudentController {
 		model.addAttribute("identityCard",identityCard);
 		return "information/student/shifanshaichadetail";
 	}
-	
-	
-	/**
-	 * 计算近视率	
-	 */
-	
-	/*@ResponseBody
-	@GetMapping("/getJInShiLv")
-	public Map<String,Object> getJInShiLv(Date startDate,Date endDate){
-		
-		return  studentService.getJInShiLv(startDate,endDate);		
-	}*/
-	
-	/**
-	 * 男生女生近期近视率
-	 */
-	/*@GetMapping("/getJInShiLvSex")
-	@ResponseBody
-	public Map<String,Object> getJInShiLvSex(Date startDate,Date endDate){
-		return  studentService.getJInShiLvSex( startDate,endDate);	
-	}*/
-	
-	/**
-	 * 教育局
-	 * @throws ParseException 
-	 */
-	
-//	@GetMapping("/getee")
-//	public Map<String,Object>  getee() throws ParseException{
-//		Map<String,Object> map =  studentService.createDataToJiAOYuJu(new SimpleDateFormat("yyyy-MM-dd").parse("2019-12-10"),new Date());
-//		System.out.println(map);
-//		return map;
-//	}
-	
 	/**
 	 * 首页真实数据展示
 	 */
