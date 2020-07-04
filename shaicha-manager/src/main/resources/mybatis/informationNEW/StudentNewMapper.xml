@@ -152,6 +152,72 @@
   			#{schoolId}
 		)
 	</insert>
+	
+	<insert id="insertBatch"  parameterType="java.util.List">
+    insert into t_student_new
+		(
+			`student_name`, 
+			`student_sex`, 
+			`nation`, 
+			`birthday`, 
+			`identity_card`, 
+			`school`, 
+			`grade`, 
+			`student_class`, 
+			`phone`, 
+			`address`, 
+			`height`, 
+			`weight`, 
+			`add_time`, 
+			`status`,
+			q_r_code,
+			last_check_time,
+			model_type,
+  			ideentity_type,
+  			school_code,
+  			xue_bu,
+  			check_type,
+  			check_local,
+  			student_number,
+  			name_jianpin,
+  			activity_id,
+  			sys_id,
+  			school_id
+		)
+    	VALUES
+	    <foreach collection ="list" item="user" separator =",">
+	       (
+			#{user.studentName}, 
+			#{user.studentSex}, 
+			#{user.nation}, 
+			#{user.birthday}, 
+			#{user.identityCard}, 
+			#{user.school}, 
+			#{user.grade}, 
+			#{user.studentClass}, 
+			#{user.phone}, 
+			#{user.address}, 
+			#{user.height}, 
+			#{user.weight}, 
+			#{user.addTime}, 
+			#{user.status},
+			#{user.QRCode},
+			#{user.lastCheckTime},
+			#{user.modelType},
+  			#{user.ideentityType},
+  			#{user.schoolCode},
+  			#{user.xueBu},
+  			#{user.checkType},
+  			#{user.checkLocal},
+  			#{user.studentNumber},
+  			#{user.nameJianpin},
+  			#{user.activityId},
+  			#{user.sysId},
+  			#{user.schoolId}
+		)
+	    </foreach >
+	</insert>
+
 	 
 	<update id="update" parameterType="com.shaicha.informationNEW.domain.StudentNewDO">
 		update t_student_new 

@@ -9,6 +9,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver  
+    #url: jdbc:mysql://rm-2zee8021e2232hhbcqo.mysql.rds.aliyuncs.com:3306/shaicha?useUnicode=true&characterEncoding=utf8
+    #username: root
+    #password: Tmn521hjj
     url: jdbc:mysql://119.3.238.84:3306/shaicha?useUnicode=true&characterEncoding=utf8
     username: root
     password: Dm202003

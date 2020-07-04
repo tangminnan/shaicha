@@ -32,6 +32,7 @@ public interface StudentNewDao {
 	int count(Map<String,Object> map);
 	
 	int save(StudentNewDO student);
+	int insertBatch(List<StudentNewDO> student);
 	
 	int update(StudentNewDO student);
 	
