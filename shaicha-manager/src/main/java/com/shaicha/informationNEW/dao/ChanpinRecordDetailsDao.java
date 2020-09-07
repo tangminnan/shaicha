@@ -29,4 +29,6 @@ public interface ChanpinRecordDetailsDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+	
+	List<ChanpinRecordDetailsDO> getByChanpin(Integer id);
 }

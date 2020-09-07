@@ -154,21 +154,21 @@ public class ResultServiceImpl implements ResultService{
 		);
 		else
 			addUpdate(studentId, resultEyeaxisDO);
-		jsonObject =obj.getJSONObject("eyepressure");//眼内压检查数据
-    	double eyePressureOd=jsonObject.getDouble("eyePressureOd");
-    	double eyePressureOs=jsonObject.getDouble("eyePressureOs");
+		//jsonObject =obj.getJSONObject("eyepressure");//眼内压检查数据
+    	//double eyePressureOd=jsonObject.getDouble("eyePressureOd");
+    	//double eyePressureOs=jsonObject.getDouble("eyePressureOs");
     	//String cornealCurvatureOd=jsonObject.getString("cornealCurvatureOd");
     	//String cornealCurvatureOs=jsonObject.getString("cornealCurvatureOs");
-    	ResultEyepressureDO resultEyepressureDO= new ResultEyepressureDO(studentId,chectorId, eyePressureOd, eyePressureOs, date, 0,identityCard,activityId,"0","0");
-    	if( 
-    			eyePressureOd==0.0 && 
-    			eyePressureOs==0.0
+    	//ResultEyepressureDO resultEyepressureDO= new ResultEyepressureDO(studentId,chectorId, eyePressureOd, eyePressureOs, date, 0,identityCard,activityId,"0","0");
+    	//if(
+    			//eyePressureOd==0.0 &&
+    			//eyePressureOs==0.0
     			//"".equals(cornealCurvatureOd) && 
     			//"".equals(cornealCurvatureOs)
-    	);
-    	else
-    		addUpdate(studentId, resultEyepressureDO);
-    	/*jsonObject =obj.getJSONObject("adjusting");//调节灵敏度检查数据
+    	//);
+    	//else
+    		//addUpdate(studentId, resultEyepressureDO);
+    	jsonObject =obj.getJSONObject("adjusting");//调节灵敏度检查数据
     	double adjustingOd=jsonObject.getDouble("adjustingOd");
     	double adjustingOs=jsonObject.getDouble("adjustingOs");
     	double adjustingOu=jsonObject.getDouble("adjustingOu");
@@ -192,37 +192,39 @@ public class ResultServiceImpl implements ResultService{
 		double adjustmentRangeOd=jsonObject.getDouble("adjustmentRangeOd");
 		double adjustmentRangeOc=jsonObject.getDouble("adjustmentRangeOc");
 		double adjustmentRangeOu=jsonObject.getDouble("adjustmentRangeOu");
-		double gatherNearOd=jsonObject.getDouble("gatherNearOd");
-		double gatherNearOc=jsonObject.getDouble("gatherNearOc");
-		double gatherNearOu=jsonObject.getDouble("gatherNearOu");
-		String obliqueValue=jsonObject.getString("obliqueValue");
-		double obliqueDis=jsonObject.getDouble("obliqueDis");
-		Integer beforeAfterOdValue=jsonObject.getInteger("beforeAfterOdValue");
-		String beforeAfterOdDis=jsonObject.getString("beforeAfterOdDis");
-		Integer beforeAfterOsValue=jsonObject.getInteger("beforeAfterOsValue");
-		String beforeAfterOsDis=jsonObject.getString("beforeAfterOsDis");
-		ResultVisibilityDO resultVisibilityDO=new ResultVisibilityDO(studentId,chectorId, stereoscopicViewingValue, stereoscopicViewingDis, 
-				adjustmentRangeOd, adjustmentRangeOc, adjustmentRangeOu, gatherNearOd, gatherNearOc, gatherNearOu, obliqueValue, obliqueDis, beforeAfterOdValue, beforeAfterOdDis, beforeAfterOsValue, beforeAfterOsDis,date, 0,identityCard,activityId);
-    	
+//		double gatherNearOd=jsonObject.getDouble("gatherNearOd");
+//		double gatherNearOc=jsonObject.getDouble("gatherNearOc");
+//		double gatherNearOu=jsonObject.getDouble("gatherNearOu");
+//		String obliqueValue=jsonObject.getString("obliqueValue");
+//		double obliqueDis=jsonObject.getDouble("obliqueDis");
+//		Integer beforeAfterOdValue=jsonObject.getInteger("beforeAfterOdValue");
+//		String beforeAfterOdDis=jsonObject.getString("beforeAfterOdDis");
+//		Integer beforeAfterOsValue=jsonObject.getInteger("beforeAfterOsValue");
+//		String beforeAfterOsDis=jsonObject.getString("beforeAfterOsDis");
+//		ResultVisibilityDO resultVisibilityDO=new ResultVisibilityDO(studentId,chectorId, stereoscopicViewingValue, stereoscopicViewingDis,
+//				adjustmentRangeOd, adjustmentRangeOc, adjustmentRangeOu, gatherNearOd, gatherNearOc, gatherNearOu, obliqueValue, obliqueDis, beforeAfterOdValue, beforeAfterOdDis, beforeAfterOsValue, beforeAfterOsDis,date, 0,identityCard,activityId);
+		ResultVisibilityDO resultVisibilityDO=new ResultVisibilityDO(studentId,chectorId, stereoscopicViewingValue, stereoscopicViewingDis,
+				adjustmentRangeOd, adjustmentRangeOc, adjustmentRangeOu,date, 0,identityCard,activityId);
+
 		if(
 				stereoscopicViewingValue==0 && 
 				"".equals(stereoscopicViewingDis)&&
 				adjustmentRangeOd==0.0&&
 				adjustmentRangeOc==0.0&&
-				adjustmentRangeOu==0.0&&
-				gatherNearOd==0.0&&
-				gatherNearOc==0.0&&
-				gatherNearOu==0.0&&
-				"".equals(obliqueValue)&&
-				obliqueDis==0.0 &&
-				beforeAfterOdValue==0 &&
-				"".equals(beforeAfterOdDis) &&
-				beforeAfterOsValue==0 &&
-				"".equals(beforeAfterOsDis) 
+				adjustmentRangeOu==0.0//&&
+//				gatherNearOd==0.0&&
+//				gatherNearOc==0.0&&
+//				gatherNearOu==0.0&&
+//				"".equals(obliqueValue)&&
+//				obliqueDis==0.0 &&
+//				beforeAfterOdValue==0 &&
+//				"".equals(beforeAfterOdDis) &&
+//				beforeAfterOsValue==0 &&
+//				"".equals(beforeAfterOsDis)
 		);
 		
 		else
-			addUpdate(studentId, resultVisibilityDO);*/
+			addUpdate(studentId, resultVisibilityDO);
     	jsonObject =obj.getJSONObject("optometry");//电脑验光检查数据
     	double firstCheckVd=jsonObject.getDouble("firstCheckVd");
     	double firstCheckRps=jsonObject.getDouble("firstCheckRps");

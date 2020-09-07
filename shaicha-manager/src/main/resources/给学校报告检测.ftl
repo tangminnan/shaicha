@@ -6251,6 +6251,8 @@
 								<w:right w:w="0" w:type="dxa" /></w:tblCellMar>
 						</w:tblPrEx>
 						<w:trPr>
+							<w:gridAfter w:val="1" />
+                            <w:wAfter w:w="90" w:type="dxa" />
 							<w:trHeight w:val="387" w:h-rule="atLeast" /></w:trPr>
 						<w:tc>
 							<w:tcPr>
@@ -6281,8 +6283,8 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="9082" w:type="dxa" />
-								<w:gridSpan w:val="12" />
+								<w:tcW w:w="8227" w:type="dxa" />
+								<w:gridSpan w:val="10" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -6361,8 +6363,8 @@
 						</w:tc>
 						<w:tc>
 							<w:tcPr>
-								<w:tcW w:w="9082" w:type="dxa" />
-								<w:gridSpan w:val="12" />
+								<w:tcW w:w="8227" w:type="dxa" />
+								<w:gridSpan w:val="10" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
 							<w:p>
 								<w:pPr>
@@ -6674,7 +6676,7 @@
 								</w:r>
 							</w:p>
 						</w:tc>
-						<w:tc>
+						<#--<w:tc>
 							<w:tcPr>
 								<w:tcW w:w="855" w:type="dxa" />
 								<w:gridSpan w:val="2" />
@@ -6705,7 +6707,7 @@
 									<w:t>眼压</w:t>
 								</w:r>
 							</w:p>
-						</w:tc>
+						</w:tc>-->
 					</w:tr>
 					<w:tr>
 						<w:tblPrEx>
@@ -6989,7 +6991,7 @@
 								</w:pPr>
 							</w:p>
 						</w:tc>
-						<w:tc>
+						<#--<w:tc>
 							<w:tcPr>
 								<w:tcW w:w="855" w:type="dxa" />
 								<w:gridSpan w:val="2" />
@@ -7010,7 +7012,7 @@
 										<w:lang w:fareast="ZH-CN" /></w:rPr>
 								</w:pPr>
 							</w:p>
-						</w:tc>
+						</w:tc>-->
 					</w:tr>
 					<#list xs.jieguo as jg>
 					<w:tr>
@@ -7363,7 +7365,7 @@
 								</w:r>
 							</w:p>
 						</w:tc>
-						<w:tc>
+						<#--<w:tc>
 							<w:tcPr>
 								<w:tcW w:w="850" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
@@ -7390,7 +7392,7 @@
 									<w:t>${jg.eyePressureOd!''}</w:t>
 								</w:r>
 							</w:p>
-						</w:tc>
+						</w:tc>-->
 					</w:tr>
 					<w:tr>
 						<w:tblPrEx>
@@ -7714,7 +7716,7 @@
 								</w:r>
 							</w:p>
 						</w:tc>
-						<w:tc>
+						<#--<w:tc>
 							<w:tcPr>
 								<w:tcW w:w="850" w:type="dxa" />
 								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
@@ -7741,7 +7743,7 @@
 									<w:t>${jg.eyePressureOs!''}</w:t>
 								</w:r>
 							</w:p>
-						</w:tc>
+						</w:tc>-->
 					</w:tr>
 					</#list>
 				</w:tbl>

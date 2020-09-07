@@ -68,7 +68,8 @@ function load() {
 									title : '题目类型',
 									formatter : function(value, row, index) {
 										if(value==1)return"单选";
-										else return"多选";
+										else if (value==2) return"多选";
+										else return"填空"
 									}
 								},
 																{

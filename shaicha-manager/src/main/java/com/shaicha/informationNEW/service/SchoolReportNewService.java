@@ -35,4 +35,6 @@ public interface SchoolReportNewService {
 	void schoolGradeRep(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
 	void schoolClassRep(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	
+	void shaichawenjuanRep(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

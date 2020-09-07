@@ -6,6 +6,13 @@
 	<select id="get" resultType="com.shaicha.informationNEW.domain.ChanpinRecordListDO">
 		select `id`,`chanpin_id`,`add_time`,`del_flag`,chanpin_name from t_chanpin_record_list where id = #{value}
 	</select>
+	
+	<select id="getIdentityCard" resultType="com.shaicha.informationNEW.domain.ChanpinRecordListDO">
+		select rl.* from t_chanpin_record_list rl,
+		(select rl.identity_card,MAX(rl.add_time) addTime from t_chanpin_record_list rl, t_chanpin_list cl
+		where rl.chanpin_id = cl.id and rl.identity_card = #{identityCard}  GROUP BY rl.chanpin_id) a
+		where rl.add_time = a.addTime and rl.identity_card = a.identity_card
+	</select>
 
 	<select id="list" resultType="com.shaicha.informationNEW.domain.ChanpinRecordListDO">
 		select `id`,`chanpin_id`,`add_time`,`del_flag`,chanpin_name from t_chanpin_record_list

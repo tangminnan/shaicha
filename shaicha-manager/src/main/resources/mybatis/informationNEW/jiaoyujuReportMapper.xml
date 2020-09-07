@@ -7,6 +7,11 @@
 	<select id="getAddress" resultType="com.shaicha.informationNEW.domain.SchoolNewDO">
 		SELECT `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school_new where OrgName = #{value}
 	</select>
+
+	<select id="getSchoolxuebu" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		SELECT `id`,`school`,`address`,`status`,xue_bu,activity_id,sys_id,school_id from t_student_new
+		where school = #{school} and activity_id = #{activityId} GROUP BY school
+	</select>
 	<!-- 检测时间 -->
 	<select id="getMaxMinCheckDate" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 		SELECT MIN(last_check_time) mincheckdate, max(last_check_time) maxcheckdate from t_student_new where activity_id = #{activityId}
