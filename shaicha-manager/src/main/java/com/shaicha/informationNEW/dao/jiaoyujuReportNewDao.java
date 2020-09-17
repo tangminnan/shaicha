@@ -60,6 +60,7 @@ public interface jiaoyujuReportNewDao {
 	int linianSexrenshu(@Param("studentSex") Integer studentSex,@Param("activityId") Integer activityId,@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
 	
 	int linianSexjinshi(@Param("studentSex") Integer studentSex,@Param("activityId") Integer activityId,@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
-	
+
+	StudentNewDO getSchoolxuebu(@Param("school") String school,@Param("activityId") Integer activityId);
 
 }

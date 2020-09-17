@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shaicha.common.config.BootdoConfig;
 import com.shaicha.common.utils.Base64Utils;
+import com.shaicha.common.utils.ImportExcel;
 import com.shaicha.common.utils.QRCodeUtil;
 
 import com.shaicha.common.utils.R;
@@ -130,6 +131,40 @@ public class StudentNewServiceImpl implements StudentNewService {
 	public int batchRemove(Integer[] ids){
 		return studentNewDao.batchRemove(ids);
 	}
+	
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@Transactional(propagation=Propagation.REQUIRED)
+	public Map<String,Object> importMemberm(Integer activityId,Integer schoolId,String checkType, MultipartFile file) {
+		System.out.println("==============file================"+file);
+		Map<String,Object> map = new HashMap<String,Object>();
+		SchoolNewDO schoolDO = schoolDao.get(schoolId);
+		try {
+			Map<String, Object> readExcel = ImportExcel.readExcel(file, activityId, schoolDO, checkType);
+			if(readExcel.get("data") == null){
+				map.put("code", -1);
+				map.put("msg", readExcel.get("msg"));
+			}else{
+				List<StudentNewDO> student = (List<StudentNewDO>) readExcel.get("data");
+			    int students = student.size();
+			    int i = 0;
+			    while (students > 20) {
+			    	studentNewDao.insertBatch(student.subList(i, i + 20));
+			        i = i + 20;
+			        students = students - 20;
+			    }
+			    if (students > 0) {
+			    	studentNewDao.insertBatch(student.subList(i, i + students));
+			    }
+			    map.put("code", 0);
+			    map.put("msg", "上传成功,共增加["+students+"]条");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return map;
+	}
 
 	/**
 	 * excel数据导入
@@ -152,11 +187,11 @@ public class StudentNewServiceImpl implements StudentNewService {
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					try {
 					row = sheet.getRow(rowNum);
-					/*if(rowNum==0){
-						modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
-						school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
-						schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
-					}*/
+					//if(rowNum==0){
+					//	modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
+					//	school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
+					//	schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
+					//}
 					//if(rowNum>1){
 						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
 						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
@@ -206,14 +241,14 @@ public class StudentNewServiceImpl implements StudentNewService {
 							}
 						}
 						
-						/*if(birthday != null && birthday != ""){
-							Calendar c = new GregorianCalendar(1900,0,-1);
-							Date d = c.getTime();
-							Date _d = DateUtils.addDays(d, Integer.parseInt(birthday));
-							student.setBirthday(_d);
-						}else
-							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("1990-12-24"));
-						*/
+//						if(birthday != null && birthday != ""){
+//							Calendar c = new GregorianCalendar(1900,0,-1);
+//							Date d = c.getTime();
+//							Date _d = DateUtils.addDays(d, Integer.parseInt(birthday));
+//							student.setBirthday(_d);
+//						}else
+//							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("1990-12-24"));
+//						
 						student.setAddTime(new Date());
 						if(identityCard != null && identityCard != ""){
 							
@@ -230,18 +265,18 @@ public class StudentNewServiceImpl implements StudentNewService {
 									}
 							}
 							
-							/*Map<String,Object> map = new HashMap<String,Object>();
-							map.put("identityCard", identityCard);
-							List<StudentNewDO> list = studentNewDao.list(map);
-							if(list.size()>0){
-								continue;
-							}else{*/
+//							Map<String,Object> map = new HashMap<String,Object>();
+//							map.put("identityCard", identityCard);
+//							List<StudentNewDO> list = studentNewDao.list(map);
+//							if(list.size()>0){
+//								continue;
+//							}else{
 								student.setIdentityCard(identityCard);
-								/*String destPath = bootdoConfig.getUploadPath();
-								String rand = new Random().nextInt(99999999)+".jpg";
-								//生成二维码
-								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
-								student.setQRCode("/files/"+rand);*/
+//								String destPath = bootdoConfig.getUploadPath();
+//								String rand = new Random().nextInt(99999999)+".jpg";
+//								//生成二维码
+//								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
+//								student.setQRCode("/files/"+rand);
 							//}
 						}else{
 							list.add(rowNum+1);
@@ -283,8 +318,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 		}
 		return R.error();	
 	}
-	
-	
+		
 	@Override
 	public List<StudentNewDO> getList() {
 		return studentNewDao.getList();

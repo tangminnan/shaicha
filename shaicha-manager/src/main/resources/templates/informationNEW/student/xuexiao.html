@@ -48,12 +48,17 @@
 									<label class="radio-inline"> <input type="radio" 
 										name="type" value="2" /> 教育局报告
 									</label>
+									<span th:if="${sysId} == 'admin' or ${sysId} == 'shujuzhongxin'">
 									<label class="radio-inline"> <input type="radio" 
 										name="type" value="3" /> 年级报告
 									</label>
 									<label class="radio-inline"> <input type="radio" 
 										name="type" value="4" /> 班级报告
 									</label>
+									<label class="radio-inline"> <input type="radio" 
+										name="type" value="5" /> 筛查问卷
+									</label>
+									</span>
 								</div>
 							</div>
 							<div class="form-group">	
@@ -66,7 +71,7 @@
 								</div>
 								
 							</div> 
-							<div class="form-group">	
+							<div class="form-group" id="school_div">	
 								<label class="col-sm-3 control-label">活动学校：</label>
 								<div class="col-sm-8">	
 								<span id="select_choose_id">
@@ -158,6 +163,7 @@
 		    	$("#school").selectpicker('refresh');
 		    	$('#grade_div').css("display","none");
 				$('#class_div').css("display","none");
+				$("#school_div").show();
 		    }
 			if(type == 2){
 				$("#activityId").val("");
@@ -170,6 +176,7 @@
                 $("#school").selectpicker('refresh');
                 $('#grade_div').css("display","none");
         		$('#class_div').css("display","none");
+        		$("#school_div").show();
 		    }
 			if(type == 3){
 				$("#activityId").val("");
@@ -182,6 +189,7 @@
 		    	$("#school").selectpicker('refresh');
 				$('#grade_div').css("display","block");
 				$('#class_div').css("display","none");
+				$("#school_div").show();
 			}
 			if(type == 4){
 				$("#activityId").val("");
@@ -194,6 +202,17 @@
 		    	$("#school").selectpicker('refresh');
 		    	$('#grade_div').css("display","block");
 				$('#class_div').css("display","block");
+				$("#school_div").show();
+			}
+			if(type == 5){
+				$("#activityId").val("");
+		    	$("#grade").empty();
+		    	$("#stuclass").empty();
+		    	$("#select_choose_id").empty();
+		    	$("#school").empty();
+		    	$("#school_div").hide();
+		    	$('#grade_div').css("display","none");
+				$('#class_div').css("display","none");
 			}
 			
 		});
@@ -245,7 +264,7 @@
 		
 		
 		function stuschool(){
-			var activityId = $('#school').val();
+			var activityId = $('#activityId').val();
 			var school = $('#school option:selected').text();
 			$.ajax({
 				
@@ -278,7 +297,7 @@
 		}
 		
 		function stugrade(){
-			var activityId = $('#school').val();
+			var activityId = $('#activityId').val();
 			var school = $('#school option:selected').text();
 			var grade = $('#grade option:selected').text();
 			$.ajax({

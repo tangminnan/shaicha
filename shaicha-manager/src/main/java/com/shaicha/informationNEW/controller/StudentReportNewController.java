@@ -64,11 +64,13 @@ public class StudentReportNewController {
 	@GetMapping("/studentReportNew/xuexiao")
 	public String xuexiao(Model model){
 		Map<String,Object> map = new HashMap<>();
-		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+		String username = ShiroUtils.getUser().getUsername();
+		if(!username.equals("admin") && !username.equals("shujuzhongxin")){
 			 map.put("sysId", ShiroUtils.getUserId());
 	    }
 		List<ActivityListNewDO> activityList = activityListService.list(map);
 		model.addAttribute("activityList", activityList);
+		model.addAttribute("sysId", ShiroUtils.getUser().getUsername());
 		/*List<StudentDO> schoolName = studentService.querySchoolName();
 		List<ResultDiopterDO> jianchashijian = resultDiopterService.jianchashijian();
 		model.addAttribute("schoolName", schoolName);
@@ -357,8 +359,9 @@ public class StudentReportNewController {
 	@GetMapping("/studentReportNew/schoolActivity")
 	public List<StudentNewDO> schoolActivity(Integer activityId){
 		Long sysId = null;
-		if(!ShiroUtils.getUser().getUsername().equals("admin")){
-			sysId = ShiroUtils.getUserId();
+		String username = ShiroUtils.getUser().getUsername();
+		if(!username.equals("admin") && !username.equals("shujuzhongxin")){
+        	sysId = ShiroUtils.getUserId();
         }
 		List<StudentNewDO> schoolActivity = schoolReportService.schoolActivity(activityId,sysId);
 		
@@ -370,7 +373,8 @@ public class StudentReportNewController {
 	@GetMapping("/studentReportNew/schoolGrade")
 	public List<StudentNewDO> schoolGrade(Integer activityId,String school){
 		Long sysId = null;
-		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+		String username = ShiroUtils.getUser().getUsername();
+		if(!username.equals("admin") && !username.equals("shujuzhongxin")){
 			sysId = ShiroUtils.getUserId();
         }
 		List<StudentNewDO> schoolGrade = studentService.queryBySchoolGrade(activityId, school,sysId);
@@ -383,7 +387,8 @@ public class StudentReportNewController {
 	@GetMapping("/studentReportNew/schoolStuClass")
 	public List<StudentNewDO> schoolStuClass(Integer activityId,String school,String grade){
 		Long sysId = null;
-		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+		String username = ShiroUtils.getUser().getUsername();
+		if(!username.equals("admin") && !username.equals("shujuzhongxin")){
 			sysId = ShiroUtils.getUserId();
         }
 		List<StudentNewDO> stuClass = studentService.queryBySchoolStudentClass(activityId, school,sysId,grade);
@@ -424,7 +429,13 @@ public class StudentReportNewController {
 		schoolReportService.schoolClassRep(request, response);
 	}
 
-	
+	/**
+	 * 筛查问卷
+	 */
+	@GetMapping("/studentReportNew/shaichawenjuan")
+	public void shaichawenjuan(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		schoolReportService.shaichawenjuanRep(request, response);
+	}
 	
 	
 	

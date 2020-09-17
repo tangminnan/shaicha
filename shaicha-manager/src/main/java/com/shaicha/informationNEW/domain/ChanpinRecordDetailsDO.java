@@ -31,9 +31,16 @@ public class ChanpinRecordDetailsDO implements Serializable {
 	private Date addTime;
 	//状态1：正常2：禁止
 	private Integer delFlag;
-	
-	
-	
+	private String chooseSort;
+
+
+	public String getChooseSort() {
+		return chooseSort;
+	}
+
+	public void setChooseSort(String chooseSort) {
+		this.chooseSort = chooseSort;
+	}
 
 	public String getTitleName() {
 		return titleName;

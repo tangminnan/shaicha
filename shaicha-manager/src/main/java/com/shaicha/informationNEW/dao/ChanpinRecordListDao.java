@@ -29,4 +29,6 @@ public interface ChanpinRecordListDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+	
+	List<ChanpinRecordListDO> getIdentityCard(String identityCard);
 }

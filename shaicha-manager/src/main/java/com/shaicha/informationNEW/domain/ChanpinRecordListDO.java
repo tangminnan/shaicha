@@ -25,8 +25,17 @@ public class ChanpinRecordListDO implements Serializable {
 	private Date addTime;
 	//状态1：正常2：禁用
 	private Integer delFlag;
+	
+	private String identityCard;
+	
 
 	
+	public String getIdentityCard() {
+		return identityCard;
+	}
+	public void setIdentityCard(String identityCard) {
+		this.identityCard = identityCard;
+	}
 	public String getChanpinName() {
 		return chanpinName;
 	}

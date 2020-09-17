@@ -41,6 +41,7 @@ function load() {
 								studentSex:$("#studentSex option:selected").val(),
 								grade:$("#grade option:selected").val(),
 								studentClass:$("#studentClass option:selected").val(),
+								id:$("#xueshengid").val(),								
 								//lastCheckTime:$("#lastCheckTime").val()
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
@@ -135,7 +136,7 @@ function load() {
 												+ '\')" style="text-decoration: none;">编辑</a>';
 										var d = '<a class="btn btn-warning btn-xs '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
-												+ '\')" style="text-decoration: none;">删除</a>';
+												+ '\',\''+row.lastCheckTime+'\')" style="text-decoration: none;">删除</a>';
 										return e + d;
 									}
 								},
@@ -336,7 +337,11 @@ function daorudatijiguo(){
 }
 
 
-function remove(id) {
+function remove(id,lastCheckTime) {
+    if(lastCheckTime != 'null'){
+        alert('禁止删除检查过的数据！！！');
+        return ;
+    }
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
@@ -365,6 +370,16 @@ function batchRemove() {
 	if (rows.length == 0) {
 		layer.msg("请选择要删除的数据");
 		return;
+	}
+    var k=0;
+    $.each(rows, function(i, row) {
+        if(row['lastCheckTime']!=null){
+        	k++;
+        }
+    });
+    if (k>0){
+        alert('禁止删除检查过的数据！！！');
+        return false;
 	}
 	layer.confirm("确认要删除选中的'" + rows.length + "'条数据吗?", {
 		btn : [ '确定', '取消' ]

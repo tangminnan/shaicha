@@ -85,7 +85,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		String[] split1 = parameter.split(",");
 		String date = request.getParameter("date");
 		String cityname = jiaoyujuReportDao.getAddress(split1[0]).getAreaname();
-		System.out.println(cityname);
+		//System.out.println(cityname);
 		params.put("address", cityname);
 		StudentNewDO maxMin = jiaoyujuReportDao.getMaxMinCheckDate(activityId);
 		params.put("kai", maxMin.getMincheckdate()==null?"":sdf.format(maxMin.getMincheckdate()));
@@ -111,7 +111,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		params.put("school", split.length);
 		for (String string : split) {
 			Map<String,Integer> map = new HashMap<String,Integer>();
-			map.put(jiaoyujuReportDao.getAddress(string).getXuebu(), jiaoyujuReportDao.schoolByCheckNum(activityId,string));
+			map.put(jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu(), jiaoyujuReportDao.schoolByCheckNum(activityId,string));
 			list1.add(map);
 			list2.add(jiaoyujuReportDao.schoolByCheckNum(activityId,string));
 		}

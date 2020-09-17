@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
@@ -27,6 +28,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.shaicha.informationNEW.dao.*;
+import com.shaicha.informationNEW.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,23 +37,8 @@ import com.shaicha.common.utils.ExcelExportUtil4DIY;
 import com.shaicha.common.utils.ShiroUtils;
 import com.shaicha.common.config.BootdoConfig;
 import com.shaicha.information.dao.LinShiUrlDao;
-import com.shaicha.informationNEW.dao.ResultCornealNewDao;
-import com.shaicha.informationNEW.dao.ResultDiopterNewDao;
-import com.shaicha.informationNEW.dao.ResultEyeaxisNewDao;
-import com.shaicha.informationNEW.dao.ResultEyepressureNewDao;
-import com.shaicha.informationNEW.dao.ResultEyesightNewDao;
-import com.shaicha.informationNEW.dao.SchoolReportNewDao;
-import com.shaicha.informationNEW.dao.StudentNewDao;
 import com.shaicha.information.domain.LinShiUrlDO;
-import com.shaicha.informationNEW.domain.ActivityListNewDO;
-import com.shaicha.informationNEW.domain.ResultCornealNewDO;
-import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
-import com.shaicha.informationNEW.domain.ResultEyeaxisNewDO;
-import com.shaicha.informationNEW.domain.ResultEyepressureNewDO;
-import com.shaicha.informationNEW.domain.ResultEyesightNewDO;
-import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.service.SchoolReportNewService;
-import com.shaicha.informationNEW.dao.ActivityListNewDao;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -77,7 +65,17 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 	private ResultEyepressureNewDao resultEyepressureDao;
 	@Autowired
 	private ActivityListNewDao activityListDao;
-	
+	@Autowired
+	private ChanpinRecordListDao chanpinRecordListDao;
+	@Autowired
+	private ChanpinRecordDetailsDao chanpinRecordDetailsDao;
+	@Autowired
+	private ChanpinTitleChooseDao chanpinTitleChooseDao;
+	@Autowired
+	private SchoolNewDao schoolNewDao;
+
+
+
 	//历年近视率走势图
 	@Override
 	public Map<String, List<Object>> overYearMyopia(String school) {
@@ -99,6 +97,10 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		int xianjinshi = schoolReportDao.linianjinshi(school,sdf.format(xian));
 		da.add(qianrenshu==0?0:Double.parseDouble(df.format((double)qianjinshi/(double)qianrenshu*100)));
 		da.add(qurenshu==0?0:Double.parseDouble(df.format((double)qujinshi/(double)qurenshu*100)));
+		//da.add(36.8);
+		//da.add(35.6);
+		//da.add(22.2);
+		//da.add(15.3);
 		da.add(xianrenshu==0?0:Double.parseDouble(df.format((double)xianjinshi/(double)xianrenshu*100)));
 		List<Object> ye = new ArrayList<>();
 		ye.add(sdf.format(qian));
@@ -136,10 +138,10 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			 zongNumshang = schoolReportDao.waihaijiancharenshu();
 			 jinshilast = schoolReportDao.waihaijinshirenshu();
 			 bulianglast  = schoolReportDao.waihaibuliangrenshu();
-			//myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100)));
-			//myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100)));			
-			//myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100)));
-			//myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)jinshinow/(double)zongNum*100)));
+			 //myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100)));
+			 //myt1.add(zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100)));			
+			 //myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100)));
+			 //myt2.add(zongNum==0?0:Double.parseDouble(df.format((double)jinshinow/(double)zongNum*100)));
 			 blshujus = zongNumshang==0?0:Double.parseDouble(df.format((double)bulianglast/(double)zongNumshang*100));
 			 jsshujus = zongNumshang==0?0:Double.parseDouble(df.format((double)jinshilast/(double)zongNumshang*100));			
 			 blshujuz = zongNum==0?0:Double.parseDouble(df.format((double)buliangnow/(double)zongNum*100));
@@ -165,7 +167,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		}
 		map.put("blshujus", blshujus);
 		map.put("blshujuz", blshujuz);
-		map.put("jsshujus", jsshujus);
+		map.put("jsshujus", blshujus);
 		map.put("jsshujuz", jsshujuz);
 		return map;
 	}
@@ -219,6 +221,26 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			int xianjinshi = schoolReportDao.liniangradeCheckjinshi(school,studentDO.getGrade(),sdf.format(xian));
 			myt3.add(xianrenshu==0?0:Double.parseDouble(df.format((double)xianjinshi/(double)xianrenshu*100)));
 		}
+		/*myt1.add(22.2);
+		myt1.add(0);
+		myt1.add(0);
+		
+		myt2.add(12.8);
+		myt2.add(16.2);
+		myt2.add(20.8);*/
+		/*myt2.add(12.6);
+		myt2.add(12.3);
+		myt2.add(30.1);
+		myt2.add(39.1);
+		myt2.add(54.7);
+		myt2.add(71.5);
+		
+		myt1.add(15.0);
+		myt1.add(24.2);
+		myt1.add(43.1);
+		myt1.add(42.5);
+		myt1.add(48.6);
+		myt1.add(49.3);*/
 		map.put("seventeen", myt1);
 		map.put("eighteen", myt2);
 		map.put("nineteen", myt3);
@@ -256,9 +278,13 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Date qian = cal.getTime();
 		int qianrenshu = schoolReportDao.linianSexCheckNum(school,1,sdf.format(qian));
 		int qianjinshi = schoolReportDao.linianSexCheckjinshi(school,1,sdf.format(qian));
+		//myt.add(32.9);
+		//myt.add(16.7);
 		myt.add(qianrenshu==0?0:Double.parseDouble(df.format((double)qianjinshi/(double)qianrenshu*100)));
 		int qurenshu = schoolReportDao.linianSexCheckNum(school,1,sdf.format(qu));
 		int qujinshi = schoolReportDao.linianSexCheckjinshi(school,1,sdf.format(qu));
+		//myt.add(32.9);
+		//myt.add(16.3);
 		myt.add(qurenshu==0?0:Double.parseDouble(df.format((double)qujinshi/(double)qurenshu*100)));
 		int xianrenshu = schoolReportDao.linianSexCheckNum(school,1,sdf.format(xian));
 		int xianjinshi = schoolReportDao.linianSexCheckjinshi(school,1,sdf.format(xian));
@@ -282,9 +308,13 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Date qian = cal.getTime();
 		int qianrenshu = schoolReportDao.linianSexCheckNum(school,2,sdf.format(qian));
 		int qianjinshi = schoolReportDao.linianSexCheckjinshi(school,2,sdf.format(qian));
+		//myt.add(41.4);
+		//myt.add(29.6);
 		myt.add(qianrenshu==0?0:Double.parseDouble(df.format((double)qianjinshi/(double)qianrenshu*100)));
 		int qurenshu = schoolReportDao.linianSexCheckNum(school,2,sdf.format(qu));
 		int qujinshi = schoolReportDao.linianSexCheckjinshi(school,2,sdf.format(qu));
+		//myt.add(38.6);
+		//myt.add(14.3);
 		myt.add(qurenshu==0?0:Double.parseDouble(df.format((double)qujinshi/(double)qurenshu*100)));
 		int xianrenshu = schoolReportDao.linianSexCheckNum(school,2,sdf.format(xian));
 		int xianjinshi = schoolReportDao.linianSexCheckjinshi(school,2,sdf.format(xian));
@@ -1404,8 +1434,158 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
         } 
     }
 
+	@Override
+	public void shaichawenjuanRep(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Map<String,Object> mapP = new HashMap<String,Object>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
+		List<Map<String,Object>> bb = new ArrayList<Map<String,Object>>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("activityId", activityId);
+		List<StudentNewDO> list = studentDao.list(map);
+		int i = 0;
+		if(list.size()>0){
+			for (StudentNewDO studentNewDO : list) {
+				Map<String,Object> mapPP = new LinkedHashMap<String,Object>();
+				String identityCard = studentNewDO.getIdentityCard();
+				//System.out.println(i++);
+				ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
+				ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
+				ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
+				List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentNewDO.getId());
+				List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", identityCard,activityId);
+				List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", identityCard,activityId);
+				//List<ResultCornealNewDO> LR1 = resultCornealDao.getCornealMm("L", identityCard,"R1",activityId);
+				//List<ResultCornealNewDO> LR2 = resultCornealDao.getCornealMm("L", identityCard,"R2",activityId);
+				//List<ResultCornealNewDO> RR1 = resultCornealDao.getCornealMm("R", identityCard,"R1",activityId);
+				//List<ResultCornealNewDO> RR2 = resultCornealDao.getCornealMm("R", identityCard,"R2",activityId);
+				mapPP.put("学校", studentNewDO.getSchool());
+				mapPP.put("年级", studentNewDO.getGrade());
+				mapPP.put("班级", studentNewDO.getStudentClass());
+				mapPP.put("学部", studentNewDO.getXueBu()==null?"":studentNewDO.getXueBu());
+				mapPP.put("姓名", studentNewDO.getStudentName());
+				mapPP.put("身份证号", studentNewDO.getIdentityCard());
+				mapPP.put("手机号", studentNewDO.getPhone()==null?"":studentNewDO.getPhone());
+				mapPP.put("生日", studentNewDO.getBirthday()==null?"":sdf.format(studentNewDO.getBirthday()));
+				mapPP.put("检查时间", studentNewDO.getLastCheckTime()==null?"":sdf.format(studentNewDO.getLastCheckTime()));
+				if(studentNewDO.getStudentSex()!=null && studentNewDO.getStudentSex()==1){
+					mapPP.put("性别", "男");
+				}else if(studentNewDO.getStudentSex()!=null && studentNewDO.getStudentSex()==2){
+					mapPP.put("性别", "女");
+				}else{
+					mapPP.put("性别", "");
+				}
+                SchoolNewDO schoolNewDO = schoolNewDao.get(studentNewDO.getSchoolId());
+                mapPP.put("省", schoolNewDO.getProvincename());
+                mapPP.put("市", schoolNewDO.getCityname());
+                mapPP.put("市区县", schoolNewDO.getAreaname());
+                mapPP.put("活动时间", sdf.format(activityListDao.get(activityId).getAddTime()));
+				if(lifeShili.size()>0){
+					resultEyesightDO = lifeShili.get(0);
+					mapPP.put("裸眼视力-右", resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
+					mapPP.put("裸眼视力-左", resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
+					mapPP.put("生活视力-右", resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
+					mapPP.put("生活视力-左", resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
+				}else{
+					mapPP.put("裸眼视力-右", "");
+					mapPP.put("裸眼视力-左", "");
+					mapPP.put("生活视力-右", "");
+					mapPP.put("生活视力-左", "");
+				}
+				if(L.size()>0){
+					resultDiopterDO = L.get(0);
+					mapPP.put("球镜-左", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
+					mapPP.put("柱镜-左", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
+					mapPP.put("轴位-左", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
+				}else{
+					mapPP.put("球镜-左", "");
+					mapPP.put("柱镜-左", "");
+					mapPP.put("轴位-左", "");
+				}
+				if(R.size()>0){
+					resultDiopterDO = R.get(0);
+					mapPP.put("球镜-右", resultDiopterDO.getDiopterS()==null?"":resultDiopterDO.getDiopterS());
+					mapPP.put("柱镜-右", resultDiopterDO.getDiopterC()==null?"":resultDiopterDO.getDiopterC());
+					mapPP.put("轴位-右", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
+				}else{
+					mapPP.put("球镜-右", "");
+					mapPP.put("柱镜-右", "");
+					mapPP.put("轴位-右", "");
+				}
+				/*if(LR1.size()>0){
+					resultCornealDO = LR1.get(0);
+					mapPP.put("R1-左", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+				}else{
+					mapPP.put("R1-左", "");
+				}
+				if(LR2.size()>0){
+					resultCornealDO = LR2.get(0);
+					mapPP.put("R2-左", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+				}else{
+					mapPP.put("R2-左","");
+				}
+				if(RR1.size()>0){
+					resultCornealDO = RR1.get(0);
+					mapPP.put("R1-右", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+				}else{
+					mapPP.put("R1-右", "");
+				}
+				if(RR2.size()>0){
+					resultCornealDO = RR2.get(0);
+					mapPP.put("R2-右", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+				}else{
+					mapPP.put("R2-右", "");
+				}*/
+                List<ChanpinRecordDetailsDO> list4 = chanpinRecordDetailsDao.getByChanpin(null);
+                for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list4) {
+                    mapPP.put(chanpinRecordDetailsDO.getTitleName(), "");
+                }
+				List<ChanpinRecordListDO> list2 = chanpinRecordListDao.getIdentityCard(identityCard);
+				if(list2.size()>0){
+					for (ChanpinRecordListDO chanpinRecordListDO : list2) {
 
-	
-	
+						List<ChanpinRecordDetailsDO> list3 = chanpinRecordDetailsDao.getByChanpin(chanpinRecordListDO.getId());
+						Map<String,Object> mapPPP = new HashMap<String,Object>();
+						//mapPP.put("问卷名称", chanpinRecordListDao.get(chanpinRecordListDO.getId()).getChanpinName());
+						for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list3) {
+                            if(chanpinRecordDetailsDO.getChooseSort() != null){
+                                mapPP.put(chanpinRecordDetailsDO.getTitleName(), chanpinRecordDetailsDO.getChooseSort());
+                            }
+						}
+						//mapPP.putAll(mapPPP);
+					}
+				}
+
+				bb.add(mapPP);
+			}
+		}else{
+			Map<String,Object> mapp = new HashMap<String,Object>();
+			mapp.put("信息", "暂无数据！！！");
+			bb.add(mapp);
+		}
+
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String filename = "问卷记录"+format.format(new Date().getTime())+".xls";
+		response.setContentType("application/ms-excel;charset=UTF-8");
+		response.setHeader("Content-Disposition", "attachment;filename="+new String(filename.getBytes(),"iso-8859-1"));
+
+		Cookie status = new Cookie("status","success");
+	    status.setMaxAge(600);
+	    response.addCookie(status);
+
+		OutputStream out = response.getOutputStream();
+
+		try {
+			ExcelExportUtil4DIY.exportToFile(bb,out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			out.close();
+		}
+
+
+	}
+
 	
 }

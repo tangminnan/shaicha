@@ -4,11 +4,16 @@
 <mapper namespace="com.shaicha.informationNEW.dao.ChanpinRecordDetailsDao">
 
 	<select id="get" resultType="com.shaicha.informationNEW.domain.ChanpinRecordDetailsDO">
-		select `id`,`record_id`,`title_id`,`title_type`,`remarks`,`add_time`,`del_flag`,title_name from t_chanpin_record_details where id = #{value}
+		select `id`,`record_id`,`title_id`,`title_type`,`remarks`,`add_time`,`del_flag`,title_name,choose_sort from t_chanpin_record_details where id = #{value}
+	</select>
+	
+	<select id="getByChanpin" resultType="com.shaicha.informationNEW.domain.ChanpinRecordDetailsDO">
+		select cd.id,rd.title_id, ifnull(rd.remarks,'') remarks, rd.add_time , cd.timu_name titleName, cd.sort,rd.choose_sort from  t_chanpin_details cd
+		LEFT JOIN t_chanpin_record_details rd on rd.title_id = cd.id and rd.record_id = #{value}
 	</select>
 
 	<select id="list" resultType="com.shaicha.informationNEW.domain.ChanpinRecordDetailsDO">
-		select `id`,`record_id`,`title_id`,`title_type`,`remarks`,`add_time`,`del_flag`,title_name from t_chanpin_record_details
+		select `id`,`record_id`,`title_id`,`title_type`,`remarks`,`add_time`,`del_flag`,title_name,choose_sort from t_chanpin_record_details
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="recordId != null and recordId != ''"> and record_id = #{recordId} </if>
@@ -24,7 +29,7 @@
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by id desc
+                order by id asc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">

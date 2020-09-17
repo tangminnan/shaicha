@@ -312,8 +312,8 @@ public class ResultVisibilityDO implements Serializable {
 	}
 	public ResultVisibilityDO(Long studentId, Long checkorId, Integer stereoscopicViewingValue,
 			String stereoscopicViewingDis, Double adjustmentRangeOd, Double adjustmentRangeOc, Double adjustmentRangeOu,
-			Double gatherNearOd, Double gatherNearOc, Double gatherNearOu, String obliqueValue, Double obliqueDis,
-			Integer beforeAfterOdValue, String beforeAfterOdDis, Integer beforeAfterOsValue, String beforeAfterOsDis,
+			//Double gatherNearOd, Double gatherNearOc, Double gatherNearOu, String obliqueValue, Double obliqueDis,
+			//Integer beforeAfterOdValue, String beforeAfterOdDis, Integer beforeAfterOsValue, String beforeAfterOsDis,
 			Date checkDate, Integer deleteFlag,
 			String identityCard,Integer activityId) {
 		super();
@@ -324,15 +324,15 @@ public class ResultVisibilityDO implements Serializable {
 		this.adjustmentRangeOd = adjustmentRangeOd;
 		this.adjustmentRangeOc = adjustmentRangeOc;
 		this.adjustmentRangeOu = adjustmentRangeOu;
-		this.gatherNearOd = gatherNearOd;
-		this.gatherNearOc = gatherNearOc;
-		this.gatherNearOu = gatherNearOu;
-		this.obliqueValue = obliqueValue;
-		this.obliqueDis = obliqueDis;
-		this.beforeAfterOdValue = beforeAfterOdValue;
-		this.beforeAfterOdDis = beforeAfterOdDis;
-		this.beforeAfterOsValue = beforeAfterOsValue;
-		this.beforeAfterOsDis = beforeAfterOsDis;
+//		this.gatherNearOd = gatherNearOd;
+//		this.gatherNearOc = gatherNearOc;
+//		this.gatherNearOu = gatherNearOu;
+//		this.obliqueValue = obliqueValue;
+//		this.obliqueDis = obliqueDis;
+//		this.beforeAfterOdValue = beforeAfterOdValue;
+//		this.beforeAfterOdDis = beforeAfterOdDis;
+//		this.beforeAfterOsValue = beforeAfterOsValue;
+//		this.beforeAfterOsDis = beforeAfterOsDis;
 		this.checkDate = checkDate;
 		this.deleteFlag = deleteFlag;
 		this.identityCard=identityCard;

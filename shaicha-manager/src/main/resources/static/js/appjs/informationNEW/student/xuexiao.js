@@ -45,6 +45,12 @@ function save() {
 															+"&stuclass="+stuclass
 															+"&type="+type
 	}
+	if(type == 5){
+		var activityId = $('#activityId option:selected').val();
+		
+		window.location.href= "/studentReportNew/dengdaigrade?activityId="+activityId
+															+"&type="+type
+	}
 }
 
 function validateRule() {

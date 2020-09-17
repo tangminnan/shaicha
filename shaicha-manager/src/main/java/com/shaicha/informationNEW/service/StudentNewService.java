@@ -44,7 +44,8 @@ public interface StudentNewService {
 	int batchRemove(Integer[] ids);
 	
 	R importMember(Integer activityId,Integer schoolId,String checkType, MultipartFile file);
-	
+	Map<String,Object> importMemberm(Integer activityId,Integer schoolId,String checkType, MultipartFile file);
+
 	List<StudentNewDO> getList();
 
 	void downloadErweima(Integer[] ids,HttpServletRequest request,HttpServletResponse response);
