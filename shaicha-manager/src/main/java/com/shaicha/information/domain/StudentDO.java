@@ -80,10 +80,8 @@ public class StudentDO implements Serializable {
 	private Integer activityId;
 	private Date mincheckdate;
 	private Date maxcheckdate;
-	
-	
-	
-	
+
+
 	public Date getMincheckdate() {
 		return mincheckdate;
 	}
