@@ -691,7 +691,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					List<ResultEyeaxisNewDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO2.getId());
 					List<ResultEyepressureNewDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO2.getId());
 					mapPP.put("studentName", studentDO2.getStudentName());
-					mapPP.put("studentSex", studentDO2.getStudentSex());
+					mapPP.put("studentSex", studentDO2.getStudentSex()==null? 1:studentDO2.getStudentSex());
 					if(lifeShili.size()>0){
 						resultEyesightDO = lifeShili.get(0);
 						mapPP.put("nakedNearvisionOd", resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
