@@ -31,6 +31,7 @@ public class ExcelExportUtil4DIY extends ExcelExportUtil {
 		try {
 			// workbook 2 FileOutputStream
 			workbook.write(outputStream);
+			outputStream.flush();
 			// flush
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

@@ -14,11 +14,13 @@ public class BootdoConfig {
 	private String poiword;
 
 	public String getPoiword() {
-		File file =new File(poiword);
-		if(!file.exists())
-			file.mkdirs();
+//		File file =new File(poiword);
+//		if(!file.exists())
+//			file.mkdirs();
 		return poiword;
 	}
+
+
 
 	public void setPoiword(String poiword) {
 		this.poiword = poiword;

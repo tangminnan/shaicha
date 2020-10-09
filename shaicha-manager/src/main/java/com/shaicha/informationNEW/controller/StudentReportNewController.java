@@ -436,7 +436,13 @@ public class StudentReportNewController {
 	public void shaichawenjuan(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		schoolReportService.shaichawenjuanRep(request, response);
 	}
-	
-	
+
+	/**
+	 *   根据条件导出数据
+	 */
+	@GetMapping("/studentReportNew/conditionExport")
+	public void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		schoolReportService.conditionExport(request, response);
+	}
 	
 }

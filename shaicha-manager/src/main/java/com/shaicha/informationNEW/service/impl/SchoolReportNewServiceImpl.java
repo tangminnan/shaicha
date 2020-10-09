@@ -1,26 +1,11 @@
 package com.shaicha.informationNEW.service.impl;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -30,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.shaicha.informationNEW.dao.*;
 import com.shaicha.informationNEW.domain.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +31,8 @@ import freemarker.template.Template;
 
 @Service
 public class SchoolReportNewServiceImpl implements SchoolReportNewService{
+	@Autowired
+	private StudentNewDao studentNewDao;
 	@Autowired
 	private SchoolReportNewDao schoolReportDao;
 	@Autowired
@@ -1587,5 +1575,146 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 
 	}
 
-	
+	/**
+	 *  条件导出数据
+	 */
+	@Override
+	public void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
+		double zhujingqL = 0.0;
+		double zhujingqR = 0.0;
+		double od=0.0,os=0.0;
+
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("school","济南市舜耕小学");
+		List<StudentNewDO> listAll = studentDao.list(map);
+		Map<String, List<StudentNewDO> > listMap = listAll.stream().collect(Collectors.groupingBy(k -> k.getGrade()+k.getStudentClass()));
+		Set<Map.Entry<String, List<StudentNewDO>>> entries = listMap.entrySet();
+		String fileName="";
+		for(Map.Entry<String, List<StudentNewDO>> e :entries) {
+			List<Map<String,Object>> bb = new ArrayList<Map<String,Object>>();
+			List<StudentNewDO> list = e.getValue();
+			for (StudentNewDO studentNewDO : list) {
+				fileName=studentNewDO.getSchool()+studentNewDO.getGrade()+studentNewDO.getStudentClass();
+				Map<String, Object> mapPP = new LinkedHashMap<String, Object>();
+				ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
+				ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
+				List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentNewDO.getId());
+				List<ResultDiopterNewDO> L = studentNewDao.getLatestResultDiopterDOListL(studentNewDO.getId(), "L");
+				List<ResultDiopterNewDO> R = studentNewDao.getLatestResultDiopterDOListL(studentNewDO.getId(), "R");
+				mapPP.put("学校", studentNewDO.getSchool());
+				mapPP.put("年级", studentNewDO.getGrade());
+				mapPP.put("班级", studentNewDO.getStudentClass());
+				mapPP.put("学部", studentNewDO.getXueBu() == null ? "" : studentNewDO.getXueBu());
+				mapPP.put("姓名", studentNewDO.getStudentName());
+				mapPP.put("身份证号", studentNewDO.getIdentityCard());
+				mapPP.put("手机号", studentNewDO.getPhone() == null ? "" : studentNewDO.getPhone());
+				mapPP.put("生日", studentNewDO.getBirthday() == null ? "" : sdf.format(studentNewDO.getBirthday()));
+				mapPP.put("检查时间", studentNewDO.getLastCheckTime() == null ? "" : sdf.format(studentNewDO.getLastCheckTime()));
+				if (studentNewDO.getStudentSex() != null && studentNewDO.getStudentSex() == 1) {
+					mapPP.put("性别", "男");
+				} else if (studentNewDO.getStudentSex() != null && studentNewDO.getStudentSex() == 2) {
+					mapPP.put("性别", "女");
+				} else {
+					mapPP.put("性别", "");
+				}
+				SchoolNewDO schoolNewDO = schoolNewDao.get(studentNewDO.getSchoolId());
+				mapPP.put("省", schoolNewDO.getProvincename());
+				mapPP.put("市", schoolNewDO.getCityname());
+				mapPP.put("市区县", schoolNewDO.getAreaname());
+				String nakedFarvisionOd="";
+				String nakedFarvisionOs="";
+				String correctionFarvisionOd="";
+				String correctionFarvisionOs="";
+				if (lifeShili.size() > 0) {
+					resultEyesightDO = lifeShili.get(0);
+					nakedFarvisionOd = resultEyesightDO.getNakedFarvisionOd() == null ? "" : resultEyesightDO.getNakedFarvisionOd();
+					nakedFarvisionOs = resultEyesightDO.getNakedFarvisionOs() == null ? "" : resultEyesightDO.getNakedFarvisionOs();
+					correctionFarvisionOd = resultEyesightDO.getCorrectionFarvisionOd() == null ? "" : resultEyesightDO.getCorrectionFarvisionOd();
+					correctionFarvisionOs = resultEyesightDO.getCorrectionFarvisionOs() == null ? "" : resultEyesightDO.getCorrectionFarvisionOs();
+				}
+				mapPP.put("裸眼视力-右", nakedFarvisionOd);
+				mapPP.put("裸眼视力-左", nakedFarvisionOs);
+				mapPP.put("生活视力-右", correctionFarvisionOd);
+				mapPP.put("生活视力-左", correctionFarvisionOs);
+				if(!StringUtils.isBlank(nakedFarvisionOd) && isDouble(nakedFarvisionOd)){
+					od=Double.parseDouble(nakedFarvisionOd);
+				}
+				if(!StringUtils.isBlank(nakedFarvisionOs) && isDouble(nakedFarvisionOs)){
+					os=Double.parseDouble(nakedFarvisionOs);
+				}
+
+				if (L.size() > 0) {
+					resultDiopterDO = L.get(0);
+					mapPP.put("球镜-左", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
+					mapPP.put("柱镜-左", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
+					mapPP.put("轴位-左", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
+					dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+					zhujingqL = resultDiopterDO.getDiopterC() == null ? 0.0 : resultDiopterDO.getDiopterC();
+				} else {
+					mapPP.put("球镜-左", "");
+					mapPP.put("柱镜-左", "");
+					mapPP.put("轴位-左", "");
+				}
+				if (R.size() > 0) {
+					resultDiopterDO = R.get(0);
+					mapPP.put("球镜-右", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
+					mapPP.put("柱镜-右", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
+					mapPP.put("轴位-右", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
+					dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+					zhujingqR = resultDiopterDO.getDiopterC() == null ? 0.0 : resultDiopterDO.getDiopterC();
+				} else {
+					mapPP.put("球镜-右", "");
+					mapPP.put("柱镜-右", "");
+					mapPP.put("轴位-右", "");
+				}
+				String yz= "";
+				String zz="";
+				if (od >= 5.0 && dengxiaoqiujingR >= -0.5 && dengxiaoqiujingR <= 0.75 && zhujingqR > -1.0) {
+					yz= "近视临床前期";
+				}
+				if (os >= 5.0 && dengxiaoqiujingL >= -0.5 && dengxiaoqiujingL <= 0.75 && zhujingqL > -1.0) {
+					zz =  "近视临床前期";
+				}
+
+				if (od >= 5.0 && dengxiaoqiujingR >= -0.5 && dengxiaoqiujingR <= 0.75 && zhujingqR <= -1.0) {
+					yz= "近视临床前期";
+				}
+				if (os >= 5.0 && dengxiaoqiujingL >= -0.5 && dengxiaoqiujingL <= 0.75 && zhujingqL <= -1.0) {
+					zz= "近视临床前期";
+				}
+
+				if (od >= 5.0 && dengxiaoqiujingR < -0.5 && zhujingqR > -1.0) {
+					yz =  "假性近视";
+				}
+				if (os >= 5.0 && dengxiaoqiujingL < -0.5 && zhujingqL > -1.0) {
+					zz= "假性近视";
+				}
+
+				if (od >= 5.0 && dengxiaoqiujingR < -0.5 && zhujingqR <= -1.0) {
+					yz= "假性近视";
+				}
+				if (os >= 5.0 && dengxiaoqiujingL < -0.5 && zhujingqL <= -1.0) {
+					zz  = "假性近视";
+				}
+				mapPP.put("右眼结果", yz);
+				mapPP.put("左眼结果",zz);
+				if(!"".equals(yz) || !"".equals(zz))
+					bb.add(mapPP);
+			}
+			if(bb.size()>0) {
+				OutputStream out = new FileOutputStream(bootdoConfig.getPoiword() +new String(fileName.getBytes(), "utf-8") + ".xlsx");
+				try {
+					ExcelExportUtil4DIY.exportToFile(bb, out);
+				} catch (Exception e3) {
+					e3.printStackTrace();
+				}
+			}
+		}
+
+
+	}
+
+
 }

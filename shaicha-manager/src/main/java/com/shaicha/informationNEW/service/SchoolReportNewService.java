@@ -1,6 +1,8 @@
 package com.shaicha.informationNEW.service;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -37,4 +39,6 @@ public interface SchoolReportNewService {
 	void schoolClassRep(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
 	void shaichawenjuanRep(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+    void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException;
 }
