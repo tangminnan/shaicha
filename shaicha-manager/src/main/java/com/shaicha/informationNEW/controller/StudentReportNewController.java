@@ -441,8 +441,8 @@ public class StudentReportNewController {
 	 *   根据条件导出数据
 	 */
 	@GetMapping("/studentReportNew/conditionExport")
-	public void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		schoolReportService.conditionExport(request, response);
+	public void conditionExport(String school,HttpServletRequest request,HttpServletResponse response) throws IOException{
+		schoolReportService.conditionExport(school,request, response);
 	}
 	
 }

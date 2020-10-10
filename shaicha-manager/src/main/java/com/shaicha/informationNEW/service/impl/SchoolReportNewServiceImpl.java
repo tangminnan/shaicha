@@ -1579,7 +1579,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 	 *  条件导出数据
 	 */
 	@Override
-	public void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public void conditionExport(String school,HttpServletRequest request,HttpServletResponse response) throws IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		double zhujingqL = 0.0;
@@ -1587,7 +1587,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		double od=0.0,os=0.0;
 
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("school","济南市舜耕小学");
+		map.put("school",school);
 		List<StudentNewDO> listAll = studentDao.list(map);
 		Map<String, List<StudentNewDO> > listMap = listAll.stream().collect(Collectors.groupingBy(k -> k.getGrade()+k.getStudentClass()));
 		Set<Map.Entry<String, List<StudentNewDO>>> entries = listMap.entrySet();
