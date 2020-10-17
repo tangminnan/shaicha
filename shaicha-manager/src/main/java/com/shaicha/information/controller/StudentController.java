@@ -2,20 +2,24 @@ package com.shaicha.information.controller;
 
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Map.Entry;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.shaicha.information.domain.*;
+import com.shaicha.information.service.*;
+import com.shaicha.system.config.ExcelUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -27,27 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.w3c.dom.Document;
 
 import com.shaicha.common.utils.PageUtils;
 import com.shaicha.common.utils.QRCodeUtil;
 import com.shaicha.common.utils.Query;
 import com.shaicha.common.utils.R;
-import com.shaicha.information.domain.AnswerResultDO;
-import com.shaicha.information.domain.BuLiangShili;
-import com.shaicha.information.domain.ResultCornealDO;
-import com.shaicha.information.domain.ResultDiopterDO;
-import com.shaicha.information.domain.ResultEyeaxisDO;
-import com.shaicha.information.domain.ResultEyepressureDO;
-import com.shaicha.information.domain.ResultEyesightDO;
-import com.shaicha.information.domain.ResultOptometryDO;
-import com.shaicha.information.domain.ShiliJinShi;
-import com.shaicha.information.domain.StudentDO;
-import com.shaicha.information.service.ResultEyesightService;
-import com.shaicha.information.service.ResultOptometryService;
-import com.shaicha.information.service.StudentService;
-import com.shaicha.information.domain.SchoolDO;
-import com.shaicha.information.service.SchoolService;
 
 
 /**
@@ -69,7 +57,10 @@ public class StudentController {
 	private ResultOptometryService resultOptometryService;
 	@Autowired
 	private SchoolService schoolService;
-	
+	@Autowired
+	private ResultVisibilityService resultVisibilityService;
+	@Autowired
+	private ResultDiopterService resultDiopterService;
 	@GetMapping()
 	@RequiresPermissions("information:student:student")
 	String Student(Model model){
@@ -256,18 +247,18 @@ public class StudentController {
 	/**
 	 * 答题导入
 	 */
-	@PostMapping( "/daorudatijiguo")
-	@ResponseBody
-	@RequiresPermissions("information:student:student")
-	public R daorudatijiguo(MultipartFile file){
-		return studentService.daorudatijiguo(file);	
-	}
-
-	@GetMapping("/downloadErweima")
-	public void  downloadErweima(Integer[] ids,HttpServletRequest request,HttpServletResponse response){
-		studentService.downloadErweima(ids,request,response);
-		System.out.println(ids);
-	}
+//	@PostMapping( "/daorudatijiguo")
+//	@ResponseBody
+//	@RequiresPermissions("information:student:student")
+//	public R daorudatijiguo(MultipartFile file){
+//		return studentService.daorudatijiguo(file);
+//	}
+//
+//	@GetMapping("/downloadErweima")
+//	public void  downloadErweima(Integer[] ids,HttpServletRequest request,HttpServletResponse response){
+//		studentService.downloadErweima(ids,request,response);
+//		System.out.println(ids);
+//	}
 	
 	
 	
@@ -637,4 +628,242 @@ public class StudentController {
 	            return d.intValue();
 	        return d;
 	    }
+
+
+	    @GetMapping("/Import")
+	    public String Import(){
+			return "informationNEW/student/Import";
+		}
+
+	/**
+	 * 	  筛查老数据导入
+	 */
+	 @PostMapping("/oldDataImport")
+	 @ResponseBody
+	public R importMember(MultipartFile file) throws IOException {
+		DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormat dfs = new DecimalFormat("0");
+
+        Workbook book = ExcelUtils.getBook(file);
+        Sheet sheet = book.getSheetAt(0);
+        int num = 0;
+        try {
+			for (int rowNum = 3; rowNum <= sheet.getLastRowNum(); rowNum++) {
+				Row row = sheet.getRow(rowNum);
+				if (row == null) {
+					continue;
+				}
+				if (rowNum > 1) {
+					String school = ExcelUtils.getCellFormatValue(row.getCell((short) 3));//学校名称
+			//		String grade = ExcelUtils.getCellFormatValue(row.getCell((short) 1));//年级
+					String username = ExcelUtils.getCellFormatValue(row.getCell((short) 1));//姓名
+					String xingbie = ExcelUtils.getCellFormatValue(row.getCell((short) 2));//性别
+					String nakedFarvisionOd = ExcelUtils.getCellFormatValue(row.getCell((short) 4));//裸眼视力 右眼
+					String nakedFarvisionOs = ExcelUtils.getCellFormatValue(row.getCell((short) 5));//裸眼视力  左眼
+					String correctionFarvisionOd = ExcelUtils.getCellFormatValue(row.getCell((short) 6));// 右眼
+					String correctionFarvisionOs = ExcelUtils.getCellFormatValue(row.getCell((short) 7));//  左眼
+
+					String diopterSD = ExcelUtils.getCellFormatValue(row.getCell((short) 8));//裸眼视力  左眼
+					if(StringUtils.isBlank(diopterSD)) diopterSD="0.0";
+					String diopterC = ExcelUtils.getCellFormatValue(row.getCell((short) 9));// 右眼
+					if(StringUtils.isBlank(diopterC)) diopterC="0.0";
+					String diopterA = ExcelUtils.getCellFormatValue(row.getCell((short) 10));//  左眼
+					if(StringUtils.isBlank(diopterA)) diopterA="0.0";
+
+					String diopterSS = ExcelUtils.getCellFormatValue(row.getCell((short) 11));//裸眼视力  左眼
+					if(StringUtils.isBlank(diopterSS)) diopterSS="0.0";
+					String diopterCS = ExcelUtils.getCellFormatValue(row.getCell((short) 12));// 右眼
+					if(StringUtils.isBlank(diopterCS)) diopterCS="0.0";
+					String diopterAS = ExcelUtils.getCellFormatValue(row.getCell((short) 13));//  左眼
+					if(StringUtils.isBlank(diopterAS)) diopterAS="0.0";
+
+
+
+
+
+//
+//					String yanguangD = ExcelUtils.getCellFormatValue(row.getCell((short) 7));
+//					String yanguangZ = ExcelUtils.getCellFormatValue(row.getCell((short) 8));
+//					if(yanguangD==null || "".equals(yanguangD)) yanguangD="0.0";
+//					if(yanguangZ==null ||"".equals(yanguangZ)) yanguangZ="0.0";
+					String yanqianjie = ExcelUtils.getCellFormatValue(row.getCell((short) 14));//眼前节
+					String yanwei = ExcelUtils.getCellFormatValue(row.getCell((short) 15));
+					StudentDO studentDO = new StudentDO();
+
+					studentDO.setSchool(school);
+
+//					String s  = grade.substring(0,1);
+//					String y= grade.substring(2);
+//					studentDO.setGrade(grade);
+//					studentDO.setStudentClass(grade.substring(2));
+					studentDO.setStudentName(username);
+//					if (StringUtils.isNotBlank(xingbie)) {
+//						if (xingbie.equals("男")) {
+//							studentDO.setStudentSex(1);
+//						}
+//						if (xingbie.equals("女")) {
+//							studentDO.setStudentSex(2);
+//						}
+//					}
+					studentDO.setActivityId(44);
+					studentDO.setNakedFarvisionOd(nakedFarvisionOd);
+					studentDO.setNakedFarvisionOs(nakedFarvisionOs);
+					studentDO.setCheckType("PU_TONG");
+//					Double diopterSD = 0.0;//右眼球镜
+//					Double diopterC = 0.0;//右眼柱镜
+//					Double diopterA = 0.0;//右眼轴位
+//					if (yanguangD != null) {//
+//						if (yanguangD.contains("/")) {
+//							String di = yanguangD.substring(0, yanguangD.indexOf("/"));
+//							if (di.contains("+")) {
+//								diopterSD = Double.parseDouble(di.substring(1));
+//							} else {
+//								diopterSD = Double.parseDouble(di.substring(0));
+//							}
+//							if (yanguangD.contains("*")) {
+//								String ci = yanguangD.substring(yanguangD.indexOf("/") + 1, yanguangD.indexOf("*"));
+//								if (ci.contains("+")) {
+//									diopterC = Double.parseDouble(ci.substring(1));
+//								} else {
+//									diopterC = Double.parseDouble(ci.substring(0));
+//								}
+//								String ai = yanguangD.substring(yanguangD.indexOf("*") + 1);
+//								if (ai.contains("+")) {
+//									diopterA = Double.parseDouble(ai.substring(1));
+//								} else {
+//									diopterA = Double.parseDouble(ai.substring(0));
+//								}
+//							}
+//						} else {
+//							if (yanguangD.contains("+")) {
+//								diopterSD = Double.parseDouble(yanguangD.substring(1));
+//							} else {
+//								diopterSD = Double.parseDouble(yanguangD.substring(0));
+//							}
+//						}
+//					}
+//					Double diopterSS = 0.0;//左眼球镜
+//					Double diopterCS = 0.0;//左眼柱镜
+//					Double diopterAS = 0.0;//左眼轴位
+//					if (yanguangZ != null) {//
+//						if (yanguangZ.contains("/")) {
+//							String di = yanguangZ.substring(0, yanguangZ.indexOf("/"));
+//							if (di.contains("+")) {
+//								diopterSS = Double.parseDouble(di.substring(1));
+//							} else {
+//								diopterSS = Double.parseDouble(di.substring(0));
+//							}
+//							if (yanguangZ.contains("*")) {
+//								String ci = yanguangZ.substring(yanguangZ.indexOf("/") + 1, yanguangZ.indexOf("*"));
+//								if (ci.contains("+")) {
+//									diopterCS = Double.parseDouble(ci.substring(1));
+//								} else {
+//									diopterCS = Double.parseDouble(ci.substring(0));
+//								}
+//								String ai = yanguangZ.substring(yanguangZ.indexOf("*") + 1);
+//								if (ai.contains("+")) {
+//									diopterAS = Double.parseDouble(ai.substring(1));
+//								} else {
+//									diopterAS = Double.parseDouble(ai.substring(0));
+//								}
+//							}
+//						} else {
+//							if (yanguangZ.contains("+")) {
+//								diopterSS = Double.parseDouble(yanguangZ.substring(1));
+//							} else {
+//								diopterSS = Double.parseDouble(yanguangZ.substring(0));
+//							}
+//						}
+//					}
+					Double zd = Double.parseDouble(diopterSS) + 1.0 / 2 * Double.parseDouble(diopterCS) ;//左眼等效球镜
+					Double yd = Double.parseDouble(diopterSD)  + 1.0 / 2 * Double.parseDouble(diopterC) ;//右眼等效球镜
+					studentDO.setDengxiaoqiujingl(zd);
+					studentDO.setDengxiaoqiujingr(yd);
+					studentDO.setAddTime(new Date());
+					studentService.save(studentDO);//保存学生信息
+					ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
+					resultEyesightDO.setStudentId(studentDO.getId());
+					resultEyesightDO.setNakedFarvisionOd(nakedFarvisionOd);
+					resultEyesightDO.setNakedFarvisionOs(nakedFarvisionOs);
+					resultEyesightDO.setDeleteFlag(0);
+					resultEyesightDO.setActivityId(44);
+//					resultEyesightDO.setCorrectionFarvisionOd(correctionFarvisionOd);
+//					resultEyesightDO.setCorrectionFarvisionOs(correctionFarvisionOs);
+					resultEyesightService.save(resultEyesightDO);//保存裸眼视力
+					ResultVisibilityDO resultVisibilityDO = new ResultVisibilityDO();
+					resultVisibilityDO.setStudentId(studentDO.getId());
+					resultVisibilityDO.setBeforeAfterOdDis(yanqianjie);
+					resultVisibilityDO.setBeforeAfterOsDis(yanqianjie);
+					resultVisibilityDO.setActivityId(44);
+					resultVisibilityDO.setYyanwei(yanwei);
+					resultVisibilityDO.setZyanwei(yanwei);
+					resultVisibilityService.save(resultVisibilityDO);
+					ResultOptometryDO resultOptometryDO = new ResultOptometryDO();
+					resultOptometryDO.setStudentId(studentDO.getId());
+					resultOptometryDO.setFirstCheckVd(0d);
+					resultOptometryDO.setFirstCheckRps(0d);
+					resultOptometryDO.setFirstCheckLps(0d);
+					resultOptometryDO.setFirstCheckRcs(0d);
+					resultOptometryDO.setFirstCheckLcs(0d);
+					resultOptometryDO.setSecondCheckVd(0d);
+					resultOptometryDO.setSecondCheckRps(0d);
+					resultOptometryDO.setSecondCheckLps(0d);
+					resultOptometryDO.setSecondCheckRcs(0d);
+					resultOptometryDO.setSecondCheckLcs(0d);
+					resultOptometryDO.setDeleteFlag(0);
+					resultOptometryDO.setFirstCheckPd(0d);
+					resultOptometryDO.setSecondCheckPd(0d);
+					if (resultOptometryService.save(resultOptometryDO) > 0) {
+						ResultDiopterDO rd;
+						rd = new ResultDiopterDO();
+						rd.settOptometryId(resultOptometryDO.gettOptometryId());
+						rd.setDiopterS(Double.parseDouble(diopterSD) );
+						rd.setDiopterC(Double.parseDouble(diopterC) );
+						rd.setDiopterA(Double.parseDouble(diopterA) );
+						rd.setBelieve(0);
+						rd.setNum(0);
+						rd.setType("AVG");
+						rd.setIfrl("R");
+						rd.setFirstSecond("FIRST_CHECK");
+						rd.setDengxiaoqiujing(yd);
+						rd.setActivityId(43);
+						resultDiopterService.save(rd);
+
+						rd = new ResultDiopterDO();
+						rd.settOptometryId(resultOptometryDO.gettOptometryId());
+						rd.setDiopterS(Double.parseDouble(diopterSS));
+						rd.setDiopterC(Double.parseDouble(diopterCS));
+						rd.setDiopterA(Double.parseDouble(diopterAS) );
+						rd.setBelieve(0);
+						rd.setNum(0);
+						rd.setType("AVG");
+						rd.setIfrl("L");
+						rd.setFirstSecond("FIRST_CHECK");
+						rd.setDengxiaoqiujing(zd);
+						rd.setActivityId(43);
+						resultDiopterService.save(rd);
+
+
+
+
+
+					}
+
+				}
+
+				num++;
+				System.out.println(num);
+			}
+			return R.ok("上传成功,共增加[" + num + "]条");
+		}
+		finally{
+			try {
+				if(book!=null)
+					book.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
 }

@@ -1,6 +1,7 @@
 package com.shaicha.informationNEW.dao;
 
 import com.shaicha.informationNEW.domain.SchoolNewDO;
+import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.domain.TArea;
 
 import java.util.List;
@@ -30,5 +31,6 @@ public interface SchoolNewDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
-	
+
+    List<StudentNewDO> listAll();
 }

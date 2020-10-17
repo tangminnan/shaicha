@@ -110,4 +110,8 @@ public interface StudentNewDao {
 	int activitySchoolNum(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
 	
 	int activitySchoolCheckNum(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
+
+
+
+
 }

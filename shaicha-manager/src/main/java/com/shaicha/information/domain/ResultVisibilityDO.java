@@ -49,6 +49,8 @@ public class ResultVisibilityDO implements Serializable {
 	private String beforeAfterOdDis;
 	//左眼前后节value 0=正常   1=其他
 	private Integer beforeAfterOsValue;
+	private String  zyanwei;//左眼眼位
+	private  String yyanwei; //右眼眼位
 	//左眼前后节text
 	private String beforeAfterOsDis;
 	//检查日期
@@ -59,8 +61,16 @@ public class ResultVisibilityDO implements Serializable {
 	private String identityCard;
 	private Date endTime;
 	private Date startTime;
-	
-	
+	private Integer activityId;
+
+	public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
+
 	public Date getEndTime() {
 		return endTime;
 	}
@@ -87,6 +97,23 @@ public class ResultVisibilityDO implements Serializable {
 	public void settVisibilityId(Integer tVisibilityId) {
 		this.tVisibilityId = tVisibilityId;
 	}
+
+	public String getZyanwei() {
+		return zyanwei;
+	}
+
+	public void setZyanwei(String zyanwei) {
+		this.zyanwei = zyanwei;
+	}
+
+	public String getYyanwei() {
+		return yyanwei;
+	}
+
+	public void setYyanwei(String yyanwei) {
+		this.yyanwei = yyanwei;
+	}
+
 	/**
 	 * 设置：id
 	 */

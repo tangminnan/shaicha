@@ -64,7 +64,16 @@ public class ResultEyesightDO implements Serializable {
 	private Date maxCheckDate;
 	//检查类型   示范校筛查    普通筛查
 	private String checkType;
-	
+	private Integer activityId;
+
+	public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
+
 	public Date getMinCheckDate() {
 		return minCheckDate;
 	}

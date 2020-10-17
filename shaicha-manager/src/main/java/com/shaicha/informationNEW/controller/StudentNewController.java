@@ -1308,6 +1308,4 @@ public class StudentNewController {
 		return stuClass;
 		
 	}
-
-
 }
