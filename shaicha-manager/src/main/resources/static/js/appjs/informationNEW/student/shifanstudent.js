@@ -43,6 +43,7 @@ function load() {
 								grade:$("#grade option:selected").val(),
 								studentClass:$("#studentClass option:selected").val(),
 								id:$("#xueshengid").val(),
+                                activityId:$("#shifanactivity_id").val(),
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};

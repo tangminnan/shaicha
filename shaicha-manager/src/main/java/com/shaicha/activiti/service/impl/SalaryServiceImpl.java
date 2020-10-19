@@ -16,7 +16,7 @@ import com.shaicha.activiti.domain.SalaryDO;
 import com.shaicha.activiti.service.SalaryService;
 
 
-@Service
+@Service("SalaryService")
 public class SalaryServiceImpl implements SalaryService {
 	@Autowired
 	private SalaryDao salaryDao;

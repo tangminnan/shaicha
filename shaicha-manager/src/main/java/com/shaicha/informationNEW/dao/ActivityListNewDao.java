@@ -17,6 +17,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ActivityListNewDao {
 
 	ActivityListNewDO get(Integer id);
+
+	//List<ActivityListNewDO> getlistall;
 	
 	List<ActivityListNewDO> list(Map<String,Object> map);
 	
@@ -29,4 +31,5 @@ public interface ActivityListNewDao {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+
 }

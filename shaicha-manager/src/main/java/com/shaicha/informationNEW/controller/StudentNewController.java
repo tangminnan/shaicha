@@ -18,10 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,7 +83,7 @@ public class StudentNewController {
 	@Autowired
 	private ActivityListNewService activityListNewService;
 	@Autowired
-	UserService userMapper;
+	private UserService userMapper;
 	
 	@GetMapping()
 	@RequiresPermissions("information:student:student")
@@ -95,6 +97,9 @@ public class StudentNewController {
 	    }
 		List<SchoolNewDO> school = schoolService.list(params);
 		model.addAttribute("school", school);
+		//Map<String,Object> map = new HashMap<String, Object>();
+		List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
+		model.addAttribute("activity",stuactivity);
 	    return "informationNEW/student/student";
 	}
 	
@@ -129,6 +134,15 @@ public class StudentNewController {
 	    }
 		List<SchoolNewDO> school = schoolService.list(params);
 		model.addAttribute("school", school);
+		//Map<String,Object> map = new HashMap<String, Object>();
+		List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
+		model.addAttribute("activity",stuactivity);
+		List<Integer> shifanactivityid = studentNewService.shifanactivityid();
+		List<ActivityListNewDO> shifanactivity = new ArrayList<>();
+		for(int i:shifanactivityid){
+			shifanactivity.add(activityListNewService.get(i));
+		}
+		model.addAttribute("shifanactivity",shifanactivity);
 	    return "informationNEW/student/shifanstudent";
 	}
 	
@@ -147,6 +161,7 @@ public class StudentNewController {
         	query.put("sysId", ShiroUtils.getUserId());
         }
         List<StudentNewDO> studentList = studentNewService.list(query);
+
 		int total = studentNewService.count(query);
 		PageUtils pageUtils = new PageUtils(studentList, total);
 		return pageUtils;
@@ -1308,4 +1323,33 @@ public class StudentNewController {
 		return stuClass;
 		
 	}
+
+	/**
+	 * 获取普通筛查活动ID
+	 * @param activity
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/activityid")
+	public int avtivityStuClass(String activity){
+		Map<String,Object> map = new HashMap<String, Object>();
+		int id = 0;
+		if(activity=="请选择"){
+			return id;
+		}
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			map.put("sysId",ShiroUtils.getUserId());
+		}
+		map.put("activityName",activity);
+		List<ActivityListNewDO> stuactivity = activityListNewService.list(map);
+		if (stuactivity.size()>0){
+			id = Math.toIntExact(stuactivity.get(0).getId());
+		}
+		return id;
+	}
+
+
+
+
+
 }
