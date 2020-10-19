@@ -81,13 +81,22 @@
 						
 						<div class="columns pull-right col-md-2 nopadding">
 							<select onchange="stuschool();" name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
-								<option value="">学校</option>
+								<option value="">请选择</option>
 								<option th:each="sc:${school}" th:value="${sc.orgname}" th:text="${sc.orgname}"></option>
 							</select>
 							<!-- <select class="form-control" name="school" id="school" >
                         		<option value="">学校</option>
                         		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
                     		</select> -->
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							<select onchange="stuactivity();" name="activity" id="activity" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
+								<option value="">请选择</option>
+								<option th:each="ac:${activity}" th:value="${ac.activityName}" th:text="${ac.activityName}"></option>
+							</select>
+						</div>
+						<div id="shifanactivityid">
+							<input type="hidden" th:value="${kong}" id="shifanactivity_id" />
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="xueshengid" name="xueshengid" class="form-control" placeholder="学生id" type="text">
@@ -148,8 +157,39 @@
 		title:"学校名称",
 		style:'btn-white'
 	});
-	
-		 
+    $('#activity').selectpicker({
+        title:"活动名称",
+        style:'btn-white'
+    });
+
+    function stuactivity() {
+        var activity = $('#activity option:selected').text();
+        $.ajax({
+
+            cache: true,
+            type: "get",
+            url: "/informationNEW/student/activityid",
+            data: {
+                activity: activity,
+            },
+            success : function(data){
+                if (data!=0) {
+                    $("#shifanactivityid").empty();
+                    var html = '';
+                    html += '<input type="hidden" value="' + data + '"id="shifanactivity_id" />'
+                    $("#shifanactivityid").html(html);
+                }else {
+                    $("#shifanactivityid").empty();
+                    var html = '<input type="hidden" th:value="${kong}" id="shifanactivity_id" />';
+                    // html += '<input type="hidden" value="' + data + '"id="shifanactivity_id" />'
+                    $("#shifanactivityid").html(html);
+				}
+            }
+        })
+
+
+    }
+
 		 function stuschool(){
 				
 				var school = $('#school option:selected').text();

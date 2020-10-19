@@ -45,7 +45,8 @@
 								placeholder="姓名">
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
-							<input id="identityCard" name="identityCard" class="form-control" placeholder="身份证号" type="text">
+							<input id="identityCard" name="identityCard" class="form-control"
+								   placeholder="身份证号" type="text">
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<select class="form-control" name="studentSex" id="studentSex" >
@@ -72,8 +73,18 @@
 							</select>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
+							<select onchange="stuactivity();" name="activity" id="activity" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
+								<option value="">请选择</option>
+								<option th:each="ac:${activity}" th:value="${ac.activityName}" th:text="${ac.activityName}"></option>
+							</select>
+						</div>
+						<div id="oui">
+						<input type="hidden" th:value="${kong}" id="stuac_id" />
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
 							<input id="xueshengid" name="xueshengid" class="form-control" placeholder="学生id" type="text">
 						</div>
+						<!--style="display:none"  type="hidden"-->
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -120,6 +131,42 @@
 			title:"学校名称",
 			style:'btn-white'
 		});
+
+        $('#activity').selectpicker({
+            title:"活动名称",
+            style:'btn-white'
+        });
+
+        function stuactivity() {
+            var activity = $('#activity option:selected').text();
+            $.ajax({
+
+                cache: true,
+                type: "get",
+                url: "/informationNEW/student/activityid",
+                data: {
+                    activity: activity,
+                },
+                success : function(data){
+
+                    if (data!=0) {
+                        $("#oui").empty();
+                        var html = '';
+                        html += '<input type="hidden" value="' + data + '"id="stuac_id" />'
+						// window.alert(html)
+                        $("#oui").html(html);
+					}else {
+                        $("#oui").empty();
+                        var html = '<input type="hidden" th:value="${kong}" id="stuac_id" />';
+                        // html += '<input type="hidden" value="' + data + '"id="stuac_id" />'
+                        // window.alert(html)
+                        $("#oui").html(html);
+					}
+                }
+            })
+
+
+        }
 		
 		function stuschool(){
 			
@@ -155,7 +202,7 @@
 		
 		function stugrade(){
 			var school = $('#school option:selected').text();
-			var grade = $("#grade option:selected").val();
+			var grade = $("#grade option:selected").val();  //年级
 			$.ajax({
 				type : "get",
 				url : "/informationNEW/student/schoolStuClass",
