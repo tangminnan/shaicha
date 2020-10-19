@@ -111,7 +111,12 @@ public class StudentNewServiceImpl implements StudentNewService {
 	public int count(Map<String, Object> map){
 		return studentNewDao.count(map);
 	}
-	
+
+	@Override
+	public List<Integer> shifanactivityid() {
+		return studentNewDao.shifanactivityid();
+	}
+
 	@Override
 	public int save(StudentNewDO student){
 		return studentNewDao.save(student);

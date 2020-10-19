@@ -35,6 +35,8 @@ public interface StudentNewDao {
 	int insertBatch(List<StudentNewDO> student);
 	
 	int update(StudentNewDO student);
+
+	List<Integer> shifanactivityid();
 	
 	int remove(Integer id);
 	

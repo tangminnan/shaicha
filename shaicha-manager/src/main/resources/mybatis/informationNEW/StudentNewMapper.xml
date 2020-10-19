@@ -17,7 +17,9 @@
 		limit #{offset}, #{limit}
 	</select>
 
-
+	<select id="shifanactivityid" resultType="Integer">
+		select DISTINCT `activity_id` from t_student_new where check_type = 'SHI_FANXIAO'
+	</select>
 
 
 

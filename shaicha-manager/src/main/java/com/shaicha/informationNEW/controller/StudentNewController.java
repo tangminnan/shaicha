@@ -137,6 +137,12 @@ public class StudentNewController {
 		//Map<String,Object> map = new HashMap<String, Object>();
 		List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
 		model.addAttribute("activity",stuactivity);
+		List<Integer> shifanactivityid = studentNewService.shifanactivityid();
+		List<ActivityListNewDO> shifanactivity = new ArrayList<>();
+		for(int i:shifanactivityid){
+			shifanactivity.add(activityListNewService.get(i));
+		}
+		model.addAttribute("shifanactivity",shifanactivity);
 	    return "informationNEW/student/shifanstudent";
 	}
 	
@@ -1319,7 +1325,7 @@ public class StudentNewController {
 	}
 
 	/**
-	 * 获取活动ID
+	 * 获取普通筛查活动ID
 	 * @param activity
 	 * @return
 	 */
@@ -1328,6 +1334,9 @@ public class StudentNewController {
 	public int avtivityStuClass(String activity){
 		Map<String,Object> map = new HashMap<String, Object>();
 		int id = 0;
+		if(activity=="请选择"){
+			return id;
+		}
 		if(!ShiroUtils.getUser().getUsername().equals("admin")){
 			map.put("sysId",ShiroUtils.getUserId());
 		}
@@ -1338,7 +1347,6 @@ public class StudentNewController {
 		}
 		return id;
 	}
-
 
 
 

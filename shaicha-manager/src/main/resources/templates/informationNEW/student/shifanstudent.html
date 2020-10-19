@@ -91,8 +91,8 @@
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<select onchange="stuactivity();" name="activity" id="activity" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
-								<option value="">请选择</option>
-								<option th:each="ac:${activity}" th:value="${ac.activityName}" th:text="${ac.activityName}"></option>
+								<option value="''">请选择</option>
+								<option th:each="ac:${shifanactivity}" th:value="${ac.activityName}" th:text="${ac.activityName}"></option>
 							</select>
 						</div>
 						<div id="shifanactivityid">
@@ -178,7 +178,11 @@
                     var html = '';
                     html += '<input type="hidden" value="' + data + '"id="shifanactivity_id" />'
                     $("#shifanactivityid").html(html);
-                }
+                }else {
+                    $("#shifanactivityid").empty();
+                    var html = '<input type="hidden"  id="shifanactivity_id" />';
+                    $("#shifanactivityid").html(html);
+				}
             }
         })
 
