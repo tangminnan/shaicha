@@ -96,7 +96,7 @@
 							</select>
 						</div>
 						<div id="shifanactivityid">
-							<input type="hidden" th:value="${kong}" id="shifanactivity_id" />
+							<input type="hidden"  id="shifanactivity_id" />
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="xueshengid" name="xueshengid" class="form-control" placeholder="学生id" type="text">
@@ -180,7 +180,7 @@
                     $("#shifanactivityid").html(html);
                 }else {
                     $("#shifanactivityid").empty();
-                    var html = '<input type="hidden" th:value="${kong}" id="shifanactivity_id" />';
+                    var html = '<input type="hidden" id="shifanactivity_id" />';
                     // html += '<input type="hidden" value="' + data + '"id="shifanactivity_id" />'
                     $("#shifanactivityid").html(html);
 				}

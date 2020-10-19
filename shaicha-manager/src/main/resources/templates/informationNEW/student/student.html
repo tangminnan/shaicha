@@ -82,7 +82,7 @@
 							</select>
 						</div>
 						<div id="oui">
-						<input type="hidden" th:value="${kong}" id="stuac_id" />
+							<input type="hidden" id="stuac_id" />
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="xueshengid" name="xueshengid" class="form-control" placeholder="学生id" type="text">
@@ -160,7 +160,7 @@
                         $("#oui").html(html);
 					}else {
                         $("#oui").empty();
-                        var html = '<input type="hidden" th:value="${kong}" id="stuac_id" />';
+                        var html = '<input type="hidden"  id="stuac_id" />';
                         // html += '<input type="hidden" value="' + data + '"id="stuac_id" />'
                         // window.alert(html)
                         $("#oui").html(html);
