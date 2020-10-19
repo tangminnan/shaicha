@@ -1335,12 +1335,8 @@ public class StudentNewController {
 			int id = Math.toIntExact(stuactivity.get(0).getId());
 			return id;
 		}
-//		Map<String,Object> map = new HashMap<String, Object>();
-//		map.put("activityName",activity);
-//		List<ActivityListNewDO> stuactivity = activityListNewService.list(map);
-//		int id = Math.toIntExact(stuactivity.get(0).getId());
-//		return id;
 	}
+
 
 
 

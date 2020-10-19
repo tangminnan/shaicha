@@ -1575,7 +1575,6 @@ public class StudentNewServiceImpl implements StudentNewService {
 	public int activitySchoolCheckNum(Integer activityId, Integer schoolId) {
 		return studentNewDao.activitySchoolCheckNum(activityId, schoolId);
 	}
-
 }
 
 

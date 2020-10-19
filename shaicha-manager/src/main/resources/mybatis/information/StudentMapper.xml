@@ -110,7 +110,12 @@
   			check_type,
   			check_local,
   			student_number,
-  			name_jianpin
+  			name_jianpin,
+  			dengxiaoqiujingr,
+  			dengxiaoqiujingl,
+  			naked_farvision_od,
+  			naked_farvision_os,
+  			activity_id
 		)
 		values
 		(
@@ -137,7 +142,12 @@
   			#{checkType},
   			#{checkLocal},
   			#{studentNumber},
-  			#{nameJianpin}
+  			#{nameJianpin},
+  			#{dengxiaoqiujingr},
+  			#{dengxiaoqiujingl},
+  			#{nakedFarvisionOd},
+  			#{nakedFarvisionOs},
+  			#{activityId}
 		)
 	</insert>
 	 

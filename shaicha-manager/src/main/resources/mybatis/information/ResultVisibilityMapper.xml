@@ -93,7 +93,10 @@
 			`before_after_os_value`, 
 			`before_after_os_dis`, 
 			`check_date`, 
-			`delete_flag`
+			`delete_flag`,
+			activity_id,
+			yyanwei,
+			zyanwei
 		)
 		values
 		(
@@ -114,7 +117,10 @@
 			#{beforeAfterOsValue}, 
 			#{beforeAfterOsDis}, 
 			#{checkDate}, 
-			#{deleteFlag}
+			#{deleteFlag},
+			#{activityId},
+			#{yyanwei},
+			#{zyanwei}
 		)
 	</insert>
 	 

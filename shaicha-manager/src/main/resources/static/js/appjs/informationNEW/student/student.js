@@ -274,6 +274,48 @@ function datidaoru(){
 	});
 }
 
+function oldDataImport(){
+    layer.open({
+        type : 2,
+        title : '筛查老数据导入',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '300px' ],
+        content : '/information/student/Import' // iframe的url
+    });
+}
+
+/**
+ *  筛查老数据导入
+ */
+function oldDataImportIn() {
+    var formData = new FormData(document.getElementById("signupForm"));
+    $.ajax({
+        cache : true,
+        type : "POST",
+        url : "/information/student/oldDataImport",
+        data : formData,// 你的formid
+        processData:false,
+        contentType:false,
+        async : false,
+        error : function(request) {
+            parent.layer.alert("网络超时");
+        },
+        success : function(data) {
+            if (data.code == 0) {
+                parent.layer.msg(data.msg);
+                parent.reLoad();
+                var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                parent.layer.close(index);
+
+            } else {
+                parent.layer.alert(data.msg)
+            }
+
+        }
+    });
+}
+
 /**
  * 模板导入
  */

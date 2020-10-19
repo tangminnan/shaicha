@@ -103,7 +103,9 @@
 			`num`, 
 			`type`, 
 			`ifRL`,
-			first_second
+			first_second,
+			dengxiaoqiujing,
+			activity_id
 		)
 		values
 		(
@@ -115,7 +117,9 @@
 			#{num}, 
 			#{type}, 
 			#{ifrl},
-			#{firstSecond}
+			#{firstSecond},
+			#{dengxiaoqiujing},
+			#{activityId}
 		)
 	</insert>
 	 

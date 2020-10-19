@@ -43,7 +43,16 @@ public class ResultDiopterDO implements Serializable {
 	private String checkDate1;
 	private String endTime;
 	private String startTime;
-	
+	private Integer activityId;
+
+	public Integer getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(Integer activityId) {
+		this.activityId = activityId;
+	}
+
 	public String getEndTime() {
 		return endTime;
 	}

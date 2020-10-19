@@ -1083,12 +1083,18 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 						if(re.get(0).getNakedFarvisionOd().length()<=0 ||!isDouble(re.get(0).getNakedFarvisionOd())|| re.get(0).getNakedFarvisionOd().equals(""))nfd="0";
 						String nfs = re.get(0).getNakedFarvisionOs();
 						if(re.get(0).getNakedFarvisionOs().length()<=0 ||!isDouble(re.get(0).getNakedFarvisionOs())|| re.get(0).getNakedFarvisionOs().equals(""))nfs="0";
+
+						if("10/10".equals(nfd)) nfd="5.0";
+						if("10/10".equals(nfs)) nfs="5.0";
 						if(Double.valueOf(nfd)>Double.valueOf(nfs))luo=Double.valueOf(nfs);
 						else luo=Double.valueOf(nfs);
 						String cfd = re.get(0).getCorrectionFarvisionOd();
 						if(re.get(0).getCorrectionFarvisionOd().length()<=0 ||!isDouble(re.get(0).getCorrectionFarvisionOd())|| re.get(0).getCorrectionFarvisionOd().equals(""))cfd="0";
 						String cfs = re.get(0).getCorrectionFarvisionOs();
 						if(re.get(0).getCorrectionFarvisionOs().length()<=0 ||!isDouble(re.get(0).getCorrectionFarvisionOs())|| re.get(0).getCorrectionFarvisionOs().equals(""))cfs="0";
+
+						if("10/10".equals(cfd)) cfd="5.0";
+						if("10/10".equals(cfs)) cfs="5.0";
 						if(Double.valueOf(cfd)>Double.valueOf(cfs))jiao=Double.valueOf(cfs);
 						else jiao=Double.valueOf(cfd);
 						double dxql = studentDO2.getDengxiaoqiujingl()==null?0:studentDO2.getDengxiaoqiujingl();
