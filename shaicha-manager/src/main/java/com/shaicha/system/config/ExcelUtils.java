@@ -97,7 +97,8 @@ public class ExcelUtils {
 				// 如果是纯数字
 				else {
 					// 取得当前Cell的数值
-					cellvalue = df.format(cell.getNumericCellValue());
+				//	cellvalue = df.format(cell.getNumericCellValue());
+					cellvalue =String.valueOf(cell.getNumericCellValue());
 				}
 				break;
 			}
