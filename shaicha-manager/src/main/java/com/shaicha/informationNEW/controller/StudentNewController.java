@@ -1326,15 +1326,17 @@ public class StudentNewController {
 	@ResponseBody
 	@GetMapping("/activityid")
 	public int avtivityStuClass(String activity){
-		if(activity.equals("请选择")){
-			return 0;
-		}else {
-			Map<String,Object> map = new HashMap<String, Object>();
-			map.put("activityName",activity);
-			List<ActivityListNewDO> stuactivity = activityListNewService.list(map);
-			int id = Math.toIntExact(stuactivity.get(0).getId());
-			return id;
+		Map<String,Object> map = new HashMap<String, Object>();
+		int id = 0;
+		if(!ShiroUtils.getUser().getUsername().equals("admin")){
+			map.put("sysId",ShiroUtils.getUserId());
 		}
+		map.put("activityName",activity);
+		List<ActivityListNewDO> stuactivity = activityListNewService.list(map);
+		if (stuactivity.size()>0){
+			id = Math.toIntExact(stuactivity.get(0).getId());
+		}
+		return id;
 	}
 
 

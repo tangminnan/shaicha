@@ -81,7 +81,7 @@
 								<option th:each="ac:${activity}" th:value="${ac.activityName}" th:text="${ac.activityName}"></option>
 							</select>
 						</div>
-						<div id="oui">
+						<div id="activity_id">
 							<input type="hidden" id="stuac_id" />
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
@@ -153,17 +153,11 @@
                 success : function(data){
 
                     if (data!=0) {
-                        $("#oui").empty();
+                        $("#activity_id").empty();
                         var html = '';
                         html += '<input type="hidden" value="' + data + '"id="stuac_id" />'
 						// window.alert(html)
-                        $("#oui").html(html);
-					}else {
-                        $("#oui").empty();
-                        var html = '<input type="hidden"  id="stuac_id" />';
-                        // html += '<input type="hidden" value="' + data + '"id="stuac_id" />'
-                        // window.alert(html)
-                        $("#oui").html(html);
+                        $("#activity_id").html(html);
 					}
                 }
             })
