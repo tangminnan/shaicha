@@ -82,6 +82,9 @@
 			`naked_nearvision_os`, 
 			`check_date`, 
 			`delete_flag`,
+			glass_od,
+			glass_os,
+	        qita,
 			activity_id
 		)
 		values
@@ -100,6 +103,9 @@
 			#{nakedNearvisionOs}, 
 			#{checkDate}, 
 			#{deleteFlag},
+			#{glassOd},
+			#{glassOs},
+	        #{qita},
 			#{activityId}
 		)
 	</insert>

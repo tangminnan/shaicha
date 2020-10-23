@@ -667,88 +667,39 @@ public class StudentController {
         DecimalFormat dfs = new DecimalFormat("0");
 
         Workbook book = ExcelUtils.getBook(file);
-        Sheet sheet = book.getSheetAt(0);
+        Sheet sheet = book.getSheetAt(5);
         int num = 0;
         try {
-			for (int rowNum =851; rowNum <=sheet.getLastRowNum(); rowNum++) {
+			for (int rowNum =813; rowNum <=1432; rowNum++) {
 				Row row = sheet.getRow(rowNum);
 				if (row == null) {
 					continue;
 				}
+
 				if (rowNum > 1) {
-			//		String school = ExcelUtils.getCellFormatValue(row.getCell((short) 3));//学校名称
-			//		String grade = ExcelUtils.getCellFormatValue(row.getCell((short) 1));//年级
-					String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short) 2));//班级
-					String username = ExcelUtils.getCellFormatValue(row.getCell((short) 3));//姓名
-					String xingbie = ExcelUtils.getCellFormatValue(row.getCell((short) 4));//性别
-			//		String age = ExcelUtils.getCellFormatValue(row.getCell((short) 3));//年龄
-					String nakedFarvisionOd = ExcelUtils.getCellFormatValue(row.getCell((short) 5));//裸眼视力 右眼
-					String nakedFarvisionOs = ExcelUtils.getCellFormatValue(row.getCell((short) 6));//裸眼视力  左眼
-					String correctionFarvisionOd = ExcelUtils.getCellFormatValue(row.getCell((short) 7));// 右眼
-					String correctionFarvisionOs = ExcelUtils.getCellFormatValue(row.getCell((short) 8));//  左眼
+					String grade = ExcelUtils.getCellFormatValue(row.getCell((short) 1));//班级
+					String username = ExcelUtils.getCellFormatValue(row.getCell((short) 2));//姓名
+					String xingbie = ExcelUtils.getCellFormatValue(row.getCell((short) 3));//性别
+					String phone = ExcelUtils.getCellFormatValue(row.getCell((short) 5));//裸眼视力 右眼
+					String nakedFarvisionOd = ExcelUtils.getCellFormatValue(row.getCell((short) 6));//裸眼视力 右眼
+					String nakedFarvisionOs = ExcelUtils.getCellFormatValue(row.getCell((short) 7));//裸眼视力  左眼
+					String yanguangD = ExcelUtils.getCellFormatValue(row.getCell((short) 8));
+					String yanguangZ = ExcelUtils.getCellFormatValue(row.getCell((short) 9));
+					String correctionFarvisionOd = ExcelUtils.getCellFormatValue(row.getCell((short) 10));// 右眼
+					String correctionFarvisionOs = ExcelUtils.getCellFormatValue(row.getCell((short) 11));//  左眼
+					String glassOd = ExcelUtils.getCellFormatValue(row.getCell((short) 12));// 右眼
+					String glassOs = ExcelUtils.getCellFormatValue(row.getCell((short) 13));//  左眼
+					String qita = ExcelUtils.getCellFormatValue(row.getCell((short) 14));//  左眼
 
-//				  String nakedFarvisionOd1="";
-//				  String nakedFarvisionOs1="";
-//				  String correctionFarvisionOd1="";
-//				  String correctionFarvisionOs1="";
-//					if(StringUtils.isNotBlank(nakedFarvisionOd)){
-//						nakedFarvisionOd1 = nakedFarvisionOd.substring(0,nakedFarvisionOd.indexOf("/"));
-//						nakedFarvisionOs1 = nakedFarvisionOd.substring(nakedFarvisionOd.indexOf("/")+1);
-//					}
-//					if(StringUtils.isNotBlank(nakedFarvisionOs)){
-//						correctionFarvisionOd1 = nakedFarvisionOs.substring(0,nakedFarvisionOs.indexOf("/"));
-//						correctionFarvisionOs1 = nakedFarvisionOs.substring(nakedFarvisionOs.indexOf("/")+1);
-//					}
-
-
-
-//					String diopterSD = ExcelUtils.getCellFormatValue(row.getCell((short) 7));//裸眼视力  左眼
-//					if(NumType(diopterSD)==-1) diopterSD="0.0";
-//					if(StringUtils.isBlank(diopterSD)) diopterSD="0.0";
-//					diopterSD=getNewStr(diopterSD);
-//					String diopterC = ExcelUtils.getCellFormatValue(row.getCell((short) 8));// 右眼
-//					if(NumType(diopterC)==-1) diopterC="0.0";
-//					if(StringUtils.isBlank(diopterC)) diopterC="0.0";
-//					diopterC=getNewStr(diopterC);
-//					String diopterA = ExcelUtils.getCellFormatValue(row.getCell((short) 9));//  左眼
-//					if(NumType(diopterA)==-1) diopterA="0.0";
-//					if(StringUtils.isBlank(diopterA)) diopterA="0.0";
-//
-//					String diopterSS = ExcelUtils.getCellFormatValue(row.getCell((short) 10));//裸眼视力  左眼
-//					if(NumType(diopterSS)==-1) diopterSS="0.0";
-//					if(StringUtils.isBlank(diopterSS)) diopterSS="0.0";
-//					diopterSS=getNewStr(diopterSS);
-//					String diopterCS = ExcelUtils.getCellFormatValue(row.getCell((short) 11));// 右眼
-//					if(NumType(diopterCS)==-1) diopterCS="0.0";
-//					if(StringUtils.isBlank(diopterCS)) diopterCS="0.0";
-//					diopterCS=getNewStr(diopterCS);
-//					String diopterAS = ExcelUtils.getCellFormatValue(row.getCell((short) 12));//  左眼
-//					if(NumType(diopterAS)==-1) diopterAS="0.0";
-//					if(StringUtils.isBlank(diopterAS)) diopterAS="0.0";
-//
-//					String eyePressureOd = ExcelUtils.getCellFormatValue(row.getCell((short) 13));
-//					String eyePressureOs = ExcelUtils.getCellFormatValue(row.getCell((short) 14));
-//					if(StringUtils.isBlank(eyePressureOd)) eyePressureOd="0.0";
-//					if(StringUtils.isBlank(eyePressureOs)) eyePressureOs="0.0";
-
-
-
-
-					String yanguangD = ExcelUtils.getCellFormatValue(row.getCell((short) 9));
-					String yanguangZ = ExcelUtils.getCellFormatValue(row.getCell((short) 10));
 					if(yanguangD==null || "".equals(yanguangD.trim())) yanguangD="0.0";
 					if(yanguangZ==null ||"".equals(yanguangZ.trim())) yanguangZ="0.0";
-					String yanqianjie = ExcelUtils.getCellFormatValue(row.getCell((short) 12));//眼前节
-					String yanwei = ExcelUtils.getCellFormatValue(row.getCell((short) 11));
 					StudentDO studentDO = new StudentDO();
 
-					studentDO.setSchool("实验二中");
-//					studentDO.setAge(Integer.parseInt(age.substring(0,age.indexOf("."))));
-//					String s  = grade.substring(0,1);
-//					String y= grade.substring(2);
-//					studentDO.setGrade(grade);
-					studentDO.setStudentClass(studentClass);
+					studentDO.setSchool("天衢东路小学");
+					studentDO.setGrade(grade.substring(0,3));
+					studentDO.setStudentClass(grade.substring(3));
 					studentDO.setStudentName(username);
+					studentDO.setPhone(phone);
 					if (StringUtils.isNotBlank(xingbie)) {
 						if (xingbie.equals("男")) {
 							studentDO.setStudentSex(1);
@@ -757,7 +708,7 @@ public class StudentController {
 							studentDO.setStudentSex(2);
 						}
 					}
-					studentDO.setActivityId(47);
+					studentDO.setActivityId(51);
 					studentDO.setNakedFarvisionOd(nakedFarvisionOd);
 					studentDO.setNakedFarvisionOs(nakedFarvisionOs);
 					studentDO.setCheckType("PU_TONG");
@@ -786,6 +737,21 @@ public class StudentController {
 									diopterA = Double.parseDouble(ai.substring(0));
 								}
 							}
+						}else if(!yanguangD.contains("/") && yanguangD.contains("*") ){
+							diopterSD=0.0;
+							String ci = yanguangD.substring(0, yanguangD.indexOf("*"));
+							if (ci.contains("+")) {
+								diopterC = Double.parseDouble(ci.substring(1));
+							} else {
+								diopterC = Double.parseDouble(ci.substring(0));
+							}
+							String ai = yanguangD.substring(yanguangD.indexOf("*") + 1);
+							if (ai.contains("+")) {
+								diopterA = Double.parseDouble(ai.substring(1));
+							} else {
+								diopterA = Double.parseDouble(ai.substring(0));
+							}
+
 						} else {
 							if (yanguangD.contains("+")) {
 								diopterSD = Double.parseDouble(yanguangD.substring(1));
@@ -819,6 +785,21 @@ public class StudentController {
 									diopterAS = Double.parseDouble(ai.substring(0));
 								}
 							}
+						}else if(!yanguangZ.contains("/") && yanguangZ.contains("*") ){
+							diopterSS=0.0;
+							String ci = yanguangZ.substring(0, yanguangZ.indexOf("*"));
+							if (ci.contains("+")) {
+								diopterCS = Double.parseDouble(ci.substring(1));
+							} else {
+								diopterCS = Double.parseDouble(ci.substring(0));
+							}
+							String ai = yanguangZ.substring(yanguangZ.indexOf("*") + 1);
+							if (ai.contains("+")) {
+								diopterAS = Double.parseDouble(ai.substring(1));
+							} else {
+								diopterAS = Double.parseDouble(ai.substring(0));
+							}
+
 						} else {
 							if (yanguangZ.contains("+")) {
 								diopterSS = Double.parseDouble(yanguangZ.substring(1));
@@ -838,30 +819,13 @@ public class StudentController {
 					resultEyesightDO.setNakedFarvisionOd(nakedFarvisionOd);
 					resultEyesightDO.setNakedFarvisionOs(nakedFarvisionOs);
 					resultEyesightDO.setDeleteFlag(0);
-					resultEyesightDO.setActivityId(47);
+					resultEyesightDO.setActivityId(51);
 					resultEyesightDO.setCorrectionFarvisionOd(correctionFarvisionOd);
 					resultEyesightDO.setCorrectionFarvisionOs(correctionFarvisionOs);
+					resultEyesightDO.setGlassOd(glassOd);
+					resultEyesightDO.setGlassOs(glassOs);
+					resultEyesightDO.setQita(qita);
 					resultEyesightService.save(resultEyesightDO);//保存裸眼视力
-					ResultVisibilityDO resultVisibilityDO = new ResultVisibilityDO();
-					resultVisibilityDO.setStudentId(studentDO.getId());
-					resultVisibilityDO.setBeforeAfterOdDis(yanqianjie);
-					resultVisibilityDO.setBeforeAfterOsDis(yanqianjie);
-					resultVisibilityDO.setActivityId(47);
-					resultVisibilityDO.setYyanwei(yanwei);
-					resultVisibilityDO.setZyanwei(yanwei);
-					resultVisibilityService.save(resultVisibilityDO);
-
-
-//					ResultEyepressureDO resultEyepressureDO = new ResultEyepressureDO();
-//					resultEyepressureDO.setStudentId(studentDO.getId());
-//					resultEyepressureDO.setEyePressureOd(Double.parseDouble(eyePressureOd));
-//					resultEyepressureDO.setEyePressureOs(Double.parseDouble(eyePressureOs));
-//					eyepressureService.save(resultEyepressureDO);
-
-
-
-
-
 					ResultOptometryDO resultOptometryDO = new ResultOptometryDO();
 					resultOptometryDO.setStudentId(studentDO.getId());
 					resultOptometryDO.setFirstCheckVd(0d);
@@ -890,7 +854,7 @@ public class StudentController {
 						rd.setIfrl("R");
 						rd.setFirstSecond("FIRST_CHECK");
 						rd.setDengxiaoqiujing(yd);
-						rd.setActivityId(47);
+						rd.setActivityId(51);
 						resultDiopterService.save(rd);
 
 						rd = new ResultDiopterDO();
@@ -904,7 +868,7 @@ public class StudentController {
 						rd.setIfrl("L");
 						rd.setFirstSecond("FIRST_CHECK");
 						rd.setDengxiaoqiujing(zd);
-						rd.setActivityId(47);
+						rd.setActivityId(51);
 						resultDiopterService.save(rd);
 
 

@@ -43,6 +43,9 @@ public class ResultEyesightDO implements Serializable {
 	private String nakedNearvisionOd;
 	//左眼裸眼近视力
 	private String nakedNearvisionOs;
+	private String glassOd;//左眼眼镜度数
+	private String glassOs;//右眼眼镜度数
+	private String qita;//其他
 	//学校
 	private String school;
 	//年级
@@ -325,6 +328,31 @@ public class ResultEyesightDO implements Serializable {
 		this.correctionFarvisionOs = correctionFarvisionOs;
 		
 	}
+
+	public String getGlassOd() {
+		return glassOd;
+	}
+
+	public void setGlassOd(String glassOd) {
+		this.glassOd = glassOd;
+	}
+
+	public String getGlassOs() {
+		return glassOs;
+	}
+
+	public void setGlassOs(String glassOs) {
+		this.glassOs = glassOs;
+	}
+
+	public String getQita() {
+		return qita;
+	}
+
+	public void setQita(String qita) {
+		this.qita = qita;
+	}
+
 	public String getGlassvisionOd() {
 		return glassvisionOd;
 	}
