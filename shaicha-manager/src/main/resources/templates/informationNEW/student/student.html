@@ -70,24 +70,20 @@
                     		</select>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
-							<select onchange="stuschool();" name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
+							<select  name="stuschool" id="stuschool" class="form-control" onchange="stuschool();">
 								<option value="">请选择</option>
-								<option th:each="sc:${school}" th:value="${sc.orgname}" th:text="${sc.orgname}"></option>
 							</select>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<select onchange="stuactivity();" name="activity" id="activity" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
 								<option value="">请选择</option>
-								<option th:each="ac:${activity}" th:value="${ac.activityName}" th:text="${ac.activityName}"></option>
+								<option th:each="ac:${activity}" th:value="${ac.id}" th:text="${ac.activityName}"></option>
 							</select>
-						</div>
-						<div id="activity_id">
-							<input type="hidden" id="stuac_id" />
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="xueshengid" name="xueshengid" class="form-control" placeholder="学生id" type="text">
 						</div>
-						<!--style="display:none"  type="hidden"-->
+						<!--style="display:none"  data-live-search="true" data-actions-box="false" type="hidden"-->
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -141,23 +137,27 @@
         });
 
         function stuactivity() {
-            var activity = $('#activity option:selected').text();
+            var activityId = $('#activity option:selected').val();
             $.ajax({
 
                 cache: true,
                 type: "get",
                 url: "/informationNEW/student/activityid",
                 data: {
-                    activity: activity,
+                    activityId: activityId,
                 },
                 success : function(data){
 
-                    if (data!=0) {
-                        $("#activity_id").empty();
+                    if (data.length>0) {
+                        $("#stuschool").empty();
                         var html = '';
-                        html += '<input type="hidden" value="' + data + '"id="stuac_id" />'
-						// window.alert(html)
-                        $("#activity_id").html(html);
+                        html += '<option value="">请选择</option>'
+                        for(var i = 0; i < data.length; i++) {
+                            html += '<option value="' + data[i].school + '">' + data[i].school + '</option>'
+                        }
+                        $("#stuschool").html(html);
+					}else {
+                        $("#stuschool").empty();
 					}
                 }
             })
@@ -167,7 +167,7 @@
 		
 		function stuschool(){
 			
-			var school = $('#school option:selected').text();
+			var school = $('#stuschool option:selected').text();
 			$.ajax({
 				
 				cache : true,
@@ -198,7 +198,7 @@
 		}
 		
 		function stugrade(){
-			var school = $('#school option:selected').text();
+			var school = $('#stuschool option:selected').text();
 			var grade = $("#grade option:selected").val();  //年级
 			$.ajax({
 				type : "get",

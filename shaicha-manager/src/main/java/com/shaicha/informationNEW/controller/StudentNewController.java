@@ -137,12 +137,14 @@ public class StudentNewController {
 		//Map<String,Object> map = new HashMap<String, Object>();
 		List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
 		model.addAttribute("activity",stuactivity);
-		List<Integer> shifanactivityid = studentNewService.shifanactivityid();
-		List<ActivityListNewDO> shifanactivity = new ArrayList<>();
-		for(int i:shifanactivityid){
-			shifanactivity.add(activityListNewService.get(i));
+		List<StudentNewDO> shifanstudent = studentNewService.shifanactivityid();
+		ActivityListNewDO shifanactivity = new ActivityListNewDO();
+		List<ActivityListNewDO> shifanactivitylist = new ArrayList<>();
+		for(StudentNewDO studentNewDO:shifanstudent){
+			shifanactivity = activityListNewService.get(studentNewDO.getActivityId());
+			shifanactivitylist.add(shifanactivity);
 		}
-		model.addAttribute("shifanactivity",shifanactivity);
+		model.addAttribute("shifanactivitylist",shifanactivitylist);
 	    return "informationNEW/student/shifanstudent";
 	}
 	
@@ -1326,26 +1328,26 @@ public class StudentNewController {
 
 	/**
 	 * 获取普通筛查活动ID
-	 * @param activity
+	 * @param activityId
 	 * @return
 	 */
 	@ResponseBody
 	@GetMapping("/activityid")
-	public int avtivityStuClass(String activity){
-		Map<String,Object> map = new HashMap<String, Object>();
-		int id = 0;
-		if(activity=="请选择"){
-			return id;
+	public List<StudentNewDO> avtivityStuClass(Integer activityId){
+		List<StudentNewDO> school = studentNewService.activityIdBySchool(activityId);
+		if (school.size()>0){
+			return school;
 		}
-		if(!ShiroUtils.getUser().getUsername().equals("admin")){
-			map.put("sysId",ShiroUtils.getUserId());
+		return null;
+	}
+	@ResponseBody
+	@GetMapping("/shifanactivityid")
+	public List<StudentNewDO> schoolStuClass(Integer activityId){
+		List<StudentNewDO> school = studentNewService.shifanschool(activityId);
+		if (school.size()>0){
+			return school;
 		}
-		map.put("activityName",activity);
-		List<ActivityListNewDO> stuactivity = activityListNewService.list(map);
-		if (stuactivity.size()>0){
-			id = Math.toIntExact(stuactivity.get(0).getId());
-		}
-		return id;
+		return null;
 	}
 
 

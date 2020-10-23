@@ -79,20 +79,25 @@
                     		</select>
 						</div>
 						
+						<!--<div class="columns pull-right col-md-2 nopadding">-->
+							<!--<select onchange="stuschool();" name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">-->
+								<!--<option value="">请选择</option>-->
+								<!--<option th:each="sc:${school}" th:value="${sc.orgname}" th:text="${sc.orgname}"></option>-->
+							<!--</select>-->
+							<!--&lt;!&ndash; <select class="form-control" name="school" id="school" >-->
+                        		<!--<option value="">学校</option>-->
+                        		<!--<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>-->
+                    		<!--</select> &ndash;&gt;-->
+						<!--</div>-->
 						<div class="columns pull-right col-md-2 nopadding">
-							<select onchange="stuschool();" name="school" id="school" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
+							<select  name="stuschool" id="stuschool" class="form-control" onchange="stuschool();">
 								<option value="">请选择</option>
-								<option th:each="sc:${school}" th:value="${sc.orgname}" th:text="${sc.orgname}"></option>
 							</select>
-							<!-- <select class="form-control" name="school" id="school" >
-                        		<option value="">学校</option>
-                        		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
-                    		</select> -->
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<select onchange="stuactivity();" name="activity" id="activity" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
-								<option value="''">请选择</option>
-								<option th:each="ac:${shifanactivity}" th:value="${ac.activityName}" th:text="${ac.activityName}"></option>
+								<option value="">请选择</option>
+								<option th:each="ac:${shifanactivitylist}" th:value="${ac.id}" th:text="${ac.activityName}"></option>
 							</select>
 						</div>
 						<div id="shifanactivityid">
@@ -163,26 +168,28 @@
     });
 
     function stuactivity() {
-        var activity = $('#activity option:selected').text();
+        var activityId = $('#activity option:selected').val();
         $.ajax({
 
             cache: true,
             type: "get",
-            url: "/informationNEW/student/activityid",
+            url: "/informationNEW/student/shifanactivityid",
             data: {
-                activity: activity,
+                activityId: activityId,
             },
             success : function(data){
-                if (data!=0) {
-                    $("#shifanactivityid").empty();
+
+                if (data.length>0) {
+                    $("#stuschool").empty();
                     var html = '';
-                    html += '<input type="hidden" value="' + data + '"id="shifanactivity_id" />'
-                    $("#shifanactivityid").html(html);
+                    html += '<option value="">请选择</option>'
+                    for(var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[i].school + '">' + data[i].school + '</option>'
+                    }
+                    $("#stuschool").html(html);
                 }else {
-                    $("#shifanactivityid").empty();
-                    var html = '<input type="hidden"  id="shifanactivity_id" />';
-                    $("#shifanactivityid").html(html);
-				}
+                    $("#stuschool").empty();
+                }
             }
         })
 
@@ -191,7 +198,7 @@
 
 		 function stuschool(){
 				
-				var school = $('#school option:selected').text();
+				var school = $('#stuschool option:selected').text();
 				$.ajax({
 					
 					cache : true,
@@ -222,7 +229,7 @@
 			}
 			
 			function stugrade(){
-				var school = $('#school option:selected').text();
+				var school = $('#stuschool option:selected').text();
 				var grade = $("#grade option:selected").val();
 				$.ajax({
 					type : "get",

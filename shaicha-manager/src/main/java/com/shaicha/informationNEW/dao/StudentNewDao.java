@@ -28,6 +28,9 @@ public interface StudentNewDao {
 	StudentNewDO get(Integer id);
 	
 	List<StudentNewDO> list(Map<String,Object> map);
+
+	List<StudentNewDO> activitygetschool(Integer activityId);
+
 	
 	int count(Map<String,Object> map);
 	
@@ -36,7 +39,9 @@ public interface StudentNewDao {
 	
 	int update(StudentNewDO student);
 
-	List<Integer> shifanactivityid();
+	List<StudentNewDO> shifanactivityid();
+	List<StudentNewDO> shifanschool(Integer activityId);
+
 	
 	int remove(Integer id);
 	

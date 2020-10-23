@@ -113,8 +113,18 @@ public class StudentNewServiceImpl implements StudentNewService {
 	}
 
 	@Override
-	public List<Integer> shifanactivityid() {
+	public List<StudentNewDO> activitygetschool(Integer activityId) {
+		return studentNewDao.activitygetschool(activityId);
+	}
+
+	@Override
+	public List<StudentNewDO> shifanactivityid() {
 		return studentNewDao.shifanactivityid();
+	}
+
+	@Override
+	public List<StudentNewDO> shifanschool(Integer activityId) {
+		return studentNewDao.shifanschool(activityId);
 	}
 
 	@Override

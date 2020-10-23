@@ -35,7 +35,10 @@ public interface StudentNewService {
 	
 	int count(Map<String, Object> map);
 
-	List<Integer> shifanactivityid();
+	List<StudentNewDO> activitygetschool(Integer activityId);
+
+	List<StudentNewDO> shifanactivityid();
+	List<StudentNewDO> shifanschool(Integer activityId);
 	
 	int save(StudentNewDO student);
 	

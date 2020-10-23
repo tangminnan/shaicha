@@ -38,12 +38,12 @@ function load() {
 								offset:params.offset,
 								studentName:$("#studentName").val(),
 								identityCard:$("#identityCard").val(),
-								school:$("#school option:selected").val(),
+								school:$("#stuschool option:selected").val(),
 								studentSex:$("#studentSex option:selected").val(),
 								grade:$("#grade option:selected").val(),
 								studentClass:$("#studentClass option:selected").val(),
 								id:$("#xueshengid").val(),
-                                activityId:$("#shifanactivity_id").val(),
+                                activityId:$("#activity").val(),
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
