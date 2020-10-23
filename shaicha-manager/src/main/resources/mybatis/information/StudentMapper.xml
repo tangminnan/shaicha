@@ -115,7 +115,8 @@
   			dengxiaoqiujingl,
   			naked_farvision_od,
   			naked_farvision_os,
-  			activity_id
+  			activity_id,
+  			age
 		)
 		values
 		(
@@ -147,7 +148,8 @@
   			#{dengxiaoqiujingl},
   			#{nakedFarvisionOd},
   			#{nakedFarvisionOs},
-  			#{activityId}
+  			#{activityId},
+  			#{age}
 		)
 	</insert>
 	 

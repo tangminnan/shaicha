@@ -66,6 +66,8 @@ public class StudentDO implements Serializable {
 	private Integer status;
 	//二维码url
 	private String QRCode;
+	//
+	private int age;
 	
 	//模板类型  XUE_XIAO=学校
 	private String  modelType;
@@ -81,6 +83,13 @@ public class StudentDO implements Serializable {
 	private Date mincheckdate;
 	private Date maxcheckdate;
 
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
 
 	public Date getMincheckdate() {
 		return mincheckdate;
