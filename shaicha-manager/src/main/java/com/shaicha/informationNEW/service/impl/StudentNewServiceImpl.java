@@ -2,10 +2,7 @@ package com.shaicha.informationNEW.service.impl;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,7 +192,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 		try {
 			if(file != null){
 				in = file.getInputStream();
-				book =ExcelUtils.getBook(in);
+				book =ExcelUtils.getBook(file);
 				Sheet sheet = book.getSheetAt(0);
 				Row row=null;
 				//String modelType= "",school = "", schoolCode= "";
@@ -213,8 +210,12 @@ public class StudentNewServiceImpl implements StudentNewService {
 						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
 						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
 						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)4));		//年级
-						String studentClass = ExcelUtils.getCellFormatValue(row.getCell((short)5));	//班级
-						String phone = ExcelUtils.getCellFormatValue(row.getCell((short)6));		//手机号
+						Cell cell = row.getCell((short) 5);
+						cell.setCellType(CellType.STRING);
+						String studentClass = ExcelUtils.getCellFormatValue(cell);	//班级
+						cell = row.getCell((short) 6);
+						cell.setCellType(CellType.STRING);
+						String phone = ExcelUtils.getCellFormatValue(cell);		//手机号
 						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7));		//民族
 						if(ideentityType == null && 
 								identityCard == null &&
@@ -235,14 +236,14 @@ public class StudentNewServiceImpl implements StudentNewService {
 						student.setAddress(schoolDO.getAreaname());
 						student.setActivityId(activityId);
 						student.setCheckType(checkType);
-						student.setStudentName(name);
-						student.setPhone(phone);
+						student.setStudentName(name.trim());
+						student.setPhone(phone.trim());
 						student.setNation(nation);
 						//student.setSchool(school);
-						student.setGrade(grade);
-						student.setStudentClass(studentClass);
+						student.setGrade(grade.trim());
+						student.setStudentClass(studentClass.trim());
 						student.setStatus(0);
-						student.setIdeentityType(ideentityType);
+						student.setIdeentityType(ideentityType.trim());
 						student.setXueBu(schoolDO.getXuebu());
 						student.setSysId(ShiroUtils.getUserId());
 						//student.setSchoolCode(schoolCode);

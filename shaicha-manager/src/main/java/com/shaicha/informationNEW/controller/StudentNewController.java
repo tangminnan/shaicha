@@ -255,6 +255,10 @@ public class StudentNewController {
 		student.setSchoolCode(schoolDO.getOrgcode());
 		student.setSysId(ShiroUtils.getUserId());
 		student.setXueBu(schoolDO.getXuebu());
+		student.setIdentityCard(student.getIdentityCard().trim());
+		student.setGrade(student.getGrade().trim());
+		student.setStudentClass(student.getStudentClass().trim());
+		student.setPhone(student.getPhone().trim());
 		if(studentNewService.save(student)>0){
 			return R.ok();
 		}
@@ -824,8 +828,12 @@ public class StudentNewController {
 	@GetMapping("/shifanshaichadayin")
 	public String shifanshaichadayin(Integer id,Model model){
 		//基本信息获取
+		/**
+		 *   滨州中心示范校筛查模板比较特殊
+		 */
 		StudentNewDO studentDO = studentNewService.get(id);
 		if(studentDO==null || studentDO.getLastCheckTime()==null) return "information/student/示范校筛查打印";
+		Integer activityId = studentDO.getActivityId();
 		model.addAttribute("school", studentDO.getSchool());
 		model.addAttribute("grade",studentDO.getGrade().toString());
 		model.addAttribute("studentClass",studentDO.getStudentClass().toString());
@@ -1189,6 +1197,8 @@ public class StudentNewController {
 			model.addAttribute("zdoctorchubu","戴原镜视力异常，近视增长。 请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
 	//    	model.addAttribute("yujing","近视增长");
 		}*/
+	   if(activityId==70)
+	   		return "informationNEW/student/示范校筛查打印-69滨州";
 		return "informationNEW/student/示范校筛查打印";
 	}
 	

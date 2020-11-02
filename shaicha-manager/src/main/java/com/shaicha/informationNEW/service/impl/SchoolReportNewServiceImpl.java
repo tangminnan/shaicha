@@ -1530,25 +1530,25 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				}else{
 					mapPP.put("R2-右", "");
 				}*/
-                List<ChanpinRecordDetailsDO> list4 = chanpinRecordDetailsDao.getByChanpin(null);
-                for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list4) {
-                    mapPP.put(chanpinRecordDetailsDO.getTitleName(), "");
-                }
-				List<ChanpinRecordListDO> list2 = chanpinRecordListDao.getIdentityCard(identityCard);
-				if(list2.size()>0){
-					for (ChanpinRecordListDO chanpinRecordListDO : list2) {
-
-						List<ChanpinRecordDetailsDO> list3 = chanpinRecordDetailsDao.getByChanpin(chanpinRecordListDO.getId());
-						Map<String,Object> mapPPP = new HashMap<String,Object>();
-						//mapPP.put("问卷名称", chanpinRecordListDao.get(chanpinRecordListDO.getId()).getChanpinName());
-						for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list3) {
-                            if(chanpinRecordDetailsDO.getChooseSort() != null){
-                                mapPP.put(chanpinRecordDetailsDO.getTitleName(), chanpinRecordDetailsDO.getChooseSort());
-                            }
-						}
-						//mapPP.putAll(mapPPP);
-					}
-				}
+//                List<ChanpinRecordDetailsDO> list4 = chanpinRecordDetailsDao.getByChanpin(null);
+//                for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list4) {
+//                    mapPP.put(chanpinRecordDetailsDO.getTitleName(), "");
+//                }
+//				List<ChanpinRecordListDO> list2 = chanpinRecordListDao.getIdentityCard(identityCard);
+//				if(list2.size()>0){
+//					for (ChanpinRecordListDO chanpinRecordListDO : list2) {
+//
+//						List<ChanpinRecordDetailsDO> list3 = chanpinRecordDetailsDao.getByChanpin(chanpinRecordListDO.getId());
+//						Map<String,Object> mapPPP = new HashMap<String,Object>();
+//						//mapPP.put("问卷名称", chanpinRecordListDao.get(chanpinRecordListDO.getId()).getChanpinName());
+//						for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list3) {
+//                            if(chanpinRecordDetailsDO.getChooseSort() != null){
+//                                mapPP.put(chanpinRecordDetailsDO.getTitleName(), chanpinRecordDetailsDO.getChooseSort());
+//                            }
+//						}
+//						//mapPP.putAll(mapPPP);
+//					}
+//				}
 
 				bb.add(mapPP);
 			}

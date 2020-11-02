@@ -81,12 +81,13 @@ public class ExcelUtils {
 		DecimalFormat df=new DecimalFormat("0");
 		if (cell != null) {
 			// 判断当前Cell的Type
+			int cellType = cell.getCellType();
 			switch (cell.getCellType()) {
 			// 如果当前Cell的Type为NUMERIC
 		   case Cell.CELL_TYPE_NUMERIC:
 				cellvalue = String.valueOf(cell.getNumericCellValue());
 				
-		//		cellvalue = df.format(cell.getNumericCellValue());
+			//	cellvalue = df.format(cell.getNumericCellValue());
 				break;
 			case Cell.CELL_TYPE_FORMULA: {
 				// 判断当前的cell是否为Date
