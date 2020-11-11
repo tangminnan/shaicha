@@ -198,14 +198,15 @@ public class StudentNewServiceImpl implements StudentNewService {
 				//String modelType= "",school = "", schoolCode= "";
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					try {
-					row = sheet.getRow(rowNum);
-					//if(rowNum==0){
+						row = sheet.getRow(rowNum);
+						//if(rowNum==0){
 					//	modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
 					//	school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
 					//	schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
 					//}
 					//if(rowNum>1){
 						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
+
 						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
 						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
 						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
