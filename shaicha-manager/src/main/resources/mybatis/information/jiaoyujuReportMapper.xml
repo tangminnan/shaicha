@@ -5,7 +5,13 @@
 
 	<!--  -->
 	<select id="getAddress" resultType="com.shaicha.information.domain.SchoolDO">
-		SELECT `id`,`OrgCode`,`OrgName`,`ShortName`,`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,`xuebu` from t_school where OrgName = #{value}
+		SELECT `id`,`OrgCode`,`OrgName`,`ShortName`,
+		`SpellName`,`OrgType`,`ProvinceCode`,`ProvinceName`,`CityCode`,
+		`CityName`,`AreaCode`,`AreaName`,`Street`,`Address`,`SortNumber`,
+		`Linker`,`LinkPhone`,`EnabledStatus`,`IsPublic`,`CreateDate`,
+		`xuebu` from t_school where OrgName = #{value}
+
+
 	</select>
 	<!-- 检测时间 -->
 	<select id="getMaxMinCheckDate" resultType="com.shaicha.information.domain.StudentDO">

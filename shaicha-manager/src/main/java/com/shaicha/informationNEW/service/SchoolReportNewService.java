@@ -40,5 +40,5 @@ public interface SchoolReportNewService {
 	
 	void shaichawenjuanRep(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
-    void conditionExport(String school,HttpServletRequest request,HttpServletResponse response) throws IOException;
+    void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException;
 }

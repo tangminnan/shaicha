@@ -1585,7 +1585,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 	 *  条件导出数据
 	 */
 	@Override
-	public void conditionExport(String school,HttpServletRequest request,HttpServletResponse response) throws IOException {
+	public void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
 		double zhujingqL = 0.0;
@@ -1593,7 +1593,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		double od=0.0,os=0.0;
 
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("school",school);
+		map.put("school","济南市市中区爱都小学");
 		List<StudentNewDO> listAll = studentDao.list(map);
 		Map<String, List<StudentNewDO> > listMap = listAll.stream().collect(Collectors.groupingBy(k -> k.getGrade()+k.getStudentClass()));
 		Set<Map.Entry<String, List<StudentNewDO>>> entries = listMap.entrySet();
@@ -1709,8 +1709,9 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				if(!"".equals(yz) || !"".equals(zz))
 					bb.add(mapPP);
 			}
+
 			if(bb.size()>0) {
-				OutputStream out = new FileOutputStream(bootdoConfig.getPoiword() +new String(fileName.getBytes(), "utf-8") + ".xlsx");
+				OutputStream out = new FileOutputStream(bootdoConfig.getPoiword()+new String(fileName.getBytes(),"UTF-8")+".xls");
 				try {
 					ExcelExportUtil4DIY.exportToFile(bb, out);
 				} catch (Exception e3) {

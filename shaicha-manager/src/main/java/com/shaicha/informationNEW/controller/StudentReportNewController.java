@@ -439,10 +439,11 @@ public class StudentReportNewController {
 
 	/**
 	 *   根据条件导出数据
+	 *   （手动直接在代码上修改条件）
 	 */
 	@GetMapping("/studentReportNew/conditionExport")
-	public void conditionExport(String school,HttpServletRequest request,HttpServletResponse response) throws IOException{
-		schoolReportService.conditionExport(school,request, response);
+	public void conditionExport(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		schoolReportService.conditionExport(request, response);
 	}
 	
 }

@@ -463,9 +463,12 @@ function erweimaxiazai(){
 	$.each(rows, function(i, row) {
 		ids[i] = row['id'];
 	});
-	
+
 	window.location.href="/informationNEW/student/downloadErweima?ids="+ids
+
 }
+
+
 
 /**
  * 普通筛查结果导出
