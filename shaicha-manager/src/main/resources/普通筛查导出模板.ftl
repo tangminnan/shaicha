@@ -2965,7 +2965,7 @@
 										<w:sz w:val="24" />
 										<w:sz-cs w:val="24" />
 										<w:highlight w:val="white" /></w:rPr>
-									<w:t>持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)</w:t>
+									<w:t>${zhongxin.biaogeBiaoti!'持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)'}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
