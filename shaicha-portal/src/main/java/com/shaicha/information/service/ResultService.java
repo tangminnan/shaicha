@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.shaicha.information.domain.ResultQuestionDO;
 import com.shaicha.information.domain.SchoolNewDO;
 
 public interface ResultService {
@@ -15,5 +16,7 @@ public interface ResultService {
 	Map<String, Object> getStudentInfo(Long id);
 	
 	List<SchoolNewDO> list(Map<String,Object> map);
+
+
 
 }
