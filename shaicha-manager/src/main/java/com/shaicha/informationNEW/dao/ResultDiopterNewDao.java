@@ -34,7 +34,7 @@ public interface ResultDiopterNewDao {
 	
 	List<ResultDiopterNewDO> getByToptometryId(Integer tOptometryId);
 	
-	List<ResultDiopterNewDO> getYanGuang(@Param("ifRL") String ifRL,@Param("identityCard") String identityCard,@Param("activityId") Integer activityId);
+	List<ResultDiopterNewDO> getYanGuang(@Param("ifRL") String ifRL,@Param("studentId") Integer id,@Param("activityId") Integer activityId);
 	
 	List<ResultDiopterNewDO> jianchashijian();
 	

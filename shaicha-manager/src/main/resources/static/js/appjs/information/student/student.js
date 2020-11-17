@@ -416,3 +416,17 @@ function putongshaichadayin(id,lastCheckTime){
 	}
 	window.open("/information/student/putongshaichadayin?id="+id);
 }
+
+/**
+ *   活动报告 */
+function huodongbaogao(){
+    var page = layer.open({
+        type : 2,
+        title : '报告',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '300px' ],
+        content : '/studentReport/xuexiao' // iframe的url
+    });
+    layer.full(page);
+}

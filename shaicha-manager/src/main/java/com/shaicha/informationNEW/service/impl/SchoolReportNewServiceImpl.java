@@ -670,8 +670,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
 					ResultEyepressureNewDO resultEyepressureDO = new ResultEyepressureNewDO();
 					List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentDO2.getId());
-					List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getIdentityCard(),activityId);
-					List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getIdentityCard(),activityId);
+					List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getId(),activityId);
+					List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getId(),activityId);
 					List<ResultCornealNewDO> LR1 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R1",activityId);
 					List<ResultCornealNewDO> LR2 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R2",activityId);
 					List<ResultCornealNewDO> RR1 = resultCornealDao.getCornealMm("R", studentDO2.getIdentityCard(),"R1",activityId);
@@ -976,8 +976,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
 					ResultEyepressureNewDO resultEyepressureDO = new ResultEyepressureNewDO();
 					List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentDO2.getId());
-					List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getIdentityCard(),activityId);
-					List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getIdentityCard(),activityId);
+					List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getId(),activityId);
+					List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getId(),activityId);
 					List<ResultCornealNewDO> LR1 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R1",activityId);
 					List<ResultCornealNewDO> LR2 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R2",activityId);
 					List<ResultCornealNewDO> RR1 = resultCornealDao.getCornealMm("R", studentDO2.getIdentityCard(),"R1",activityId);
@@ -1207,8 +1207,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
 				ResultEyepressureNewDO resultEyepressureDO = new ResultEyepressureNewDO();
 				List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentDO2.getId());
-				List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getIdentityCard(),activityId);
-				List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getIdentityCard(),activityId);
+				List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getId(),activityId);
+				List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getId(),activityId);
 				List<ResultCornealNewDO> LR1 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R1",activityId);
 				List<ResultCornealNewDO> LR2 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R2",activityId);
 				List<ResultCornealNewDO> RR1 = resultCornealDao.getCornealMm("R", studentDO2.getIdentityCard(),"R1",activityId);
@@ -1447,8 +1447,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
 				ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 				List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentNewDO.getId());
-				List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", identityCard,activityId);
-				List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", identityCard,activityId);
+				List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentNewDO.getId(),activityId);
+				List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentNewDO.getId(),activityId);
 				//List<ResultCornealNewDO> LR1 = resultCornealDao.getCornealMm("L", identityCard,"R1",activityId);
 				//List<ResultCornealNewDO> LR2 = resultCornealDao.getCornealMm("L", identityCard,"R2",activityId);
 				//List<ResultCornealNewDO> RR1 = resultCornealDao.getCornealMm("R", identityCard,"R1",activityId);

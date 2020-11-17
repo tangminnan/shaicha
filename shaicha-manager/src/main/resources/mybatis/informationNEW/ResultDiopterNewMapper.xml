@@ -123,8 +123,14 @@
 	</delete>
 
 	<select id="getYanGuang" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
-		select `diopter_s`,`diopter_c`,`diopter_a` from t_result_diopter_new where type = 'AVG'
-		and ifRL = #{ifRL} and identity_card = #{identityCard} and activity_id = #{activityId}
+		select d.`diopter_s`,d.`diopter_c`,d.`diopter_a` from t_result_diopter_new d join t_result_optometry_new o
+		 ON d.t_optometry_id=o.t_optometry_id
+
+		 where d.type = 'AVG'
+		and d.ifRL = #{ifRL} and o.student_id= #{studentId} and d.activity_id = #{activityId}
+
+
+
 	</select>
 
 	<select id="jianchashijian" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">

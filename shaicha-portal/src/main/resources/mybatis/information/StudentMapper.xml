@@ -19,6 +19,7 @@
 	<update id="updateStudentDOshi" parameterType="com.shaicha.information.domain.StudentDO">
 		update t_student_new 
 		<set>
+			last_check_time=now(),
 			<if test="dengxiaoqiujingr != null">`dengxiaoqiujingr` = #{dengxiaoqiujingr}, </if>
 			<if test="dengxiaoqiujingl != null">`dengxiaoqiujingl` = #{dengxiaoqiujingl}, </if>
 			<if test="nakedFarvisionOd != null">`naked_farvision_od` = #{nakedFarvisionOd}, </if>

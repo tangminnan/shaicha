@@ -31,6 +31,17 @@
 								 <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
 									   筛查结果导出
 								</button>-->
+								<div class="columns pull-right col-md-2 nopadding">
+									<select onchange="stuactivity();" name="activity" id="activity" class="selectpicker show-tick form-control" data-live-search="true" data-actions-box="false" data-size="8">
+										<option value="">请选择</option>
+										<option th:each="ac:${activity}" th:value="${ac.id}" th:text="${ac.activityName}"></option>
+									</select>
+								</div>
+								<div class="columns pull-right col-md-2 nopadding">
+									<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="huodongbaogao()">
+										活动报告
+									</button>
+								</div>
 							</div>
 						</div>
 						<div class="columns pull-right">
@@ -56,12 +67,12 @@
 									<input id="lastCheckTime" name="lastCheckTime" class="form-control" type="text" placeholder="筛查日期">
 								</div>
 							
-						<!-- <div class="columns pull-right col-md-2 nopadding">
+						 <div class="columns pull-right col-md-2 nopadding">
 							<select class="form-control" name="school" id="school" >
                         		<option value="">学校</option>
                         		<option th:each="list:${studentList}" th:value="${list.school}" th:text="${list.school}"></option>
                     		</select>
-						</div> -->
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>

@@ -85,19 +85,7 @@ public class ResultServiceImpl implements ResultService{
 		String grade=studentDetails.getString("grade");
 		String studentClass=studentDetails.getString("studentClass");
 		String phone=studentDetails.getString("phone");
-		//String ideentityType=studentDetails.getString("ideentityType");
-		/*if(ideentityType.equals("身份证") && identityCard.length() == 18){
-	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String year = identityCard.substring(6, 10);
-			String month = identityCard.substring(10, 12);
-			String day = identityCard.substring(12, 14);
-			String bir = year+"-"+month+"-"+day;
-			try {
-				stu.setBirthday(sdf.parse(bir));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}*/
+
 		stu.setStudentName(studentName);
 		stu.setStudentSex(studentSex);
 		stu.setNation(nation);
@@ -115,16 +103,12 @@ public class ResultServiceImpl implements ResultService{
 		studentDao.update(stu);
 		
 		JSONObject jsonObject =obj.getJSONObject("eyesight");//视力检查数据
-    	//String lifeFarvisionOd = jsonObject.getString("lifeFarvisionOd");
-    	//String lifeFarvisionOs = jsonObject.getString("lifeFarvisionOs");
+
     	String nakedFarvisionOd = jsonObject.getString("nakedFarvisionOd");
     	String nakedFarvisionOs = jsonObject.getString("nakedFarvisionOs");
     	String correctionFarvisionOd = jsonObject.getString("correctionFarvisionOd");
     	String correctionFarvisionOs = jsonObject.getString("correctionFarvisionOs");
-    	//String lifeNearvisionOd = jsonObject.getString("lifeNearvisionOd");
-    	//String lifeNearvisionOs = jsonObject.getString("lifeNearvisionOs");
-    	//String nakedNearvisionOd = jsonObject.getString("nakedNearvisionOd");
-    	//String nakedNearvisionOs = jsonObject.getString("nakedNearvisionOs");
+
     	ResultEyesightDO resultEyesightDO = new ResultEyesightDO(studentId,chectorId,  nakedFarvisionOd, nakedFarvisionOs, 
     			correctionFarvisionOd, correctionFarvisionOs,date, 0,identityCard,activityId);
     	if(		//"".equals(lifeFarvisionOd) && 
