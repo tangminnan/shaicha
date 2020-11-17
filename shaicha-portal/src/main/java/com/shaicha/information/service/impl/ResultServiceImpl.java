@@ -14,33 +14,14 @@ import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.shaicha.information.dao.*;
+import com.shaicha.information.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shaicha.common.utils.ShiroUtils;
-import com.shaicha.information.dao.ResultAdjustingDao;
-import com.shaicha.information.dao.ResultCornealDao;
-import com.shaicha.information.dao.ResultDao;
-import com.shaicha.information.dao.ResultDiopterDao;
-import com.shaicha.information.dao.ResultEyeaxisDao;
-import com.shaicha.information.dao.ResultEyepressureDao;
-import com.shaicha.information.dao.ResultEyesightDao;
-import com.shaicha.information.dao.ResultOptometryDao;
-import com.shaicha.information.dao.ResultVisibilityDao;
-import com.shaicha.information.dao.SchoolNewDao;
-import com.shaicha.information.dao.StudentDao;
-import com.shaicha.information.domain.ResultAdjustingDO;
-import com.shaicha.information.domain.ResultCornealDO;
-import com.shaicha.information.domain.ResultDiopterDO;
-import com.shaicha.information.domain.ResultEyeaxisDO;
-import com.shaicha.information.domain.ResultEyepressureDO;
-import com.shaicha.information.domain.ResultEyesightDO;
-import com.shaicha.information.domain.ResultOptometryDO;
-import com.shaicha.information.domain.ResultVisibilityDO;
-import com.shaicha.information.domain.SchoolNewDO;
-import com.shaicha.information.domain.StudentDO;
 import com.shaicha.information.service.ResultService;
 
 @Service
@@ -66,6 +47,8 @@ public class ResultServiceImpl implements ResultService{
 	private ResultVisibilityDao visibilityDao;
 	@Autowired
 	private SchoolNewDao  schoolNewDao;
+	@Autowired
+	private ResultQuestionDao resultQuestionDao;
 
 	@Override
 	public Map<String, Object> saveResultData(JSONObject obj) {
@@ -85,7 +68,24 @@ public class ResultServiceImpl implements ResultService{
 		String grade=studentDetails.getString("grade");
 		String studentClass=studentDetails.getString("studentClass");
 		String phone=studentDetails.getString("phone");
-
+		Integer questionOneI = studentDetails.getInteger("questionOneI");
+		String questionOneS = studentDetails.getString("questionOneS");
+		String questionTwoR = studentDetails.getString("questionTwoR");
+		String questionTwoL = studentDetails.getString("questionTwoL");
+		String questionThree = studentDetails.getString("questionThree");
+		//String ideentityType=studentDetails.getString("ideentityType");
+		/*if(ideentityType.equals("身份证") && identityCard.length() == 18){
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String year = identityCard.substring(6, 10);
+			String month = identityCard.substring(10, 12);
+			String day = identityCard.substring(12, 14);
+			String bir = year+"-"+month+"-"+day;
+			try {
+				stu.setBirthday(sdf.parse(bir));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}*/
 		stu.setStudentName(studentName);
 		stu.setStudentSex(studentSex);
 		stu.setNation(nation);
@@ -101,7 +101,10 @@ public class ResultServiceImpl implements ResultService{
 		stu.setSchoolId(schoolId);
 		stu.setId(studentId.intValue());
 		studentDao.update(stu);
-		
+		//问卷
+		ResultQuestionDO resultQuestionDO = new ResultQuestionDO(studentId.intValue(),studentName,questionOneI,questionOneS,questionTwoR,questionTwoL,questionThree);
+		addUpdate(studentId,resultQuestionDO);
+
 		JSONObject jsonObject =obj.getJSONObject("eyesight");//视力检查数据
 
     	String nakedFarvisionOd = jsonObject.getString("nakedFarvisionOd");
@@ -390,6 +393,18 @@ public class ResultServiceImpl implements ResultService{
 			eyepressureDao.saveEyepressureDO(resultEyepressureDO);
 		}
 	}
+	public void addUpdate(Long studentId,ResultQuestionDO resultQuestionDO){
+		List<ResultQuestionDO> ResultQuestionDOList=resultQuestionDao.get(studentId);
+		if(ResultQuestionDOList.size()>0){
+			Date checkDate  = studentDao.get(studentId).getLastCheckTime();
+			if(checkDate!=null) {
+				resultQuestionDao.update(resultQuestionDO);
+			}
+		}
+		else{
+			resultQuestionDao.save(resultQuestionDO);
+		}
+	}
 	public void addUpdate(Long studentId,ResultAdjustingDO resultAdjustingDO){
 		List<ResultAdjustingDO> resultAdjustingDOList=adjustingDao.getAdjustingDO(studentId);
 		if(resultAdjustingDOList.size()>0){
@@ -560,6 +575,14 @@ public class ResultServiceImpl implements ResultService{
 			diopterDOs = diopterDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 			cornealDOs=cornealDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 		}
+		List<ResultQuestionDO> ResultQuestionDOList=resultQuestionDao.get(id);
+		ResultQuestionDO resultQuestionDO = new ResultQuestionDO();
+		if (ResultQuestionDOList.size()>0){
+			Date checkDate  = studentDao.get(id).getLastCheckTime();
+			if(checkDate!=null) {
+				resultQuestionDO = ResultQuestionDOList.get(0);
+			}
+		}
 		resultMap.put("resultEyesightDO", resultEyesightDO);
 		resultMap.put("resultEyeaxisDO", resultEyeaxisDO);
 		resultMap.put("resultEyepressureDO", resultEyepressureDO);
@@ -567,7 +590,9 @@ public class ResultServiceImpl implements ResultService{
 		resultMap.put("resultAdjustingDO", resultAdjustingDO);
 		resultMap.put("resultVisibilityDO", resultVisibilityDO);
 		resultMap.put("resultOptometryDO", resultOptometryDO);
-					
+
+        resultMap.put("resultQuestionDO",resultQuestionDO);
+
 		resultMap.put("diopterDOs", diopterDOs);
 		resultMap.put("cornealDOs", cornealDOs);
 		resultMap.put("code",0);
@@ -579,5 +604,7 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public List<SchoolNewDO> list(Map<String, Object> map) {
 		return schoolNewDao.list(map);
-	}	
+	}
+
+
 }
