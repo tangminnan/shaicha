@@ -297,10 +297,10 @@ function load() {
 							field : 'diopterA', 
 							title : '轴位' 
 						},
-														/*{
-							field : 'believe', 
-							title : '可信度' 
-						},*/
+														{
+							field : 'dengxiaoqiujing',
+							title : '等效球镜'
+						},
 						/*								{
 							field : 'num', 
 							title : 'SCA多次普通顺序 1 2  3...' 
