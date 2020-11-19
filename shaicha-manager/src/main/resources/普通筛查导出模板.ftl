@@ -509,6 +509,7 @@
 										<w:u w:val="single" /></w:rPr>
 									<w:t>${school!''}</w:t>
 								</w:r>
+
 								<w:r>
 									<w:rPr>
 										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
@@ -519,7 +520,7 @@
 										<w:highlight w:val="none" />
 										<w:u w:val="none" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t></w:t>
+									<w:t>         </w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -547,7 +548,7 @@
 										<w:highlight w:val="none" />
 										<w:u w:val="single" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t></w:t>
+									<w:t>           </w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -558,7 +559,7 @@
 										<w:highlight w:val="none" />
 										<w:u w:val="none" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t></w:t>
+									<w:t>       </w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -611,7 +612,7 @@
 										<w:highlight w:val="none" />
 										<w:u w:val="single" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t></w:t>
+									<w:t>       </w:t>
 								</w:r>								
 								<w:r>
 									<w:rPr>
@@ -639,7 +640,7 @@
 										<w:highlight w:val="none" />
 										<w:u w:val="single" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t></w:t>
+									<w:t>        </w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -2965,7 +2966,7 @@
 										<w:sz w:val="24" />
 										<w:sz-cs w:val="24" />
 										<w:highlight w:val="white" /></w:rPr>
-									<w:t>持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)</w:t>
+									<w:t>${zhongxin.biaogeBiaoti!'持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)'}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3289,7 +3290,7 @@
 				<w:p/>
 				<w:sectPr>
 					<w:pgSz w:w="11906" w:h="16838" />
-					<w:pgMar w:top="1134" w:right="851" w:bottom="1134" w:left="851" w:header="851" w:footer="992" w:gutter="0" />
+					<w:pgMar w:top="1134" w:right="851" w:bottom="500" w:left="851" w:header="851" w:footer="992" w:gutter="0" />
 					<w:cols w:space="720" />
 					<w:docGrid w:type="lines" w:line-pitch="312" /></w:sectPr>
 			</wx:sect>

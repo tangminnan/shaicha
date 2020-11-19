@@ -26,8 +26,8 @@ public class Base64Utils {
 	 * @dateTime 2018-02-23 14:40:46
 	 */
 	public static String ImageToBase64ByLocal(String imgFile) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
- 
- 
+
+
 		InputStream in = null;
 		byte[] data = null;
  
