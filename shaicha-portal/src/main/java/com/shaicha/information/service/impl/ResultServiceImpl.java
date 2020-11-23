@@ -253,6 +253,7 @@ public class ResultServiceImpl implements ResultService{
     			double diopterS=jb.getDouble("diopterS");
     			double diopterC=jb.getDouble("diopterC");
     			double diopterA=jb.getDouble("diopterA");
+    			double dengxiaoqiujing = jb.getDouble("dengxiaoqiujing");
     			Integer believe=jb.getInteger("believe");
     			Integer num=jb.getInteger("num");
     			String type=jb.getString("type");
@@ -260,7 +261,12 @@ public class ResultServiceImpl implements ResultService{
     			//String firstSecond = jb.getString("firstSecond");
     			ResultDiopterDO resultDiopterDO=new ResultDiopterDO(tOptometryId, diopterS, diopterC, diopterA, believe, num, type, ifrl, identityCard,activityId);
     			//计算等效球镜
-    			resultDiopterDO.setDengxiaoqiujing(diopterS+1.0/2*diopterC);
+				if(dengxiaoqiujing == 0.0 ){
+					resultDiopterDO.setDengxiaoqiujing(diopterS+1.0/2*diopterC);
+				}else {
+					resultDiopterDO.setDengxiaoqiujing(dengxiaoqiujing);
+				}
+
     			System.out.println(resultDiopterDO);
     			resultDiopterDO.setTOptometryId(tOptometryId);
     			resultDiopterDO.setCheckDate(date);
