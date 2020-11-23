@@ -253,7 +253,10 @@ public class ResultServiceImpl implements ResultService{
     			double diopterS=jb.getDouble("diopterS");
     			double diopterC=jb.getDouble("diopterC");
     			double diopterA=jb.getDouble("diopterA");
-    			double dengxiaoqiujing = jb.getDouble("dengxiaoqiujing");
+				double dengxiaoqiujing = 0.0;
+    			if(jb.getDouble("dengxiaoqiujing")!=null) {
+    				dengxiaoqiujing = jb.getDouble("dengxiaoqiujing");
+				}
     			Integer believe=jb.getInteger("believe");
     			Integer num=jb.getInteger("num");
     			String type=jb.getString("type");
