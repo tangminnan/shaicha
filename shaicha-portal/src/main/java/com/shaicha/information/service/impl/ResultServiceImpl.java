@@ -68,11 +68,11 @@ public class ResultServiceImpl implements ResultService{
 		String grade=studentDetails.getString("grade");
 		String studentClass=studentDetails.getString("studentClass");
 		String phone=studentDetails.getString("phone");
-		Integer questionOneI = studentDetails.getInteger("questionOneI");
-		String questionOneS = studentDetails.getString("questionOneS");
-		String questionTwoR = studentDetails.getString("questionTwoR");
-		String questionTwoL = studentDetails.getString("questionTwoL");
-		String questionThree = studentDetails.getString("questionThree");
+//		Integer questionOneI = studentDetails.getInteger("questionOneI");
+//		String questionOneS = studentDetails.getString("questionOneS");
+//		String questionTwoR = studentDetails.getString("questionTwoR");
+//		String questionTwoL = studentDetails.getString("questionTwoL");
+//		String questionThree = studentDetails.getString("questionThree");
 		//String ideentityType=studentDetails.getString("ideentityType");
 		/*if(ideentityType.equals("身份证") && identityCard.length() == 18){
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -102,8 +102,8 @@ public class ResultServiceImpl implements ResultService{
 		stu.setId(studentId.intValue());
 		studentDao.update(stu);
 		//问卷
-		ResultQuestionDO resultQuestionDO = new ResultQuestionDO(studentId.intValue(),studentName,questionOneI,questionOneS,questionTwoR,questionTwoL,questionThree);
-		addUpdate(studentId,resultQuestionDO);
+//		ResultQuestionDO resultQuestionDO = new ResultQuestionDO(studentId.intValue(),studentName,questionOneI,questionOneS,questionTwoR,questionTwoL,questionThree);
+//		addUpdate(studentId,resultQuestionDO);
 
 		JSONObject jsonObject =obj.getJSONObject("eyesight");//视力检查数据
 
@@ -403,7 +403,7 @@ public class ResultServiceImpl implements ResultService{
 		}
 	}
 	public void addUpdate(Long studentId,ResultQuestionDO resultQuestionDO){
-		List<ResultQuestionDO> ResultQuestionDOList=resultQuestionDao.get(studentId);
+		List<ResultQuestionDO> ResultQuestionDOList=resultQuestionDao.get(studentId.intValue());
 		if(ResultQuestionDOList.size()>0){
 			Date checkDate  = studentDao.get(studentId).getLastCheckTime();
 			if(checkDate!=null) {
@@ -507,6 +507,7 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public Map<String, Object> getStudentInfo(String identityCard) {
 		Map<String,Object> resultMap  =new HashMap<String,Object>();
+
 		if(identityCard.length() <= 0 || identityCard.trim() == "" || identityCard.indexOf("JOIN") == -1){
 			resultMap.put("code", 1);
 			resultMap.put("msg", "请重新扫描二维码");
@@ -520,8 +521,14 @@ public class ResultServiceImpl implements ResultService{
 				resultMap.put("data", null);
 			}
 			else{
+				List<ResultQuestionDO> ResultQuestionDOList=resultQuestionDao.get(list.get(0).getId());
+				int a = 1;
+				if (ResultQuestionDOList.size()==0){
+					a = 0;
+				}
 				resultMap.put("code", 0);
 				resultMap.put("msg", "获取到数据...");
+				resultMap.put("resultQuestion",a);
 				resultMap.put("data",list.get(0));
 			}
 		}
@@ -584,14 +591,7 @@ public class ResultServiceImpl implements ResultService{
 			diopterDOs = diopterDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 			cornealDOs=cornealDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 		}
-		List<ResultQuestionDO> ResultQuestionDOList=resultQuestionDao.get(id);
-		ResultQuestionDO resultQuestionDO = new ResultQuestionDO();
-		if (ResultQuestionDOList.size()>0){
-			Date checkDate  = studentDao.get(id).getLastCheckTime();
-			if(checkDate!=null) {
-				resultQuestionDO = ResultQuestionDOList.get(0);
-			}
-		}
+
 		resultMap.put("resultEyesightDO", resultEyesightDO);
 		resultMap.put("resultEyeaxisDO", resultEyeaxisDO);
 		resultMap.put("resultEyepressureDO", resultEyepressureDO);
@@ -599,8 +599,6 @@ public class ResultServiceImpl implements ResultService{
 		resultMap.put("resultAdjustingDO", resultAdjustingDO);
 		resultMap.put("resultVisibilityDO", resultVisibilityDO);
 		resultMap.put("resultOptometryDO", resultOptometryDO);
-
-        resultMap.put("resultQuestionDO",resultQuestionDO);
 
 		resultMap.put("diopterDOs", diopterDOs);
 		resultMap.put("cornealDOs", cornealDOs);
@@ -613,6 +611,24 @@ public class ResultServiceImpl implements ResultService{
 	@Override
 	public List<SchoolNewDO> list(Map<String, Object> map) {
 		return schoolNewDao.list(map);
+	}
+
+	@Override
+	public Map<String, Object> saveResultQuestion(JSONObject obj) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		Long studentId = obj.getLong("studentId");
+		String studentName = studentDao.get(studentId).getStudentName();
+		Integer questionOneI = obj.getInteger("questionOneI");
+		String questionOneS = obj.getString("questionOneS");
+		String questionTwoR = obj.getString("questionTwoR");
+		String questionTwoL = obj.getString("questionTwoL");
+		String questionThree = obj.getString("questionThree");
+		ResultQuestionDO resultQuestionDO = new ResultQuestionDO(studentId.intValue(),studentName,questionOneI,questionOneS,questionTwoR,questionTwoL,questionThree);
+		addUpdate(studentId,resultQuestionDO);
+		result.put("code", 0);
+		result.put("msg","上传数据成功");
+		return result;
+
 	}
 
 

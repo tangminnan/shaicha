@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ResultQuestionDao {
 
-	List<ResultQuestionDO> get(Long studentId);
+	List<ResultQuestionDO> get(int studentId);
 	
 	List<ResultQuestionDO> list(Map<String, Object> map);
 	
