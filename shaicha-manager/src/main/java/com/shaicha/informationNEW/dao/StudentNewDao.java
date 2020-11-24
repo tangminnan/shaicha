@@ -99,7 +99,8 @@ public interface StudentNewDao {
 	void updateS(StudentNewDO studentDO);
 
 	List<StudentNewDO> getAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
-		
+
+
 	List<StudentNewDO> queryBySchoolGrade(@Param("activityId") Integer activityId,@Param("school") String school,@Param("sysId") Long sysId);
 	
 	List<StudentNewDO> queryBySchoolStudentClass(@Param("activityId") Integer activityId,@Param("school") String school,@Param("sysId") Long sysId,@Param("grade") String grade);

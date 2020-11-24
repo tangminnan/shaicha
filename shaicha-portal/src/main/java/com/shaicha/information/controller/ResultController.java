@@ -50,7 +50,7 @@ public class ResultController {
 		map.put("msg","数据获取成功...");
 		return map;
 	}
-	@Log("检查结果数据保存")
+	@Log("问卷结果数据保存")
 	@PostMapping("/saveResultQuestion")
 	public Map<String,Object> saveResultQuestion(@RequestBody  JSONObject obj){
 		return resultService.saveResultQuestion(obj);

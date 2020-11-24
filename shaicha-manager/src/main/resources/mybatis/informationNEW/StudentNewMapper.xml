@@ -104,7 +104,7 @@
 		where last_check_time is not null
 			 <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
 			 <if test="address != null and address != ''">and  address = #{address} </if>
-			 <if test="lastCheckTime != null and lastCheckTime != ''">and last_check_time &gt; DATE_FORMAT('2019-06-30','%Y-%m-%d') </if>
+			 <if test="lastCheckTime != null and lastCheckTime != ''">and last_check_time &gt; DATE_FORMAT('2020-06-00','%Y-%m-%d') </if>
 		
 	</select>
 	 
@@ -767,8 +767,9 @@ LIMIT #{i},#{j}
 		   ifnull(naked_farvision_od,"r") nakedFarvisionOd,
 		   ifnull(naked_farvision_os,"r") nakedFarvisionOs
 		   
-		   from t_student_new  where last_check_time is not null   limit #{i},#{j}  
+		   from t_student_new  where last_check_time is not null   limit #{i},#{j}
 </select>
+
 
 	<select id="queryBySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 		select activity_id,school,grade from t_student_new where activity_id = #{activityId} and school = #{school} 
