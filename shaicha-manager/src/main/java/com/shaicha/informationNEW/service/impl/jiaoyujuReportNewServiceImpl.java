@@ -181,7 +181,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 			Integer jinzongy = didujinshi+zhongdujinshi+gaodujinshi;
 			String jinzongr = df.format(double3+double4+double5);
 			map.put("xuexiao", string);
-			map.put("xuebu", jiaoyujuReportDao.getAddress(string).getXuebu());
+			map.put("xuebu",jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu());
 			map.put("jiancha", String.valueOf(checkNum));
 			map.put("qq", String.valueOf(jinshiqianqi));
 			map.put("jx", String.valueOf(jiaxingjinshi));
@@ -196,9 +196,9 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 			map.put("zz", String.valueOf(jinzongy));
 			map.put("zzr", jinzongr);
 			list3.add(map);
-			map2.put(jiaoyujuReportDao.getAddress(string).getXuebu(), checkNum);
+			map2.put(jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu(), checkNum);
 			list4.add(map2);
-			map3.put(jiaoyujuReportDao.getAddress(string).getXuebu(), jinzongy);
+			map3.put(jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu(), jinzongy);
 			list6.add(map3);
 		}
 		params.put("jinshi", list3);
@@ -288,7 +288,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 			int buliangtotal = jiaoyujuReportDao.buliangtotal(activityId,string);
 			double double4 = checkNum==0?0:Double.parseDouble(df.format((double)buliangtotal/(double)checkNum*100));
 			map.put("xuexiao", string);
-			map.put("xuebu", jiaoyujuReportDao.getAddress(string).getXuebu());
+			map.put("xuebu", jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu());
 			map.put("jiancha", String.valueOf(checkNum));
 			map.put("qd", String.valueOf(qingdubuliang));
 			map.put("qdr", String.valueOf(double1));
