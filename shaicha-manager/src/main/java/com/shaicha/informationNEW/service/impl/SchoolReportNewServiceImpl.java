@@ -61,6 +61,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 	private ChanpinTitleChooseDao chanpinTitleChooseDao;
 	@Autowired
 	private SchoolNewDao schoolNewDao;
+	@Autowired
+	private ResultQuestionDao resultQuestionDao;
 
 
 
@@ -1437,7 +1439,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("activityId", activityId);
 		List<StudentNewDO> list = studentDao.list(map);
-		list = list.stream().filter(a ->a.getSchool().equals("济南市育秀中学小学部")).collect(Collectors.toList());
+//		list = list.stream().filter(a ->a.getSchool().equals("济南市育秀中学小学部")).collect(Collectors.toList());
 
 		int i = 0;
 		if(list.size()>0){
@@ -1507,6 +1509,34 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					mapPP.put("球镜-右", "");
 					mapPP.put("柱镜-右", "");
 					mapPP.put("轴位-右", "");
+				}
+				List<ResultQuestionDO> questionDOList = resultQuestionDao.getQuestion(studentNewDO.getId());
+				if (questionDOList.size()>0){
+					ResultQuestionDO resultQuestionDO = questionDOList.get(0);
+					if (!"".equals(resultQuestionDO.getQuestionOneI()) && resultQuestionDO.getQuestionOneI()==null){
+						mapPP.put("目前孩子戴镜类型","");
+					}else if (resultQuestionDO.getQuestionOneI()==1){
+						mapPP.put("目前孩子戴镜类型","框架眼镜");
+					}else if (resultQuestionDO.getQuestionOneI()==2){
+						mapPP.put("目前孩子戴镜类型","隐形眼镜");
+					}else if (resultQuestionDO.getQuestionOneI()==3){
+						mapPP.put("目前孩子戴镜类型","夜戴角膜塑形镜");
+					}else if (resultQuestionDO.getQuestionOneI()==4){
+						mapPP.put("目前孩子戴镜类型", "不戴镜");
+					}
+					if (!"".equals(resultQuestionDO.getQuestionOneS()) && resultQuestionDO.getQuestionOneS()!=null){
+						mapPP.put("目前孩子戴镜类型",resultQuestionDO.getQuestionOneS());
+					}
+
+					mapPP.put("右眼戴镜的近视度数",resultQuestionDO.getQuestionTwoR()==null?"":resultQuestionDO.getQuestionTwoR());
+					mapPP.put("左眼戴镜的近视度数",resultQuestionDO.getQuestionTwoL()==null?"":resultQuestionDO.getQuestionTwoL());
+					mapPP.put("是否存在眼部疾病史",resultQuestionDO.getQuestionThree()==null?"":resultQuestionDO.getQuestionThree());
+
+				}else {
+					mapPP.put("目前孩子戴镜类型","");
+					mapPP.put("右眼戴镜的近视度数","");
+					mapPP.put("左眼戴镜的近视度数","");
+					mapPP.put("是否存在眼部疾病史","");
 				}
 				/*if(LR1.size()>0){
 					resultCornealDO = LR1.get(0);

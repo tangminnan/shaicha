@@ -12,6 +12,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +85,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+	@Autowired
+	private RedisTemplate redisTemplate;
 	@Autowired
 	private StudentDao studentDao;
 	@Autowired
@@ -1010,7 +1014,7 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("wuquguangcenci", totalnumber-freeMap.get("quguangcenciNumber"));
 		 return freeMap;
 	}
-
+	@Scheduled(cron = "0 0 0 1/1 * ? ")
 	private void forsave(){
 		Map<String,Object> paMap = new HashMap<String,Object>();
 		int totalnumber =studentDao.countP(paMap);

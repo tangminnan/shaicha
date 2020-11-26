@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.ResultQuestionDao">
+
+	<select id="get" resultType="com.shaicha.informationNEW.domain.ResultQuestionDO">
+		select `student_id`,`student_name`,`question_one_i`,`question_one_s`,`question_two_r`,`question_two_l`,`question_three` from t_result_question where student_id = #{value}
+	</select>
+	<select id="getQuestion" resultType="com.shaicha.informationNEW.domain.ResultQuestionDO">
+		select `student_id`,`student_name`,`question_one_i`,`question_one_s`,`question_two_r`,`question_two_l`,`question_three` from t_result_question where student_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.informationNEW.domain.ResultQuestionDO">
+		select `student_id`,`student_name`,`question_one_i`,`question_one_s`,`question_two_r`,`question_two_l`,`question_three` from t_result_question
+        <where>  
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="studentName != null and studentName != ''"> and student_name = #{studentName} </if>
+		  		  <if test="questionOneI != null and questionOneI != ''"> and question_one_i = #{questionOneI} </if>
+		  		  <if test="questionOneS != null and questionOneS != ''"> and question_one_s = #{questionOneS} </if>
+		  		  <if test="questionTwoR != null and questionTwoR != ''"> and question_two_r = #{questionTwoR} </if>
+		  		  <if test="questionTwoL != null and questionTwoL != ''"> and question_two_l = #{questionTwoL} </if>
+		  		  <if test="questionThree != null and questionThree != ''"> and question_three = #{questionThree} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by student_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_question
+		 <where>  
+		  		  <if test="studentId != null and studentId != ''"> and student_id = #{studentId} </if>
+		  		  <if test="studentName != null and studentName != ''"> and student_name = #{studentName} </if>
+		  		  <if test="questionOneI != null and questionOneI != ''"> and question_one_i = #{questionOneI} </if>
+		  		  <if test="questionOneS != null and questionOneS != ''"> and question_one_s = #{questionOneS} </if>
+		  		  <if test="questionTwoR != null and questionTwoR != ''"> and question_two_r = #{questionTwoR} </if>
+		  		  <if test="questionTwoL != null and questionTwoL != ''"> and question_two_l = #{questionTwoL} </if>
+		  		  <if test="questionThree != null and questionThree != ''"> and question_three = #{questionThree} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.informationNEW.domain.ResultQuestionDO">
+		insert into t_result_question
+		(
+			`student_id`, 
+			`student_name`, 
+			`question_one_i`, 
+			`question_one_s`, 
+			`question_two_r`, 
+			`question_two_l`, 
+			`question_three`
+		)
+		values
+		(
+			#{studentId}, 
+			#{studentName}, 
+			#{questionOneI}, 
+			#{questionOneS}, 
+			#{questionTwoR}, 
+			#{questionTwoL}, 
+			#{questionThree}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.informationNEW.domain.ResultQuestionDO">
+		update t_result_question 
+		<set>
+			<if test="studentName != null">`student_name` = #{studentName}, </if>
+			<if test="questionOneI != null">`question_one_i` = #{questionOneI}, </if>
+			<if test="questionOneS != null">`question_one_s` = #{questionOneS}, </if>
+			<if test="questionTwoR != null">`question_two_r` = #{questionTwoR}, </if>
+			<if test="questionTwoL != null">`question_two_l` = #{questionTwoL}, </if>
+			<if test="questionThree != null">`question_three` = #{questionThree}</if>
+		</set>
+		where student_id = #{studentId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_question where student_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_question where student_id in 
+		<foreach item="studentId" collection="array" open="(" separator="," close=")">
+			#{studentId}
+		</foreach>
+	</delete>
+
+</mapper>
