@@ -1,5 +1,8 @@
 package com.shaicha.information.service.impl;
 
+import com.shaicha.informationNEW.dao.ResultMainDao;
+import com.shaicha.informationNEW.dao.StudentNewDao;
+import com.shaicha.informationNEW.domain.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.ss.usermodel.Cell;
@@ -9,6 +12,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +38,6 @@ import com.shaicha.information.service.StudentService;
 import com.shaicha.information.dao.ResultCornealDao;
 import com.shaicha.information.dao.ResultDiopterDao;
 import com.shaicha.information.dao.ResultOptometryDao;
-import com.shaicha.informationNEW.domain.ResultCornealNewDO;
-import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
-import com.shaicha.informationNEW.domain.ResultOptometryNewDO;
 import com.shaicha.system.config.ExcelUtils;
 
 import freemarker.template.Configuration;
@@ -84,7 +86,13 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class StudentServiceImpl implements StudentService {
 	@Autowired
+	private RedisTemplate redisTemplate;
+	@Autowired
 	private StudentDao studentDao;
+	@Autowired
+	private StudentNewDao studentNewDao;
+	@Autowired
+	private ResultMainDao resultMainDao;
 	@Autowired
 	private BootdoConfig bootdoConfig;
 	@Autowired
@@ -954,12 +962,14 @@ public class StudentServiceImpl implements StudentService {
 	 */
 	@Override
 	public Map<String, Double> shouYeTrueData() {
+//		forsave();
 		Map<String,Object> paMap = new HashMap<String,Object>();
 		int totalnumber =studentDao.countP(paMap);
+		totalnumber+=studentNewDao.countP(paMap);
 		paMap.put("checkType","SHI_FANXIAO");
-		paMap.put("address","济南市");
+//		paMap.put("address","济南市");
 		Calendar calendar  = Calendar.getInstance();
-		calendar.set(Calendar.YEAR,2019);
+		calendar.set(Calendar.YEAR,2020);
 		calendar.set(Calendar.MONTH, 6);
 		calendar.set(Calendar.DAY_OF_MONTH, 0);
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -967,38 +977,29 @@ public class StudentServiceImpl implements StudentService {
 		calendar.set(Calendar.SECOND,0);
 		String str = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
 		paMap.put("lastCheckTime",str);
-		int shifan = studentDao.countP(paMap);
+		int shifan = studentNewDao.countP(paMap);
 		paMap.put("checkType","PU_TONG");
-		int putong = studentDao.countP(paMap);
+		int putong = studentNewDao.countP(paMap);
+
+		ResultMainDO resultMainDO = resultMainDao.get(4);
 		Map<String,Double> freeMap = new HashMap<String,Double>();
 
-		 freeMap.put("jslcqianqiNumber",0.0);
-		 freeMap.put("jxjsNumber", 0.0);
-		 freeMap.put("gaodujinshiNumber", 0.0);
-		 freeMap.put("zhongdujinshiNumber",0.0);
-		 freeMap.put("didujinshiNumber",0.0);
-		 freeMap.put("jinshizongjiNumber",0.0);
-		 freeMap.put("totalNumber",0.0);
-		 freeMap.put("shifanxiao",0.0);
-		 freeMap.put("putong",0.0);
-		 freeMap.put("zhengshiNumber", 0.0);
-		 freeMap.put("buliangshiliNumber",0.0);
-		 freeMap.put("yuanshiNumber",0.0);
-		 freeMap.put("quguangcenciNumber",0.0);
 		 freeMap.put("totalnumber",(double)totalnumber);
 		 freeMap.put("shifanxiaoshaicha",(double)shifan);
-		 freeMap.put("putongshaicha",(double)(putong));
-		 freeMap.put("nain6",0.0);
-		 freeMap.put("nain612",0.0);
-		 freeMap.put("nain1315",0.0);
-		 freeMap.put("nain1618",0.0);
-		 freeMap.put("nain18",0.0);
-		for(int i=1;i<=totalnumber/150000+1;i++){
-			countShouYe(i,150000,freeMap);	
-			
-		}
-		
-	
+		 freeMap.put("putongshaicha",(double)putong);
+		 freeMap.put("nain6",resultMainDO.getAge6());
+		 freeMap.put("nain612",resultMainDO.getAge612());
+		 freeMap.put("nain1315",resultMainDO.getAge1315());
+		 freeMap.put("nain1618",resultMainDO.getAge1618());
+		 freeMap.put("nain18",resultMainDO.getAge19());
+		freeMap.put("gaodujinshiNumber", resultMainDO.getGaodujinshinumber());
+		freeMap.put("zhongdujinshiNumber",resultMainDO.getZhongdujinshinumber());
+		freeMap.put("didujinshiNumber",resultMainDO.getDidujinshinumber());
+		freeMap.put("zhengshiNumber", resultMainDO.getZhengshinumber());
+		freeMap.put("buliangshiliNumber",resultMainDO.getBuliangshilinumber());
+		freeMap.put("yuanshiNumber",resultMainDO.getYuanshinumber());
+		freeMap.put("quguangcenciNumber",resultMainDO.getQuguangcencinumber());
+
 		 Double jinshizongjiNumber=freeMap.get("didujinshiNumber")+freeMap.get("zhongdujinshiNumber")
 		 					+freeMap.get("gaodujinshiNumber");//近视总人数
 		 freeMap.put("zhengchang",totalnumber-jinshizongjiNumber);
@@ -1013,144 +1014,110 @@ public class StudentServiceImpl implements StudentService {
 		 freeMap.put("wuquguangcenci", totalnumber-freeMap.get("quguangcenciNumber"));
 		 return freeMap;
 	}
-	long a=0,b=0;
-	private void countShouYe(int i, int j,Map<String,Double> freeMap) {
-		 long inittimnes = System.currentTimeMillis();
-		 List<StudentDO> studentDOList = studentDao.getAllCheckStudentDO((i-1)*j,j);
-		 long  ddt  =System.currentTimeMillis();
-		 System.out.println("查询所用时间============"+(ddt-inittimnes));
-		 System.out.println("查到的数=============="+studentDOList.size());
-		 /*CountDownLatch countDownLatch = new CountDownLatch(4);
-		
-		 
-		 ExecutorService executor = Executors.newFixedThreadPool(4);
-		 	executor.execute(() ->{
-		 		 a  = System.currentTimeMillis();
-		 		studentDOlIST1=  studentDao.getStudentDOshou((i-1)*j,j);
-		 		countDownLatch.countDown();
-				 b=System.currentTimeMillis();
-				 System.out.println("查询学生年龄段时间==============================="+(b-a));
-		 	});
-			executor.execute(() ->{
-				 a  = System.currentTimeMillis();
-			 resultEyesightDOList11 = studentDao.getJInShiLv((i-1)*j,j);
-			 countDownLatch.countDown();
-			 b=System.currentTimeMillis();
-			 System.out.println("查询视力段时间==============================="+(b-a));
-		 });
-			executor.execute(() ->{
-			 a  = System.currentTimeMillis();
-			 resultDiopterDOListR11 = studentDao.getResultDiopterDO((i-1)*j,j, "R");
-			 countDownLatch.countDown();
-			 b=System.currentTimeMillis();
-			 System.out.println("查询右眼等效球镜段时间==============================="+(b-a));
-		 });
-			executor.execute(() ->{
-				 a  = System.currentTimeMillis();
-			 resultDiopterDOListL11 = studentDao.getResultDiopterDO((i-1)*j,j,"L");
-			 countDownLatch.countDown();
-			 b=System.currentTimeMillis();
-			 System.out.println("查询个数======================"+resultDiopterDOListL11.size());
-			 System.out.println("查询左眼等效球镜段时间==============================="+(b-a));
-		 });
-			
-			long endtimes=0	;
-		try {
-			countDownLatch.await();
-			executor.shutdown();
-			endtimes = System.currentTimeMillis();
-			 System.out.println("单独查询时间==========================================="+(endtimes-inittimnes));
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} */
-//		Map<String,List<ResultEyesightDO>> resultEyeSightMap = resultEyesightDOList11.stream().collect(Collectors.groupingBy(ResultEyesightDO::getIdentityCard));
-//		Map<String,Date> stMap = studentDOlIST1.stream().collect(Collectors.toMap(StudentDO::getIdentityCard,StudentDO::getBirthday));
-//		Map<String,Double> dengxLMap = resultDiopterDOListL11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
-//		Map<String,Double> dengxRMap = resultDiopterDOListR11.stream().collect(Collectors.toMap(ResultDiopterDO::getIdentityCard, ResultDiopterDO::getDengxiaoqiujing));
-		
-		
-//		for(ResultEyesightDO resultEyeSight:resultEyesightDOList11){
-		for(StudentDO s:studentDOList){
-		
-//			String identityCard = resultEyeSight.getIdentityCard();
-			Double luoyanshilii=0.0;
-			Double dengxiaoqiujing=0.0;
-//			String nakedFarvisionOd=resultEyeSight.getNakedFarvisionOd();
-//			String nakedFarvisionOs=resultEyeSight.getNakedFarvisionOs();
-			String nakedFarvisionOd=s.getNakedFarvisionOd();
-			String nakedFarvisionOs=s.getNakedFarvisionOs();
-			if(!nakedFarvisionOd.matches("-?[0-9]+.?[0-9]*")) continue;
-			if(!nakedFarvisionOs.matches("-?[0-9]+.?[0-9]*")) continue;
-			 nakedFarvisionOd=nakedFarvisionOd.compareTo(nakedFarvisionOs)>0?nakedFarvisionOs:nakedFarvisionOd;
-			 if(!StringUtils.isBlank(nakedFarvisionOd))
-				 luoyanshilii=Double.parseDouble(nakedFarvisionOd);
-			/* Double dengxiaoqiujingR = Optional.ofNullable(dengxRMap.get(identityCard)).orElse(0.0);
-			 Double dengxiaoqiujingL = Optional.ofNullable(dengxLMap.get(identityCard)).orElse(0.0);*/
-			 Double dengxiaoqiujingR = s.getDengxiaoqiujingr();
-			 Double dengxiaoqiujingL = s.getDengxiaoqiujingl();
-			 dengxiaoqiujing = dengxiaoqiujingR>dengxiaoqiujingL?dengxiaoqiujingL:dengxiaoqiujingR;
-			 
-			 if(luoyanshilii==5.0 && dengxiaoqiujing>=-0.5 && dengxiaoqiujing<=0.75){//近视临床前期
-				freeMap.put("jslcqianqiNumber",freeMap.get("jslcqianqiNumber")+1);
-			 }
-			 if(luoyanshilii==5.0 && dengxiaoqiujing<-0.5){//假性近视
-				 freeMap.put("jxjsNumber", freeMap.get("jxjsNumber")+1);
-			 }
-			 if(luoyanshilii<5.0 &&dengxiaoqiujing<-6.0){//高度近视
-				 freeMap.put("gaodujinshiNumber", freeMap.get("gaodujinshiNumber")+1);
-			 }
-			 if(luoyanshilii<5.0 &&  dengxiaoqiujing>-6.0 && dengxiaoqiujing<-3.25){//中度近视
-				 freeMap.put("zhongdujinshiNumber",freeMap.get("zhongdujinshiNumber")+1);
-			 }
-			if(luoyanshilii<5.0 && dengxiaoqiujing>-3.0 && dengxiaoqiujing<-0.5){//低度近视
-				freeMap.put("didujinshiNumber", freeMap.get("didujinshiNumber")+1);
-			}
-			if(luoyanshilii<5.0){
-				freeMap.put("buliangshiliNumber",freeMap.get("buliangshiliNumber")+1);
-			}
-			if(dengxiaoqiujingR>0.75 || dengxiaoqiujingL>0.75){
-				freeMap.put("yuanshiNumber",freeMap.get("yuanshiNumber")+1);
-			}
-			if((dengxiaoqiujingR>=-0.5&& dengxiaoqiujingR<=0.75) ||
-				(dengxiaoqiujingL>=-0.5 && dengxiaoqiujingL<=0.75)){
-					freeMap.put("zhengshiNumber",freeMap.get("zhengshiNumber")+1);
-			}
-			if(Math.abs(dengxiaoqiujingL-dengxiaoqiujingR)>=1.0){
-				freeMap.put("quguangcenciNumber",freeMap.get("quguangcenciNumber")+1);
-			}
-			/**
-			 * 年龄
-			 */
-			
-			Date da=s.getBirthday();
-		
-			if(da!=null){
-				int now = Calendar.getInstance().get(Calendar.YEAR);
-				Calendar c = Calendar.getInstance();c.setTime(da);
-				int dd = c.get(Calendar.YEAR);
-				int age= now-dd+1;
-				if(age<6){
-					 freeMap.put("nain6",freeMap.get("nain6")+1);
-				}else if(age>=6 && age<=12){
-					 freeMap.put("nain612",freeMap.get("nain612")+1);
-				}else if(age>=13 && age<=15){
-					 freeMap.put("nain1315",freeMap.get("nain1315")+1);
-				}else if(age>=16 &&age<=18){
-					 freeMap.put("nain1618",freeMap.get("nain1618")+1);
-				}else{
-					 freeMap.put("nain18",freeMap.get("nain18")+1);
-				}	
-			}
-			
-			
-		
+	@Scheduled(cron = "0 0 0 1/1 * ? ")
+	private void forsave(){
+		Map<String,Object> paMap = new HashMap<String,Object>();
+		int totalnumber =studentDao.countP(paMap);
+		int newtotalnumber=studentNewDao.countP(paMap);
+		ResultMainDO resultMainDO = new ResultMainDO();
+		resultMainDO.setGaodujinshinumber(0.0);
+		resultMainDO.setZhongdujinshinumber(0.0);
+		resultMainDO.setDidujinshinumber(0.0);
+		resultMainDO.setBuliangshilinumber(0.0);
+		resultMainDO.setYuanshinumber(0.0);
+		resultMainDO.setZhengshinumber(0.0);
+		resultMainDO.setQuguangcencinumber(0.0);
+		resultMainDO.setAge6(0.0);
+		resultMainDO.setAge612(0.0);
+		resultMainDO.setAge1315(0.0);
+		resultMainDO.setAge1618(0.0);
+		resultMainDO.setAge19(0.0);
+		for(int i=1;i<=totalnumber/150000+1;i++){
+			List<StudentDO> studentDOList = studentDao.getAllCheckStudentDO((i-1)*150000,150000);
+			savemain(studentDOList,resultMainDO);
+		}
+		for(int i=1;i<=newtotalnumber/150000+1;i++){
+			List<StudentDO> studentDOList = studentDao.getnewAllCheckStudentDO((i-1)*150000,150000);
+			savemain(studentDOList,resultMainDO);
+		}
+
+		resultMainDO.setId(4);
+		resultMainDao.update(resultMainDO);
 	}
-		long mm = System.currentTimeMillis();
-		System.out.println("每一次的遍历时间==="+(mm-ddt));
-		studentDOList=null;
-		System.gc();
-	}
+	private void savemain(List<StudentDO> studentDOList,ResultMainDO resultMainDO) {
+		long ddt = System.currentTimeMillis();
+		System.out.println("查到的数==============" + studentDOList.size());
+		for (StudentDO s : studentDOList) {
+			Double luoyanshilii = 0.0;
+			Double dengxiaoqiujing = 0.0;
+			String nakedFarvisionOd = s.getNakedFarvisionOd();
+			String nakedFarvisionOs = s.getNakedFarvisionOs();
+			nakedFarvisionOd = nakedFarvisionOd.compareTo(nakedFarvisionOs) > 0 ? nakedFarvisionOs : nakedFarvisionOd;
+
+			nakedFarvisionOd = nakedFarvisionOd.compareTo(nakedFarvisionOs) > 0 ? nakedFarvisionOs : nakedFarvisionOd;
+			if (!StringUtils.isBlank(nakedFarvisionOd)) {
+				if ("1.0".equals(nakedFarvisionOd) || "10/10".equals(nakedFarvisionOd)) {
+					luoyanshilii = 5.0;
+				}
+			}
+				Double dengxiaoqiujingR = s.getDengxiaoqiujingr();
+				Double dengxiaoqiujingL = s.getDengxiaoqiujingl();
+				dengxiaoqiujing = dengxiaoqiujingR > dengxiaoqiujingL ? dengxiaoqiujingL : dengxiaoqiujingR;
+
+				if (luoyanshilii < 5.0 && dengxiaoqiujing < -6.0) {//高度近视
+					resultMainDO.setGaodujinshinumber(resultMainDO.getGaodujinshinumber() + 1);
+				}
+				if (luoyanshilii < 5.0 && dengxiaoqiujing > -6.0 && dengxiaoqiujing < -3.25) {//中度近视
+					resultMainDO.setZhongdujinshinumber(resultMainDO.getZhongdujinshinumber() + 1);
+				}
+				if (luoyanshilii < 5.0 && dengxiaoqiujing > -3.0 && dengxiaoqiujing < -0.5) {//低度近视
+					resultMainDO.setDidujinshinumber(resultMainDO.getDidujinshinumber() + 1);
+				}
+				if (luoyanshilii < 5.0) {
+					resultMainDO.setBuliangshilinumber(resultMainDO.getBuliangshilinumber() + 1);
+				}
+				if (dengxiaoqiujingR > 0.75 || dengxiaoqiujingL > 0.75) {
+					resultMainDO.setYuanshinumber(resultMainDO.getYuanshinumber() + 1);
+				}
+				if ((dengxiaoqiujingR >= -0.5 && dengxiaoqiujingR <= 0.75) ||
+						(dengxiaoqiujingL >= -0.5 && dengxiaoqiujingL <= 0.75)) {
+					resultMainDO.setZhengshinumber(resultMainDO.getZhengshinumber() + 1);
+				}
+				if (Math.abs(dengxiaoqiujingL - dengxiaoqiujingR) >= 1.0) {
+					resultMainDO.setQuguangcencinumber(resultMainDO.getQuguangcencinumber() + 1);
+				}
+				/**
+				 * 年龄
+				 */
+
+				Date da = s.getBirthday();
+
+				if (da != null) {
+					int now = Calendar.getInstance().get(Calendar.YEAR);
+					Calendar c = Calendar.getInstance();
+					c.setTime(da);
+					int dd = c.get(Calendar.YEAR);
+					int age = now - dd + 1;
+					if (age < 6) {
+						resultMainDO.setAge6(resultMainDO.getAge6() + 1);
+					} else if (age >= 6 && age <= 12) {
+						resultMainDO.setAge612(resultMainDO.getAge612() + 1);
+					} else if (age >= 13 && age <= 15) {
+						resultMainDO.setAge1315(resultMainDO.getAge1315() + 1);
+					} else if (age >= 16 && age <= 18) {
+						resultMainDO.setAge1618(resultMainDO.getAge1618() + 1);
+					} else {
+						resultMainDO.setAge19(resultMainDO.getAge19() + 1);
+					}
+				}
+
+
+			}
+			long mm = System.currentTimeMillis();
+			System.out.println("每一次的遍历时间===" + (mm - ddt));
+			System.gc();
+		}
+
 	
 	private static Double FormatDouble(double s){
 		

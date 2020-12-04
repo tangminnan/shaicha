@@ -673,6 +673,14 @@ LIMIT #{i},#{j}
 		   
 		   from t_student  where last_check_time is not null   limit #{i},#{j}  
 </select>
+	<select id="getnewAllCheckStudentDO"  resultType="com.shaicha.information.domain.StudentDO">
+	select ifnull(dengxiaoqiujingr,-10) dengxiaoqiujingr,
+		   ifnull(dengxiaoqiujingl,-10) dengxiaoqiujingl,birthday,
+		   ifnull(naked_farvision_od,"r") nakedFarvisionOd,
+		   ifnull(naked_farvision_os,"r") nakedFarvisionOs
+
+		   from t_student_new  where last_check_time is not null   limit #{i},#{j}
+</select>
 
 	<select id="queryBySchoolGrade" resultType="com.shaicha.information.domain.StudentDO">
 		select activity_id,school,grade from t_student where activity_id = #{activityId} and school = #{school} GROUP BY grade

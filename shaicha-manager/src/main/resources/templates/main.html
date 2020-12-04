@@ -33,7 +33,7 @@
     				<i class="iconfont icon-yonghuguanli1"></i>
     			</p>
     			<p class="itemLs">
-	    			<span>2019年下半年济南示范校筛查系统</span>
+	    			<span>2020年下半年示范校筛查系统</span>
 	    			<span id="shifanxiao"></span>
     			</p>
     		</div>
@@ -42,7 +42,7 @@
     				<i class="iconfont icon-yonghuguanli1"></i>
     			</p>
     			<p class="itemLs">
-	    			<span>2019年下半年济南普通筛查系统</span>
+	    			<span>2020年下半年普通筛查系统</span>
 	    			<span id="putong"></span>
     			</p>
     		</div>
@@ -130,9 +130,6 @@
 <input type="hidden" id="didujinshiNumber">
 <input type="hidden" id="zhongdujinshiNumber">
 <input type="hidden" id="gaodujinshiNumber">
-<input type="hidden" id="jinshizongjiNumber">
-<input type="hidden" id="jslcqianqiNumber">
-<input type="hidden" id="jxjsNumber">
 <input type="hidden" id="zhengchang">
 <input type="hidden" id="jinshilv">
 <input type="hidden" id="buliangshiliNumber">
@@ -172,9 +169,6 @@ $.ajax({
 		$(".total").text(data.totalnumber+"人");
 		$("#shifanxiao").text(data.shifanxiaoshaicha+"人");
 		$("#putong").text(data.putongshaicha);
-		$("#jxjsNumber").val(data.jxjsNumber);
-		$("#jslcqianqiNumber").val(data.jslcqianqiNumber);
-		$("#jinshizongjiNumber").val(data.jinshizongjiNumber);
 		$("#gaodujinshiNumber").val(data.gaodujinshiNumber);
 		$("#zhongdujinshiNumber").val(data.zhongdujinshiNumber);
 		$("#didujinshiNumber").val(data.didujinshiNumber);
@@ -471,8 +465,8 @@ $.ajax({
    	                }
    	            },
    	            data:[
-							{value:$("#zhengshiNumber").val(), name:'正常'},
-							{value:$("#wuzhengshi").val(), name:'患病'}
+							{value:$("#wuzhengshi").val(), name:'正常'},
+							{value:$("#zhengshiNumber").val(), name:'患病'}
    	              ]
    	        },
    	            

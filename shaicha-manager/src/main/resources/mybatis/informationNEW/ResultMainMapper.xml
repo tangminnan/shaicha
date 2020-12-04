@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shaicha.informationNEW.dao.ResultMainDao">
+
+	<select id="get" resultType="com.shaicha.informationNEW.domain.ResultMainDO">
+		select `id`,`age6`,`age612`,`age1315`,`age1618`,`age19`,`gaodujinshiNumber`,`zhongdujinshiNumber`,`didujinshiNumber`,`buliangshiliNumber`,`yuanshiNumber`,`zhengshiNumber`,`quguangcenciNumber` from t_result_main where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.shaicha.informationNEW.domain.ResultMainDO">
+		select `id`,`age6`,`age612`,`age1315`,`age1618`,`age19`,`gaodujinshiNumber`,`zhongdujinshiNumber`,`didujinshiNumber`,`buliangshiliNumber`,`yuanshiNumber`,`zhengshiNumber`,`quguangcenciNumber` from t_result_main
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="age6 != null and age6 != ''"> and age6 = #{age6} </if>
+		  		  <if test="age612 != null and age612 != ''"> and age612 = #{age612} </if>
+		  		  <if test="age1315 != null and age1315 != ''"> and age1315 = #{age1315} </if>
+		  		  <if test="age1618 != null and age1618 != ''"> and age1618 = #{age1618} </if>
+		  		  <if test="age19 != null and age19 != ''"> and age19 = #{age19} </if>
+		  		  <if test="gaodujinshinumber != null and gaodujinshinumber != ''"> and gaodujinshiNumber = #{gaodujinshinumber} </if>
+		  		  <if test="zhongdujinshinumber != null and zhongdujinshinumber != ''"> and zhongdujinshiNumber = #{zhongdujinshinumber} </if>
+		  		  <if test="didujinshinumber != null and didujinshinumber != ''"> and didujinshiNumber = #{didujinshinumber} </if>
+		  		  <if test="buliangshilinumber != null and buliangshilinumber != ''"> and buliangshiliNumber = #{buliangshilinumber} </if>
+		  		  <if test="yuanshinumber != null and yuanshinumber != ''"> and yuanshiNumber = #{yuanshinumber} </if>
+		  		  <if test="zhengshinumber != null and zhengshinumber != ''"> and zhengshiNumber = #{zhengshinumber} </if>
+		  		  <if test="quguangcencinumber != null and quguangcencinumber != ''"> and quguangcenciNumber = #{quguangcencinumber} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_result_main
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="age6 != null and age6 != ''"> and age6 = #{age6} </if>
+		  		  <if test="age612 != null and age612 != ''"> and age612 = #{age612} </if>
+		  		  <if test="age1315 != null and age1315 != ''"> and age1315 = #{age1315} </if>
+		  		  <if test="age1618 != null and age1618 != ''"> and age1618 = #{age1618} </if>
+		  		  <if test="age19 != null and age19 != ''"> and age19 = #{age19} </if>
+		  		  <if test="gaodujinshinumber != null and gaodujinshinumber != ''"> and gaodujinshiNumber = #{gaodujinshinumber} </if>
+		  		  <if test="zhongdujinshinumber != null and zhongdujinshinumber != ''"> and zhongdujinshiNumber = #{zhongdujinshinumber} </if>
+		  		  <if test="didujinshinumber != null and didujinshinumber != ''"> and didujinshiNumber = #{didujinshinumber} </if>
+		  		  <if test="buliangshilinumber != null and buliangshilinumber != ''"> and buliangshiliNumber = #{buliangshilinumber} </if>
+		  		  <if test="yuanshinumber != null and yuanshinumber != ''"> and yuanshiNumber = #{yuanshinumber} </if>
+		  		  <if test="zhengshinumber != null and zhengshinumber != ''"> and zhengshiNumber = #{zhengshinumber} </if>
+		  		  <if test="quguangcencinumber != null and quguangcencinumber != ''"> and quguangcenciNumber = #{quguangcencinumber} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.shaicha.informationNEW.domain.ResultMainDO">
+		insert into t_result_main
+		(
+			`id`, 
+			`age6`, 
+			`age612`, 
+			`age1315`, 
+			`age1618`, 
+			`age19`, 
+			`gaodujinshiNumber`, 
+			`zhongdujinshiNumber`, 
+			`didujinshiNumber`, 
+			`buliangshiliNumber`, 
+			`yuanshiNumber`, 
+			`zhengshiNumber`, 
+			`quguangcenciNumber`
+		)
+		values
+		(
+			#{id}, 
+			#{age6}, 
+			#{age612}, 
+			#{age1315}, 
+			#{age1618}, 
+			#{age19}, 
+			#{gaodujinshinumber}, 
+			#{zhongdujinshinumber}, 
+			#{didujinshinumber}, 
+			#{buliangshilinumber}, 
+			#{yuanshinumber}, 
+			#{zhengshinumber}, 
+			#{quguangcencinumber}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.shaicha.informationNEW.domain.ResultMainDO">
+		update t_result_main 
+		<set>
+			<if test="age6 != null">`age6` = #{age6}, </if>
+			<if test="age612 != null">`age612` = #{age612}, </if>
+			<if test="age1315 != null">`age1315` = #{age1315}, </if>
+			<if test="age1618 != null">`age1618` = #{age1618}, </if>
+			<if test="age19 != null">`age19` = #{age19}, </if>
+			<if test="gaodujinshinumber != null">`gaodujinshiNumber` = #{gaodujinshinumber}, </if>
+			<if test="zhongdujinshinumber != null">`zhongdujinshiNumber` = #{zhongdujinshinumber}, </if>
+			<if test="didujinshinumber != null">`didujinshiNumber` = #{didujinshinumber}, </if>
+			<if test="buliangshilinumber != null">`buliangshiliNumber` = #{buliangshilinumber}, </if>
+			<if test="yuanshinumber != null">`yuanshiNumber` = #{yuanshinumber}, </if>
+			<if test="zhengshinumber != null">`zhengshiNumber` = #{zhengshinumber}, </if>
+			<if test="quguangcencinumber != null">`quguangcenciNumber` = #{quguangcencinumber}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_result_main where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_result_main where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

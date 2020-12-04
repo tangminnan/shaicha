@@ -17,6 +17,8 @@ public interface ResultService {
 	
 	List<SchoolNewDO> list(Map<String,Object> map);
 
+	Map<String, Object> saveResultQuestion(JSONObject obj);
+
 
 
 }

@@ -91,7 +91,8 @@ public interface StudentDao {
 	void updateS(StudentDO studentDO);
 
 	List<StudentDO> getAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
-	
+	List<StudentDO> getnewAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
+
 	List<StudentDO> querylistStudentName(@Param("studentName") String studentname,@Param("offset") Integer offset, @Param("limit") Integer limit );
 	
 	List<StudentDO> queryBySchoolGrade(@Param("activityId") Integer activityId,@Param("school") String school);

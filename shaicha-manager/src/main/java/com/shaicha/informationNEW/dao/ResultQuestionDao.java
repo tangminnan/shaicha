@@ -1,6 +1,6 @@
-package com.shaicha.information.dao;
+package com.shaicha.informationNEW.dao;
 
-import com.shaicha.information.domain.ResultQuestionDO;
+import com.shaicha.informationNEW.domain.ResultQuestionDO;
 
 import java.util.List;
 import java.util.Map;
@@ -16,8 +16,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ResultQuestionDao {
 
-	List<ResultQuestionDO> get(int studentId);
-	
+	ResultQuestionDO get(Integer studentId);
+	List<ResultQuestionDO> getQuestion(Integer studentId);
+
 	List<ResultQuestionDO> list(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
