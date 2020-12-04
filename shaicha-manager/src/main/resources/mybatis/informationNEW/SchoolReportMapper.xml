@@ -16,14 +16,14 @@
 	</select>
 	<!--  -->
 	<select id="activityByCheckNum" resultType="int">
-		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
-		where 
-		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school}
+		SELECT count(*) from t_student_new s where
+		s.activity_id = #{activityId} and s.school = #{school} and last_check_time is not null
 	</select>
 	<select id="activityGradeByCheckNum" resultType="int">
-		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
-		where 
-		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school} and s.grade = #{grade}
+
+
+		SELECT count(*) from t_student_new s where
+	 activity_id = #{activityId} and school = #{school} and last_check_time is not null and grade=#{grade}
 	</select>
 	<select id="activitySexByCheckNum" resultType="int">
 		SELECT count(*) from t_student_new s,t_result_eyesight_new r 

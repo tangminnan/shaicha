@@ -23,9 +23,15 @@
 	</select>
 	<!--  -->
 	<select id="activityByCheckNum" resultType="int">
-		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
-		where 
-		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school}
+
+
+
+		SELECT count(*) from t_student_new s where
+	 activity_id = #{activityId} and school = #{school} and last_check_time is not null
+
+
+
+
 	</select>
 	<!--  -->
 	<select id="schoolByCheckNum" resultType="int">
