@@ -83,7 +83,8 @@
 			`naked_nearvision_os`, 
 			`check_date`, 
 			`delete_flag`,
-			activity_id
+			activity_id,
+			identity_card
 		)
 		values
 		(
@@ -101,7 +102,8 @@
 			#{nakedNearvisionOs}, 
 			#{checkDate}, 
 			#{deleteFlag},
-			#{activityId}
+			#{activityId},
+			#{identityCard}
 		)
 	</insert>
 	 

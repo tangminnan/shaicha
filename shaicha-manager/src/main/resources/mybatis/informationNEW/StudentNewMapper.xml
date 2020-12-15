@@ -137,7 +137,9 @@
   			name_jianpin,
   			activity_id,
   			sys_id,
-  			school_id
+  			school_id,
+  			naked_farvision_od,
+  			naked_farvision_os
 		)
 		values
 		(
@@ -167,7 +169,9 @@
   			#{nameJianpin},
   			#{activityId},
   			#{sysId},
-  			#{schoolId}
+  			#{schoolId},
+  			#{nakedFarvisionOd},
+  			#{nakedFarvisionOs}
 		)
 	</insert>
 	

@@ -1441,6 +1441,12 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("activityId", activityId);
 		List<StudentNewDO> list = studentDao.list(map);
+		list=list.stream().filter(a->"山师附小".
+				equals(a.getSchool()) &&
+				"三年级三班".equals(a.getStudentClass())
+		).
+
+				collect(Collectors.toList());
 		int i = 0;
 		if(list.size()>0){
 			for (StudentNewDO studentNewDO : list) {
