@@ -6,6 +6,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -1439,8 +1441,12 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("activityId", activityId);
 		List<StudentNewDO> list = studentDao.list(map);
-//		list = list.stream().filter(a ->a.getSchool().equals("济南市育秀中学小学部")).collect(Collectors.toList());
+		list=list.stream().filter(a->"山师附小".
+				equals(a.getSchool()) &&
+				"三年级三班".equals(a.getStudentClass())
+		).
 
+				collect(Collectors.toList());
 		int i = 0;
 		if(list.size()>0){
 			for (StudentNewDO studentNewDO : list) {
@@ -1625,7 +1631,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		double od=0.0,os=0.0;
 
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("school","济南市市中区爱都小学");
+		map.put("school","济南市育秀中学小学部");
 		List<StudentNewDO> listAll = studentDao.list(map);
 		Map<String, List<StudentNewDO> > listMap = listAll.stream().collect(Collectors.groupingBy(k -> k.getGrade()+k.getStudentClass()));
 		Set<Map.Entry<String, List<StudentNewDO>>> entries = listMap.entrySet();
@@ -1709,7 +1715,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				}
 				String yz= "";
 				String zz="";
-				if (od >= 5.0 && dengxiaoqiujingR >= -0.5 && dengxiaoqiujingR <= 0.75 && zhujingqR > -1.0) {
+			/*	if (od >= 5.0 && dengxiaoqiujingR >= -0.5 && dengxiaoqiujingR <= 0.75 && zhujingqR > -1.0) {
 					yz= "近视临床前期";
 				}
 				if (os >= 5.0 && dengxiaoqiujingL >= -0.5 && dengxiaoqiujingL <= 0.75 && zhujingqL > -1.0) {
@@ -1721,7 +1727,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				}
 				if (os >= 5.0 && dengxiaoqiujingL >= -0.5 && dengxiaoqiujingL <= 0.75 && zhujingqL <= -1.0) {
 					zz= "近视临床前期";
-				}
+				}*/
 
 				if (od >= 5.0 && dengxiaoqiujingR < -0.5 && zhujingqR > -1.0) {
 					yz =  "假性近视";

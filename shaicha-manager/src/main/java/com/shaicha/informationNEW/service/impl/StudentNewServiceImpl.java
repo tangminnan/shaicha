@@ -1,5 +1,6 @@
 package com.shaicha.informationNEW.service.impl;
 
+import com.shaicha.informationNEW.dao.ResultEyesightNewDao;
 import com.shaicha.informationNEW.dao.ResultMainDao;
 import com.shaicha.informationNEW.domain.*;
 import org.apache.commons.lang.StringUtils;
@@ -81,6 +82,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 	private SchoolNewDao schoolDao;
 	@Autowired
 	private ResultMainDao resultMainDao;
+	@Autowired
+	private ResultEyesightNewDao resultEyesightNewDao;
 	@Autowired
 	UserDao userMapper;
 	
@@ -209,7 +212,13 @@ public class StudentNewServiceImpl implements StudentNewService {
 						cell.setCellType(CellType.STRING);
 						String phone = ExcelUtils.getCellFormatValue(cell);		//手机号
 						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7));		//民族
-						if(ideentityType == null && 
+						String nakedFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)8));//左眼裸眼视力
+						String correctionFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)9));//左眼戴镜视力
+						String nakedFarvisionOd= ExcelUtils.getCellFormatValue(row.getCell((short)10));//右眼裸眼视力
+						String correctionFarvisionOd=ExcelUtils.getCellFormatValue(row.getCell((short)11));//右眼戴镜视力
+
+
+						if(ideentityType == null &&
 								identityCard == null &&
 								name == null &&
 								sex == null &&
@@ -231,6 +240,10 @@ public class StudentNewServiceImpl implements StudentNewService {
 						student.setStudentName(name.trim());
 						student.setPhone(phone.trim());
 						student.setNation(nation);
+						if(!"0.0".equals(nakedFarvisionOd))
+							student.setNakedFarvisionOd(nakedFarvisionOd);
+						if(!"0.0".equals(nakedFarvisionOs))
+							student.setNakedFarvisionOs(nakedFarvisionOs);
 						//student.setSchool(school);
 						student.setGrade(grade.trim());
 						student.setStudentClass(studentClass.trim());
@@ -290,8 +303,39 @@ public class StudentNewServiceImpl implements StudentNewService {
 							list.add(rowNum+1);
 							continue;
 						}
+
+						if(StringUtils.isNotBlank(nakedFarvisionOd) ||
+								StringUtils.isNotBlank(nakedFarvisionOs)||
+								StringUtils.isNotBlank(correctionFarvisionOd) ||
+								StringUtils.isNotBlank(correctionFarvisionOs)) {
+							student.setLastCheckTime(new Date());
+
+						}
 						
 						studentNewDao.save(student);
+						if(StringUtils.isNotBlank(nakedFarvisionOd) ||
+								StringUtils.isNotBlank(nakedFarvisionOs)||
+								StringUtils.isNotBlank(correctionFarvisionOd) ||
+								StringUtils.isNotBlank(correctionFarvisionOs)) {
+
+							ResultEyesightNewDO resultEyesightNewDO = new ResultEyesightNewDO();
+							resultEyesightNewDO.setStudentId(student.getId());
+							resultEyesightNewDO.setActivityId(activityId);
+							resultEyesightNewDO.setIdentityCard(identityCard);
+							resultEyesightNewDO.setDeleteFlag(0);
+							if(!"0.0".equals(nakedFarvisionOd))
+								resultEyesightNewDO.setNakedFarvisionOd(nakedFarvisionOd);
+							resultEyesightNewDO.setCheckDate(new Date());
+							if(!"0.0".equals(nakedFarvisionOs))
+								resultEyesightNewDO.setNakedFarvisionOs(nakedFarvisionOs);
+							if(!"0.0".equals(correctionFarvisionOd))
+								resultEyesightNewDO.setCorrectionFarvisionOd(correctionFarvisionOd);
+							if(!"0.0".equals(correctionFarvisionOs))
+								resultEyesightNewDO.setCorrectionFarvisionOs(correctionFarvisionOs);
+							resultEyesightNewDao.save(resultEyesightNewDO);
+
+						}
+
 						num++;
 							
 							
@@ -751,15 +795,20 @@ public class StudentNewServiceImpl implements StudentNewService {
 		ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
 		String nakedFarvisionOd="";
 		String nakedFarvisionOs="";
-		String correctionFarvisionOd="";
-		String correctionFarvisionOs="";
+		String correctionFarvisionOd="5.0";
+		String correctionFarvisionOs="5.0";
 		if(resultEyesightDOList.size()>0){
 			resultEyesightDO=resultEyesightDOList.get(0);
 			nakedFarvisionOd=resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd().toString();
 			nakedFarvisionOs=resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs().toString();
 			correctionFarvisionOd=resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd().toString();
 			correctionFarvisionOs=resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs().toString();
+
 		}
+        if(nakedFarvisionOd.equals("10/10")) nakedFarvisionOd="5.0";
+		if(nakedFarvisionOs.equals("10/10")) nakedFarvisionOs="5.0";
+		if(correctionFarvisionOd.equals("10/10")) correctionFarvisionOd="5.0";
+		if(correctionFarvisionOs.equals("10/10")) correctionFarvisionOs="5.0";
 		params.put("nakedFarvisionOd",zhuanhuan1(nakedFarvisionOd)==""?"":zhuanhuan1(nakedFarvisionOd));
 		params.put("nakedFarvisionOs",zhuanhuan1(nakedFarvisionOs)==""?"":zhuanhuan1(nakedFarvisionOs));
 		params.put("glassvisionOd",zhuanhuan1(correctionFarvisionOd)==""?"":zhuanhuan1(correctionFarvisionOd));
