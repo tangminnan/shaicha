@@ -35,6 +35,12 @@ public class ResultOptometryDO implements Serializable {
 	private Double firstCheckRcs;
 	//第一次检查左眼cs
 	private Double firstCheckLcs;
+	//瞳距
+	private Double pupilDistance;
+	//瞳距右眼
+	private Double pupilDistanceOr;
+	//瞳距左眼
+	private Double pupilDistanceOl;
 	//验光日期
 	private Date checkDate;
 	//第二次验光VD
@@ -52,9 +58,31 @@ public class ResultOptometryDO implements Serializable {
 	//身份证号
 	private String identityCard;
 	private Integer activityId;
-	
-	
-	
+
+	public Double getPupilDistance() {
+		return pupilDistance;
+	}
+
+	public void setPupilDistance(Double pupilDistance) {
+		this.pupilDistance = pupilDistance;
+	}
+
+	public Double getPupilDistanceOr() {
+		return pupilDistanceOr;
+	}
+
+	public void setPupilDistanceOr(Double pupilDistanceOr) {
+		this.pupilDistanceOr = pupilDistanceOr;
+	}
+
+	public Double getPupilDistanceOl() {
+		return pupilDistanceOl;
+	}
+
+	public void setPupilDistanceOl(Double pupilDistanceOl) {
+		this.pupilDistanceOl = pupilDistanceOl;
+	}
+
 	public Integer getActivityId() {
 		return activityId;
 	}
@@ -254,7 +282,7 @@ public class ResultOptometryDO implements Serializable {
 	}
 	public ResultOptometryDO(Long studentId, Long checkorId, Double firstCheckVd, Double firstCheckPd,
 			Double secondCheckPd, Double firstCheckRps, Double firstCheckLps, Double firstCheckRcs,
-			Double firstCheckLcs, Date checkDate, Double secondCheckVd, Double secondCheckRps, Double secondCheckLps,
+			Double firstCheckLcs,Double pupilDistance,Double pupilDistanceOr,Double pupilDistanceOl, Date checkDate, Double secondCheckVd, Double secondCheckRps, Double secondCheckLps,
 			Double secondCheckRcs, Double secondCheckLcs, Integer deleteFlag,
 			String identityCard,Integer activityId) {
 		super();
@@ -267,6 +295,9 @@ public class ResultOptometryDO implements Serializable {
 		this.firstCheckLps = firstCheckLps;
 		this.firstCheckRcs = firstCheckRcs;
 		this.firstCheckLcs = firstCheckLcs;
+		this.pupilDistance = pupilDistance;
+		this.pupilDistanceOr = pupilDistanceOr;
+		this.pupilDistanceOl = pupilDistanceOl;
 		this.checkDate = checkDate;
 		this.secondCheckVd = secondCheckVd;
 		this.secondCheckRps = secondCheckRps;

@@ -11,6 +11,9 @@
 						 `first_check_lps`,
 						 `first_check_rcs`,
 						 `first_check_lcs`,
+						 `pupil_distance`,
+						 `pupil_distance_or`,
+						 `pupil_distance_ol`,
 						 `check_date`,
 						 `second_check_vd`,
 						 `second_check_rps`,
@@ -34,7 +37,10 @@
 			`first_check_rps`, 
 			`first_check_lps`, 
 			`first_check_rcs`, 
-			`first_check_lcs`, 
+			`first_check_lcs`,
+			`pupil_distance`,
+			`pupil_distance_or`,
+			`pupil_distance_ol`,
 			`check_date`, 
 			`second_check_vd`, 
 			`second_check_rps`, 
@@ -56,7 +62,10 @@
 			#{firstCheckLps}, 
 			#{firstCheckRcs}, 
 			#{firstCheckLcs}, 
-			#{checkDate}, 
+			#{pupilDistance},
+			#{pupilDistanceOr},
+			#{pupilDistanceOl},
+			#{checkDate},
 			#{secondCheckVd}, 
 			#{secondCheckRps}, 
 			#{secondCheckLps}, 
@@ -79,6 +88,9 @@
 			<if test="firstCheckLps != null">`first_check_lps` = #{firstCheckLps}, </if>
 			<if test="firstCheckRcs != null">`first_check_rcs` = #{firstCheckRcs}, </if>
 			<if test="firstCheckLcs != null">`first_check_lcs` = #{firstCheckLcs}, </if>
+			<if test="pupilDistance != null">`pupil_distance` = #{pupilDistance}, </if>
+			<if test="pupilDistanceOr != null">`pupil_distance_or` = #{pupilDistanceOr}, </if>
+			<if test="pupilDistanceOl != null">`pupil_distance_ol` = #{pupilDistanceOl}, </if>
 			<if test="checkDate != null">`check_date` = #{checkDate}, </if>
 		
 			<if test="secondCheckVd != null">`second_check_vd` = #{secondCheckVd}, </if>

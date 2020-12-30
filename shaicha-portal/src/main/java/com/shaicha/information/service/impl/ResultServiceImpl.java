@@ -218,6 +218,9 @@ public class ResultServiceImpl implements ResultService{
     	double firstCheckLps=jsonObject.getDouble("firstCheckLps");
     	double firstCheckRcs=jsonObject.getDouble("firstCheckRcs");
     	double firstCheckLcs=jsonObject.getDouble("firstCheckLcs");
+    	double pupilDistance=jsonObject.getDouble("pupilDistance")==null ? 0.0 :jsonObject.getDouble("pupilDistance");
+    	double pupilDistanceOr=jsonObject.getDouble("pupilDistanceOr") == null	? 0.0 : jsonObject.getDouble("pupilDistanceOr");
+    	double pupilDistanceOl=jsonObject.getDouble("pupilDistanceOl") == null	? 0.0 : jsonObject.getDouble("pupilDistanceOl");
     	double secondCheckVd=jsonObject.getDouble("secondCheckVd");
     	double secondCheckRps=jsonObject.getDouble("secondCheckRps");
     	double secondCheckLps=jsonObject.getDouble("secondCheckLps");
@@ -225,7 +228,7 @@ public class ResultServiceImpl implements ResultService{
     	double secondCheckLcs=jsonObject.getDouble("secondCheckLcs");
     	double firstCheckPd=jsonObject.getDouble("firstCheckPd");
     	double secondCheckPd=jsonObject.getDouble("secondCheckPd");
-    	ResultOptometryDO resultOptometryDO=new ResultOptometryDO(studentId, chectorId, firstCheckVd, firstCheckPd, secondCheckPd, firstCheckRps, firstCheckLps, firstCheckRcs, firstCheckLcs,date, 
+    	ResultOptometryDO resultOptometryDO=new ResultOptometryDO(studentId, chectorId, firstCheckVd, firstCheckPd, secondCheckPd, firstCheckRps, firstCheckLps, firstCheckRcs, firstCheckLcs,pupilDistance,pupilDistanceOr,pupilDistanceOl,date,
     			secondCheckVd, secondCheckRps, secondCheckLps, secondCheckRcs, secondCheckLcs, 0,identityCard,activityId);
     	int tOptometryId=0;
     	if(
@@ -234,6 +237,9 @@ public class ResultServiceImpl implements ResultService{
 				firstCheckLps==0.0&&
 				firstCheckRcs==0.0&&
 				firstCheckLcs==0.0&&
+						pupilDistance==0.0&&
+						pupilDistanceOr==0.0&&
+						pupilDistanceOl==0.0&&
 				secondCheckVd==0.0&&
 				secondCheckRps==0.0&&
 				secondCheckLps==0.0&&

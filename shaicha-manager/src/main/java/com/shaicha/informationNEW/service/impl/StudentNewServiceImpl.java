@@ -190,6 +190,28 @@ public class StudentNewServiceImpl implements StudentNewService {
 				Sheet sheet = book.getSheetAt(0);
 				Row row=null;
 				//String modelType= "",school = "", schoolCode= "";
+				//判断导入的Excel中是否有未填项
+				for (int a=2;a<=sheet.getLastRowNum();a++){
+					row = sheet.getRow(a);
+					if (ExcelUtils.getCellFormatValue(row.getCell((short)0))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)0))!=null&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)1))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)1))!=null&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)2))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)2))!=null&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)3))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)3))!=null&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)4))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)4))!=null&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)5))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)5))!=null&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)6))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)6))!=null&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)7))!=""&&
+							ExcelUtils.getCellFormatValue(row.getCell((short)7))!=null);
+					else
+						return R.ok("Excel中有部分数据为空，请检查好重新导入");
+				}
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					try {
 						row = sheet.getRow(rowNum);
