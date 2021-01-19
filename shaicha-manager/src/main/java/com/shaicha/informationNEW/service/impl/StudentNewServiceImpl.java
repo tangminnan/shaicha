@@ -1,5 +1,6 @@
 package com.shaicha.informationNEW.service.impl;
 
+import com.shaicha.common.utils.*;
 import com.shaicha.informationNEW.dao.ResultEyesightNewDao;
 import com.shaicha.informationNEW.dao.ResultMainDao;
 import com.shaicha.informationNEW.domain.*;
@@ -16,14 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shaicha.common.config.BootdoConfig;
-import com.shaicha.common.utils.Base64Utils;
-import com.shaicha.common.utils.ImportExcel;
-import com.shaicha.common.utils.QRCodeUtil;
 
-import com.shaicha.common.utils.R;
-import com.shaicha.common.utils.ShiroUtils;
-import com.shaicha.common.utils.TimeUtils;
-import com.shaicha.common.utils.WordUtils;
 import com.shaicha.informationNEW.dao.SchoolNewDao;
 import com.shaicha.informationNEW.dao.StudentNewDao;
 import com.shaicha.information.domain.AnswerResultDO;
@@ -188,8 +182,9 @@ public class StudentNewServiceImpl implements StudentNewService {
 				in = file.getInputStream();
 				book =ExcelUtils.getBook(file);
 				Sheet sheet = book.getSheetAt(0);
-				Row row=null;
-				//String modelType= "",school = "", schoolCode= "";
+				Row row;
+				if (!"筛查".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0))))
+				    return R.error("请使用提供的模板进行导入!");
 				//判断导入的Excel中是否有未填项
 				for (int a=2;a<=sheet.getLastRowNum();a++){
 					row = sheet.getRow(a);
@@ -210,17 +205,12 @@ public class StudentNewServiceImpl implements StudentNewService {
 							ExcelUtils.getCellFormatValue(row.getCell((short)7))!=""&&
 							ExcelUtils.getCellFormatValue(row.getCell((short)7))!=null);
 					else
-						return R.ok("Excel中有部分数据为空，请检查好重新导入");
+						return R.error("Excel中有部分数据为空，请检查好重新导入");
 				}
+                SchoolNewDO schoolDO = schoolDao.get(schoolId);
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					try {
 						row = sheet.getRow(rowNum);
-						//if(rowNum==0){
-					//	modelType = ExcelUtils.getCellFormatValue(row.getCell((short)1));//模板类型
-					//	school = ExcelUtils.getCellFormatValue(row.getCell((short)3));//当前学校名称
-					//	schoolCode= ExcelUtils.getCellFormatValue(row.getCell((short)5));//学校编码
-					//}
-					//if(rowNum>1){
 						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
 
 						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
@@ -239,20 +229,9 @@ public class StudentNewServiceImpl implements StudentNewService {
 						String nakedFarvisionOd= ExcelUtils.getCellFormatValue(row.getCell((short)10));//右眼裸眼视力
 						String correctionFarvisionOd=ExcelUtils.getCellFormatValue(row.getCell((short)11));//右眼戴镜视力
 
-
-						if(ideentityType == null &&
-								identityCard == null &&
-								name == null &&
-								sex == null &&
-								grade == null &&
-								studentClass == null &&
-								phone == null &&
-								nation == null){
-							continue;
-						}
 						
 						StudentNewDO student = new StudentNewDO();
-						SchoolNewDO schoolDO = schoolDao.get(schoolId);
+
 						student.setSchoolId(schoolId);
 						student.setSchool(schoolDO.getOrgname());
 						student.setSchoolCode(schoolDO.getOrgcode());
@@ -266,14 +245,12 @@ public class StudentNewServiceImpl implements StudentNewService {
 							student.setNakedFarvisionOd(nakedFarvisionOd);
 						if(!"0.0".equals(nakedFarvisionOs))
 							student.setNakedFarvisionOs(nakedFarvisionOs);
-						//student.setSchool(school);
 						student.setGrade(grade.trim());
 						student.setStudentClass(studentClass.trim());
 						student.setStatus(0);
 						student.setIdeentityType(ideentityType.trim());
 						student.setXueBu(schoolDO.getXuebu());
 						student.setSysId(ShiroUtils.getUserId());
-						//student.setSchoolCode(schoolCode);
 						student.setModelType("学校");
 						if(sex != null && sex != ""){
 							if(sex.equals("男")){
@@ -284,47 +261,29 @@ public class StudentNewServiceImpl implements StudentNewService {
 							}
 						}
 						
-//						if(birthday != null && birthday != ""){
-//							Calendar c = new GregorianCalendar(1900,0,-1);
-//							Date d = c.getTime();
-//							Date _d = DateUtils.addDays(d, Integer.parseInt(birthday));
-//							student.setBirthday(_d);
-//						}else
-//							student.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("1990-12-24"));
-//						
 						student.setAddTime(new Date());
-						if(identityCard != null && identityCard != ""){
-							
-							if(ideentityType.equals("身份证") && identityCard.length() == 18){
-								 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-									String year = identityCard.substring(6, 10);
-									String month = identityCard.substring(10, 12);
-									String day = identityCard.substring(12, 14);
-									String bir = year+"-"+month+"-"+day;
-									try {
-										student.setBirthday(sdf.parse(bir));
-									} catch (ParseException e) {
-										e.printStackTrace();
-									}
-							}
-							
-//							Map<String,Object> map = new HashMap<String,Object>();
-//							map.put("identityCard", identityCard);
-//							List<StudentNewDO> list = studentNewDao.list(map);
-//							if(list.size()>0){
-//								continue;
-//							}else{
-								student.setIdentityCard(identityCard);
-//								String destPath = bootdoConfig.getUploadPath();
-//								String rand = new Random().nextInt(99999999)+".jpg";
-//								//生成二维码
-//								QRCodeUtil.encode(identityCard, null, destPath+"/"+rand, true);		
-//								student.setQRCode("/files/"+rand);
-							//}
-						}else{
-							list.add(rowNum+1);
-							continue;
-						}
+						if ("身份证".equals(ideentityType)) {
+                            String s = isIDCardUtil.IDCardValidate(identityCard);
+                            System.out.println(s);
+                            if ("该身份证有效！".equals(isIDCardUtil.IDCardValidate(identityCard))) {
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                String year = identityCard.substring(6, 10);
+                                String month = identityCard.substring(10, 12);
+                                String day = identityCard.substring(12, 14);
+                                String bir = year + "-" + month + "-" + day;
+                                try {
+                                    student.setBirthday(sdf.parse(bir));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                student.setIdentityCard(identityCard);
+                            } else {
+                                list.add(rowNum + 1);
+                                continue;
+                            }
+                        }else {
+                            student.setIdentityCard(identityCard);
+                        }
 
 						if(StringUtils.isNotBlank(nakedFarvisionOd) ||
 								StringUtils.isNotBlank(nakedFarvisionOs)||
@@ -361,16 +320,14 @@ public class StudentNewServiceImpl implements StudentNewService {
 						num++;
 							
 							
-					//}
 					} catch (Exception e) {
 						System.out.println("导入失败======第"+(rowNum+1)+"条==================");
 						e.printStackTrace();
-						//return R.error("导入失败！第"+(rowNum+1)+"行");
 					}
 						
 				}
 				if(list.size()>0){
-					return R.ok("上传成功,共增加["+num+"]条,第"+list+"行导入用户失败，原因：身份证号可能为空");
+					return R.ok("上传成功,共增加["+num+"]条,第"+list+"行导入用户失败，原因：身份证号可能无效");
 				}else{
 					return R.ok("上传成功,共增加["+num+"]条");
 				}
