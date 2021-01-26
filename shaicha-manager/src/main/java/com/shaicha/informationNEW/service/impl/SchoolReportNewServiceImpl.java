@@ -941,7 +941,9 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 
 			try {
 				Map<String, Object> params = gradeRep(request, response);
-				createExe(response,params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给年级报告检测.ftl");
+                String school = request.getParameter("school");
+                String grade = request.getParameter("grade");
+				createExe(response,params, school+grade, "给年级报告检测.ftl");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}finally {
@@ -1434,28 +1436,26 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 
 	@Override
 	public void shaichawenjuanRep(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Map<String,Object> mapP = new HashMap<String,Object>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
 		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
 		List<Map<String,Object>> bb = new ArrayList<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("activityId", activityId);
+//		map.put("school", "淄博机电工程学校");
+//		map.put("xueBu","小学");
 		List<StudentNewDO> list = studentDao.list(map);
-		list=list.stream().filter(a->"山师附小".
-				equals(a.getSchool()) &&
-				"三年级三班".equals(a.getStudentClass())
-		).
-
-				collect(Collectors.toList());
-		int i = 0;
+//		list=list.stream().filter(a->"山师附小".
+//				equals(a.getSchool()) &&
+//				"三年级三班".equals(a.getStudentClass())
+//		).
+//
+//				collect(Collectors.toList());
 		if(list.size()>0){
-			for (StudentNewDO studentNewDO : list) {
+            String activitytime = sdf.format(activityListDao.get(activityId).getAddTime());
+            for (StudentNewDO studentNewDO : list) {
 				Map<String,Object> mapPP = new LinkedHashMap<String,Object>();
-				String identityCard = studentNewDO.getIdentityCard();
-				//System.out.println(i++);
-				ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
-				ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
-				ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
+				ResultEyesightNewDO resultEyesightDO ;
+				ResultDiopterNewDO resultDiopterDO ;
 				List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentNewDO.getId());
 				List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentNewDO.getId(),activityId);
 				List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentNewDO.getId(),activityId);
@@ -1469,6 +1469,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				mapPP.put("学部", studentNewDO.getXueBu()==null?"":studentNewDO.getXueBu());
 				mapPP.put("姓名", studentNewDO.getStudentName());
 				mapPP.put("身份证号", studentNewDO.getIdentityCard());
+				mapPP.put("民族",studentNewDO.getNation()==null?"":studentNewDO.getNation());
 				mapPP.put("手机号", studentNewDO.getPhone()==null?"":studentNewDO.getPhone());
 				mapPP.put("生日", studentNewDO.getBirthday()==null?"":sdf.format(studentNewDO.getBirthday()));
 				mapPP.put("检查时间", studentNewDO.getLastCheckTime()==null?"":sdf.format(studentNewDO.getLastCheckTime()));
@@ -1483,7 +1484,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
                 mapPP.put("省", schoolNewDO.getProvincename());
                 mapPP.put("市", schoolNewDO.getCityname());
                 mapPP.put("市区县", schoolNewDO.getAreaname());
-                mapPP.put("活动时间", sdf.format(activityListDao.get(activityId).getAddTime()));
+                mapPP.put("活动时间", activitytime);
 				if(lifeShili.size()>0){
 					resultEyesightDO = lifeShili.get(0);
 					mapPP.put("裸眼视力-右", resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());

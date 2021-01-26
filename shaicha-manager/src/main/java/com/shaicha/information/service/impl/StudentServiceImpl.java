@@ -967,7 +967,6 @@ public class StudentServiceImpl implements StudentService {
 		int totalnumber =studentDao.countP(paMap);
 		totalnumber+=studentNewDao.countP(paMap);
 		paMap.put("checkType","SHI_FANXIAO");
-//		paMap.put("address","济南市");
 		Calendar calendar  = Calendar.getInstance();
 		calendar.set(Calendar.YEAR,2020);
 		calendar.set(Calendar.MONTH, 6);
@@ -977,7 +976,7 @@ public class StudentServiceImpl implements StudentService {
 		calendar.set(Calendar.SECOND,0);
 		String str = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
 		paMap.put("lastCheckTime",str);
-		int shifan = studentNewDao.countP(paMap);
+		int shifan = studentNewDao.countS(paMap);
 		paMap.put("checkType","PU_TONG");
 		int putong = studentNewDao.countP(paMap);
 

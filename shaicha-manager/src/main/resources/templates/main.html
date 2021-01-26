@@ -42,7 +42,7 @@
     				<i class="iconfont icon-yonghuguanli1"></i>
     			</p>
     			<p class="itemLs">
-	    			<span>2020年下半年普通筛查系统</span>
+	    			<span>2021年普通筛查系统</span>
 	    			<span id="putong"></span>
     			</p>
     		</div>
@@ -168,7 +168,7 @@ $.ajax({
 	success : function(data) {
 		$(".total").text(data.totalnumber+"人");
 		$("#shifanxiao").text(data.shifanxiaoshaicha+"人");
-		$("#putong").text(data.putongshaicha);
+		$("#putong").text(data.putongshaicha+"人");
 		$("#gaodujinshiNumber").val(data.gaodujinshiNumber);
 		$("#zhongdujinshiNumber").val(data.zhongdujinshiNumber);
 		$("#didujinshiNumber").val(data.didujinshiNumber);

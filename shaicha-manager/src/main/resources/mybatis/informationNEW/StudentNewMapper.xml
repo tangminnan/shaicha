@@ -58,6 +58,7 @@
 		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
 		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
 		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+		  		  <if test="xueBu != null and xueBu != ''"> and xue_bu = #{xueBu} </if>
 		  		  <if test="schoolId != null and schoolId != ''"> and school_id = #{schoolId} </if>
 		  </where>
         <choose>
@@ -99,14 +100,22 @@
 		  		  <if test="schoolId != null and schoolId != ''"> and school_id = #{schoolId} </if>
 		  		</where>
 	</select>
-	<select id="countP" resultType="int">
+	<select id="countS" resultType="int">
 		select count(*) from t_student_new 
 		where last_check_time is not null
 			 <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
 			 <if test="address != null and address != ''">and  address = #{address} </if>
-			 <if test="lastCheckTime != null and lastCheckTime != ''">and last_check_time &gt; DATE_FORMAT('2020-06-00','%Y-%m-%d') </if>
+			 <if test="lastCheckTime != null and lastCheckTime != ''"> and DATE_FORMAT(last_check_time,'%Y-%m-%d') between '2020-06-01' and '2020-12-31' </if>
 		
 	</select>
+    <select id="countP" resultType="int">
+        select count(*) from t_student_new
+        where last_check_time is not null
+        <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
+        <if test="address != null and address != ''">and  address = #{address} </if>
+        <if test="lastCheckTime != null and lastCheckTime != ''">and last_check_time &gt; DATE_FORMAT('2021-01-00','%Y-%m-%d') </if>
+
+    </select>
 	 
 	<insert id="save" parameterType="com.shaicha.informationNEW.domain.StudentNewDO" useGeneratedKeys="true" keyProperty="id">
 		insert into t_student_new

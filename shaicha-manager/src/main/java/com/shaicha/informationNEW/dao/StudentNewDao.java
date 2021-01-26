@@ -95,6 +95,7 @@ public interface StudentNewDao {
 	List<StudentNewDO> getStudentDOshou(@Param("i") int i,@Param("j") int j);
 
 	int countP(Map<String, Object> paMap);
+	int countS(Map<String, Object> paMap);
 
 	void updateS(StudentNewDO studentDO);
 

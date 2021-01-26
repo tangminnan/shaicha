@@ -4,6 +4,7 @@ import com.shaicha.common.utils.*;
 import com.shaicha.informationNEW.dao.ResultEyesightNewDao;
 import com.shaicha.informationNEW.dao.ResultMainDao;
 import com.shaicha.informationNEW.domain.*;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.ss.usermodel.*;
@@ -229,7 +230,10 @@ public class StudentNewServiceImpl implements StudentNewService {
 						String nakedFarvisionOd= ExcelUtils.getCellFormatValue(row.getCell((short)10));//右眼裸眼视力
 						String correctionFarvisionOd=ExcelUtils.getCellFormatValue(row.getCell((short)11));//右眼戴镜视力
 
-						
+                        if (!checkRealName(name)){
+                            list.add(rowNum + 1);
+                            continue;
+                        }
 						StudentNewDO student = new StudentNewDO();
 
 						student.setSchoolId(schoolId);
@@ -327,7 +331,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 						
 				}
 				if(list.size()>0){
-					return R.ok("上传成功,共增加["+num+"]条,第"+list+"行导入用户失败，原因：身份证号可能无效");
+					return R.ok("上传成功,共增加["+num+"]条,第"+list+"行导入用户失败，原因：姓名或者身份证号可能无效");
 				}else{
 					return R.ok("上传成功,共增加["+num+"]条");
 				}
@@ -354,6 +358,20 @@ public class StudentNewServiceImpl implements StudentNewService {
 	public List<StudentNewDO> getList() {
 		return studentNewDao.getList();
 	}
+	//判断名字是否都为汉字
+    private boolean checkRealName(String realName) {
+        if (StringUtils.isEmpty(realName)) {
+            return false;
+        }
+
+        char[] ch = realName.toCharArray();
+        for (char c : ch) {
+            if (c < 0x4E00 || c > 0x9FA5) {
+                return false;
+            }
+        }
+        return true;
+    }
 	
 	public Map<String, Object> studentQRcodes(Integer ids){
 		Map<String, Object> params = new HashMap<String, Object>();  
