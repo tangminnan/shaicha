@@ -259,6 +259,20 @@ function importtemplate(){
 		content : prefix + '/importtemplate/'+checkType // iframe的url
 	});
 }
+/**
+ * 疾控导入会员
+ */
+function jikongimport(){
+	var checkType='JI_KONG';
+	layer.open({
+		type : 2,
+		title : '导入会员',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '800px', '520px' ],
+		content : prefix + '/importtemplate/'+checkType // iframe的url
+	});
+}
 
 /**
  * 答题结果导入

@@ -1,8 +1,8 @@
 package com.shaicha.informationNEW.service.impl;
 
 import com.shaicha.common.utils.*;
-import com.shaicha.informationNEW.dao.ResultEyesightNewDao;
-import com.shaicha.informationNEW.dao.ResultMainDao;
+import com.shaicha.information.domain.ResultOptometryDO;
+import com.shaicha.informationNEW.dao.*;
 import com.shaicha.informationNEW.domain.*;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.lang.StringUtils;
@@ -19,8 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.shaicha.common.config.BootdoConfig;
 
-import com.shaicha.informationNEW.dao.SchoolNewDao;
-import com.shaicha.informationNEW.dao.StudentNewDao;
 import com.shaicha.information.domain.AnswerResultDO;
 import com.shaicha.information.domain.StudentDO;
 import com.shaicha.informationNEW.service.StudentNewService;
@@ -76,9 +74,11 @@ public class StudentNewServiceImpl implements StudentNewService {
 	@Autowired
 	private SchoolNewDao schoolDao;
 	@Autowired
-	private ResultMainDao resultMainDao;
+	private ResultDiopterNewDao resultDiopterNewDao;
 	@Autowired
 	private ResultEyesightNewDao resultEyesightNewDao;
+	@Autowired
+    private ResultOptometryNewDao resultOptometryNewDao;
 	@Autowired
 	UserDao userMapper;
 	
@@ -184,7 +184,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 				book =ExcelUtils.getBook(file);
 				Sheet sheet = book.getSheetAt(0);
 				Row row;
-				if (!"筛查".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0))))
+				if (!"筛查".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0)))&&!"疾控".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0))))
 				    return R.error("请使用提供的模板进行导入!");
 				//判断导入的Excel中是否有未填项
 				for (int a=2;a<=sheet.getLastRowNum();a++){
@@ -206,7 +206,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 							ExcelUtils.getCellFormatValue(row.getCell((short)7))!=""&&
 							ExcelUtils.getCellFormatValue(row.getCell((short)7))!=null);
 					else
-						return R.error("Excel中有部分数据为空，请检查好重新导入");
+						return R.error("Excel中有部分基本信息数据为空，请检查好重新导入");
 				}
                 SchoolNewDO schoolDO = schoolDao.get(schoolId);
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
@@ -224,11 +224,19 @@ public class StudentNewServiceImpl implements StudentNewService {
 						cell = row.getCell((short) 6);
 						cell.setCellType(CellType.STRING);
 						String phone = ExcelUtils.getCellFormatValue(cell);		//手机号
-						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7));		//民族
+						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7));//民族
+
 						String nakedFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)8));//左眼裸眼视力
 						String correctionFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)9));//左眼戴镜视力
 						String nakedFarvisionOd= ExcelUtils.getCellFormatValue(row.getCell((short)10));//右眼裸眼视力
 						String correctionFarvisionOd=ExcelUtils.getCellFormatValue(row.getCell((short)11));//右眼戴镜视力
+						String diopterSOd=ExcelUtils.getCellFormatValue(row.getCell((short)12));//右-球镜
+						String diopterCOd=ExcelUtils.getCellFormatValue(row.getCell((short)13));//右-柱镜
+						String diopterAOd=ExcelUtils.getCellFormatValue(row.getCell((short)14));//右-轴位
+						String diopterSOs=ExcelUtils.getCellFormatValue(row.getCell((short)15));//左-球镜
+						String diopterCOs=ExcelUtils.getCellFormatValue(row.getCell((short)16));//左-柱镜
+						String diopterAOs=ExcelUtils.getCellFormatValue(row.getCell((short)17));//左-轴位
+						String checktime=ExcelUtils.getCellFormatValue(row.getCell((short)18));//检查时间
 
                         if (!checkRealName(name)){
                             list.add(rowNum + 1);
@@ -249,6 +257,14 @@ public class StudentNewServiceImpl implements StudentNewService {
 							student.setNakedFarvisionOd(nakedFarvisionOd);
 						if(!"0.0".equals(nakedFarvisionOs))
 							student.setNakedFarvisionOs(nakedFarvisionOs);
+						Double dengOd = 0.0;
+						Double dengOs = 0.0;
+						if (StringUtils.isNotBlank(diopterSOd) && StringUtils.isNotBlank(diopterCOd))
+                            dengOd = Double.parseDouble(diopterSOd) + (1.0 / 2) * (Double.parseDouble(diopterCOd));
+                        if (StringUtils.isNotBlank(diopterSOs) && StringUtils.isNotBlank(diopterCOs))
+                            dengOs = Double.parseDouble(diopterSOs) + (1.0 / 2) * (Double.parseDouble(diopterCOs));
+                        student.setDengxiaoqiujingr(dengOd);
+                        student.setDengxiaoqiujingl(dengOs);
 						student.setGrade(grade.trim());
 						student.setStudentClass(studentClass.trim());
 						student.setStatus(0);
@@ -288,15 +304,25 @@ public class StudentNewServiceImpl implements StudentNewService {
                         }else {
                             student.setIdentityCard(identityCard);
                         }
+                        Date dd = new Date();
+						if(StringUtils.isNotBlank(checktime)) {
+                            Calendar calendar = new GregorianCalendar(1900,0,-1);
+                            Date d = calendar.getTime();
+                            dd = DateUtils.addDays(d,Integer.parseInt(checktime.substring(0,checktime.indexOf("."))));
+							student.setLastCheckTime(dd);
+						}else if (StringUtils.isNotBlank(nakedFarvisionOd) ||
+                                StringUtils.isNotBlank(nakedFarvisionOs)||
+                                StringUtils.isNotBlank(correctionFarvisionOd) ||
+                                StringUtils.isNotBlank(correctionFarvisionOs) ||
+                                StringUtils.isNotBlank(diopterSOd) ||
+                                StringUtils.isNotBlank(diopterCOd) ||
+                                StringUtils.isNotBlank(diopterAOd) ||
+                                StringUtils.isNotBlank(diopterSOs) ||
+                                StringUtils.isNotBlank(diopterCOs) ||
+                                StringUtils.isNotBlank(diopterAOs)){
+                            student.setLastCheckTime(dd);
+                        }
 
-						if(StringUtils.isNotBlank(nakedFarvisionOd) ||
-								StringUtils.isNotBlank(nakedFarvisionOs)||
-								StringUtils.isNotBlank(correctionFarvisionOd) ||
-								StringUtils.isNotBlank(correctionFarvisionOs)) {
-							student.setLastCheckTime(new Date());
-
-						}
-						
 						studentNewDao.save(student);
 						if(StringUtils.isNotBlank(nakedFarvisionOd) ||
 								StringUtils.isNotBlank(nakedFarvisionOs)||
@@ -310,7 +336,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 							resultEyesightNewDO.setDeleteFlag(0);
 							if(!"0.0".equals(nakedFarvisionOd))
 								resultEyesightNewDO.setNakedFarvisionOd(nakedFarvisionOd);
-							resultEyesightNewDO.setCheckDate(new Date());
+							resultEyesightNewDO.setCheckDate(dd);
 							if(!"0.0".equals(nakedFarvisionOs))
 								resultEyesightNewDO.setNakedFarvisionOs(nakedFarvisionOs);
 							if(!"0.0".equals(correctionFarvisionOd))
@@ -320,6 +346,53 @@ public class StudentNewServiceImpl implements StudentNewService {
 							resultEyesightNewDao.save(resultEyesightNewDO);
 
 						}
+						if (StringUtils.isNotBlank(diopterSOd) ||
+                                StringUtils.isNotBlank(diopterCOd)||
+                                StringUtils.isNotBlank(diopterAOd) ||
+                                StringUtils.isNotBlank(diopterSOs) ||
+                                StringUtils.isNotBlank(diopterCOs) ||
+                                StringUtils.isNotBlank(diopterAOs)){
+                            ResultOptometryNewDO resultOptometryDO = new ResultOptometryNewDO();
+                            resultOptometryDO.setStudentId(student.getId());
+                            resultOptometryDO.setCheckDate(dd);
+                            resultOptometryDO.setIdentityCard(identityCard);
+                            resultOptometryDO.setActivityId(activityId.toString());
+                            if (resultOptometryNewDao.save(resultOptometryDO)>0){
+                                ResultDiopterNewDO rd = new ResultDiopterNewDO();
+                                rd.settOptometryId(resultOptometryDO.gettOptometryId());
+                                rd.setDiopterS(Double.parseDouble(diopterSOd==""?"0.0":diopterSOd));
+                                rd.setDiopterC(Double.parseDouble(diopterCOd==""?"0.0":diopterCOd));
+                                rd.setDiopterA(Double.parseDouble(diopterAOd==""?"0.0":diopterAOd));
+                                rd.setBelieve(0);
+                                rd.setNum(0);
+                                rd.setType("AVG");
+                                rd.setIfrl("R");
+                                rd.setFirstSecond("FIRST_CHECK");
+                                rd.setDengxiaoqiujing(dengOd);
+                                rd.setActivityId(activityId.toString());
+                                rd.setCheckDate(dd);
+                                rd.setIdentityCard(identityCard);
+                                resultDiopterNewDao.save(rd);
+
+                                ResultDiopterNewDO rs = new ResultDiopterNewDO();
+                                rs.settOptometryId(resultOptometryDO.gettOptometryId());
+                                rs.setDiopterS(Double.parseDouble(diopterSOs==""?"0.0":diopterSOs));
+                                rs.setDiopterC(Double.parseDouble(diopterCOs==""?"0.0":diopterCOs));
+                                rs.setDiopterA(Double.parseDouble(diopterAOs==""?"0.0":diopterAOs));
+                                rs.setBelieve(0);
+                                rs.setNum(0);
+                                rs.setType("AVG");
+                                rs.setIfrl("L");
+                                rs.setFirstSecond("FIRST_CHECK");
+                                rs.setDengxiaoqiujing(dengOs);
+                                rs.setActivityId(activityId.toString());
+                                rs.setCheckDate(dd);
+                                rs.setIdentityCard(identityCard);
+                                resultDiopterNewDao.save(rs);
+                            }
+
+
+                        }
 
 						num++;
 							

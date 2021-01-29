@@ -84,7 +84,6 @@
 			first_check_pd ,
 			second_check_pd,
 			activity_id,
-			Relation_Patient_Crf_Id,
 			identity_card
 		)
 		values
@@ -106,7 +105,6 @@
 			#{firstCheckPd},
 			#{secondCheckPd},
 			#{activityId},
-			#{RelationPatientCrfId},
 			#{identityCard}
 		)
 	</insert>

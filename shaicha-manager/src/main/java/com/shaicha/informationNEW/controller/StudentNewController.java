@@ -331,6 +331,8 @@ public class StudentNewController {
 		}
 		if("SHI_FANXIAO".equals(checkType))
 			return "informationNEW/student/shifanimporttemplate";
+        if("JI_KONG".equals(checkType))
+            return "informationNEW/student/jikongimport";
 		return null;  
 	}
 	
@@ -350,6 +352,16 @@ public class StudentNewController {
 	public R importMember(Integer activityId,Integer schoolId,String checkType, MultipartFile file){
 		return studentNewService.importMember(activityId,schoolId,checkType,file);
 		
+	}
+	/**
+	 * 导入
+	 */
+	@PostMapping( "/jikongimport")
+	@ResponseBody
+	@RequiresPermissions("information:student:student")
+	public R jikongimport(Integer activityId,Integer schoolId,String checkType, MultipartFile file){
+		return studentNewService.importMember(activityId,schoolId,checkType,file);
+
 	}
 	
 	/**

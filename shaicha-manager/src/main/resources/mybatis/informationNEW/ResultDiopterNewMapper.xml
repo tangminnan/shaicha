@@ -70,27 +70,27 @@
 			`num`, 
 			`type`, 
 			`ifRL`,
-			first_second,
-			activity_id,
-			Relation_Patient_Crf_Id,
-			identity_card,
-			`check_date`
+			`first_second`,
+			`identity_card`,
+			`check_date`,
+			`dengxiaoqiujing`,
+			`activity_id`
 		)
 		values
 		(
-			#{tOptometryId}, 
-			#{diopterS}, 
-			#{diopterC}, 
-			#{diopterA}, 
-			#{believe}, 
-			#{num}, 
-			#{type}, 
+			#{tOptometryId},
+			#{diopterS},
+			#{diopterC},
+			#{diopterA},
+			#{believe},
+			#{num},
+			#{type},
 			#{ifrl},
 			#{firstSecond},
-			#{activityId},
-			#{RelationPatientCrfId},
 			#{identityCard},
-			#{checkDate}
+			#{checkDate},
+			#{dengxiaoqiujing},
+			#{activityId}
 		)
 	</insert>
 	 
