@@ -531,4 +531,21 @@ function huodongbaogao(){
 	});
 	layer.full(page);	
 }
+function yuce(){
+	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	if (rows.length == 0) {
+		layer.msg("选择要预测的学生");
+		return;
+	}
+	if (rows.length > 1) {
+		layer.msg("一次只预测一名学生");
+		return;
+	}
+	var ids=[];
+	$.each(rows, function(i, row) {
+		ids[i] = row['id'];
+	});
+	window.open("/informationNEW/student/putongyuce?id="+ids[0],"_blank")
+	/*window.location.href="/informationNEW/student/shifanyuce?id="+ids[0]*/
+}
 

@@ -16,5 +16,6 @@ public interface ResultDiopterDao {
 	void saveDiopterDO(ResultDiopterDO resultDiopterDO);
 	void removeAll(Integer tOptometryId);
 	List<ResultDiopterDO> getByOptometryId(Integer tOptometryId);
-	
+
+    void saveYuCeData(ResultDiopterDO resultDiopterDOL);
 }

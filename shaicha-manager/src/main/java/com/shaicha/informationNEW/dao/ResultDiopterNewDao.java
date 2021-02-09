@@ -39,6 +39,10 @@ public interface ResultDiopterNewDao {
 	List<ResultDiopterNewDO> jianchashijian();
 	
 	List<ResultDiopterNewDO> queryTimeBetween(@Param("startDate") Date startDate,@Param("endDate") Date endDate);
-	
+
+    List<ResultDiopterNewDO> getYuCeData(Integer optId);
+
+	void updateYuCeData(@Param("optId") Integer optId,@Param("y1Y") Double y1Y,@Param("y2Y") Double y2Y,@Param("ifRl") String ifRl);
+
 	//int insertForeach(List<ResultDiopterNewDO> list);
 }

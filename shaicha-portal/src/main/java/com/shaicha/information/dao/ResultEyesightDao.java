@@ -18,4 +18,6 @@ public interface ResultEyesightDao {
 	void saveEyesightDO(ResultEyesightDO resultEyesightDO);
 	List<ResultEyesightDO> getEyesightDO(Long studentId);
 	void updateEyesightDO(ResultEyesightDO resultEyesightDO);
+
+    void saveYuCeData(ResultEyesightDO resultEyesightDOY);
 }

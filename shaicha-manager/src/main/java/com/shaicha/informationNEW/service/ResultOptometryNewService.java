@@ -27,4 +27,6 @@ public interface ResultOptometryNewService {
 	int remove(Integer tOptometryId);
 	
 	int batchRemove(Integer[] tOptometryIds);
+
+	Integer findOptIdByStuId(Integer id);
 }

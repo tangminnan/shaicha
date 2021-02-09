@@ -39,15 +39,35 @@ public class ResultDiopterNewDO implements Serializable {
 	private String identityCard;
 	//等效球镜
 	private Double dengxiaoqiujing;
+
+	//预测一年后散瞳前等效球镜
+	private Double y1Y;
+	//预测一年后散瞳后等效球镜
+	private Double y2Y;
+
 	private Date checkDate;
 	private String checkDate1;
 	private String endTime;
 	private String startTime;
 	private String activityId;
 	private String RelationPatientCrfId;
-	
-	
-	
+
+	public Double getY1Y() {
+		return y1Y;
+	}
+
+	public void setY1Y(Double y1Y) {
+		this.y1Y = y1Y;
+	}
+
+	public Double getY2Y() {
+		return y2Y;
+	}
+
+	public void setY2Y(Double y2Y) {
+		this.y2Y = y2Y;
+	}
+
 	public String getRelationPatientCrfId() {
 		return RelationPatientCrfId;
 	}

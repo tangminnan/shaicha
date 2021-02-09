@@ -51,5 +51,10 @@ public class ResultOptometryNewServiceImpl implements ResultOptometryNewService 
 	public int batchRemove(Integer[] tOptometryIds){
 		return resultOptometryNewDao.batchRemove(tOptometryIds);
 	}
-	
+
+	@Override
+	public Integer findOptIdByStuId(Integer id) {
+		return resultOptometryNewDao.findOptIdByStuId(id);
+	}
+
 }

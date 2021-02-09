@@ -29,4 +29,6 @@ public interface ResultOptometryNewDao {
 	int remove(Integer t_optometry_id);
 	
 	int batchRemove(Integer[] tOptometryIds);
+
+    Integer findOptIdByStuId(Integer id);
 }
