@@ -110,13 +110,13 @@ public class StudentNewController {
 		//查询列表数据
         Query query = new Query(params);
         query.put("status", "0");
-        query.put("checkType", "PU_TONG");
+        query.put("checkType", "SHI_FANXIAO");
         String username = ShiroUtils.getUser().getUsername();
 		if(!username.equals("admin") && !username.equals("shujuzhongxin")){
         	query.put("sysId", ShiroUtils.getUserId());
         }
-        List<StudentNewDO> studentList = studentNewService.list(query);
-		int total = studentNewService.count(query);
+        List<StudentNewDO> studentList = studentNewService.listNoShiFan(query);
+		int total = studentNewService.countNoShiFan(query);
 		PageUtils pageUtils = new PageUtils(studentList, total);
 		return pageUtils;
 	}

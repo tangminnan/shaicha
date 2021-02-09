@@ -121,6 +121,7 @@ public interface StudentNewDao {
 	int activitySchoolCheckNum(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
 
 
+    List<StudentNewDO> listNoShiFan(Map<String, Object> map);
 
-
+    int countNoShiFan(Map<String, Object> map);
 }

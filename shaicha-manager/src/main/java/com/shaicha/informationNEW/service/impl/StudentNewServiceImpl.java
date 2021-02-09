@@ -92,8 +92,13 @@ public class StudentNewServiceImpl implements StudentNewService {
 	public List<StudentNewDO> list(Map<String, Object> map){
 		return studentNewDao.list(map);
 	}
-	
-	@Override
+
+    @Override
+    public List<StudentNewDO> listNoShiFan(Map<String, Object> map) {
+        return studentNewDao.listNoShiFan(map);
+    }
+
+    @Override
 	public int count(Map<String, Object> map){
 		return studentNewDao.count(map);
 	}
@@ -184,11 +189,11 @@ public class StudentNewServiceImpl implements StudentNewService {
 				book =ExcelUtils.getBook(file);
 				Sheet sheet = book.getSheetAt(0);
 				Row row;
-				if (!"筛查".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0)))&&!"疾控".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0))))
+				if (!"筛查".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0)))&&!"验光".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0))))
 				    return R.error("请使用提供的模板进行导入!");
 				//判断导入的Excel中是否有未填项
-				for (int a=2;a<=sheet.getLastRowNum();a++){
-					row = sheet.getRow(a);
+                for (int a=2;a<=sheet.getLastRowNum();a++){
+                    row = sheet.getRow(a);
 					if (ExcelUtils.getCellFormatValue(row.getCell((short)0))!=""&&
 							ExcelUtils.getCellFormatValue(row.getCell((short)0))!=null&&
 							ExcelUtils.getCellFormatValue(row.getCell((short)1))!=""&&
@@ -209,6 +214,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 						return R.error("Excel中有部分基本信息数据为空，请检查好重新导入");
 				}
                 SchoolNewDO schoolDO = schoolDao.get(schoolId);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					try {
 						row = sheet.getRow(rowNum);
@@ -284,9 +290,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 						student.setAddTime(new Date());
 						if ("身份证".equals(ideentityType)) {
                             String s = isIDCardUtil.IDCardValidate(identityCard);
-                            System.out.println(s);
+//                            System.out.println(s);
                             if ("该身份证有效！".equals(isIDCardUtil.IDCardValidate(identityCard))) {
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                                 String year = identityCard.substring(6, 10);
                                 String month = identityCard.substring(10, 12);
                                 String day = identityCard.substring(12, 14);
@@ -306,10 +311,15 @@ public class StudentNewServiceImpl implements StudentNewService {
                         }
                         Date dd = new Date();
 						if(StringUtils.isNotBlank(checktime)) {
-                            Calendar calendar = new GregorianCalendar(1900,0,-1);
-                            Date d = calendar.getTime();
-                            dd = DateUtils.addDays(d,Integer.parseInt(checktime.substring(0,checktime.indexOf("."))));
-							student.setLastCheckTime(dd);
+						    if (checktime.contains("-")) {
+                                Date parse = sdf.parse(checktime);
+                                student.setLastCheckTime(parse);
+                            }else {
+                                Calendar calendar = new GregorianCalendar(1900,0,-1);
+                                Date d = calendar.getTime();
+                                dd = DateUtils.addDays(d,Integer.parseInt(checktime.substring(0,checktime.indexOf("."))));
+							    student.setLastCheckTime(dd);
+						    }
 						}else if (StringUtils.isNotBlank(nakedFarvisionOd) ||
                                 StringUtils.isNotBlank(nakedFarvisionOs)||
                                 StringUtils.isNotBlank(correctionFarvisionOd) ||
@@ -1774,6 +1784,11 @@ public class StudentNewServiceImpl implements StudentNewService {
 	public int activitySchoolCheckNum(Integer activityId, Integer schoolId) {
 		return studentNewDao.activitySchoolCheckNum(activityId, schoolId);
 	}
+
+    @Override
+    public int countNoShiFan(Map<String, Object> map) {
+        return studentNewDao.countNoShiFan(map);
+    }
 
 }
 

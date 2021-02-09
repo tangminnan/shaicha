@@ -32,7 +32,8 @@ public interface StudentNewService {
 	StudentNewDO get(Integer id);
 	
 	List<StudentNewDO> list(Map<String, Object> map);
-	
+	List<StudentNewDO> listNoShiFan(Map<String, Object> map);
+
 	int count(Map<String, Object> map);
 
 	List<StudentNewDO> activitygetschool(Integer activityId);
@@ -120,4 +121,6 @@ public interface StudentNewService {
 	int activitySchoolNum(Integer activityId, Integer schoolId);
 	
 	int activitySchoolCheckNum( Integer activityId, Integer schoolId);
+
+    int countNoShiFan(Map<String, Object> map);
 }
