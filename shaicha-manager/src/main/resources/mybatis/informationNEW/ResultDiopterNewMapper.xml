@@ -54,7 +54,6 @@
 		  		  <if test="ifrl != null and ifrl != ''"> and ifRL = #{ifrl} </if>
 		  		  <if test="firstSecond != null and firstSecond != ''"> and first_second = #{firstSecond} </if>
 		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
-
 		  		</where>
 	</select>
 	 
@@ -73,29 +72,31 @@
 			`ifRL`,
 			first_second,
 			activity_id,
-			Relation_Patient_Crf_Id,
 			identity_card,
 			`check_date`,
 			y1Y,
-			y2Y
+			y2Y,
+			`dengxiaoqiujing`,
+			`activity_id`
 		)
 		values
 		(
-			#{tOptometryId}, 
-			#{diopterS}, 
-			#{diopterC}, 
-			#{diopterA}, 
-			#{believe}, 
-			#{num}, 
-			#{type}, 
+			#{tOptometryId},
+			#{diopterS},
+			#{diopterC},
+			#{diopterA},
+			#{believe},
+			#{num},
+			#{type},
 			#{ifrl},
 			#{firstSecond},
 			#{activityId},
-			#{RelationPatientCrfId},
 			#{identityCard},
 			#{checkDate},
 			#{y1Y},
-			#{y2Y}
+			#{y2Y},
+			#{dengxiaoqiujing},
+			#{activityId}
 		)
 	</insert>
 	 
