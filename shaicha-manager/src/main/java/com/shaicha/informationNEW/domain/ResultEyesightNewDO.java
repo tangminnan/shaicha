@@ -51,6 +51,9 @@ public class ResultEyesightNewDO implements Serializable {
 	private Integer studentSex;
 	//学部
 	private String xueBu;
+
+	private String nakedFarvisionOdY;
+	private String nakedFarvisionOsY;
 	//检查日期
 	@JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
 	private Date checkDate;
@@ -65,9 +68,24 @@ public class ResultEyesightNewDO implements Serializable {
 	//检查类型   示范校筛查    普通筛查
 	private String checkType;
 	private Integer activityId;
-	
-	
-	
+
+
+	public String getNakedFarvisionOdY() {
+		return nakedFarvisionOdY;
+	}
+
+	public void setNakedFarvisionOdY(String nakedFarvisionOdY) {
+		this.nakedFarvisionOdY = nakedFarvisionOdY;
+	}
+
+	public String getNakedFarvisionOsY() {
+		return nakedFarvisionOsY;
+	}
+
+	public void setNakedFarvisionOsY(String nakedFarvisionOsY) {
+		this.nakedFarvisionOsY = nakedFarvisionOsY;
+	}
+
 	public Integer getActivityId() {
 		return activityId;
 	}

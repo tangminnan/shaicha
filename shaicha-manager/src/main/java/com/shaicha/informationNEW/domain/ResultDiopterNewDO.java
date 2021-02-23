@@ -36,18 +36,38 @@ public class ResultDiopterNewDO implements Serializable {
 	//两周内的第几次检查  FIRST_CHECK=第一次检查   SECOND_CHECK=第二次检查'
 	private String firstSecond;
 	//身份证号
-    private String identityCard;
+	private String identityCard;
 	//等效球镜
-    private Double dengxiaoqiujing;
-    private Date checkDate;
+	private Double dengxiaoqiujing;
+
+	//预测一年后散瞳前等效球镜
+	private Double y1Y;
+	//预测一年后散瞳后等效球镜
+	private Double y2Y;
+
+	private Date checkDate;
 	private String checkDate1;
 	private String endTime;
 	private String startTime;
 	private String activityId;
 	private String RelationPatientCrfId;
-	
-	
-	
+
+	public Double getY1Y() {
+		return y1Y;
+	}
+
+	public void setY1Y(Double y1Y) {
+		this.y1Y = y1Y;
+	}
+
+	public Double getY2Y() {
+		return y2Y;
+	}
+
+	public void setY2Y(Double y2Y) {
+		this.y2Y = y2Y;
+	}
+
 	public String getRelationPatientCrfId() {
 		return RelationPatientCrfId;
 	}

@@ -21,7 +21,9 @@
 			identity_card,
 			check_date,
 			dengxiaoqiujing,
-			activity_id
+			activity_id,
+			y1Y,
+			y2Y
 		)
 		values
 		(
@@ -37,10 +39,14 @@
 			#{identityCard},
 			#{checkDate},
 			#{dengxiaoqiujing},
-			#{activityId}
+			#{activityId},
+			#{y1Y},
+			#{y2Y}
 		)
 	</insert>
-	
+	<update id="saveYuCeData" parameterType="com.shaicha.information.domain.ResultDiopterDO">
+		update t_result_diopter_new set y1Y = #{y1Y} , y2Y=#{y2Y where t_optometry_id = #{tOptometryId} and type = #{type} and ifRL = #{ifrl}
+	</update>
 	
 	<delete id="removeAll">
 		delete from t_result_diopter_new where t_optometry_id=#{value}

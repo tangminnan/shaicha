@@ -70,9 +70,12 @@
 			`num`, 
 			`type`, 
 			`ifRL`,
-			`first_second`,
-			`identity_card`,
+			first_second,
+			activity_id,
+			identity_card,
 			`check_date`,
+			y1Y,
+			y2Y,
 			`dengxiaoqiujing`,
 			`activity_id`
 		)
@@ -87,8 +90,11 @@
 			#{type},
 			#{ifrl},
 			#{firstSecond},
+			#{activityId},
 			#{identityCard},
 			#{checkDate},
+			#{y1Y},
+			#{y2Y},
 			#{dengxiaoqiujing},
 			#{activityId}
 		)
@@ -106,7 +112,9 @@
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="ifrl != null">`ifRL` = #{ifrl},</if>
 			<if test="firstSecond != null">`first_second` = #{firstSecond},</if>
-			<if test="activityId != null"> activity_id = #{activityId} </if>
+			<if test="activityId != null"> activity_id = #{activityId}, </if>
+			<if test="y1Y !=null and y1Y !=''">y1Y=#{y1Y},</if>
+			<if test="y2Y !=null and y2Y !=''">y2Y = #{y2Y}</if>
 		</set>
 		where t_diopter_id = #{tDiopterId}
 	</update>
@@ -144,5 +152,10 @@
 		AND #{endDate}&gt;=check_date 
 	</select>
 
-
+	<select id="getYuCeData" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
+		select y1Y,y2Y,ifRL from t_result_diopter_new where t_optometry_id = #{optId} and type = 'AVG'
+	</select>
+	<update id="updateYuCeData" >
+		update t_result_diopter_new set y1Y = #{y1Y} ,y2Y = #{y2Y} where t_optometry_id = #{optId} and type = 'AVG' and ifRL =#{ifRl}
+	</update>
 </mapper>

@@ -34,5 +34,8 @@ public interface ResultEyesightNewDao {
 	
 	List<ResultEyesightNewDO> getLifeShili(@Param("studentId") Integer studentId);
 
-	
+
+    Map<String,String> getYuCeData(Integer id);
+
+    void updateYuCeDate(@Param("id") Integer id,@Param("yuceNakedFarvisionOd") String yuceNakedFarvisionOd,@Param("yuceNakedFarvisionOs") String yuceNakedFarvisionOs);
 }

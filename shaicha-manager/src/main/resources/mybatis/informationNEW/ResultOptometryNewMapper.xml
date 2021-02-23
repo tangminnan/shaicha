@@ -143,5 +143,7 @@
 			#{tOptometryId}
 		</foreach>
 	</delete>
-
+	<select id="findOptIdByStuId" resultType="int">
+		select t_optometry_id from t_result_optometry_new where student_id = #{id}
+	</select>
 </mapper>
