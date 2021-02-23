@@ -54,11 +54,13 @@ public class ResultServiceImpl implements ResultService{
 	public Map<String, Object> saveResultData(JSONObject obj) {
 		Map<String,Object> result = new HashMap<String,Object>();
     	Date date = new Date();
-		String identityCard1=obj.getString("identityCard");
-		String identityCard = identityCard1.split("JOIN")[0];
+//		String identityCard1=obj.getString("identityCard");
+//		String identityCard = identityCard1.split("JOIN")[0];
 		Long studentId = obj.getLong("studentId");
-		Integer activityId = studentDao.get(studentId).getActivityId();
-		Long chectorId = obj.getLong("chectorId");
+        StudentDO studentDO = studentDao.get(studentId);
+        Integer activityId = studentDO.getActivityId();
+        String identityCard = studentDO.getIdentityCard();
+        Long chectorId = obj.getLong("chectorId");
 		StudentDO stu = new StudentDO();
 		JSONObject studentDetails = obj.getJSONObject("studentDetails");
 		String studentName=studentDetails.getString("studentName");
@@ -514,19 +516,17 @@ public class ResultServiceImpl implements ResultService{
 	public Map<String, Object> getStudentInfo(String identityCard) {
 		Map<String,Object> resultMap  =new HashMap<String,Object>();
 
-		if(identityCard.length() <= 0 || identityCard.trim() == "" || identityCard.indexOf("JOIN") == -1){
+		if(identityCard.length() <= 0 || identityCard.trim() == ""){
 			resultMap.put("code", 1);
-			resultMap.put("msg", "请重新扫描二维码");
+			resultMap.put("msg", "请重新扫描条形码");
 			resultMap.put("data", null);
 		}else{
-			String[] split = identityCard.split("JOIN");
-			List<StudentDO>  list = studentDao.getStudentInfo(Integer.valueOf(split[1]));
+			List<StudentDO>  list = studentDao.getStudentInfo(Integer.valueOf(identityCard));
 			if(list.size()==0){
 				resultMap.put("code", -1);
 				resultMap.put("msg", "数据缺失");
 				resultMap.put("data", null);
-			}
-			else{
+			} else{
 				List<ResultQuestionDO> ResultQuestionDOList=resultQuestionDao.get(list.get(0).getId());
 				int a = 1;
 				if (ResultQuestionDOList.size()==0){
@@ -636,6 +636,5 @@ public class ResultServiceImpl implements ResultService{
 		return result;
 
 	}
-
 
 }
