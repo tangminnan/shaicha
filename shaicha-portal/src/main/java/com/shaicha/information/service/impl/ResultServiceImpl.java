@@ -15,6 +15,8 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.alibaba.fastjson.JSON;
+import com.shaicha.common.utils.ShiLiZhuanHuanUtils;
+import com.shaicha.common.utils.StringUtils;
 import com.shaicha.information.dao.*;
 import com.shaicha.information.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.shaicha.common.utils.ShiroUtils;
 import com.shaicha.information.service.ResultService;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -55,7 +58,6 @@ public class ResultServiceImpl implements ResultService{
 	private SchoolNewDao  schoolNewDao;
 	@Autowired
 	private ResultQuestionDao resultQuestionDao;
-
 	@Autowired
 	private RestTemplate restTemplate;
 
@@ -378,143 +380,186 @@ public class ResultServiceImpl implements ResultService{
     			addUpdatec(studentId, cornealDOs);
     	}
     	studentDao.updateLastCheckTime(studentId,date);
-
-    	List<Map<String,Object>> dataL = new ArrayList<>();
-    	Map<String,Object> Lmap = new HashMap<>();
-    	Lmap.put("student",studentId+"|L");
-    	Lmap.put("studeny_sex",studeny_sex);
-		Lmap.put("lasy_check_time",date);
-		Lmap.put("shifou_tangwo",0);
-		Lmap.put("zuizhong_tizhi",0);
-		Lmap.put("gzr_sm",0);
-		Lmap.put("zm_sm",0);
-		Lmap.put("zm_swhd",0);
-		Lmap.put("zm_mtgz",0);
-		Lmap.put("zx_swhd",0);
-		Lmap.put("xw_swhd",0);
-		Lmap.put("life_farvision",0);
-		Lmap.put("naked_farvision",nakedFarvisionOs);
-		Lmap.put("diopter_s1",diopterSL);
-		Lmap.put("diopter_c1",diopterCL);
-		Lmap.put("diopter_a1",diopterAL);
-		Lmap.put("y1_x",dxqjL);
-		Lmap.put("diopter_s2",0);
-		Lmap.put("diopter_c2",0);
-		Lmap.put("diopter_a2",0);
-		Lmap.put("y2_x",0);
-		Lmap.put("corneal_mm",cornealMmL);
-		Lmap.put("corneal_d",cornealDL);
-		Lmap.put("eyeaxis",firstCheckOs);
-		Lmap.put("eyepressure",0);
-		Lmap.put("age",date.getYear()-birthday.getYear());
-		if (firstCheckOs==0.0||cornealMmL==0){
-			Lmap.put("eyeaxis_corneal",0);
-		}else {
-			Lmap.put("eyeaxis_corneal",firstCheckOs/cornealMmL);
-		}
-		int month = date.getMonth();
-		if (month==9 || month == 10 || month == 11 || month == 0){
-			Lmap.put("winter",1);
-		}else {
-			Lmap.put("winter",0);
-		}
-		Lmap.put("flag",2);
-		dataL.add(Lmap);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
-		HttpEntity<List<Map<String, Object>>> entity = new HttpEntity<>(dataL, httpHeaders);
-		ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://121.36.21.238:8081/vision_analyze/api/vision/visionAnalyze", entity, String.class);
-		String response = responseEntity.getBody();
-		Map map = JSON.parseObject(response, Map.class);
-		List<Map<String,Object>> Ldata = (List<Map<String, Object>>) map.get("data");
-		Double y1YL = 0.0;
-		Double y2YL = 0.0;
-		String yuceNakedFarvisionOs = "";
-		for (Map<String, Object> mapL : Ldata) {
-			y1YL = (Double) mapL.get("y1Y");
-			y2YL = (Double) mapL.get("y2Y");
-			yuceNakedFarvisionOs = mapL.get("nakedFarvisionY").toString();
-		}
-		ResultDiopterDO resultDiopterDOL = new ResultDiopterDO();
-		resultDiopterDOL.setTOptometryId(tOptometryId);
-		resultDiopterDOL.setY1Y(y1YL);
-		resultDiopterDOL.setY2Y(y2YL);
-		resultDiopterDOL.setType("AVG");
-		resultDiopterDOL.setIfrl("L");
-		diopterDao.saveYuCeData(resultDiopterDOL);
+        if ("塑形镜".equals(nakedFarvisionOd)||"塑形镜".equals(nakedFarvisionOs) ||
+            "无光感".equals(nakedFarvisionOd)||"无光感".equals(nakedFarvisionOs) ||
+            "不配合".equals(nakedFarvisionOd)||"不配合".equals(nakedFarvisionOs) ||
+            "其他".equals(nakedFarvisionOd)||"其他".equals(nakedFarvisionOs)
+        ){
+            ResultDiopterDO resultDiopterDOR = new ResultDiopterDO();
+            resultDiopterDOR.setTOptometryId(tOptometryId);
+            resultDiopterDOR.setY1Y(0.0);
+            resultDiopterDOR.setY2Y(0.0);
+            resultDiopterDOR.setType("AVG");
+            resultDiopterDOR.setIfrl("R");
+            diopterDao.saveYuCeData(resultDiopterDOR);
+            ResultDiopterDO resultDiopterDOL = new ResultDiopterDO();
+            resultDiopterDOL.setTOptometryId(tOptometryId);
+            resultDiopterDOL.setY1Y(0.0);
+            resultDiopterDOL.setY2Y(0.0);
+            resultDiopterDOL.setType("AVG");
+            resultDiopterDOL.setIfrl("L");
+            diopterDao.saveYuCeData(resultDiopterDOL);
+            ResultEyesightDO resultEyesightDOY = new ResultEyesightDO();
+            resultEyesightDOY.setStudentId(studentId);
+            resultEyesightDOY.setNakedFarvisionOsY("0.0");
+            resultEyesightDOY.setNakedFarvisionOdY("0.0");
+            eyesightDao.saveYuCeData(resultEyesightDOY);
 
 
-		List<Map<String,Object>> dataR = new ArrayList<>();
-		Map<String,Object> Rmap = new HashMap<>();
-		Rmap.put("student",studentId+"|R");
-		Rmap.put("studeny_sex",studeny_sex);
-		Rmap.put("lasy_check_time",date);
-		Rmap.put("shifou_tangwo",0);
-		Rmap.put("zuizhong_tizhi",0);
-		Rmap.put("gzr_sm",0);
-		Rmap.put("zm_sm",0);
-		Rmap.put("zm_swhd",0);
-		Rmap.put("zm_mtgz",0);
-		Rmap.put("zx_swhd",0);
-		Rmap.put("xw_swhd",0);
-		Rmap.put("life_farvision",0);
-		Rmap.put("naked_farvision",nakedFarvisionOd);
-		Rmap.put("diopter_s1",diopterSR);
-		Rmap.put("diopter_c1",diopterCR);
-		Rmap.put("diopter_a1",diopterAR);
-		Rmap.put("y1_x",dxqjR);
-		Rmap.put("diopter_s2",0);
-		Rmap.put("diopter_c2",0);
-		Rmap.put("diopter_a2",0);
-		Rmap.put("y2_x",0);
-		Rmap.put("corneal_mm",cornealMmR);
-		Rmap.put("corneal_d",cornealDR);
-		Rmap.put("eyeaxis",firstCheckOd);
-		Rmap.put("eyepressure",0);
-		Rmap.put("age",date.getYear()-birthday.getYear());
-		if (firstCheckOd==0.0||cornealMmR==0){
-			Rmap.put("eyeaxis_corneal",0);
-		}else {
-			Rmap.put("eyeaxis_corneal",firstCheckOd/cornealMmR);
-		}
-		if (month==9 || month == 10 || month == 11 || month == 0){
-			Rmap.put("winter",1);
-		}else {
-			Rmap.put("winter",0);
-		}
-		Rmap.put("flag",2);
-		dataR.add(Rmap);
-		HttpHeaders httpHeadersR = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
-		HttpEntity<List<Map<String, Object>>> entityR = new HttpEntity<>(dataR, httpHeadersR);
-		ResponseEntity<String> responseEntityR = restTemplate.postForEntity("http://121.36.21.238:8081/vision_analyze/api/vision/visionAnalyze", entityR, String.class);
-		String responseR = responseEntityR.getBody();
-		Map mapR = JSON.parseObject(responseR, Map.class);
-		List<Map<String,Object>> Rdata = (List<Map<String, Object>>) mapR.get("data");
-		Double y1YR = 0.0;
-		Double y2YR = 0.0;
-		String yuceNakedFarvisionOd = "";
-		for (Map<String, Object> mapRR : Rdata) {
-			y1YR = (Double) mapRR.get("y1Y");
-			y2YR = (Double) mapRR.get("y2Y");
-			yuceNakedFarvisionOd = mapRR.get("nakedFarvisionY").toString();
-		}
-		ResultDiopterDO resultDiopterDOR = new ResultDiopterDO();
-		resultDiopterDOL.setTOptometryId(tOptometryId);
-		resultDiopterDOL.setY1Y(y1YR);
-		resultDiopterDOL.setY2Y(y2YR);
-		resultDiopterDOL.setType("AVG");
-		resultDiopterDOL.setIfrl("R");
-		diopterDao.saveYuCeData(resultDiopterDOR);
+            result.put("code", 0);
+            result.put("msg","上传数据成功");
+            return result;
 
-		ResultEyesightDO resultEyesightDOY = new ResultEyesightDO();
-		resultEyesightDOY.setStudentId(studentId);
-		resultEyesightDOY.setNakedFarvisionOsY(yuceNakedFarvisionOs);
-		resultEyesightDOY.setNakedFarvisionOdY(yuceNakedFarvisionOd);
-		eyesightDao.saveYuCeData(resultEyesightDOY);
+        }
+        try {
+            if (StringUtils.isNotEmpty(nakedFarvisionOd) && StringUtils.isNotEmpty(nakedFarvisionOs)) {
+                List<Map<String,Object>> dataL = new ArrayList<>();
+                Map<String,Object> Lmap = new HashMap<>();
+                Lmap.put("student",studentId+"|L");
+                Lmap.put("studeny_sex",studeny_sex);
+                Lmap.put("lasy_check_time",date);
+                Lmap.put("shifou_tangwo",0);
+                Lmap.put("zuizhong_tizhi",0);
+                Lmap.put("gzr_sm",0);
+                Lmap.put("zm_sm",0);
+                Lmap.put("zm_swhd",0);
+                Lmap.put("zm_mtgz",0);
+                Lmap.put("zx_swhd",0);
+                Lmap.put("xw_swhd",0);
+                Lmap.put("life_farvision",0);
+                Lmap.put("naked_farvision", ShiLiZhuanHuanUtils.zhuanhuanshiliForSc(nakedFarvisionOs));
+                Lmap.put("diopter_s1",diopterSL);
+                Lmap.put("diopter_c1",diopterCL);
+                Lmap.put("diopter_a1",diopterAL);
+                Lmap.put("y1_x",dxqjL);
+                Lmap.put("diopter_s2",0);
+                Lmap.put("diopter_c2",0);
+                Lmap.put("diopter_a2",0);
+                Lmap.put("y2_x",0);
+                Lmap.put("corneal_mm",cornealMmL);
+                Lmap.put("corneal_d",cornealDL);
+                Lmap.put("eyeaxis",firstCheckOs);
+                Lmap.put("eyepressure",0);
+                Lmap.put("age",date.getYear()-birthday.getYear());
+                if (firstCheckOs==0.0||cornealMmL==0){
+                    Lmap.put("eyeaxis_corneal",0);
+                }else {
+                    Lmap.put("eyeaxis_corneal",firstCheckOs/cornealMmL);
+                }
+                int month = date.getMonth();
+                if (month==9 || month == 10 || month == 11 || month == 0){
+                    Lmap.put("winter",1);
+                }else {
+                    Lmap.put("winter",0);
+                }
+                Lmap.put("flag",2);
+                dataL.add(Lmap);
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+                HttpEntity<List<Map<String, Object>>> entity = new HttpEntity<>(dataL, httpHeaders);
+                ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://121.36.21.238:8081/vision_analyze/api/vision/visionAnalyze", entity, String.class);
+                String response = responseEntity.getBody();
+                Map map = JSON.parseObject(response, Map.class);
+                if ("SUCCESS".equals(map.get("message"))){
+                    List<Map<String,Object>> Ldata = (List<Map<String, Object>>) map.get("data");
+                    Double y1YL = 0.0;
+                    Double y2YL = 0.0;
+                    String yuceNakedFarvisionOs = "";
+                    for (Map<String, Object> mapL : Ldata) {
+                    y1YL =  Double.parseDouble(mapL.get("y1Y").toString());
+                    y2YL = Double.parseDouble(mapL.get("y2Y").toString());
+                    yuceNakedFarvisionOs = mapL.get("nakedFarvisionY").toString();
+                    }
+                    ResultDiopterDO resultDiopterDOL = new ResultDiopterDO();
+                    resultDiopterDOL.setTOptometryId(tOptometryId);
+                    resultDiopterDOL.setY1Y(y1YL);
+                    resultDiopterDOL.setY2Y(y2YL);
+                    resultDiopterDOL.setType("AVG");
+                    resultDiopterDOL.setIfrl("L");
 
 
-		result.put("code", 0);
+
+                    List<Map<String,Object>> dataR = new ArrayList<>();
+                    Map<String,Object> Rmap = new HashMap<>();
+                    Rmap.put("student",studentId+"|R");
+                    Rmap.put("studeny_sex",studeny_sex);
+                    Rmap.put("lasy_check_time",date);
+                    Rmap.put("shifou_tangwo",0);
+                    Rmap.put("zuizhong_tizhi",0);
+                    Rmap.put("gzr_sm",0);
+                    Rmap.put("zm_sm",0);
+                    Rmap.put("zm_swhd",0);
+                    Rmap.put("zm_mtgz",0);
+                    Rmap.put("zx_swhd",0);
+                    Rmap.put("xw_swhd",0);
+                    Rmap.put("life_farvision",0);
+                    Rmap.put("naked_farvision",ShiLiZhuanHuanUtils.zhuanhuanshiliForSc(nakedFarvisionOd));
+                    Rmap.put("diopter_s1",diopterSR);
+                    Rmap.put("diopter_c1",diopterCR);
+                    Rmap.put("diopter_a1",diopterAR);
+                    Rmap.put("y1_x",dxqjR);
+                    Rmap.put("diopter_s2",0);
+                    Rmap.put("diopter_c2",0);
+                    Rmap.put("diopter_a2",0);
+                    Rmap.put("y2_x",0);
+                    Rmap.put("corneal_mm",cornealMmR);
+                    Rmap.put("corneal_d",cornealDR);
+                    Rmap.put("eyeaxis",firstCheckOd);
+                    Rmap.put("eyepressure",0);
+                    Rmap.put("age",date.getYear()-birthday.getYear());
+                    if (firstCheckOd==0.0||cornealMmR==0){
+                    Rmap.put("eyeaxis_corneal",0);
+                    }else {
+                    Rmap.put("eyeaxis_corneal",firstCheckOd/cornealMmR);
+                    }
+                    if (month==9 || month == 10 || month == 11 || month == 0){
+                    Rmap.put("winter",1);
+                    }else {
+                    Rmap.put("winter",0);
+                    }
+                    Rmap.put("flag",2);
+                    dataR.add(Rmap);
+                    HttpHeaders httpHeadersR = new HttpHeaders();
+                    httpHeaders.setContentType(MediaType.APPLICATION_JSON_UTF8);
+                    HttpEntity<List<Map<String, Object>>> entityR = new HttpEntity<>(dataR, httpHeadersR);
+                    ResponseEntity<String> responseEntityR = restTemplate.postForEntity("http://121.36.21.238:8081/vision_analyze/api/vision/visionAnalyze", entityR, String.class);
+                    String responseR = responseEntityR.getBody();
+                    Map mapR = JSON.parseObject(responseR, Map.class);
+                    if ("SUCCESS".equals(mapR.get("message"))){
+                    List<Map<String,Object>> Rdata = (List<Map<String, Object>>) mapR.get("data");
+                    Double y1YR = 0.0;
+                    Double y2YR = 0.0;
+                    String yuceNakedFarvisionOd = "";
+                    for (Map<String, Object> mapRR : Rdata) {
+                    y1YR = Double.parseDouble(mapRR.get("y1Y").toString());
+                    y2YR = Double.parseDouble(mapRR.get("y2Y").toString());
+                    yuceNakedFarvisionOd = mapRR.get("nakedFarvisionY").toString();
+                    }
+                    ResultDiopterDO resultDiopterDOR = new ResultDiopterDO();
+                    resultDiopterDOR.setTOptometryId(tOptometryId);
+                    resultDiopterDOR.setY1Y(y1YR);
+                    resultDiopterDOR.setY2Y(y2YR);
+                    resultDiopterDOR.setType("AVG");
+                    resultDiopterDOR.setIfrl("R");
+
+                    diopterDao.saveYuCeData(resultDiopterDOL);
+                    diopterDao.saveYuCeData(resultDiopterDOR);
+
+                    ResultEyesightDO resultEyesightDOY = new ResultEyesightDO();
+                    resultEyesightDOY.setStudentId(studentId);
+                    resultEyesightDOY.setNakedFarvisionOsY(yuceNakedFarvisionOs);
+                    resultEyesightDOY.setNakedFarvisionOdY(yuceNakedFarvisionOd);
+                    eyesightDao.saveYuCeData(resultEyesightDOY);
+                    }
+
+                    }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        result.put("code", 0);
     	result.put("msg","上传数据成功");
 		return result;
 	}
@@ -783,6 +828,33 @@ public class ResultServiceImpl implements ResultService{
 			diopterDOs = diopterDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 			cornealDOs=cornealDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 		}
+        List<ResultQuestionDO> questionDOS=resultQuestionDao.get(id.intValue());
+		if (questionDOS.size()>0 && questionDOS.get(0).getQuestionOneI()==3){
+		    resultEyesightDO.setNakedFarvisionOd("塑形镜");
+		    resultEyesightDO.setNakedFarvisionOs("塑形镜");
+//		    if (diopterDOs.size()>0){
+//		        for (ResultDiopterDO diopterDO : diopterDOs){
+//		            if ("AVG".equals(diopterDO.getType()) && "L".equals(diopterDO.getIfrl())){
+//		                diopterDO.setDiopterS(Double.parseDouble(questionDOS.get(0).getQuestionTwoL()));
+//                    }
+//                    if ("AVG".equals(diopterDO.getType()) && "R".equals(diopterDO.getIfrl())){
+//                        diopterDO.setDiopterS(Double.parseDouble(questionDOS.get(0).getQuestionTwoR()));
+//                    }
+//                }
+//            }else {
+//		        ResultDiopterDO diopterDO = new ResultDiopterDO();
+//		        diopterDO.setType("AVG");
+//		        diopterDO.setIfrl("L");
+//		        diopterDO.setDiopterS(Double.parseDouble(questionDOS.get(0).getQuestionTwoL()));
+//		        diopterDOs.add(diopterDO);
+//		        diopterDO = new ResultDiopterDO();
+//                diopterDO.setType("AVG");
+//                diopterDO.setIfrl("R");
+//                diopterDO.setDiopterS(Double.parseDouble(questionDOS.get(0).getQuestionTwoR()));
+//                diopterDOs.add(diopterDO);
+//            }
+
+        }
 
 		resultMap.put("resultEyesightDO", resultEyesightDO);
 		resultMap.put("resultEyeaxisDO", resultEyeaxisDO);

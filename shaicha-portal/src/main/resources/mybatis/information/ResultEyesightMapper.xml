@@ -94,7 +94,7 @@
 	</update>
 
 	<update id="saveYuCeData" parameterType="com.shaicha.information.domain.ResultEyesightDO">
-		update t_result_eyesight_new set  naked_farvision_os_y #{nakedFarvisionOsY} , naked_farvision_od_y = #{nakedFarvisionOdY} where student_id= #{studentId}
+		update t_result_eyesight_new set  naked_farvision_os_y = #{nakedFarvisionOsY} , naked_farvision_od_y = #{nakedFarvisionOdY} where student_id= #{studentId}
 	</update>
 
 </mapper>

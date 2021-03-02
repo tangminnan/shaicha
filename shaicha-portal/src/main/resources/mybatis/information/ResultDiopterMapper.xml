@@ -45,7 +45,7 @@
 		)
 	</insert>
 	<update id="saveYuCeData" parameterType="com.shaicha.information.domain.ResultDiopterDO">
-		update t_result_diopter_new set y1Y = #{y1Y} , y2Y=#{y2Y where t_optometry_id = #{tOptometryId} and type = #{type} and ifRL = #{ifrl}
+		update t_result_diopter_new set y1Y = #{y1Y} , y2Y=#{y2Y} where t_optometry_id = #{tOptometryId} and type = #{type} and ifRL = #{ifrl}
 	</update>
 	
 	<delete id="removeAll">
