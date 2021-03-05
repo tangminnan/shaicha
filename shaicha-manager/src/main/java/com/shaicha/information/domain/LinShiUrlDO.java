@@ -10,7 +10,8 @@ public class LinShiUrlDO implements Serializable {
 	private String imgUrl;
 	private Date addTime;
 	private String type;
-	
+	private String fore;
+
 	
 	public String getType() {
 		return type;
@@ -42,7 +43,12 @@ public class LinShiUrlDO implements Serializable {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	
-	
-	
+
+    public String getFore() {
+        return fore;
+    }
+
+    public void setFore(String fore) {
+        this.fore = fore;
+    }
 }

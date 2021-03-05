@@ -415,6 +415,7 @@
 		</w:docPr>
 		<w:body>
 			<wx:sect>
+                <#list list as mm>
 				<w:p>
 					<w:pPr>
 						<w:tabs>
@@ -427,12 +428,16 @@
 							<w:sz w:val="36" />
 							<w:sz-cs w:val="36" /></w:rPr>
 					</w:pPr>
+                    <w:r>
+                        <w:br w:type="page"/>
+                    </w:r>
 					<w:r>
 						<w:rPr>
 							<w:rFonts w:ascii="宋体" w:cs="宋体" w:hint="fareast" />
 							<w:b/>
 							<w:sz w:val="36" />
-							<w:sz-cs w:val="36" /></w:rPr>
+							<w:sz-cs w:val="36" />
+                        </w:rPr>
 						<w:t>山东省儿童青少年视觉健康档案</w:t>
 					</w:r>
 				</w:p>
@@ -507,7 +512,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="none" />
 										<w:u w:val="single" /></w:rPr>
-									<w:t>${school!''}</w:t>
+									<w:t>${mm.school!''}</w:t>
 								</w:r>
 
 								<w:r>
@@ -537,7 +542,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="none" />
 										<w:u w:val="single" /></w:rPr>
-									<w:t>${grade!''}</w:t>
+									<w:t>${mm.grade!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -576,7 +581,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="none" />
 										<w:u w:val="single" /></w:rPr>
-									<w:t>${studentClass!''}</w:t>
+									<w:t>${mm.studentClass!''}</w:t>
 								</w:r>							
 							</w:p>
 							<w:p>
@@ -601,7 +606,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="none" />
 										<w:u w:val="single" /></w:rPr>
-									<w:t>${studentName!''}</w:t>
+									<w:t>${mm.studentName!''}</w:t>
 								</w:r>								
 								<w:r>
 									<w:rPr>
@@ -629,7 +634,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="none" />
 										<w:u w:val="single" /></w:rPr>
-									<w:t>${studentSex!''}</w:t>
+									<w:t>${mm.studentSex!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -668,7 +673,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="none" />
 										<w:u w:val="single" /></w:rPr>
-									<w:t>${lastCheckTime!''}</w:t>
+									<w:t>${mm.lastCheckTime!''}</w:t>
 								</w:r>								
 							</w:p>
 						</w:tc>
@@ -1135,7 +1140,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${nakedFarvisionOd!''}</w:t>
+												<w:t>${mm.nakedFarvisionOd!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1166,7 +1171,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${glassvisionOd!''}</w:t>
+												<w:t>${mm.glassvisionOd!''}</w:t>
 											</w:r>											
 										</w:p>
 										<aml:annotation aml:id="0" w:type="Word.Bookmark.End" />
@@ -1198,7 +1203,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${diopterSR!''}</w:t>
+												<w:t>${mm.diopterSR!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1229,7 +1234,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${diopterCR!''}</w:t>
+												<w:t>${mm.diopterCR!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1260,7 +1265,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${diopterAR!''}</w:t>
+												<w:t>${mm.diopterAR!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1343,7 +1348,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${nakedFarvisionOs!''}</w:t>
+												<w:t>${mm.nakedFarvisionOs!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1374,7 +1379,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${glassvisionOs!''}</w:t>
+												<w:t>${mm.glassvisionOs!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1405,7 +1410,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${diopterSL!''}</w:t>
+												<w:t>${mm.diopterSL!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1436,7 +1441,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${diopterCL!''}</w:t>
+												<w:t>${mm.diopterCL!''}</w:t>
 											</w:r>											
 										</w:p>
 									</w:tc>
@@ -1467,7 +1472,7 @@
 													<w:sz w:val="24" />
 													<w:sz-cs w:val="24" />
 													<w:highlight w:val="none" /></w:rPr>
-												<w:t>${diopterAL!''}</w:t>
+												<w:t>${mm.diopterAL!''}</w:t>
 											</w:r>										
 										</w:p>
 									</w:tc>
@@ -1715,7 +1720,7 @@
 						<w:t>散光的方向</w:t>
 					</w:r>
 				</w:p>
-				<#if ifStu == '2'>
+				<#if mm.ifStu == '2'>
 				<w:tbl>
 					<w:tblPr>
 						<w:tblW w:w="0" w:type="auto" />
@@ -1849,7 +1854,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="white" /></w:rPr>
-									<w:t>${ydoctorchubu!''}</w:t>
+									<w:t>${mm.ydoctorchubu!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -1975,7 +1980,7 @@
 										<w:sz w:val="21" />
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="white" /></w:rPr>
-									<w:t>${zdoctorchubu!''}</w:t>
+									<w:t>${mm.zdoctorchubu!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -2966,7 +2971,7 @@
 										<w:sz w:val="24" />
 										<w:sz-cs w:val="24" />
 										<w:highlight w:val="white" /></w:rPr>
-									<w:t>${zhongxin.biaogeBiaoti!'持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)'}</w:t>
+									<w:t>${mm.zhongxin.biaogeBiaoti!'持此档案到视光中心可免费做三级视功能检测(周末节假日均可检查)'}</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3105,7 +3110,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="white" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${zhongxin.zhongxinName!''}</w:t>
+									<w:t>${mm.zhongxin.zhongxinName!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -3164,7 +3169,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="white" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${zhongxin.zhongxinAddress!''}</w:t>
+									<w:t>${mm.zhongxin.zhongxinAddress!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -3220,7 +3225,7 @@
 										<w:sz-cs w:val="21" />
 										<w:highlight w:val="white" />
 										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${zhongxin.zhongxinPhone!''}</w:t>
+									<w:t>${mm.zhongxin.zhongxinPhone!''}</w:t>
 								</w:r>
 								<w:r>
 									<w:rPr>
@@ -3260,7 +3265,7 @@
 										<w:vertAlign w:val="baseline" />
 										<w:lang w:fareast="ZH-CN" /></w:rPr>
 									<w:pict>
-										<w:binData w:name="wordml://2.jpg">${zhongxinImg!''}
+										<w:binData w:name="wordml://2.jpg">${mm.zhongxinImg!''}
 										</w:binData>
 										<v:shape id="图片 2" o:spid="_x0000_s1036" o:spt="75" alt="penglai" type="#_x0000_t75" style="height:57.75pt;width:57.75pt;" filled="f" o:preferrelative="t" stroked="f" coordsize="21600,21600">
 											<v:path/>
@@ -3287,12 +3292,12 @@
 					</w:pPr>
 				</w:p>
 				<w:p/>
-				<w:p/>
 				<w:sectPr>
 					<w:pgSz w:w="11906" w:h="16838" />
 					<w:pgMar w:top="1134" w:right="851" w:bottom="500" w:left="851" w:header="851" w:footer="992" w:gutter="0" />
 					<w:cols w:space="720" />
 					<w:docGrid w:type="lines" w:line-pitch="312" /></w:sectPr>
+                </#list>
 			</wx:sect>
 		</w:body>
 	</w:wordDocument>

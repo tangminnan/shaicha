@@ -15,11 +15,13 @@ import com.shaicha.informationNEW.domain.StudentNewDO;
 public interface SchoolReportNewService {
 	
 	Map<String,List<Object>> overYearMyopia(String school);
-	
+
 	Map<String,List<Object>> gradeMyopia(String school,Integer activityId);
 	
 	Map<String,List<Object>> overYearGradeMyopia(String school);
-	
+
+	Map<String,List<Object>> overYearGradeBuliang(String school);
+
 	Map<String,List<Double>> studentSexMyopia(String school,Integer activityId);
 	
 	Map<String,List<Object>> overYearSexNan(String school);

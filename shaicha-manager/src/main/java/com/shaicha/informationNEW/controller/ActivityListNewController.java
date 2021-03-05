@@ -62,6 +62,7 @@ public class ActivityListNewController {
 			Integer id = activityListNewDO.getId();
 			activityListNewDO.setYingjian(studentNewService.activityNum(id));
 			activityListNewDO.setShoujian(studentNewService.activityCheckNum(id));
+
 		}
 		int total = activityListNewService.count(query);
 		PageUtils pageUtils = new PageUtils(activityListNewList, total);
@@ -80,7 +81,14 @@ public class ActivityListNewController {
 				aln.setActivityName(studentNewDO.getSchool());
 				aln.setYingjian(studentNewService.activitySchoolNum(id, schoolId));
 				aln.setShoujian(studentNewService.activitySchoolCheckNum(id, schoolId));
-				al.add(aln);
+                List<String> schoolCheckDate = studentNewService.getSchoolCheckDate(id, schoolId);
+                String checkDate = "";
+                for (int i = 0;i<schoolCheckDate.size();i++){
+                    checkDate = checkDate + schoolCheckDate.get(i) + ",";
+                }
+                if (schoolCheckDate.size()>0) checkDate = checkDate.substring(0,checkDate.length()-1);
+                aln.setCheckDate(checkDate);
+                al.add(aln);
 			}
 		}
 		return al;

@@ -22,7 +22,7 @@ function daoru(){
         },
         success : function(data) {
             if (data.code == 0) {
-                parent.layer.msg(data.msg);
+                parent.layer.alert(data.msg);
                 parent.reLoad();
                 var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                 parent.layer.close(index);

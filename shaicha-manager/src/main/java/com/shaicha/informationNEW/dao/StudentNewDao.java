@@ -62,6 +62,7 @@ public interface StudentNewDao {
 	 获取电脑验光最新数据
 	 */
 	List<ResultDiopterNewDO> getLatestResultDiopterDOListL(@Param("studentId") Integer studentId,@Param("ifRL") String ifRL);
+	List<ResultDiopterNewDO> getDiopterDOList(@Param("studentId") Integer studentId,@Param("ifRL") String ifRL);
 	/**
 	 * 获取最新的眼内压数据
 	 */
@@ -124,4 +125,6 @@ public interface StudentNewDao {
     List<StudentNewDO> listNoShiFan(Map<String, Object> map);
 
     int countNoShiFan(Map<String, Object> map);
+
+    List<String> getSchoolCheckDate(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
 }

@@ -20,8 +20,6 @@
 		s.activity_id = #{activityId} and s.school = #{school} and last_check_time is not null
 	</select>
 	<select id="activityGradeByCheckNum" resultType="int">
-
-
 		SELECT count(*) from t_student_new s where
 	 activity_id = #{activityId} and school = #{school} and last_check_time is not null and grade=#{grade}
 	</select>
@@ -175,6 +173,12 @@
 		SELECT * ,LEAST(dengxiaoqiujingr,dengxiaoqiujingl) dengxiaoqiujing from (
 		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where school = #{school} and grade = #{grade})a where a.jinshi < 5.0) b 
 		where b.dengxiaoqiujing < -0.5 and date_format(b.last_check_time,'%Y') =#{lastCheckTime} ]]>
+	</select>
+    <!-- 不良 -->
+    <select id="liniangradeCheckbuliang" resultType="int">
+		<![CDATA[ SELECT count(*) from (SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where school = #{school} and grade = #{grade})a
+        where a.jinshi < 5.0
+		and date_format(a.last_check_time,'%Y') =#{lastCheckTime} ]]>
 	</select>
 	<!-- 男、女生近视检查 -->
 	<select id="sexCheckNum" resultType="int">

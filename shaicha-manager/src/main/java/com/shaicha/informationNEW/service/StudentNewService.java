@@ -48,6 +48,7 @@ public interface StudentNewService {
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);
+	List<String> getSchoolCheckDate(Integer activityId, Integer schoolId);
 	
 	R importMember(Integer activityId,Integer schoolId,String checkType, MultipartFile file);
 	Map<String,Object> importMemberm(Integer activityId,Integer schoolId,String checkType, MultipartFile file);

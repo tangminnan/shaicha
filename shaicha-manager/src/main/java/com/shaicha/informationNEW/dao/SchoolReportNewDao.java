@@ -66,7 +66,9 @@ public interface SchoolReportNewDao {
 	int liniangradeCheck(@Param("school") String school,@Param("grade") String grade,@Param("lastCheckTime") String lastCheckTime);
 	
 	int liniangradeCheckjinshi(@Param("school") String school,@Param("grade") String grade,@Param("lastCheckTime") String lastCheckTime);
-	
+
+	int liniangradeCheckbuliang(@Param("school") String school,@Param("grade") String grade,@Param("lastCheckTime") String lastCheckTime);
+
 	int sexCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("studentSex") Integer studentSex);
 	
 	int sexCheckjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("studentSex") Integer studentSex);

@@ -20,8 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
-import com.shaicha.informationNEW.dao.ResultDiopterNewDao;
-import com.shaicha.informationNEW.dao.ResultEyesightNewDao;
+import com.shaicha.common.config.BootdoConfig;
+import com.shaicha.common.utils.*;
+import com.shaicha.informationNEW.dao.*;
+import com.shaicha.informationNEW.domain.*;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -44,24 +46,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 
-import com.shaicha.common.utils.PageUtils;
-import com.shaicha.common.utils.QRCodeUtil;
-import com.shaicha.common.utils.Query;
-import com.shaicha.common.utils.R;
-import com.shaicha.common.utils.ShiroUtils;
-import com.shaicha.common.utils.TimeUtils;
 import com.shaicha.information.domain.AnswerResultDO;
 import com.shaicha.information.domain.BuLiangShili;
-import com.shaicha.informationNEW.domain.ActivityListNewDO;
-import com.shaicha.informationNEW.domain.ResultCornealNewDO;
-import com.shaicha.informationNEW.domain.ResultDiopterNewDO;
-import com.shaicha.informationNEW.domain.ResultEyeaxisNewDO;
-import com.shaicha.informationNEW.domain.ResultEyepressureNewDO;
-import com.shaicha.informationNEW.domain.ResultEyesightNewDO;
-import com.shaicha.informationNEW.domain.ResultOptometryNewDO;
-import com.shaicha.informationNEW.domain.SchoolNewDO;
 import com.shaicha.information.domain.ShiliJinShi;
-import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.service.ActivityListNewService;
 import com.shaicha.informationNEW.service.ResultEyesightNewService;
 import com.shaicha.informationNEW.service.ResultOptometryNewService;
@@ -99,6 +86,10 @@ public class StudentNewController {
 	private ResultDiopterNewDao resultDiopterNewDao;
 	@Autowired
 	private ResultEyesightNewDao resultEyesightNewDao;
+    @Autowired
+    private StudentNewDao studentNewDao;
+    @Autowired
+    private ResultQuestionDao questionDao;
 
 	@GetMapping()
 	@RequiresPermissions("information:student:student")
@@ -224,8 +215,9 @@ public class StudentNewController {
 	String code(@PathVariable("id") Integer id,Model model){
 		StudentNewDO student = studentNewService.get(id);
 		String identityCard = student.getIdentityCard();
-		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
-		model.addAttribute("code", "data:image/png;base64,"+code);
+//		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);//二维码
+        String code = BarCodeUtils.generateBarCode128(id.toString(), 10.0, 0.3, true, true);//条形码
+        model.addAttribute("code", "data:image/png;base64,"+code);
 		model.addAttribute("student", student);
 	    return "informationNEW/student/QrCode";
 	}
@@ -392,7 +384,6 @@ public class StudentNewController {
 	@GetMapping("/downloadErweima")
 	public void  downloadErweima(Integer[] ids,HttpServletRequest request,HttpServletResponse response){
 		studentNewService.downloadErweima(ids,request,response);
-		System.out.println(ids);
 	}
 
 	@Autowired
@@ -507,7 +498,7 @@ public class StudentNewController {
 		ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 		List<ResultCornealNewDO> resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
+		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
 
 		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealNewDO();
@@ -695,6 +686,18 @@ public class StudentNewController {
 			model.addAttribute("zdoctorchubu", "视力下降，近视，散光。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病；若已进行近视矫治，根据检查结果提示，眼镜度数可能需要调整，请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
 			//    	model.addAttribute("yujing","近视");
 		}
+        if ("塑形镜".equals(nakedFarvisionOd)||"塑形镜".equals(nakedFarvisionOs)){
+            model.addAttribute("yuceNakedFarvisionOd",0.0);
+            model.addAttribute("y1YR",0.0);
+            model.addAttribute("y2YR",0.0);
+            model.addAttribute("yuceNakedFarvisionOs",0.0);
+            model.addAttribute("y1YL",0.0);
+            model.addAttribute("y2YL",0.0);
+            model.addAttribute("yucejieguo","佩戴塑形镜无法预测");
+            if(activityId==70)
+                return "informationNEW/student/示范校预测-69滨州";
+            return "informationNEW/student/示范校预测";
+        }
 		Integer optId = resultOptometryNewService.findOptIdByStuId(id);
 		Double y1YL = null;
 		Double y2YL = null;
@@ -1233,6 +1236,7 @@ public class StudentNewController {
 					model.addAttribute("zdoctorchubu","戴原镜视力异常，近视增长。 请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
 			//    	model.addAttribute("yujing","近视增长");
 				}*/
+
 		Integer optId = resultOptometryNewService.findOptIdByStuId(id);
 		Double y1YL = null;
 		Double y2YL = null;
@@ -1471,7 +1475,8 @@ public class StudentNewController {
 		model.addAttribute("grade",studentDO.getGrade());
 		model.addAttribute("studentClass",studentDO.getStudentClass());
 		String identityCard = studentDO.getIdentityCard();
-		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
+//		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
+        String code = BarCodeUtils.generateBarCode128(id.toString(), 10.0, 0.3, true, true);//条形码
 		model.addAttribute("QRCode", "data:image/png;base64,"+code);
 		//model.addAttribute("QRCode",studentDO.getQRCode());
 		return "informationNEW/student/二维码";
@@ -1525,18 +1530,31 @@ public class StudentNewController {
 				
 				//自动电脑验光结果(左眼) 
 				double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
-				List<ResultDiopterNewDO> resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
-				ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
-				if(resultDiopterDOList.size()>0)
-					resultDiopterDO=resultDiopterDOList.get(0);
+        ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
+        ResultQuestionDO questionDO = questionDao.get(studentDO.getId());
+        String diopterSL="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoL()));
+            diopterSL = "-" + df.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
+            if(resultDiopterDOList.size()>0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            }else {
+                List<ResultDiopterNewDO> diopterDOListL = studentNewDao.getDiopterDOList(studentDO.getId(), "L");
+                if (diopterDOListL.size()>0){
+                    resultDiopterDO = diopterDOListL.get(0);
+                }
+            }
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSL)>0){
+                    diopterSL="+"+diopterSL;
+                }
+            }
+        }
 
-					String diopterSL="";
-					if(resultDiopterDO.getDiopterS()!=null){
-						diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-						if(Double.valueOf(diopterSL)>0){
-							diopterSL="+"+diopterSL;
-						}
-					}
+
 					
 				model.addAttribute("diopterSL",diopterSL);
 				model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
@@ -1545,17 +1563,30 @@ public class StudentNewController {
 				double zhujingqL = resultDiopterDO.getDiopterC() == null ? 0.0 : resultDiopterDO.getDiopterC();
 				
 				//自动电脑验光结果(右眼) 
-				 resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"R");
-				 resultDiopterDO = new ResultDiopterNewDO();
-				if(resultDiopterDOList.size()>0)
-					resultDiopterDO=resultDiopterDOList.get(0);
-					String diopterSR="";
-					if(resultDiopterDO.getDiopterS()!=null){
-						diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-						if(Double.valueOf(diopterSR)>0){
-							diopterSR="+"+diopterSR;
-						}
-					}
+        resultDiopterDO = new ResultDiopterNewDO();
+        String diopterSR="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoR()));
+            diopterSR = "-" + df.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(), "R");
+            if (resultDiopterDOList.size() > 0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            } else {
+                List<ResultDiopterNewDO> diopterDOListR = studentNewDao.getDiopterDOList(studentDO.getId(), "R");
+                if (diopterDOListR.size() > 0) {
+                    resultDiopterDO = diopterDOListR.get(0);
+                }
+            }
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSR)>0){
+                    diopterSR="+"+diopterSR;
+                }
+            }
+        }
+
+
 					
 				model.addAttribute("diopterSR",diopterSR);
 				model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
@@ -1851,6 +1882,8 @@ public class StudentNewController {
 					model.addAttribute("zdoctorchubu","戴原镜视力异常，近视增长。 请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
 			//    	model.addAttribute("yujing","近视增长");
 				}*/
+			   if (studentDO.getSysId()==46)
+			       return "informationNEW/student/青海普通筛查打印";
 		return "informationNEW/student/普通筛查打印";
 	}
 	
@@ -1874,6 +1907,7 @@ public class StudentNewController {
 		model.addAttribute("studentSex", studentDO.getStudentSex()==null?"":studentDO.getStudentSex()==1? "男":"女");
 		model.addAttribute("lastCheckTime", new SimpleDateFormat("yyyy-MM-dd").format(studentDO.getLastCheckTime()));
 		DecimalFormat df = new DecimalFormat("0.00");
+		DecimalFormat df2 = new DecimalFormat("0.00");
 		DecimalFormat df1 = new DecimalFormat("0.0");
 		UserDO userDO ;
 		if(ShiroUtils.getUser().getUsername().equals("admin")){
@@ -1904,18 +1938,29 @@ public class StudentNewController {
 		
 		//自动电脑验光结果(左眼) 
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
-		List<ResultDiopterNewDO> resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"L");
-		ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
-		if(resultDiopterDOList.size()>0)
-			resultDiopterDO=resultDiopterDOList.get(0);
-
-			String diopterSL="";
-			if(resultDiopterDO.getDiopterS()!=null){
-				diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-				if(Double.valueOf(diopterSL)>0){
-					diopterSL="+"+diopterSL;
-				}
-			}
+        ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
+        ResultQuestionDO questionDO = questionDao.get(studentDO.getId());
+        String diopterSL="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoL()));
+            diopterSL = "-" + df2.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
+            if(resultDiopterDOList.size()>0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            }else {
+                List<ResultDiopterNewDO> diopterDOListL = studentNewDao.getDiopterDOList(studentDO.getId(), "L");
+                if (diopterDOListL.size()>0){
+                    resultDiopterDO = diopterDOListL.get(0);
+                }
+            }
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSL)>0){
+                    diopterSL="+"+diopterSL;
+                }
+            }
+        }
 			
 		model.addAttribute("diopterSL",diopterSL);
 		model.addAttribute("diopterCL",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
@@ -1924,17 +1969,28 @@ public class StudentNewController {
 		double zhujingqL = resultDiopterDO.getDiopterC() == null ? 0.0 : resultDiopterDO.getDiopterC();
 
 		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList = studentNewService.getLatestResultDiopterDOListL(studentDO.getId(),"R");
-		 resultDiopterDO = new ResultDiopterNewDO();
-		if(resultDiopterDOList.size()>0)
-			resultDiopterDO=resultDiopterDOList.get(0);
-			String diopterSR="";
-			if(resultDiopterDO.getDiopterS()!=null){
-				diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-				if(Double.valueOf(diopterSR)>0){
-					diopterSR="+"+diopterSR;
-				}
-			}
+        resultDiopterDO = new ResultDiopterNewDO();
+        String diopterSR="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoR()));
+            diopterSR = "-" + df2.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(), "R");
+            if (resultDiopterDOList.size() > 0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            } else {
+                List<ResultDiopterNewDO> diopterDOListR = studentNewDao.getDiopterDOList(studentDO.getId(), "R");
+                if (diopterDOListR.size() > 0) {
+                    resultDiopterDO = diopterDOListR.get(0);
+                }
+            }
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSR)>0){
+                    diopterSR="+"+diopterSR;
+                }
+            }
+        }
 			
 		model.addAttribute("diopterSR",diopterSR);
 		model.addAttribute("diopterCR",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
@@ -1963,18 +2019,18 @@ public class StudentNewController {
 		ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 		List<ResultCornealNewDO> resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
+		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
 		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealNewDO();
 		resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
+		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
 		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		
 		resultCornealDO = new ResultCornealNewDO();
 	    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R1");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
+	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
 	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		
 		
@@ -1983,7 +2039,7 @@ public class StudentNewController {
 	    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R2");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
+	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
 	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
 		//医生的建议
 	   Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
@@ -2332,7 +2388,8 @@ public class StudentNewController {
 		for (Integer id : ids) {
 			StudentNewDO studentDO = Optional.ofNullable(studentNewService.get(id)).orElseGet(StudentNewDO::new);
 			String identityCard = studentDO.getIdentityCard();
-			String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
+//			String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+id, 200,200);
+            String code = BarCodeUtils.generateBarCode128(id.toString(), 10.0, 0.3, true, true);//条形码
 			studentDO.setQRCode("data:image/png;base64,"+code);
 			list.add(studentDO);
 		}

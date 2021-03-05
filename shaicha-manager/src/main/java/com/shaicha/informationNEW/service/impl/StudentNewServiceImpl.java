@@ -41,6 +41,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -79,6 +80,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 	private ResultEyesightNewDao resultEyesightNewDao;
 	@Autowired
     private ResultOptometryNewDao resultOptometryNewDao;
+	@Autowired
+    private ResultQuestionDao questionDao;
 	@Autowired
 	UserDao userMapper;
 	
@@ -137,8 +140,13 @@ public class StudentNewServiceImpl implements StudentNewService {
 	public int batchRemove(Integer[] ids){
 		return studentNewDao.batchRemove(ids);
 	}
-	
-	@SuppressWarnings("unchecked")
+
+    @Override
+    public List<String> getSchoolCheckDate(Integer activityId, Integer schoolId) {
+        return studentNewDao.getSchoolCheckDate(activityId,schoolId);
+    }
+
+    @SuppressWarnings("unchecked")
 	@ResponseBody
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Map<String,Object> importMemberm(Integer activityId,Integer schoolId,String checkType, MultipartFile file) {
@@ -312,8 +320,8 @@ public class StudentNewServiceImpl implements StudentNewService {
                         Date dd = new Date();
 						if(StringUtils.isNotBlank(checktime)) {
 						    if (checktime.contains("-")) {
-                                Date parse = sdf.parse(checktime);
-                                student.setLastCheckTime(parse);
+                                dd = sdf.parse(checktime);
+                                student.setLastCheckTime(dd);
                             }else {
                                 Calendar calendar = new GregorianCalendar(1900,0,-1);
                                 Date d = calendar.getTime();
@@ -463,7 +471,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 		params.put("grade",studentDO.getGrade()==null?"":studentDO.getGrade());  
 		params.put("studentClass",studentDO.getStudentClass()==null?"":studentDO.getStudentClass());
 		String identityCard = studentDO.getIdentityCard();
-		String code = QRCodeUtil.creatRrCode(identityCard+"JOIN"+ids, 500,500);
+		String code = QRCodeUtil.creatRrCode(ids.toString(), 500,500);
+//        String code = BarCodeUtils.generateBarCode128(ids.toString(), 10.0, 0.3, true, true);//条形码
 		params.put("QRCode",code);
 		return params;
 	}
@@ -793,13 +802,17 @@ public class StudentNewServiceImpl implements StudentNewService {
 	 */
 	@Override
 	public void exportWordPByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response) {
+	    Map map = new HashMap();
+	    List<Map<String, Object>> list = new ArrayList<>();
 		try {
 			for(int i=0;i<ids.length;i++){
 				Map<String, Object> params = createPeramsMapF(ids[i]);
 				if(params==null) continue;
-				download(request, response, "普通筛查导出模板.ftl",ids[i].toString(), params);
-			}	
-			craeteZipPath(bootdoConfig.getPoiword(),response);
+				list.add(params);
+			}
+			map.put("list",list);
+            download(request, response, "普通筛查导出模板.ftl","q", map);
+            craeteZipPath(bootdoConfig.getPoiword(),response);
 		} catch (Exception e) {
 				e.printStackTrace();
 			}finally{
@@ -897,18 +910,29 @@ public class StudentNewServiceImpl implements StudentNewService {
 		
 		//自动电脑验光结果(左眼) 
 		double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
-		List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
-		ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
-		if(resultDiopterDOList.size()>0)
-			resultDiopterDO=resultDiopterDOList.get(0);
-
-			String diopterSL="";
-			if(resultDiopterDO.getDiopterS()!=null){
-				diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-				if(Double.valueOf(diopterSL)>0){
-					diopterSL="+"+diopterSL;
-				}
-			}
+        ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
+        ResultQuestionDO questionDO = questionDao.get(studentDO.getId());
+        String diopterSL="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoL()));
+            diopterSL = "-" + df.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
+            if(resultDiopterDOList.size()>0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            }else {
+                List<ResultDiopterNewDO> diopterDOListL = studentNewDao.getDiopterDOList(studentDO.getId(), "L");
+                if (diopterDOListL.size()>0){
+                    resultDiopterDO = diopterDOListL.get(0);
+                }
+            }
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSL)>0){
+                    diopterSL="+"+diopterSL;
+                }
+            }
+        }
 			
 			params.put("diopterSL",diopterSL);
 			params.put("diopterCL",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
@@ -917,18 +941,29 @@ public class StudentNewServiceImpl implements StudentNewService {
 		double zhujingqL = resultDiopterDO.getDiopterC() == null ? 0.0 : resultDiopterDO.getDiopterC();
 
 
-		//自动电脑验光结果(右眼) 
-		 resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"R");
-		 resultDiopterDO = new ResultDiopterNewDO();
-		if(resultDiopterDOList.size()>0)
-			resultDiopterDO=resultDiopterDOList.get(0);
-			String diopterSR="";
-			if(resultDiopterDO.getDiopterS()!=null){
-				diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-				if(Double.valueOf(diopterSR)>0){
-					diopterSR="+"+diopterSR;
-				}
-			}
+		//自动电脑验光结果(右眼)
+        resultDiopterDO = new ResultDiopterNewDO();
+        String diopterSR="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoR()));
+            diopterSR = "-" + df.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(), "R");
+            if (resultDiopterDOList.size() > 0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            } else {
+                List<ResultDiopterNewDO> diopterDOListR = studentNewDao.getDiopterDOList(studentDO.getId(), "R");
+                if (diopterDOListR.size() > 0) {
+                    resultDiopterDO = diopterDOListR.get(0);
+                }
+            }
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSR)>0){
+                    diopterSR="+"+diopterSR;
+                }
+            }
+        }
 			
 			params.put("diopterSR",diopterSR);
 			params.put("diopterCR",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
@@ -1303,44 +1338,66 @@ public class StudentNewServiceImpl implements StudentNewService {
 				
 				
 				//自动电脑验光结果(左眼) 
-				double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
-				List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
-				ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
-				if(resultDiopterDOList.size()>0)
-					resultDiopterDO=resultDiopterDOList.get(0);
+        double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
+        ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
+        ResultQuestionDO questionDO = questionDao.get(studentDO.getId());
+        if (questionDO.getQuestionTwoL()!=null && questionDO.getQuestionTwoL()!=""){
+            Double diopterSL = (Double) zhuanhuan("-" + questionDO.getQuestionTwoL());
+            resultDiopterDO.setDiopterS(diopterSL);
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
+            if(resultDiopterDOList.size()>0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            }else {
+                List<ResultDiopterNewDO> diopterDOListL = studentNewDao.getDiopterDOList(studentDO.getId(), "L");
+                if (diopterDOListL.size()>0){
+                    resultDiopterDO = diopterDOListL.get(0);
+                }
+            }
+        }
+        String diopterSL="";
+        if(resultDiopterDO.getDiopterS()!=null){
+            diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+            if(Double.valueOf(diopterSL)>0){
+                diopterSL="+"+diopterSL;
+            }
+        }
 
-					String diopterSL="";
-					if(resultDiopterDO.getDiopterS()!=null){
-						diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-						if(Double.valueOf(diopterSL)>0){
-							diopterSL="+"+diopterSL;
-						}
-					}
-					
-					params.put("diopterSL",diopterSL);
-					params.put("diopterCL",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
-					params.put("diopterAL",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
-				dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
-				
-				
-				//自动电脑验光结果(右眼) 
-				 resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"R");
-				 resultDiopterDO = new ResultDiopterNewDO();
-				if(resultDiopterDOList.size()>0)
-					resultDiopterDO=resultDiopterDOList.get(0);
-					String diopterSR="";
-					if(resultDiopterDO.getDiopterS()!=null){
-						diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-						if(Double.valueOf(diopterSR)>0){
-							diopterSR="+"+diopterSR;
-						}
-					}
-					
-					params.put("diopterSR",diopterSR);
-					params.put("diopterCR",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
-					params.put("diopterAR",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
-				dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
-				
+        params.put("diopterSL",diopterSL);
+        params.put("diopterCL",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
+        params.put("diopterAL",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
+        dengxiaoqiujingL=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+
+
+        //自动电脑验光结果(右眼)
+        resultDiopterDO = new ResultDiopterNewDO();
+        if (questionDO.getQuestionTwoR()!=null && questionDO.getQuestionTwoR()!=""){
+            Double diopterSR = (Double) zhuanhuan("-" + questionDO.getQuestionTwoR());
+            resultDiopterDO.setDiopterS(diopterSR);
+        }else {
+            List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(), "R");
+            if (resultDiopterDOList.size() > 0) {
+                resultDiopterDO = resultDiopterDOList.get(0);
+            } else {
+                List<ResultDiopterNewDO> diopterDOListR = studentNewDao.getDiopterDOList(studentDO.getId(), "R");
+                if (diopterDOListR.size() > 0) {
+                    resultDiopterDO = diopterDOListR.get(0);
+                }
+            }
+        }
+        String diopterSR="";
+        if(resultDiopterDO.getDiopterS()!=null){
+            diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+            if(Double.valueOf(diopterSR)>0){
+                diopterSR="+"+diopterSR;
+            }
+        }
+
+        params.put("diopterSR",diopterSR);
+        params.put("diopterCR",resultDiopterDO.getDiopterC()==null?"":df.format(zhuanhuan(resultDiopterDO.getDiopterC().toString())));
+        params.put("diopterAR",resultDiopterDO.getDiopterA()==null?"":zhuanhuan(resultDiopterDO.getDiopterA().toString()));
+        dengxiaoqiujingR=resultDiopterDO.getDengxiaoqiujing()==null?0.0:resultDiopterDO.getDengxiaoqiujing();
+
 				//眼内压结果拼装
 				List<ResultEyepressureNewDO> ResultEyepressureDOList = studentNewDao.getLatestResultEyepressureDO(studentDO.getId());
 				ResultEyepressureNewDO resultEyepressureDO = new ResultEyepressureNewDO();

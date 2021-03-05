@@ -30,11 +30,18 @@ public class ActivityListNewDO implements Serializable {
 	private Integer yingjian;
 	
 	private Integer shoujian;
+	private String checkDate;
 
-	
-	
-	
-	public Integer getYingjian() {
+
+    public String getCheckDate() {
+        return checkDate;
+    }
+
+    public void setCheckDate(String checkDate) {
+        this.checkDate = checkDate;
+    }
+
+    public Integer getYingjian() {
 		return yingjian;
 	}
 	public void setYingjian(Integer yingjian) {

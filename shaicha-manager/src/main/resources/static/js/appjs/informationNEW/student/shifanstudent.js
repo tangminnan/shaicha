@@ -165,9 +165,9 @@ function load() {
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
 												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-xs" href="#" title="二维码"  mce_href="#" onclick="code(\''
+										var f = '<a class="btn btn-success btn-xs" href="#" title="条形码"  mce_href="#" onclick="code(\''
 												+ row.id
-												+ '\')" style="text-decoration: none;">二维码</a>';
+												+ '\')" style="text-decoration: none;">条形码</a>';
 										/*var g = '<a class="btn btn-primary btn-xs" href="#" title="详情"  mce_href="#" onclick="detail(\''
 												+ row.id
 												+ '\')" style="text-decoration: none;">详情</a>';*/
@@ -181,9 +181,9 @@ function load() {
 										var p = '<a class="btn btn-primary btn-xs" href="#" title=""  mce_href="#" onclick="datijieguoR(\''
 											+ row.identityCard
 											+ '\')" style="text-decoration: none;">答题结果</a>';
-										var n = '<a class="btn btn-primary btn-xs" href="#" title="二维码打印"  mce_href="#" onclick="erweimaxiazaibyliulanqi(\''
+										var n = '<a class="btn btn-primary btn-xs" href="#" title="条形码打印"  mce_href="#" onclick="erweimaxiazaibyliulanqi(\''
 											+ row.id
-											+ '\')" style="text-decoration: none;">二维码打印</a>';
+											+ '\')" style="text-decoration: none;">条形码打印</a>';
 										var q = '<a class="btn btn-primary btn-xs" href="#" title="筛查打印"  mce_href="#" onclick="shifanshaichadayin(\''
 											+ row.id
 											+ '\',\''+row.lastCheckTime+'\')" style="text-decoration: none;">筛查打印</a>';
@@ -224,10 +224,10 @@ function edit(id) {
 function code(id) {
 	layer.open({
 		type : 2,
-		title : '二维码',
+		title : '条形码',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '450px', '520px' ],
+		area : [ '450px', '300px' ],
 		content : prefix + '/code/' + id // iframe的url
 	});
 }
@@ -307,7 +307,7 @@ function daoru(){
 		},
 		success : function(data) {
 			if (data.code == 0) {
-				parent.layer.msg(data.msg);
+				parent.layer.alert(data.msg);
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
@@ -339,7 +339,7 @@ function daorudatijiguo(){
 		},
 		success : function(data) {
 			if (data.code == 0) {
-				parent.layer.msg(data.msg);
+				parent.layer.alert(data.msg);
 				parent.reLoad();
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);

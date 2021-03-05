@@ -65,8 +65,6 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		try {
 			Map<String, Object> params = jiaoyujubaogao(request, response);
 			createDoc(response,params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给教育局报告检测.ftl");
-		//download(request, response, bootdoConfig.getPoiword(),new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-		//craeteZipPath(bootdoConfig.getPoiword(),response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,11 +151,11 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		params.put("xiao", xiao);//小学数
 		params.put("chu", chu);//初中数
 		params.put("gao", gao);//高中数
-		
-		params.put("your", your);//幼儿园人数
-		params.put("xiaor", xiaor);//小学人数
-		params.put("chur", chur);//初中人数
-		params.put("gaor", gaor);//高中人数
+
+        params.put("your", your);//幼儿园人数
+        params.put("xiaor", xiaor);//小学人数
+        params.put("chur", chur);//初中人数
+        params.put("gaor", gaor);//高中人数
 		
 		//近视
 		List<Map<String, String>> list3 = new ArrayList<Map<String, String>>();

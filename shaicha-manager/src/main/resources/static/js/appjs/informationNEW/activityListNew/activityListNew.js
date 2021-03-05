@@ -119,7 +119,11 @@ function load() {
 											{
 												field:'shoujian',
 												title:'受检人数'
-											}
+											},
+                                            {
+                                                field:'checkDate',
+                                                title:'筛查时间'
+                                            }
 					                    ],
 					                    url: prefix + "/schoolshuju",
 					                    method: 'get',

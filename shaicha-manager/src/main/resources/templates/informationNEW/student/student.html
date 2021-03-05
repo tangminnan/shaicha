@@ -34,7 +34,7 @@
 									   二维码下载
 								</button>
 								<button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="erweimadayin()">
-									  批量 打印二维码
+									  批量 打印条形码
 								</button>
 								 <button shiro:hasPermission="information:student:student" type="button" class="btn  btn-info" onclick="shaichajieguodaochu()">
 									   筛查结果导出
@@ -77,7 +77,7 @@
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<select  name="stuschool" id="stuschool" class="form-control" onchange="stuschool();">
-								<option value="">请选择</option>
+								<option value="">学校</option>
 							</select>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
@@ -89,6 +89,12 @@
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="xueshengid" name="xueshengid" class="form-control" placeholder="学生id" type="text">
 						</div>
+                        <div class="columns pull-right col-md-2 nopadding">
+                            <select class="form-control" name="shili" id="shili" >
+                                <option value="">请选择</option>
+                                <option value="jinshi">近视</option>
+                            </select>
+                        </div>
 						<!--style="display:none"  data-live-search="true" data-actions-box="false" type="hidden"-->
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
@@ -131,14 +137,14 @@
 				　　reLoad();
 			　}
 		});
-		
-		$('#school').selectpicker({
-			title:"学校名称",
-			style:'btn-white'
-		});
+
 
         $('#activity').selectpicker({
             title:"活动名称",
+            style:'btn-white'
+        });
+        $('#shili').selectpicker({
+            title:"视力情况",
             style:'btn-white'
         });
 
