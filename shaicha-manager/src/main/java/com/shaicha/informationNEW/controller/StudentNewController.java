@@ -1452,6 +1452,10 @@ public class StudentNewController {
 	public void exportWordPByFreemarker(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
 		studentNewService.exportWordPByFreemarker(ids,request,response);
 	}
+    @GetMapping("/jieguodaochu")
+    public void exportWordByFreemarker(Integer[] ids,HttpServletRequest request,  HttpServletResponse response){
+        studentNewService.exportWordByFreemarker(ids,request,response);
+    }
 	
 	/**
 	 * 示范校筛查结果导出（freemarker导出模式）
@@ -1648,28 +1652,39 @@ public class StudentNewController {
 					e.printStackTrace();
 				}
 			   
-			   if(birth>=3 && birth<=5){
-				   model.addAttribute("ifStu","1");
+//			   if(birth>=3 && birth<=5){
+//				   model.addAttribute("ifStu","1");
+//			   }else{
+//				   model.addAttribute("ifStu","2");
+//			   }
+                if ("幼儿园".equals(studentDO.getXueBu())){
+                    model.addAttribute("ifStu","1");
 			   }else{
 				   model.addAttribute("ifStu","2");
 			   }
 			   double od=0.0,os=0.0;
 			   if(!StringUtils.isBlank(nakedFarvisionOd) && isDouble(nakedFarvisionOd)){
-			    	od=Double.parseDouble(nakedFarvisionOd);
+			       if ("10/10".equals(nakedFarvisionOd)){
+                       od = 5.0;
+                   }else {
+			    	   od=Double.parseDouble(nakedFarvisionOd);
+			       }
 			    }
 			    if(!StringUtils.isBlank(nakedFarvisionOs) && isDouble(nakedFarvisionOs)){
-			    	os=Double.parseDouble(nakedFarvisionOs);
+                    if ("10/10".equals(nakedFarvisionOs)){
+                        os = 5.0;
+                    }else {
+                        os = Double.parseDouble(nakedFarvisionOs);
+                    }
 			    }
 //			    od=od<os?od:os;
 //			    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
 			    double yuanjingshiliL=0,yuanjingshiliR=0;//原镜视力
 			    String ssL="ss",ssR="ss";
 			    if(!StringUtils.isBlank(correctionFarvisionOd) && isDouble(correctionFarvisionOd)){
-//			    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
 			    	yuanjingshiliR=Double.parseDouble(correctionFarvisionOd);
 			    }
 			    if(!StringUtils.isBlank(correctionFarvisionOs) && isDouble(correctionFarvisionOs)){
-//			    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
 			    	yuanjingshiliL=Double.parseDouble(correctionFarvisionOs);
 			    }
 			    if(yuanjingshiliL==0)
@@ -2052,11 +2067,16 @@ public class StudentNewController {
 			e.printStackTrace();
 		}
 	   
-	   if(birth>=3 && birth<=5){
-		   model.addAttribute("ifStu","1");
-	   }else{
-		   model.addAttribute("ifStu","2");
-	   }
+//	   if(birth>=3 && birth<=5){
+//		   model.addAttribute("ifStu","1");
+//	   }else{
+//		   model.addAttribute("ifStu","2");
+//	   }
+        if ("幼儿园".equals(studentDO.getXueBu())){
+            model.addAttribute("ifStu","1");
+        }else{
+            model.addAttribute("ifStu","2");
+        }
 	   double od=0.0,os=0.0;
 	   if(!StringUtils.isBlank(nakedFarvisionOd) && isDouble(nakedFarvisionOd)){
 	    	od=Double.parseDouble(nakedFarvisionOd);
@@ -2288,6 +2308,8 @@ public class StudentNewController {
 		}*/
 	   if(activityId==70)
 	   		return "informationNEW/student/示范校筛查打印-69滨州";
+	   if (activityId==84)
+	       return "informationNEW/student/示范校筛查打印-滨州84";
 		return "informationNEW/student/示范校筛查打印";
 	}
 	

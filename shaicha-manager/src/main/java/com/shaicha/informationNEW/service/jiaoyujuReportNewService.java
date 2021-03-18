@@ -16,7 +16,8 @@ public interface jiaoyujuReportNewService {
 	Map<String,List<Double>> suoyounianjibuliang(HttpServletRequest request);
 	
 	Map<String,Object> genianlingjinshiyear(HttpServletRequest request);
-	
+	Map<String,Object> gexuebujinshiyear(HttpServletRequest request);
+
 	Map<String,Object> nannvjinshiyear(HttpServletRequest request);
 
 }

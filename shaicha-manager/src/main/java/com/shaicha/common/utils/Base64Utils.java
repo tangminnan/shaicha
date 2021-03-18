@@ -137,7 +137,7 @@ public class Base64Utils {
 		//本地图片地址
 		String url = "地址";
 		//在线图片地址
-		String string = "http://121.36.8.243:8066/files/zhongxin/5a500f72-f6f9-40fb-b101-e8d8d2aecf43.jpg";
+		String string = "http://121.36.8.243:8066/files/zhongxin/f78cf88c-9bf1-493c-afa2-4cb9b1f8f5da.jpg";
 		
 		//String str = Base64Utils.ImageToBase64ByLocal(url);
 		

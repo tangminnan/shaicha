@@ -58,6 +58,7 @@
 		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="QRCode != null and QRCode != ''"> and q_r_code = #{QRCode} </if>
 		  		  <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
+		  		  <if test="lastTime != null and lastTime != ''"> and last_check_time is null </if>
 		  		  <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
 		  		  <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
 		  		  <if test="xueBu != null and xueBu != ''"> and xue_bu = #{xueBu} </if>
@@ -81,7 +82,9 @@
             <if test="id != null and id != ''"> and id = #{id} </if>
             <if test="shili == 'jinshi'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0')) and last_check_time is not NULL </if>
             <if test="shili == 'buliang'"> AND (naked_farvision_od &lt; '5.0'  or  naked_farvision_os &lt; '5.0') and last_check_time is not NULL </if>
-            <if test="shili == 'jiaxing'"> AND ((naked_farvision_od >= '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl >= '-0.5' and naked_farvision_os &lt; '5.0')) and last_check_time is not NULL </if>
+            <if test="shili == 'jiaxing'"> AND ((naked_farvision_od >= '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os >= '5.0')) and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
+            <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75')) and last_check_time is not NULL </if>
+            <if test="shili == 'zhengchang'"> AND naked_farvision_od >= '5.0' and naked_farvision_os >= '5.0' and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
             <if test="checkType != null and checkType != ''"> and check_type != #{checkType} </if>
             <if test="studentName != null and studentName != ''"> and student_name like concat('%', #{studentName},'%') </if>
             <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>

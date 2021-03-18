@@ -84,17 +84,17 @@ public class isIDCardUtil {
 
 
         // 判断地区码是否有效
-        Hashtable areacode = GetAreaCode();
+//        Hashtable areacode = GetAreaCode();
         //如果身份证前两位的地区码不在Hashtable，则地区码有误
-        if (areacode.get(Ai.substring(0, 2)) == null) {
-            tipInfo = "身份证地区编码错误。";
-            return tipInfo;
-        }
-
-        if(isVarifyCode(Ai,IDStr)==false){
-            tipInfo = "身份证校验码无效，不是合法的身份证号码";
-            return tipInfo;
-        }
+//        if (areacode.get(Ai.substring(0, 2)) == null) {
+//            tipInfo = "身份证地区编码错误。";
+//            return tipInfo;
+//        }
+//
+//        if(isVarifyCode(Ai,IDStr)==false){
+//            tipInfo = "身份证校验码无效，不是合法的身份证号码";
+//            return tipInfo;
+//        }
 
 
         return tipInfo;

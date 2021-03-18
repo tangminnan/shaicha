@@ -77,6 +77,7 @@ public interface StudentNewService {
 	 * @param response
 	 */
 	void exportWordPByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response);
+	void exportWordByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response);
 	/**
 	 * 示范校筛查结果导出（freemarker模式）
 	 */

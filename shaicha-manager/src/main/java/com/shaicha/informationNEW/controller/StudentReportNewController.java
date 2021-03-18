@@ -257,6 +257,7 @@ public class StudentReportNewController {
 			Map<String, List<Double>> jinshi = jiaoyujuReportService.suoyounianjijinshi(request);
 			Map<String, List<Double>> buliang = jiaoyujuReportService.suoyounianjibuliang(request);
 			Map<String, Object> nianling = jiaoyujuReportService.genianlingjinshiyear(request);
+//			Map<String, Object> nianling = jiaoyujuReportService.gexuebujinshiyear(request);
 			Map<String, Object> nannv = jiaoyujuReportService.nannvjinshiyear(request);
 			
 			map.put("jinshi", jinshi.get("jinshi"));
@@ -264,7 +265,8 @@ public class StudentReportNewController {
 			map.put("buliang", buliang.get("buliang"));
 			
 			map.put("nianling", nianling.get("nianling"));
-			
+//			map.put("nianling", nianling);
+
 			map.put("nan", nannv.get("nan"));
 			map.put("nv", nannv.get("nv"));
 			map.put("list",list);
@@ -446,6 +448,7 @@ public class StudentReportNewController {
 	public void shaichawenjuan(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		schoolReportService.shaichawenjuanRep(request, response);
 	}
+
 
 	/**
 	 *   根据条件导出数据

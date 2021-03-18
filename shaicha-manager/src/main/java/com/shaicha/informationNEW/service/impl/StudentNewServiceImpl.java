@@ -226,19 +226,19 @@ public class StudentNewServiceImpl implements StudentNewService {
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					try {
 						row = sheet.getRow(rowNum);
-						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0));//证件类型
+						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0)).replace(" ", "");//证件类型
 
-						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1));	//身份证号
-						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2));	// 姓名
-						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3));			//性别
-						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)4));		//年级
+						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1)).replace(" ", "");	//身份证号
+						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2)).replace(" ", "");	// 姓名
+						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3)).replace(" ", "");			//性别
+						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)4)).replace(" ", "");		//年级
 						Cell cell = row.getCell((short) 5);
 						cell.setCellType(CellType.STRING);
-						String studentClass = ExcelUtils.getCellFormatValue(cell);	//班级
+						String studentClass = ExcelUtils.getCellFormatValue(cell).replace(" ", "");	//班级
 						cell = row.getCell((short) 6);
 						cell.setCellType(CellType.STRING);
-						String phone = ExcelUtils.getCellFormatValue(cell);		//手机号
-						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7));//民族
+						String phone = ExcelUtils.getCellFormatValue(cell).replace(" ", "");		//手机号
+						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7)).replace(" ", "");//民族
 
 						String nakedFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)8));//左眼裸眼视力
 						String correctionFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)9));//左眼戴镜视力
@@ -811,7 +811,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 				list.add(params);
 			}
 			map.put("list",list);
-            download(request, response, "普通筛查导出模板.ftl","q", map);
+            download(request, response, "普通筛查导出模板.ftl","report", map);
             craeteZipPath(bootdoConfig.getPoiword(),response);
 		} catch (Exception e) {
 				e.printStackTrace();
@@ -823,12 +823,32 @@ public class StudentNewServiceImpl implements StudentNewService {
 		              f.delete();
 		        }
 			}
-		}		
-		
-		
-	
-	
-	/**
+		}
+
+    @Override
+    public void exportWordByFreemarker(Integer[] ids, HttpServletRequest request, HttpServletResponse response) {
+        try {
+            for(int i=0;i<ids.length;i++){
+                Map<String, Object> params = createPeramsMapF(ids[i]);
+                if(params==null) continue;
+                download(request, response, "普通筛查导出模板单.ftl",ids[i].toString(), params);
+            }
+            craeteZipPath(bootdoConfig.getPoiword(),response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            File file=new File(bootdoConfig.getPoiword());
+            if(file.exists()) {
+                File[] files = file.listFiles();
+                for(File f :files)
+                    f.delete();
+            }
+        }
+    }
+
+
+
+    /**
 	 * freemarker导出工具类
 	 */
 	
@@ -1025,11 +1045,16 @@ public class StudentNewServiceImpl implements StudentNewService {
 			e.printStackTrace();
 		}
 	   
-	   if(birth>=3 && birth<=5){
-		   params.put("ifStu","1");
-	   }else{
-		   params.put("ifStu","2");
-	   }
+//	   if(birth>=3 && birth<=5){
+//		   params.put("ifStu","1");
+//	   }else{
+//		   params.put("ifStu","2");
+//	   }
+        if ("幼儿园".equals(studentDO.getXueBu())){
+            params.put("ifStu","1");
+        }else{
+            params.put("ifStu","2");
+        }
 	   double od=0.0,os=0.0;
 	   if(!StringUtils.isBlank(nakedFarvisionOd) && isDouble(nakedFarvisionOd)){
 	    	od=Double.parseDouble(nakedFarvisionOd);
@@ -1341,9 +1366,10 @@ public class StudentNewServiceImpl implements StudentNewService {
         double dengxiaoqiujingL = 0.0,dengxiaoqiujingR=0.0;
         ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
         ResultQuestionDO questionDO = questionDao.get(studentDO.getId());
-        if (questionDO.getQuestionTwoL()!=null && questionDO.getQuestionTwoL()!=""){
-            Double diopterSL = (Double) zhuanhuan("-" + questionDO.getQuestionTwoL());
-            resultDiopterDO.setDiopterS(diopterSL);
+        String diopterSL="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoL()));
+            diopterSL = "-" + df.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
         }else {
             List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(),"L");
             if(resultDiopterDOList.size()>0) {
@@ -1354,12 +1380,11 @@ public class StudentNewServiceImpl implements StudentNewService {
                     resultDiopterDO = diopterDOListL.get(0);
                 }
             }
-        }
-        String diopterSL="";
-        if(resultDiopterDO.getDiopterS()!=null){
-            diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-            if(Double.valueOf(diopterSL)>0){
-                diopterSL="+"+diopterSL;
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSL = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSL)>0){
+                    diopterSL="+"+diopterSL;
+                }
             }
         }
 
@@ -1371,9 +1396,10 @@ public class StudentNewServiceImpl implements StudentNewService {
 
         //自动电脑验光结果(右眼)
         resultDiopterDO = new ResultDiopterNewDO();
-        if (questionDO.getQuestionTwoR()!=null && questionDO.getQuestionTwoR()!=""){
-            Double diopterSR = (Double) zhuanhuan("-" + questionDO.getQuestionTwoR());
-            resultDiopterDO.setDiopterS(diopterSR);
+        String diopterSR="";
+        if (questionDO!=null && questionDO.getQuestionOneI()==3){
+            BigDecimal bg = new BigDecimal(Double.parseDouble(questionDO.getQuestionTwoR()));
+            diopterSR = "-" + df.format(bg.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
         }else {
             List<ResultDiopterNewDO> resultDiopterDOList = studentNewDao.getLatestResultDiopterDOListL(studentDO.getId(), "R");
             if (resultDiopterDOList.size() > 0) {
@@ -1384,12 +1410,11 @@ public class StudentNewServiceImpl implements StudentNewService {
                     resultDiopterDO = diopterDOListR.get(0);
                 }
             }
-        }
-        String diopterSR="";
-        if(resultDiopterDO.getDiopterS()!=null){
-            diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
-            if(Double.valueOf(diopterSR)>0){
-                diopterSR="+"+diopterSR;
+            if(resultDiopterDO.getDiopterS()!=null){
+                diopterSR = df.format(zhuanhuan(resultDiopterDO.getDiopterS().toString()));
+                if(Double.valueOf(diopterSR)>0){
+                    diopterSR="+"+diopterSR;
+                }
             }
         }
 
@@ -1452,11 +1477,16 @@ public class StudentNewServiceImpl implements StudentNewService {
 					e.printStackTrace();
 				}
 			   
-			   if(birth>=3 && birth<=5){
-				   params.put("ifStu","1");
-			   }else{
-				   params.put("ifStu","2");
-			   }
+//			   if(birth>=3 && birth<=5){
+//				   params.put("ifStu","1");
+//			   }else{
+//				   params.put("ifStu","2");
+//			   }
+        if ("幼儿园".equals(studentDO.getXueBu())){
+            params.put("ifStu","1");
+        }else{
+            params.put("ifStu","2");
+        }
 			   double od=0.0,os=0.0;
 			   if(!StringUtils.isBlank(nakedFarvisionOd) && isDouble(nakedFarvisionOd)){
 			    	od=Double.parseDouble(nakedFarvisionOd);

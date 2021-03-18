@@ -857,6 +857,90 @@ function jiaoyujubaogao(){
                         },
                         series: data
                     }
+                    // var nianling = echarts.init(document.getElementById('nianling'));
+                    // var option = {
+                    //     animation: false,
+                    //     title: {
+                    //         text: '各学部历年近视率'
+                    //     },
+                    //     tooltip: {
+                    //         trigger: 'axis'
+                    //     },
+                    //     legend: {
+                    //         data: ['幼儿园', '小学', '初中', '高中']
+                    //     },
+                    //     grid: {
+                    //         left: '3%',
+                    //         right: '4%',
+                    //         bottom: '3%',
+                    //         containLabel: true
+                    //     },
+                    //     // toolbox: {
+                    //     //     feature: {
+                    //     //         saveAsImage: {}
+                    //     //     }
+                    //     // },
+                    //     xAxis: {
+                    //         type: 'category',
+                    //         data: result.nianling.checkyear
+                    //     },
+                    //     yAxis: {
+                    //         axisLine: {
+                    //             show: true
+                    //         },
+                    //         type: 'value'
+                    //     },
+                    //     series: [
+                    //         {
+                    //             name: '幼儿园',
+                    //             type: 'line',
+                    //             label: {
+                    //                 normal: {
+                    //                     show: true,
+                    //                     position: "top",
+                    //                     formatter:'{c}%'
+                    //                 },
+                    //             },
+                    //             data: result.nianling.youer
+                    //         },
+                    //         {
+                    //             name: '小学',
+                    //             type: 'line',
+                    //             label: {
+                    //                 normal: {
+                    //                     show: true,
+                    //                     position: "top",
+                    //                     formatter:'{c}%'
+                    //                 },
+                    //             },
+                    //             data: result.nianling.xiaoxue
+                    //         },
+                    //         {
+                    //             name: '初中',
+                    //             type: 'line',
+                    //             label: {
+                    //                 normal: {
+                    //                     show: true,
+                    //                     position: "top",
+                    //                     formatter:'{c}%'
+                    //                 },
+                    //             },
+                    //             data: result.nianling.chuzhong
+                    //         },
+                    //         {
+                    //             name: '高中',
+                    //             type: 'line',
+                    //             label: {
+                    //                 normal: {
+                    //                     show: true,
+                    //                     position: "top",
+                    //                     formatter:'{c}%'
+                    //                 },
+                    //             },
+                    //             data: result.nianling.gaozhong
+                    //         }
+                    //     ]
+                    // };
                     nianling.setOption(option);
 
 

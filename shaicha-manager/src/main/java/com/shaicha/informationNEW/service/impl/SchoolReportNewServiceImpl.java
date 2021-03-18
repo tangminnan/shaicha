@@ -1450,9 +1450,11 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		List<Map<String,Object>> bb = new ArrayList<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("activityId", activityId);
-//		map.put("school", "外海实验学校");
-//		map.put("shili","buliang");
-		List<StudentNewDO> list = studentDao.list(map);
+//		map.put("school", "舜耕小学");
+//		map.put("grade","二年级");
+//		map.put("studentClass","5");
+//		map.put("shili","jiaxing");
+		List<StudentNewDO> list = studentDao.listNoShiFan(map);
 
 		if(list.size()>0){
             String activitytime = sdf.format(activityListDao.get(activityId).getAddTime());
@@ -1463,10 +1465,6 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 				List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentNewDO.getId());
 				List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentNewDO.getId(),activityId);
 				List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentNewDO.getId(),activityId);
-				//List<ResultCornealNewDO> LR1 = resultCornealDao.getCornealMm("L", identityCard,"R1",activityId);
-				//List<ResultCornealNewDO> LR2 = resultCornealDao.getCornealMm("L", identityCard,"R2",activityId);
-				//List<ResultCornealNewDO> RR1 = resultCornealDao.getCornealMm("R", identityCard,"R1",activityId);
-				//List<ResultCornealNewDO> RR2 = resultCornealDao.getCornealMm("R", identityCard,"R2",activityId);
 				mapPP.put("学校", studentNewDO.getSchool());
 				mapPP.put("年级", studentNewDO.getGrade());
 				mapPP.put("班级", studentNewDO.getStudentClass());
@@ -1537,15 +1535,15 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 
 				if (questionDOList.size()>0){
 					ResultQuestionDO resultQuestionDO = questionDOList.get(0);
-					if ("".equals(resultQuestionDO.getQuestionOneI()) && resultQuestionDO.getQuestionOneI()==null){
+					if ("".equals(resultQuestionDO.getQuestionOneI()) || resultQuestionDO.getQuestionOneI()==null){
 						mapPP.put("目前孩子戴镜类型","");
-					}else if (resultQuestionDO.getQuestionOneI()==1){
+					}else if (1==resultQuestionDO.getQuestionOneI()){
 						mapPP.put("目前孩子戴镜类型","框架眼镜");
-					}else if (resultQuestionDO.getQuestionOneI()==2){
+					}else if (2==resultQuestionDO.getQuestionOneI()){
 						mapPP.put("目前孩子戴镜类型","隐形眼镜");
-					}else if (resultQuestionDO.getQuestionOneI()==3){
+					}else if (3==resultQuestionDO.getQuestionOneI()){
 						mapPP.put("目前孩子戴镜类型","夜戴角膜塑形镜");
-					}else if (resultQuestionDO.getQuestionOneI()==4){
+					}else if (4==resultQuestionDO.getQuestionOneI()){
 						mapPP.put("目前孩子戴镜类型", "不戴镜");
 					}
 					if (!"".equals(resultQuestionDO.getQuestionOneS()) && resultQuestionDO.getQuestionOneS()!=null){
@@ -1562,30 +1560,6 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					mapPP.put("左眼戴镜的近视度数","");
 					mapPP.put("是否存在眼部疾病史","");
 				}
-				/*if(LR1.size()>0){
-					resultCornealDO = LR1.get(0);
-					mapPP.put("R1-左", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
-				}else{
-					mapPP.put("R1-左", "");
-				}
-				if(LR2.size()>0){
-					resultCornealDO = LR2.get(0);
-					mapPP.put("R2-左", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
-				}else{
-					mapPP.put("R2-左","");
-				}
-				if(RR1.size()>0){
-					resultCornealDO = RR1.get(0);
-					mapPP.put("R1-右", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
-				}else{
-					mapPP.put("R1-右", "");
-				}
-				if(RR2.size()>0){
-					resultCornealDO = RR2.get(0);
-					mapPP.put("R2-右", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
-				}else{
-					mapPP.put("R2-右", "");
-				}*/
 //                List<ChanpinRecordDetailsDO> list4 = chanpinRecordDetailsDao.getByChanpin(null);
 //                for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list4) {
 //                    mapPP.put(chanpinRecordDetailsDO.getTitleName(), "");
@@ -1596,13 +1570,13 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 //
 //						List<ChanpinRecordDetailsDO> list3 = chanpinRecordDetailsDao.getByChanpin(chanpinRecordListDO.getId());
 //						Map<String,Object> mapPPP = new HashMap<String,Object>();
-//						//mapPP.put("问卷名称", chanpinRecordListDao.get(chanpinRecordListDO.getId()).getChanpinName());
+//						mapPP.put("问卷名称", chanpinRecordListDao.get(chanpinRecordListDO.getId()).getChanpinName());
 //						for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list3) {
 //                            if(chanpinRecordDetailsDO.getChooseSort() != null){
 //                                mapPP.put(chanpinRecordDetailsDO.getTitleName(), chanpinRecordDetailsDO.getChooseSort());
 //                            }
 //						}
-//						//mapPP.putAll(mapPPP);
+//						mapPP.putAll(mapPPP);
 //					}
 //				}
 

@@ -503,6 +503,21 @@ function shaichajieguodaochu(){
 	if(ids.length==0){alert("所选没有进行筛查检查，无法提供下载");return ;}
 	window.location.href="/informationNEW/student/shaichajieguodaochu?ids="+ids
 }
+function jieguodaochu(){
+    var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+    if (rows.length == 0) {
+        layer.msg("选择要导出结果的学生");
+        return;
+    }
+    var ids=[];
+    $.each(rows, function(i, row) {
+        if(row['lastCheckTime']!=null)
+            ids[i] = row['id'];
+    });
+
+    if(ids.length==0){alert("所选没有进行筛查检查，无法提供下载");return ;}
+    window.location.href="/informationNEW/student/jieguodaochu?ids="+ids
+}
 
 function erweimaxiazaibyliulanqi(id){
 	//window.location.href="/information/student/downLoadErWeiMaByBrower?id="+id
