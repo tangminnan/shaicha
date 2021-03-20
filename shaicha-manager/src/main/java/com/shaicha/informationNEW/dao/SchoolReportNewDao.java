@@ -30,11 +30,11 @@ public interface SchoolReportNewDao {
 	int schoolSexCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("studentSex") Integer studentSex);
 	
 	int schoolSexjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("studentSex") Integer studentSex);
-	
+
 	int schoolGradeClassCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentClass") String studentClass);
 	
 	int schoolGradeClassjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentClass") String studentClass);
-	
+
 	int schoolGradeClassbuliang(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentClass") String studentClass);
 	
 	int jinshiqianqi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);
@@ -58,7 +58,7 @@ public interface SchoolReportNewDao {
 	int linianCheckNum(@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
 	
 	int linianjinshi(@Param("school") String school,@Param("lastCheckTime") String lastCheckTime);
-	
+
 	int gradeCheck(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);
 	
 	int gradeCheckjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade);
@@ -76,7 +76,7 @@ public interface SchoolReportNewDao {
 	int linianSexCheckNum(@Param("school") String school,@Param("studentSex") Integer studentSex,@Param("lastCheckTime") String lastCheckTime);
 	
 	int linianSexCheckjinshi(@Param("school") String school,@Param("studentSex") Integer studentSex,@Param("lastCheckTime") String lastCheckTime);
-	
+
 	int sexGradeCheckNum(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentSex") Integer studentSex);
 	
 	int sexGradeCheckjinshi(@Param("activityId") Integer activityId,@Param("school") String school,@Param("grade") String grade,@Param("studentSex") Integer studentSex);

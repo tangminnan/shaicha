@@ -1450,12 +1450,12 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		List<Map<String,Object>> bb = new ArrayList<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("activityId", activityId);
-//		map.put("school", "舜耕小学");
+//		map.put("school", "外海实验学校");
 //		map.put("grade","二年级");
 //		map.put("studentClass","5");
-//		map.put("shili","jiaxing");
+//		map.put("shili","jinshi");
 		List<StudentNewDO> list = studentDao.listNoShiFan(map);
-
+        DecimalFormat df = new DecimalFormat("0.00");
 		if(list.size()>0){
             String activitytime = sdf.format(activityListDao.get(activityId).getAddTime());
             for (StudentNewDO studentNewDO : list) {
@@ -1532,8 +1532,37 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
                         mapPP.put("轴位-右", "");
                     }
                 }
+//                List<ResultEyeaxisNewDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentNewDO.getId());
+//                if (eyeaxis.size()>0){
+//                    mapPP.put("眼轴右眼",eyeaxis.get(0).getFirstCheckOd()==null?"":eyeaxis.get(0).getFirstCheckOd());
+//                    mapPP.put("眼轴左眼",eyeaxis.get(0).getFirstCheckOs()==null?"":eyeaxis.get(0).getFirstCheckOs());
+//                }else {
+//                    mapPP.put("眼轴右眼","");
+//                    mapPP.put("眼轴左眼","");
+//                }
+//                ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
+//                List<ResultCornealNewDO> resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"R","R1");
+//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+//                mapPP.put("右眼-K1",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+//                mapPP.put("右眼-K1轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
+//                resultCornealDO = new ResultCornealNewDO();
+//                resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"R","R2");
+//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+//                mapPP.put("右眼-K2",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+//                mapPP.put("右眼-K2轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
+//
+//                resultCornealDO = new ResultCornealNewDO();
+//                resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"L","R1");
+//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+//                mapPP.put("左眼-K1",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+//                mapPP.put("左眼-K1轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
+//                resultCornealDO = new ResultCornealNewDO();
+//                resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"L","R2");
+//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+//                mapPP.put("左眼-K2",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+//                mapPP.put("左眼-K2轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 
-				if (questionDOList.size()>0){
+                if (questionDOList.size()>0){
 					ResultQuestionDO resultQuestionDO = questionDOList.get(0);
 					if ("".equals(resultQuestionDO.getQuestionOneI()) || resultQuestionDO.getQuestionOneI()==null){
 						mapPP.put("目前孩子戴镜类型","");
@@ -1610,6 +1639,20 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 
 
 	}
+    private static Object zhuanhuan(Object s){
+        Double d=null;
+        if(s instanceof String){
+            if("".equals((String)s))
+                return "";
+            d = Double.parseDouble((String)s);
+        }
+        if(s instanceof Double)
+            d = (Double)s;
+        System.out.println("d:"+d+" s:"+s);
+        if(Math.floor(d)==d)
+            return d.intValue();
+        return d;
+    }
 
 	/**
 	 *  条件导出数据

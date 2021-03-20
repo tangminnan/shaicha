@@ -2944,6 +2944,46 @@
 						<w:t>mmhg</w:t>
 					</w:r>
 				</w:p>
+                <w:p>
+					<w:pPr>
+						<w:tabs>
+							<w:tab w:val="center" w:pos="4153" /></w:tabs>
+						<w:spacing w:line="240" w:line-rule="auto" />
+						<w:ind w:first-line="632" w:first-line-chars="300" />
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="default" />
+							<w:b/>
+							<w:sz-cs w:val="21" /></w:rPr>
+					</w:pPr>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="微软雅黑" w:hint="fareast" />
+							<w:b/>
+							<w:color w:val="333333" />
+							<w:sz-cs w:val="21" />
+							<w:shd w:val="clear" w:color="auto" w:fill="FFFFFF" /></w:rPr>
+						<w:t>④因筛查现场检查项目有限，且受环境、光线、学生紧张心理等因素的影响，筛查结果及诊断</w:t>
+					</w:r>
+                </w:p>
+                <w:p>
+					<w:pPr>
+						<w:tabs>
+							<w:tab w:val="center" w:pos="4153" /></w:tabs>
+						<w:spacing w:line="240" w:line-rule="auto" />
+						<w:jc w:val="left" />
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast" />
+							<w:b/>
+							<w:sz-cs w:val="21" /></w:rPr>
+					</w:pPr>
+					<w:r>
+						<w:rPr>
+							<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast" />
+							<w:b/>
+							<w:sz-cs w:val="21" /></w:rPr>
+						<w:t>仅作为参考，不作为最终诊断。如需确诊，请到正规医疗机构做进一步检查。</w:t>
+					</w:r>
+                </w:p>
 				<#if ifStu == '2'>
 				<w:tbl>
 					<w:tblPr>
