@@ -53,4 +53,12 @@
 		</set>
 		where id = #{id}
 	</update>
+	
+	<select id="getStudentInfoByUserID" resultType="com.shaicha.information.domain.StudentDO">
+				select `id`,last_check_time,`student_name`,`student_sex`,`nation`,`birthday`,
+				`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,
+				`weight`,`add_time`,`status`,q_r_code,activity_id,ideentity_type,school_id from t_student_new
+				where id = #{value}
+
+	</select>
 </mapper>

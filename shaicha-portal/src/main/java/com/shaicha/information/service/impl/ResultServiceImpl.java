@@ -903,4 +903,13 @@ public class ResultServiceImpl implements ResultService{
 
 	}
 
+	@Override
+	public StudentDO getStudentInfoByUserID(Long userID) {
+		return studentDao.getStudentInfoByUserID(userID);
+	}
+
+	@Override
+	public int updateDianziEye(ResultEyesightDO resultEyesightDO) {
+		return eyesightDao.updateDianziEye(resultEyesightDO);
+	}
 }
