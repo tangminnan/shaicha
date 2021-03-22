@@ -912,4 +912,14 @@ public class ResultServiceImpl implements ResultService{
 	public int updateDianziEye(ResultEyesightDO resultEyesightDO) {
 		return eyesightDao.updateDianziEye(resultEyesightDO);
 	}
+
+	@Override
+	public List<ResultEyesightDO> getEyeSight(Long userID) {
+		return eyesightDao.getEyesightDO(userID);
+	}
+
+	@Override
+	public int saveDianziEye(ResultEyesightDO resultEyesightDO) {
+		return eyesightDao.saveDianziEye(resultEyesightDO);
+	}
 }

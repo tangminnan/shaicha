@@ -1,4 +1,5 @@
 package com.shaicha.information.controller;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,6 +126,7 @@ public class ResultController {
 			Integer isGlasses) {
 		ResultEyesightDO resultEyesightDO  = new ResultEyesightDO();
 		resultEyesightDO.setStudentId(userID);
+		resultEyesightDO.setCheckDate(new Date());
 		if(isGlasses==0){//裸眼视力
 			resultEyesightDO.setNakedFarvisionOd(Right2);
 			resultEyesightDO.setNakedFarvisionOs(Left2);
@@ -133,7 +135,13 @@ public class ResultController {
 			resultEyesightDO.setCorrectionFarvisionOd(Right2);
 			resultEyesightDO.setCorrectionFarvisionOs(Left2);
 		}
-	   int result = resultService.updateDianziEye(resultEyesightDO);
+		List<ResultEyesightDO> eyeSight = resultService.getEyeSight(userID);
+		int result=0;
+		if(eyeSight.size()==0){
+			result=resultService.saveDianziEye(resultEyesightDO);
+		}else{
+			result = resultService.updateDianziEye(resultEyesightDO);
+		}
 		Map<String,Object> resultMap11 = new HashMap<>();
 		resultMap11.put("object","");
 		Map<String,Object> resultMap = new HashMap<>();

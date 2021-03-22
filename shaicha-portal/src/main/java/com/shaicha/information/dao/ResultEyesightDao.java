@@ -22,4 +22,6 @@ public interface ResultEyesightDao {
     void saveYuCeData(ResultEyesightDO resultEyesightDOY);
 
     int updateDianziEye(ResultEyesightDO resultEyesightDO);
+
+	int saveDianziEye(ResultEyesightDO resultEyesightDO);
 }

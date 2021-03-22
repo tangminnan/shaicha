@@ -25,4 +25,8 @@ public interface ResultService {
 	StudentDO getStudentInfoByUserID(Long userID);
 
 	int updateDianziEye(ResultEyesightDO resultEyesightDO);
+
+	List<ResultEyesightDO> getEyeSight(Long userID);
+
+	int saveDianziEye(ResultEyesightDO resultEyesightDO);
 }
