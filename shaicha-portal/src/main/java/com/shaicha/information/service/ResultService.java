@@ -1,5 +1,6 @@
 package com.shaicha.information.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,4 +30,6 @@ public interface ResultService {
 	List<ResultEyesightDO> getEyeSight(Long userID);
 
 	int saveDianziEye(ResultEyesightDO resultEyesightDO);
+
+	void updateLastCheckTime(Long userID, Date date);
 }

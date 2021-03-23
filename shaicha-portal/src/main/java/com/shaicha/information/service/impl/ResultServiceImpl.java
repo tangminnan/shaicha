@@ -922,4 +922,9 @@ public class ResultServiceImpl implements ResultService{
 	public int saveDianziEye(ResultEyesightDO resultEyesightDO) {
 		return eyesightDao.saveDianziEye(resultEyesightDO);
 	}
+
+	@Override
+	public void updateLastCheckTime(Long userID, Date date) {
+		studentDao.updateLastCheckTime(userID,date);
+	}
 }
