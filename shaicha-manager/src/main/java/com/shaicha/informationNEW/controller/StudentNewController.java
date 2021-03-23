@@ -752,9 +752,15 @@ public class StudentNewController {
 			Lmap.put("corneal_d",resultCornealDO.getCornealD()==null?0:zhuanhuan(resultCornealDO.getCornealD()));
 			Lmap.put("eyeaxis",resultEyeaxisDO.getFirstCheckOs()==null?0:zhuanhuan(resultEyeaxisDO.getFirstCheckOs().toString()));
 			Lmap.put("eyepressure",resultEyepressureDO.getEyePressureOs()==null?0:zhuanhuan(resultEyepressureDO.getEyePressureOs().toString()));
-			Lmap.put("age",studentDO.getLastCheckTime().getYear()-studentDO.getBirthday().getYear());
+			if (studentDO.getBirthday()==null){
+                String birthdaystr = studentDO.getIdentityCard().substring(6, 10);
+                Lmap.put("age",studentDO.getLastCheckTime().getYear()-Integer.parseInt(birthdaystr));
+            }else {
+                Lmap.put("age",studentDO.getLastCheckTime().getYear()-studentDO.getBirthday().getYear());
+
+            }
 			Double eyeaxis = resultEyeaxisDO.getFirstCheckOs()==null?0: (Double) zhuanhuan(resultEyeaxisDO.getFirstCheckOs());
-			Double corneal_mm = resultCornealDO.getCornealMm()==null?0: (Double) zhuanhuan(resultCornealDO.getCornealMm());
+			Double corneal_mm = resultCornealDO.getCornealMm()==null?0:  resultCornealDO.getCornealMm();
 			if (eyeaxis == 0 || corneal_mm ==0){
 				Lmap.put("eyeaxis_corneal",0);
 			}else {
@@ -816,9 +822,14 @@ public class StudentNewController {
 			Rmap.put("corneal_d",resultCornealDO.getCornealD()==null?0:zhuanhuan(resultCornealDO.getCornealD()));
 			Rmap.put("eyeaxis",resultEyeaxisDO.getFirstCheckOd()==null?0:zhuanhuan(resultEyeaxisDO.getFirstCheckOd().toString()));
 			Rmap.put("eyepressure",resultEyepressureDO.getEyePressureOd()==null?0:zhuanhuan(resultEyepressureDO.getEyePressureOd().toString()));
-			Rmap.put("age",studentDO.getLastCheckTime().getYear()-studentDO.getBirthday().getYear());
+			if (studentDO.getBirthday()==null){
+                String birthdaystr = studentDO.getIdentityCard().substring(6, 10);
+                Rmap.put("age",studentDO.getLastCheckTime().getYear()-Integer.parseInt(birthdaystr));
+            }else {
+                Rmap.put("age",studentDO.getLastCheckTime().getYear()-studentDO.getBirthday().getYear());
+            }
 			eyeaxis = resultEyeaxisDO.getFirstCheckOd()==null?0: (Double) zhuanhuan(resultEyeaxisDO.getFirstCheckOd());
-			corneal_mm = resultCornealDO.getCornealMm()==null?0: (Double) zhuanhuan(resultCornealDO.getCornealMm());
+			corneal_mm = resultCornealDO.getCornealMm()==null?0: resultCornealDO.getCornealMm();
 			if (eyeaxis == 0 || corneal_mm ==0){
 				Rmap.put("eyeaxis_corneal",0);
 			}else {
