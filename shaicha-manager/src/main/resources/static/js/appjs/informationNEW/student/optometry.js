@@ -177,7 +177,7 @@ function load() {
 						},
 														{
 							field : 'cornealMm', 
-							title : '曲率' 
+							title : '曲率半径' 
 						},
 														{
 							field : 'cornealD', 

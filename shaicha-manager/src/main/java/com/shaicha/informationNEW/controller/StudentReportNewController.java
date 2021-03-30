@@ -150,7 +150,7 @@ public class StudentReportNewController {
 	@ResponseBody
 	@PostMapping("/studentReportNew/xuexiaotu")
 	public String xuexiaotu(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String format = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String format = new SimpleDateFormat("yyyyMMdd").format(new Date());
 		
 		Map<String,String> map = new HashMap<>();
 		String overYear=request.getParameter("overYear");
@@ -228,47 +228,47 @@ public class StudentReportNewController {
 		List<Map> list = new ArrayList<>();
 		for (String school : parameter) {
 			System.out.println(school);
-//            Map<String, Object> map1 = new HashMap<>();
-//            Map<String, List<Object>> overYearMyopia = schoolReportService.overYearMyopia(school);
-//            Map<String, List<Object>> gradeMyopia = schoolReportService.gradeMyopia(school,Integer.parseInt(activityId));
-//            Map<String, List<Object>> overYearGradeMyopia = schoolReportService.overYearGradeMyopia(school);
-//            Map<String, List<Object>> overYearGradeBuliang = schoolReportService.overYearGradeBuliang(school);
-//            Map<String, List<Object>> overYearSexNan = schoolReportService.overYearSexNan(school);
-//            Map<String, List<Object>> overYearSexNv = schoolReportService.overYearSexNv(school);
-//            Map<String, List<Object>> overYearGradeSex = schoolReportService.overYearGradeSex(school,Integer.parseInt(activityId));
-//            map1.put("overYearMyopia", overYearMyopia.get("overYearMyopia"));
-//            map1.put("seventeen", overYearGradeMyopia.get("seventeen"));
-//            map1.put("eighteen", overYearGradeMyopia.get("eighteen"));
-//            map1.put("nineteen", overYearGradeMyopia.get("nineteen"));
-//            map1.put("qu",overYearGradeBuliang.get("seventeen"));
-//            map1.put("jin",overYearGradeBuliang.get("eighteen"));
-//            map1.put("ming",overYearGradeBuliang.get("nineteen"));
-//            map1.put("studentSexNanMyopia", overYearSexNan.get("studentSexMyopia"));
-//            map1.put("studentSexNvMyopia", overYearSexNv.get("studentSexMyopia"));
-//            map1.put("overYearSexNan", overYearGradeSex.get("overYearSexNan"));
-//            map1.put("overYearSexNv", overYearGradeSex.get("overYearSexNv"));
-//            map1.put("year", overYearMyopia.get("year"));
-//            map1.put("grade", gradeMyopia.get("grade"));
-//            map1.put("school",school);
-//            list.add(map1);
+            Map<String, Object> map1 = new HashMap<>();
+            Map<String, List<Object>> overYearMyopia = schoolReportService.overYearMyopia(school);
+            Map<String, List<Object>> gradeMyopia = schoolReportService.gradeMyopia(school,Integer.parseInt(activityId));
+            Map<String, List<Object>> overYearGradeMyopia = schoolReportService.overYearGradeMyopia(school);
+            Map<String, List<Object>> overYearGradeBuliang = schoolReportService.overYearGradeBuliang(school);
+            Map<String, List<Object>> overYearSexNan = schoolReportService.overYearSexNan(school);
+            Map<String, List<Object>> overYearSexNv = schoolReportService.overYearSexNv(school);
+            Map<String, List<Object>> overYearGradeSex = schoolReportService.overYearGradeSex(school,Integer.parseInt(activityId));
+            map1.put("overYearMyopia", overYearMyopia.get("overYearMyopia"));
+            map1.put("seventeen", overYearGradeMyopia.get("seventeen"));
+            map1.put("eighteen", overYearGradeMyopia.get("eighteen"));
+            map1.put("nineteen", overYearGradeMyopia.get("nineteen"));
+            map1.put("qu",overYearGradeBuliang.get("seventeen"));
+            map1.put("jin",overYearGradeBuliang.get("eighteen"));
+            map1.put("ming",overYearGradeBuliang.get("nineteen"));
+            map1.put("studentSexNanMyopia", overYearSexNan.get("studentSexMyopia"));
+            map1.put("studentSexNvMyopia", overYearSexNv.get("studentSexMyopia"));
+            map1.put("overYearSexNan", overYearGradeSex.get("overYearSexNan"));
+            map1.put("overYearSexNv", overYearGradeSex.get("overYearSexNv"));
+            map1.put("year", overYearMyopia.get("year"));
+            map1.put("grade", gradeMyopia.get("grade"));
+            map1.put("school",school);
+            list.add(map1);
 		}
 		
 		Map<String, Object> map = new HashMap<>();
 			Map<String, List<Double>> jinshi = jiaoyujuReportService.suoyounianjijinshi(request);
 			Map<String, List<Double>> buliang = jiaoyujuReportService.suoyounianjibuliang(request);
-			Map<String, Object> nianling = jiaoyujuReportService.genianlingjinshiyear(request);
-//			Map<String, Object> nianling = jiaoyujuReportService.gexuebujinshiyear(request);
-			Map<String, Object> nannv = jiaoyujuReportService.nannvjinshiyear(request);
+//			Map<String, Object> nianling = jiaoyujuReportService.genianlingjinshiyear(request);
+			Map<String, Object> nianling = jiaoyujuReportService.gexuebujinshiyear(request);
+//			Map<String, Object> nannv = jiaoyujuReportService.nannvjinshiyear(request);
 			
 			map.put("jinshi", jinshi.get("jinshi"));
 			
 			map.put("buliang", buliang.get("buliang"));
 			
-			map.put("nianling", nianling.get("nianling"));
-//			map.put("nianling", nianling);
+//			map.put("nianling", nianling.get("nianling"));
+			map.put("nianling", nianling);
 
-			map.put("nan", nannv.get("nan"));
-			map.put("nv", nannv.get("nv"));
+//			map.put("nan", nannv.get("nan"));
+//			map.put("nv", nannv.get("nv"));
 			map.put("list",list);
 
 
@@ -285,7 +285,7 @@ public class StudentReportNewController {
 	@ResponseBody
 	@PostMapping("/studentReportNew/jiaoyujutu")
 	public String jiaoyujutu(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		String format = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		String format = new SimpleDateFormat("yyyyMMdd").format(new Date());
 		Map<String,String> map = new HashMap<>();
 		String gejinshi=request.getParameter("gejinshi");
 		String gejinshi1 = baseString(gejinshi);
@@ -293,17 +293,18 @@ public class StudentReportNewController {
 		String gebuliang1 = baseString(gebuliang);
 		String nianling=request.getParameter("nianling");
 		String nianling1 = baseString(nianling);
-		String nannv=request.getParameter("nannv");
-		String nannv1 = baseString(nannv);
+//		String nannv=request.getParameter("nannv");
+//		String nannv1 = baseString(nannv);
 		map.put("gejinshi", gejinshi1);
 		map.put("gebuliang", gebuliang1);
 		map.put("nianling",nianling1);
-		map.put("nannv", nannv1);
+//		map.put("nannv", nannv1);
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			LinShiUrlDO ls = new LinShiUrlDO();
 			ls.setName(entry.getKey());
 			ls.setImgUrl(entry.getValue());
 			ls.setType(format);
+			ls.setFore("jyj");
 			linShiUrlService.save(ls);
 		}		
 		return format;

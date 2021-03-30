@@ -225,10 +225,7 @@ public class StudentNewController {
 	@GetMapping("/detail/{id}")
 	@RequiresPermissions("information:student:edit")
 	String detail(@PathVariable("id") Integer id,Model model){
-		Map<String,Object> map = new HashMap<String,Object>();
 		StudentNewDO student = studentNewService.get(id);
-		List<ResultEyesightNewDO> list = resultEyesightNewService.list(map);
-		model.addAttribute("list", list);
 		model.addAttribute("student", student);
 	    return "informationNEW/student/detailed";
 	}

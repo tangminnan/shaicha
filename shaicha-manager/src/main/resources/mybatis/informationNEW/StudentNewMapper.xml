@@ -886,7 +886,7 @@ LIMIT #{i},#{j}
 
 	<select id="queryBySchoolGrade" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 		select activity_id,school,grade from t_student_new where activity_id = #{activityId} and school = #{school} 
-		 <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+		 <if test="sysId != null and sysId != ''"> and sys_id = #{sysId}  </if>
  		GROUP BY grade
 		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
 	</select>

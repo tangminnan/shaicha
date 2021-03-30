@@ -462,45 +462,53 @@
 					<w:tblGrid>
 						<w:gridCol w:w="9809" /></w:tblGrid>
 					<w:tr>
-						<w:tblPrEx>
-							<w:tblBorders>
-								<w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" /></w:tblBorders>
-							<w:tblCellMar>
-								<w:top w:w="0" w:type="dxa" />
-								<w:left w:w="108" w:type="dxa" />
-								<w:bottom w:w="0" w:type="dxa" />
-								<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
-						</w:tblPrEx>
-						<w:trPr>
-							<w:trHeight w:val="773" w:h-rule="atLeast" /></w:trPr>
-						<w:tc>
-							<w:tcPr>
-								<w:tcW w:w="9809" w:type="dxa" />
-								<w:tcBorders>
-									<w:top w:val="double" w:sz="4" wx:bdrwidth="30" w:space="0" w:color="auto" /></w:tcBorders>
-								<w:shd w:val="clear" w:color="auto" w:fill="auto" />
-								<w:noWrap w:val="0" />
-								<w:tcMar>
-									<w:left w:w="108" w:type="dxa" />
-									<w:right w:w="108" w:type="dxa" /></w:tcMar>
-								<w:vAlign w:val="top" /></w:tcPr>
-							<w:p>
-								<w:pPr>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:cs="宋体" w:hint="default" />
-										<w:sz w:val="24" />
-										<w:lang w:val="ZH-CN" /></w:rPr>
-								</w:pPr>
-								<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="24" />
-										<w:lang w:val="ZH-CN" /></w:rPr>
+                    <w:tblPrEx>
+                        <w:tblBorders>
+                            <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                        </w:tblBorders>
+                        <w:tblCellMar>
+                            <w:top w:w="0" w:type="dxa"/>
+                            <w:left w:w="108" w:type="dxa"/>
+                            <w:bottom w:w="0" w:type="dxa"/>
+                            <w:right w:w="108" w:type="dxa"/>
+                        </w:tblCellMar>
+                    </w:tblPrEx>
+                    <w:trPr>
+                        <w:trHeight w:val="633" w:h-rule="atLeast"/>
+                    </w:trPr>
+                    <w:tc>
+                        <w:tcPr>
+                            <w:tcW w:w="9809" w:type="dxa"/>
+                            <w:tcBorders>
+                                <w:top w:val="double" w:sz="4" wx:bdrwidth="30" w:space="0" w:color="auto"/>
+                            </w:tcBorders>
+                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+                            <w:noWrap w:val="0"/>
+                            <w:tcMar>
+                                <w:left w:w="108" w:type="dxa"/>
+                                <w:right w:w="108" w:type="dxa"/>
+                            </w:tcMar>
+                            <w:vAlign w:val="top"/>
+                        </w:tcPr>
+                        <w:p>
+                            <w:pPr>
+                                <w:rPr>
+                                    <w:rFonts w:ascii="宋体" w:cs="宋体" w:hint="default"/>
+                                    <w:sz w:val="24"/>
+                                    <w:lang w:val="ZH-CN"/>
+                                </w:rPr>
+                            </w:pPr>
+                            <w:r>
+                                <w:rPr>
+                                    <w:rFonts w:ascii="宋体" w:cs="宋体" w:hint="fareast"/>
+                                    <w:sz w:val="24"/>
+                                    <w:lang w:val="ZH-CN"/>
+                                </w:rPr>
 									<w:t>学校：</w:t>
 								</w:r>								
 								<w:r>
@@ -3017,46 +3025,55 @@
 						</w:tc>
 					</w:tr>
 					<w:tr>
-						<w:tblPrEx>
-							<w:tblBorders>
-								<w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" />
-								<w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto" /></w:tblBorders>
-							<w:tblCellMar>
-								<w:top w:w="0" w:type="dxa" />
-								<w:left w:w="108" w:type="dxa" />
-								<w:bottom w:w="0" w:type="dxa" />
-								<w:right w:w="108" w:type="dxa" /></w:tblCellMar>
-						</w:tblPrEx>
-						<w:trPr>
-							<w:trHeight w:val="1430" w:h-rule="atLeast" /></w:trPr>
-						<w:tc>
-							<w:tcPr>
-								<w:tcW w:w="9855" w:type="dxa" />
-								<w:shd w:val="clear" w:color="auto" w:fill="auto" /></w:tcPr>
-							<w:p>
-								<w:pPr>
-									<w:tabs>
-										<w:tab w:val="center" w:pos="4153" /></w:tabs>
-									<w:spacing w:line="240" w:line-rule="auto" />
-									<w:ind w:first-line="240" w:first-line-chars="100" />
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast" />
-										<w:b/>
-										<w:sz-cs w:val="21" />
-										<w:vertAlign w:val="baseline" /></w:rPr>
-								</w:pPr>
-								<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:color w:val="000000" />
-										<w:sz w:val="24" />
-										<w:sz-cs w:val="24" />
-										<w:highlight w:val="white" /></w:rPr>
-									<w:t>通过三级视功能检查可以评定双眼单视功能、集合功能、立体视功能、调节功能、眼位等，排除有无功能性异常、眼位异常的情况，有无加速近视进展的诱因。并根据检查结果制定个性化近视防控方案，有效控制近视进展、缓解视疲劳，解决视物困难、重影、模糊、丢字、串行等学习效率低下问题</w:t>
+                    <w:tblPrEx>
+                        <w:tblBorders>
+                            <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                            <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+                        </w:tblBorders>
+                        <w:tblCellMar>
+                            <w:top w:w="0" w:type="dxa"/>
+                            <w:left w:w="108" w:type="dxa"/>
+                            <w:bottom w:w="0" w:type="dxa"/>
+                            <w:right w:w="108" w:type="dxa"/>
+                        </w:tblCellMar>
+                    </w:tblPrEx>
+                    <w:trPr>
+                        <w:trHeight w:val="845" w:h-rule="atLeast"/>
+                    </w:trPr>
+                    <w:tc>
+                        <w:tcPr>
+                            <w:tcW w:w="9855" w:type="dxa"/>
+                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+                        </w:tcPr>
+                        <w:p>
+                            <w:pPr>
+                                <w:widowControl w:val="off"/>
+                                <w:tabs>
+                                    <w:tab w:val="center" w:pos="4153"/>
+                                </w:tabs>
+                                <w:spacing w:line="240" w:line-rule="auto"/>
+                                <w:ind w:first-line="240" w:first-line-chars="100"/>
+                                <w:jc w:val="both"/>
+                                <w:rPr>
+                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:hint="fareast"/>
+                                    <w:b/>
+                                    <w:sz-cs w:val="21"/>
+                                    <w:vertAlign w:val="baseline"/>
+                                </w:rPr>
+                            </w:pPr>
+                            <w:r>
+                                <w:rPr>
+                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
+                                    <w:color w:val="000000"/>
+                                    <w:sz w:val="24"/>
+                                    <w:sz-cs w:val="24"/>
+                                    <w:highlight w:val="none"/>
+                                </w:rPr>
+									<w:t>通过三级视功能检查可以评定双眼视功能、调节功能、眼位等，排除有无功能性异常、眼位异常的情况，有无加速近视进展的诱因。并根据检查结果制定个性化近视防控方案，有效控制近视进展、缓解视疲劳，解决视物困难、重影、模糊、丢字、串行等问题</w:t>
 								</w:r>
 							</w:p>
 						</w:tc>
@@ -3331,7 +3348,6 @@
 							<w:sz w:val="24" /></w:rPr>
 					</w:pPr>
 				</w:p>
-				<w:p/>
 				<w:sectPr>
 					<w:pgSz w:w="11906" w:h="16838" />
 					<w:pgMar w:top="1134" w:right="851" w:bottom="500" w:left="851" w:header="851" w:footer="992" w:gutter="0" />

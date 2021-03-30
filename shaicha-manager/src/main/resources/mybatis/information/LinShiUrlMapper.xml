@@ -12,7 +12,7 @@
 		  		  <if test="imgUrl != null and imgUrl != ''"> and img_url = #{imgUrl} </if>
 		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
 		  		  <if test="type != null and type != ''"> and type = #{type} </if>
-		  		  <if test="fore != null and fore != ''"> and for = #{fore} </if>
+		  		  <if test="fore != null and fore != ''"> and fore = #{fore} </if>
 		 </where>
 	</select>
 	
