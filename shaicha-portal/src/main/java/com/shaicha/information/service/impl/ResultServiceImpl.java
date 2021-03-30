@@ -903,4 +903,28 @@ public class ResultServiceImpl implements ResultService{
 
 	}
 
+	@Override
+	public StudentDO getStudentInfoByUserID(Long userID) {
+		return studentDao.getStudentInfoByUserID(userID);
+	}
+
+	@Override
+	public int updateDianziEye(ResultEyesightDO resultEyesightDO) {
+		return eyesightDao.updateDianziEye(resultEyesightDO);
+	}
+
+	@Override
+	public List<ResultEyesightDO> getEyeSight(Long userID) {
+		return eyesightDao.getEyesightDO(userID);
+	}
+
+	@Override
+	public int saveDianziEye(ResultEyesightDO resultEyesightDO) {
+		return eyesightDao.saveDianziEye(resultEyesightDO);
+	}
+
+	@Override
+	public void updateLastCheckTime(Long userID, Date date) {
+		studentDao.updateLastCheckTime(userID,date);
+	}
 }

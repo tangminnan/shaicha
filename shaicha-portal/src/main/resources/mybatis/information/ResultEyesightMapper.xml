@@ -97,4 +97,37 @@
 		update t_result_eyesight_new set  naked_farvision_os_y = #{nakedFarvisionOsY} , naked_farvision_od_y = #{nakedFarvisionOdY} where student_id= #{studentId}
 	</update>
 
+
+	<update id="updateDianziEye"  parameterType="com.shaicha.information.domain.ResultEyesightDO">
+		update t_result_eyesight_new
+		<set>
+			<if test="nakedFarvisionOd != null">`naked_farvision_od` = #{nakedFarvisionOd}, </if>
+			<if test="nakedFarvisionOs != null">`naked_farvision_os` = #{nakedFarvisionOs}, </if>
+			<if test="correctionFarvisionOd != null">`correction_farvision_od` = #{correctionFarvisionOd}, </if>
+			<if test="correctionFarvisionOs != null">`correction_farvision_os` = #{correctionFarvisionOs}, </if>
+		</set>
+		where student_id = #{studentId}
+	</update>
+	
+	<insert id="saveDianziEye" parameterType="com.shaicha.information.domain.ResultEyesightDO" useGeneratedKeys="true" keyProperty="tEyesightId">
+			insert into t_result_eyesight_new
+		(
+			`student_id`,
+			`naked_farvision_od`,
+			`naked_farvision_os`,
+			`correction_farvision_od`,
+			`correction_farvision_os`,
+			`check_date`
+		)
+		values
+		(
+			#{studentId},
+			#{nakedFarvisionOd},
+			#{nakedFarvisionOs},
+			#{correctionFarvisionOd},
+			#{correctionFarvisionOs},
+			#{checkDate}
+		)
+	</insert>
+
 </mapper>

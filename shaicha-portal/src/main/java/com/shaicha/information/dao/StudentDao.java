@@ -36,6 +36,8 @@ public interface StudentDao {
 	void updateStudentDOshi(StudentDO studentDO);
 	
 	int update(StudentDO student);
+
+    StudentDO getStudentInfoByUserID(Long userID);
 	
 	/*List<StudentDO> list(Map<String,Object> map);
 	
