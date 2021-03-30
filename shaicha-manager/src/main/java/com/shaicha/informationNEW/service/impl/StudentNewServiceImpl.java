@@ -898,8 +898,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 		}
 		params.put("zhongxin",userDO);
 		if(userDO.getZhongxinImg() != null && !userDO.getZhongxinImg().equals("")){
-//			String	zhongxinImg = Base64Utils.ImageToBase64ByLocal(bootdoConfig.getUploadPath()+ userDO.getZhongxinImg().substring(6));
-//			params.put("zhongxinImg",zhongxinImg);
+			String	zhongxinImg = Base64Utils.ImageToBase64ByLocal(bootdoConfig.getUploadPath()+ userDO.getZhongxinImg().substring(6));
+			params.put("zhongxinImg",zhongxinImg);
 		}else{
 			params.put("zhongxinImg","");
 		}
