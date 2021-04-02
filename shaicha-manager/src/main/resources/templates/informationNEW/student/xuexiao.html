@@ -81,7 +81,24 @@
 								</span>									
 								</div>
 								
-							</div> 
+							</div>
+                            <div class="form-group" id="type_div" hidden="hidden">
+                                <label class="col-sm-3 control-label">视力：</label>
+                                <div class="col-sm-8">
+								<span>
+									<select name="Stype" id="Stype" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5">
+                                        <option value="">请选择</option>
+		                        		<option value="jinshi">近视</option>
+		                        		<option value="jiaxing">假性</option>
+		                        		<option value="linchuang">临床</option>
+		                        		<option value="buliang">不良</option>
+		                        		<option value="zhengchang">正常</option>
+		                        		<option value="nocheck">未检</option>
+		                    		</select>
+								</span>
+                                </div>
+
+                            </div>
 							<div class="form-group" id="grade_div">	
 								<label class="col-sm-3 control-label">年级：</label>
 								<div class="col-sm-8">	
@@ -160,6 +177,8 @@
 		    	var ii = $('<select name="school" id="school" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5"></select>');
 		    	$("#select_choose_id").append(ii);
 		    	$("#school").empty();
+                $("#type_div").hide();
+                $("#type_div").empty();
 		    	$("#school").selectpicker('refresh');
 		    	$('#grade_div').css("display","none");
 				$('#class_div').css("display","none");
@@ -169,6 +188,7 @@
 				$("#activityId").val("");
 				$("#grade").empty();
 		    	$("#stuclass").empty();
+                $("#type_div").hide();
 				$("#select_choose_id").empty();
 				var ii = $('<select name="school" id="school" multiple class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="true" data-size="5"></select>');
 		    	$("#select_choose_id").append(ii);
@@ -186,6 +206,7 @@
 		    	var ii = $('<select name="school" id="school" onchange="stuschool();" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5"></select>');
 		    	$("#select_choose_id").append(ii);
 		    	$("#school").empty();
+                $("#type_div").hide();
 		    	$("#school").selectpicker('refresh');
 				$('#grade_div').css("display","block");
 				$('#class_div').css("display","none");
@@ -199,6 +220,7 @@
 		    	var ii = $('<select name="school" id="school" onchange="stuschool();" class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="false" data-size="5"></select>');
 		    	$("#select_choose_id").append(ii);
 		    	$("#school").empty();
+                $("#type_div").hide();
 		    	$("#school").selectpicker('refresh');
 		    	$('#grade_div').css("display","block");
 				$('#class_div').css("display","block");
@@ -208,9 +230,11 @@
 				$("#activityId").val("");
 		    	$("#grade").empty();
 		    	$("#stuclass").empty();
-		    	$("#select_choose_id").empty();
+                var ii = $('<select name="school" id="school" multiple class="selectpicker show-tick form-control" data-live-search="false" data-actions-box="true" data-size="5"></select>');
+                $("#select_choose_id").append(ii);
 		    	$("#school").empty();
-		    	$("#school_div").hide();
+		    	$("#school_div").show();
+		    	$("#type_div").show();
 		    	$('#grade_div').css("display","none");
 				$('#class_div').css("display","none");
 			}

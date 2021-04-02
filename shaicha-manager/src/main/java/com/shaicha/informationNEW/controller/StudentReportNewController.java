@@ -426,10 +426,12 @@ public class StudentReportNewController {
 		String grade = request.getParameter("grade");
 		String type = request.getParameter("type");
 		String stuclass = request.getParameter("stuclass");
+		String Stype = request.getParameter("Stype");
 		model.addAttribute("school", school);
 		model.addAttribute("grade", grade);
 		model.addAttribute("activityId", activityId);
 		model.addAttribute("type", type);
+		model.addAttribute("Stype", Stype);
 		model.addAttribute("stuclass", stuclass);
 		return "informationNEW/student/dengdaigrade";
 			

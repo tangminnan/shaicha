@@ -85,6 +85,7 @@
             <if test="shili == 'jiaxing'"> AND ((naked_farvision_od >= '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os >= '5.0')) and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
             <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75')) and last_check_time is not NULL </if>
             <if test="shili == 'zhengchang'"> AND naked_farvision_od >= '5.0' and naked_farvision_os >= '5.0' and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
+            <if test="shili == 'nocheck'"> and last_check_time is null </if>
             <if test="checkType != null and checkType != ''"> and check_type != #{checkType} </if>
             <if test="studentName != null and studentName != ''"> and student_name like concat('%', #{studentName},'%') </if>
             <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
@@ -151,6 +152,11 @@
         <where>
             <if test="id != null and id != ''"> and id = #{id} </if>
             <if test="shili == 'jinshi'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0')) and last_check_time is not NULL </if>
+            <if test="shili == 'buliang'"> AND (naked_farvision_od &lt; '5.0'  or  naked_farvision_os &lt; '5.0') and last_check_time is not NULL </if>
+            <if test="shili == 'jiaxing'"> AND ((naked_farvision_od >= '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os >= '5.0')) and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
+            <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75')) and last_check_time is not NULL </if>
+            <if test="shili == 'zhengchang'"> AND naked_farvision_od >= '5.0' and naked_farvision_os >= '5.0' and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
+            <if test="shili == 'nocheck'"> and last_check_time is null </if>
             <if test="checkType != null and checkType != ''"> and check_type != #{checkType} </if>
             <if test="studentName != null and studentName != ''"> and student_name = #{studentName} </if>
             <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
@@ -178,7 +184,7 @@
 		where last_check_time is not null
 			 <if test="checkType != null and checkType != ''">and  check_type = #{checkType} </if>
 			 <if test="address != null and address != ''">and  address = #{address} </if>
-			 <if test="lastCheckTime != null and lastCheckTime != ''"> and DATE_FORMAT(last_check_time,'%Y-%m-%d') between '2020-06-01' and '2020-12-31' </if>
+			 <if test="lastCheckTime != null and lastCheckTime != ''"> and DATE_FORMAT(last_check_time,'%Y-%m-%d') between '2021-01-01' and '2021-06-30' </if>
 		
 	</select>
     <select id="countP" resultType="int">

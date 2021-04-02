@@ -7369,1646 +7369,1498 @@
 			</#list>
             <w:p/>
             <w:p>
-                <w:pPr>
-                    <w:rPr>
-                        <w:rFonts w:hint="fareast"/>
-                    </w:rPr>
-                </w:pPr>
-            </w:p>
-            <w:p/>
+        <w:pPr>
+          <w:rPr>
+            <w:rFonts w:hint="fareast"/>
+            <w:sz w:val="28"/>
+            <w:sz-cs w:val="28"/>
+          </w:rPr>
+        </w:pPr>
+        <w:r>
+          <w:rPr>
+            <w:rFonts w:hint="fareast"/>
+            <w:sz w:val="28"/>
+            <w:sz-cs w:val="28"/>
+          </w:rPr>
+          <w:br w:type="page"/>
+        </w:r>
+        <w:r>
+          <w:rPr>
+            <w:rFonts w:hint="fareast"/>
+            <w:sz w:val="28"/>
+            <w:sz-cs w:val="28"/>
+            <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+          </w:rPr>
+          <w:t>附人员表：</w:t>
+        </w:r>
+      </w:p>
+      <w:tbl>
+        <w:tblPr>
+          <w:tblStyle w:val="a4"/>
+          <w:tblW w:w="4366" w:type="pct"/>
+          <w:jc w:val="center"/>
+          <w:tblInd w:w="631" w:type="dxa"/>
+          <w:tblBorders>
+            <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+          </w:tblBorders>
+          <w:tblCellMar>
+            <w:left w:w="108" w:type="dxa"/>
+            <w:right w:w="108" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPr>
+        <w:tblGrid>
+          <w:gridCol w:w="1443"/>
+          <w:gridCol w:w="1444"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1468"/>
+        </w:tblGrid>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:trHeight w:val="452" w:h-rule="atLeast"/>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="5000" w:type="pct"/>
+              <w:gridSpan w:val="6"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
             <w:p>
-                <w:pPr>
-                    <w:rPr>
-                        <w:sz w:val="28"/>
-                        <w:sz-cs w:val="28"/>
-                    </w:rPr>
-                </w:pPr>
-                <w:r>
-                    <w:rPr>
-                        <w:rFonts w:hint="fareast"/>
-                        <w:sz w:val="28"/>
-                        <w:sz-cs w:val="28"/>
-                    </w:rPr>
-                    <w:br w:type="page"/>
-                </w:r>
-                <w:r>
-                    <w:rPr>
-                        <w:rFonts w:hint="fareast"/>
-                        <w:sz w:val="28"/>
-                        <w:sz-cs w:val="28"/>
-                    </w:rPr>
-                    <w:t>附各班级</w:t>
-                </w:r>
-                <w:r>
-                    <w:rPr>
-                        <w:sz w:val="28"/>
-                        <w:sz-cs w:val="28"/>
-                    </w:rPr>
-                    <w:t>检查结果：</w:t>
-                </w:r>
+              <w:pPr>
+                <w:keepNext w:val="off"/>
+                <w:keepLines w:val="off"/>
+                <w:pageBreakBefore w:val="off"/>
+                <w:widowControl w:val="off"/>
+                <w:kinsoku/>
+                <w:wordWrap/>
+                <w:overflowPunct/>
+                <w:topLinePunct w:val="off"/>
+                <w:autoSpaceDE/>
+                <w:autoSpaceDN/>
+                <w:adjustRightInd/>
+                <w:snapToGrid/>
+                <w:jc w:val="center"/>
+                <w:textAlignment w:val="auto"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="default"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>真性近视学生表</w:t>
+              </w:r>
             </w:p>
-            <w:p/>
-			<#list xuesheng as xs>
-            <w:tbl>
-                <w:tblPr>
-                    <w:tblStyle w:val="a7"/>
-                    <w:tblW w:w="9197" w:type="dxa"/>
-                    <w:jc w:val="center"/>
-                    <w:tblInd w:w="10" w:type="dxa"/>
-                    <w:tblBorders>
-                        <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        <w:insideH w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        <w:insideV w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                    </w:tblBorders>
-                    <w:tblLayout w:type="Fixed"/>
-                    <w:tblCellMar>
-                        <w:top w:w="0" w:type="dxa"/>
-                        <w:left w:w="0" w:type="dxa"/>
-                        <w:bottom w:w="0" w:type="dxa"/>
-                        <w:right w:w="0" w:type="dxa"/>
-                    </w:tblCellMar>
-                </w:tblPr>
-                <w:tblGrid>
-                    <w:gridCol w:w="970"/>
-                    <w:gridCol w:w="577"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                    <w:gridCol w:w="850"/>
-                </w:tblGrid>
-                <w:tr>
-                    <w:tblPrEx>
-                        <w:tblBorders>
-                            <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideH w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideV w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        </w:tblBorders>
-                        <w:tblCellMar>
-                            <w:top w:w="0" w:type="dxa"/>
-                            <w:left w:w="0" w:type="dxa"/>
-                            <w:bottom w:w="0" w:type="dxa"/>
-                            <w:right w:w="0" w:type="dxa"/>
-                        </w:tblCellMar>
-                    </w:tblPrEx>
-                    <w:trPr>
-                        <w:trHeight w:val="387" w:h-rule="atLeast"/>
-                        <w:jc w:val="center"/>
-                    </w:trPr>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="970" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>参与班级</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="8227" w:type="dxa"/>
-                            <w:gridSpan w:val="10"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${xs.grade!''}${xs.class!''}</w:t>
-                            </w:r>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>班</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                </w:tr>
-                <w:tr>
-                    <w:tblPrEx>
-                        <w:tblBorders>
-                            <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideH w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideV w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        </w:tblBorders>
-                        <w:tblCellMar>
-                            <w:top w:w="0" w:type="dxa"/>
-                            <w:left w:w="0" w:type="dxa"/>
-                            <w:bottom w:w="0" w:type="dxa"/>
-                            <w:right w:w="0" w:type="dxa"/>
-                        </w:tblCellMar>
-                    </w:tblPrEx>
-                    <w:trPr>
-                        <w:trHeight w:val="387" w:h-rule="atLeast"/>
-                        <w:jc w:val="center"/>
-                    </w:trPr>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="970" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>普查时间</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="8227" w:type="dxa"/>
-                            <w:gridSpan w:val="10"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${xs.chaDate!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                </w:tr>
-                <w:tr>
-                    <w:tblPrEx>
-                        <w:tblBorders>
-                            <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideH w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideV w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        </w:tblBorders>
-                        <w:tblCellMar>
-                            <w:top w:w="0" w:type="dxa"/>
-                            <w:left w:w="0" w:type="dxa"/>
-                            <w:bottom w:w="0" w:type="dxa"/>
-                            <w:right w:w="0" w:type="dxa"/>
-                        </w:tblCellMar>
-                    </w:tblPrEx>
-                    <w:trPr>
-                        <w:trHeight w:val="699" w:h-rule="atLeast"/>
-                        <w:jc w:val="center"/>
-                    </w:trPr>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="970" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>姓名</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="577" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>性别</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>裸眼</w:t>
-                            </w:r>
-                        </w:p>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>视力</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>戴镜</w:t>
-                            </w:r>
-                        </w:p>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>视力</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="2550" w:type="dxa"/>
-                            <w:gridSpan w:val="3"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:ind w:first-line="525" w:first-line-chars="250"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>电脑验光</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="1700" w:type="dxa"/>
-                            <w:gridSpan w:val="2"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:ind w:first-line="105" w:first-line-chars="50"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>角膜曲率</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:ind w:first-line="105" w:first-line-chars="50"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>眼轴</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                </w:tr>
-                <w:tr>
-                    <w:tblPrEx>
-                        <w:tblBorders>
-                            <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideH w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideV w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        </w:tblBorders>
-                        <w:tblCellMar>
-                            <w:top w:w="0" w:type="dxa"/>
-                            <w:left w:w="0" w:type="dxa"/>
-                            <w:bottom w:w="0" w:type="dxa"/>
-                            <w:right w:w="0" w:type="dxa"/>
-                        </w:tblCellMar>
-                    </w:tblPrEx>
-                    <w:trPr>
-                        <w:trHeight w:val="699" w:h-rule="atLeast"/>
-                        <w:jc w:val="center"/>
-                    </w:trPr>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="970" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="577" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>球镜</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>柱镜</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>轴位</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>水平</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>垂直</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                </w:tr>
-				<#list xs.jieguo as jg>
-                <w:tr>
-                    <w:tblPrEx>
-                        <w:tblBorders>
-                            <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideH w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideV w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        </w:tblBorders>
-                        <w:tblCellMar>
-                            <w:top w:w="0" w:type="dxa"/>
-                            <w:left w:w="0" w:type="dxa"/>
-                            <w:bottom w:w="0" w:type="dxa"/>
-                            <w:right w:w="0" w:type="dxa"/>
-                        </w:tblCellMar>
-                    </w:tblPrEx>
-                    <w:trPr>
-                        <w:trHeight w:val="283" w:h-rule="atLeast"/>
-                        <w:jc w:val="center"/>
-                    </w:trPr>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="970" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:tcBorders>
-                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                                <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            </w:tcBorders>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.studentName!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="577" w:type="dxa"/>
-                            <w:vmerge w:val="restart"/>
-                            <w:tcBorders>
-                                <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            </w:tcBorders>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <#if jg.studentSex == 1>
-									<w:t>男</w:t>
-									<#elseif jg.studentSex == 2>
-									<w:t>女</w:t>
-									<#else>
-									<w:t>未知</w:t>
-									</#if>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>右眼</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="140" w:right="120"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.nakedNearvisionOd!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.lifeNearvisionOd!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.diopterSOd!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.diopterCOd!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.diopterAOd!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR1Od!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR2Od!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="default"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.secondCheckOd!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                </w:tr>
-                <w:tr>
-                    <w:tblPrEx>
-                        <w:tblBorders>
-                            <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideH w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            <w:insideV w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                        </w:tblBorders>
-                        <w:tblCellMar>
-                            <w:top w:w="0" w:type="dxa"/>
-                            <w:left w:w="0" w:type="dxa"/>
-                            <w:bottom w:w="0" w:type="dxa"/>
-                            <w:right w:w="0" w:type="dxa"/>
-                        </w:tblCellMar>
-                    </w:tblPrEx>
-                    <w:trPr>
-                        <w:trHeight w:val="283" w:h-rule="atLeast"/>
-                        <w:jc w:val="center"/>
-                    </w:trPr>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="970" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:tcBorders>
-                                <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            </w:tcBorders>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="577" w:type="dxa"/>
-                            <w:vmerge w:val="continue"/>
-                            <w:tcBorders>
-                                <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
-                            </w:tcBorders>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="21"/>
-                                    <w:sz-cs w:val="21"/>
-                                </w:rPr>
-                                <w:t>左眼</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.nakedNearvisionOs!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:before="54" w:line="240" w:line-rule="auto"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.lifeNearvisionOs!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.diopterSOs!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.diopterCOs!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="top"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110" w:right-chars="0"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-                            <w:r>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                    <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
-                                </w:rPr>
-                                <w:t>${jg.diopterAOs!''}</w:t>
-                            </w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="top"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110" w:right-chars="0"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR1Os!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="top"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110" w:right-chars="0"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.cornealR2Os!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                    <w:tc>
-                        <w:tcPr>
-                            <w:tcW w:w="850" w:type="dxa"/>
-                            <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
-                            <w:vAlign w:val="center"/>
-                        </w:tcPr>
-                        <w:p>
-                            <w:pPr>
-                                <w:pStyle w:val="a6"/>
-                                <w:widowControl w:val="off"/>
-                                <w:autoSpaceDE w:val="off"/>
-                                <w:autoSpaceDN w:val="off"/>
-                                <w:spacing w:line="220" w:line-rule="exact"/>
-                                <w:ind w:left="130" w:right="110"/>
-                                <w:jc w:val="center"/>
-                                <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast"/>
-                                    <w:sz w:val="20"/>
-                                    <w:sz-cs w:val="20"/>
-                                </w:rPr>
-                            </w:pPr>
-							<w:r>
-									<w:rPr>
-										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
-										<w:sz w:val="20" />
-										<w:sz-cs w:val="20" />
-										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
-									<w:t>${jg.secondCheckOs!''}</w:t>
-								</w:r>
-                        </w:p>
-                    </w:tc>
-                </w:tr>
-				</#list>
-            </w:tbl>
-            <w:p/>
-            <w:p/>
-			</#list>
-			<w:p/>
-			<w:p/>
-			<w:p/>
-            <w:sectPr>
-                <w:pgSz w:w="11906" w:h="16838"/>
-                <w:pgMar w:top="1440" w:right="1080" w:bottom="1440" w:left="1080" w:header="851" w:footer="992" w:gutter="0"/>
-                <w:pgBorders>
-                    <w:top w:val="nil"/>
-                    <w:left w:val="nil"/>
-                    <w:bottom w:val="nil"/>
-                    <w:right w:val="nil"/>
-                </w:pgBorders>
-                <w:cols w:space="425"/>
-                <w:docGrid w:type="lines" w:line-pitch="312"/>
-            </w:sectPr>
-        </wx:sect>
-    </w:body>
+          </w:tc>
+        </w:tr>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="842" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+		<#list zhenxingM as zm>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${zm.name0!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${zm.class0!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${zm.name1!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${zm.class1!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${zm.name2!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="842" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${zm.class2!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+        </#list>
+		<w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:trHeight w:val="462" w:h-rule="atLeast"/>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="default"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>合计</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="4169" w:type="pct"/>
+              <w:gridSpan w:val="5"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${zhenxingN!''}人</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+      </w:tbl>
+      <w:p/>
+      <w:p/>
+      <w:tbl>
+        <w:tblPr>
+          <w:tblStyle w:val="a4"/>
+          <w:tblW w:w="4366" w:type="pct"/>
+          <w:jc w:val="center"/>
+          <w:tblInd w:w="631" w:type="dxa"/>
+          <w:tblBorders>
+            <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+          </w:tblBorders>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:left w:w="108" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+            <w:right w:w="108" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPr>
+        <w:tblGrid>
+          <w:gridCol w:w="1443"/>
+          <w:gridCol w:w="1444"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1468"/>
+        </w:tblGrid>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:trHeight w:val="452" w:h-rule="atLeast"/>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="5000" w:type="pct"/>
+              <w:gridSpan w:val="6"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:tabs>
+                  <w:tab w:val="center" w:pos="4301"/>
+                  <w:tab w:val="left" w:pos="5450"/>
+                </w:tabs>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="default"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>假性近视学生表</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="842" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+		<#list jiaxingM as jm>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${jm.name0!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${jm.class0!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${jm.name1!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${jm.class1!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${jm.name2!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="842" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${jm.class2!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+        </#list>
+		<w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:trHeight w:val="492" w:h-rule="atLeast"/>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="default"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>合计</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="4169" w:type="pct"/>
+              <w:gridSpan w:val="5"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${jiaxingN!''}人</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+      </w:tbl>
+      <w:p/>
+      <w:p/>
+      <w:tbl>
+        <w:tblPr>
+          <w:tblStyle w:val="a4"/>
+          <w:tblW w:w="4366" w:type="pct"/>
+          <w:jc w:val="center"/>
+          <w:tblInd w:w="631" w:type="dxa"/>
+          <w:tblBorders>
+            <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+          </w:tblBorders>
+          <w:tblCellMar>
+            <w:top w:w="0" w:type="dxa"/>
+            <w:left w:w="108" w:type="dxa"/>
+            <w:bottom w:w="0" w:type="dxa"/>
+            <w:right w:w="108" w:type="dxa"/>
+          </w:tblCellMar>
+        </w:tblPr>
+        <w:tblGrid>
+          <w:gridCol w:w="1443"/>
+          <w:gridCol w:w="1444"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1448"/>
+          <w:gridCol w:w="1468"/>
+        </w:tblGrid>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:trHeight w:val="452" w:h-rule="atLeast"/>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="5000" w:type="pct"/>
+              <w:gridSpan w:val="6"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="default"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>未检查学生表</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>姓名</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="842" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:vertAlign w:val="baseline"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>班级</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+		<#list nocheckM as nc>
+        <w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${nc.name0!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${nc.class0!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${nc.name1!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${nc.class1!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="832" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${nc.name2!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="842" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${nc.class2!''}</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+        </#list>
+		<w:tr>
+          <w:tblPrEx>
+            <w:tblBorders>
+              <w:top w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:left w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:bottom w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:right w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideH w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+              <w:insideV w:val="single" w:sz="4" wx:bdrwidth="10" w:space="0" w:color="auto"/>
+            </w:tblBorders>
+            <w:tblCellMar>
+              <w:top w:w="0" w:type="dxa"/>
+              <w:left w:w="108" w:type="dxa"/>
+              <w:bottom w:w="0" w:type="dxa"/>
+              <w:right w:w="108" w:type="dxa"/>
+            </w:tblCellMar>
+          </w:tblPrEx>
+          <w:trPr>
+            <w:trHeight w:val="477" w:h-rule="atLeast"/>
+            <w:jc w:val="center"/>
+          </w:trPr>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="830" w:type="pct"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="default"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>合计</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+          <w:tc>
+            <w:tcPr>
+              <w:tcW w:w="4169" w:type="pct"/>
+              <w:gridSpan w:val="5"/>
+              <w:shd w:val="clear" w:color="auto" w:fill="auto"/>
+              <w:vAlign w:val="center"/>
+            </w:tcPr>
+            <w:p>
+              <w:pPr>
+                <w:jc w:val="center"/>
+                <w:rPr>
+                  <w:rFonts w:fareast="宋体" w:hint="fareast"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+              </w:pPr>
+              <w:r>
+                <w:rPr>
+                  <w:rFonts w:hint="fareast"/>
+                  <w:sz w:val="24"/>
+                  <w:sz-cs w:val="24"/>
+                  <w:vertAlign w:val="baseline"/>
+                  <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
+                </w:rPr>
+                <w:t>${nocheckN!''}人</w:t>
+              </w:r>
+            </w:p>
+          </w:tc>
+        </w:tr>
+      </w:tbl>
+      <w:p/>
+      <w:sectPr>
+        <w:pgSz w:w="11906" w:h="16838"/>
+        <w:pgMar w:top="1440" w:right="1080" w:bottom="1440" w:left="1080" w:header="851" w:footer="992" w:gutter="0"/>
+        <w:pgBorders>
+          <w:top w:val="nil"/>
+          <w:left w:val="nil"/>
+          <w:bottom w:val="nil"/>
+          <w:right w:val="nil"/>
+        </w:pgBorders>
+        <w:cols w:space="425"/>
+        <w:docGrid w:type="lines" w:line-pitch="312"/>
+      </w:sectPr>
+    </wx:sect>
+  </w:body>
 </w:wordDocument>

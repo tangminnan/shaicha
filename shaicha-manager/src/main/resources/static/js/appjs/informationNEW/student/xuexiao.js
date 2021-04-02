@@ -47,9 +47,13 @@ function save() {
 	}
 	if(type == 5){
 		var activityId = $('#activityId option:selected').val();
-		
-		window.location.href= "/studentReportNew/dengdaigrade?activityId="+activityId
+        var school = $('#school option:selected').text();
+        var Stype = $('#Stype option:selected').val();
+
+        window.location.href= "/studentReportNew/dengdaigrade?activityId="+activityId
 															+"&type="+type
+                                                             +"&school="+school
+                                                             +"&Stype="+Stype
 	}
 }
 
