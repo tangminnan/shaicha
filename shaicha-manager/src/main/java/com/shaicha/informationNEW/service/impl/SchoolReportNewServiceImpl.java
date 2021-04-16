@@ -1098,25 +1098,25 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 					}
 					if(LR1.size()>0){
 						resultCornealDO = LR1.get(0);
-						mapPP.put("R1zuo", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+						mapPP.put("R1zuo", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
 					}else{
 						mapPP.put("R1zuo", "");
 					}
 					if(LR2.size()>0){
 						resultCornealDO = LR2.get(0);
-						mapPP.put("R2zuo", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+						mapPP.put("R2zuo", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
 					}else{
 						mapPP.put("R2zuo","");
 					}
 					if(RR1.size()>0){
 						resultCornealDO = RR1.get(0);
-						mapPP.put("R1you", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+						mapPP.put("R1you", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
 					}else{
 						mapPP.put("R1you", "");
 					}
 					if(RR2.size()>0){
 						resultCornealDO = RR2.get(0);
-						mapPP.put("R2you", resultCornealDO.getCornealD()==null?"":resultCornealDO.getCornealD());
+						mapPP.put("R2you", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
 					}else{
 						mapPP.put("R2you", "");
 					}

@@ -200,6 +200,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 				if (!"筛查".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0)))&&!"验光".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0))))
 				    return R.error("请使用提供的模板进行导入!");
 				//判断导入的Excel中是否有未填项
+                int lastRowNum = sheet.getLastRowNum();
                 for (int a=2;a<=sheet.getLastRowNum();a++){
                     row = sheet.getRow(a);
 					if (ExcelUtils.getCellFormatValue(row.getCell((short)0))!=""&&
@@ -226,31 +227,35 @@ public class StudentNewServiceImpl implements StudentNewService {
 				for (int rowNum = 2; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					try {
 						row = sheet.getRow(rowNum);
-						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0)).replace(" ", "");//证件类型
-
-						String identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1)).replace(" ", "");	//身份证号
-						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2)).replace(" ", "");	// 姓名
-						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3)).replace(" ", "");			//性别
-						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)4)).replace(" ", "");		//年级
+						String ideentityType = ExcelUtils.getCellFormatValue(row.getCell((short)0)).replaceAll("[\t\n' ']", "");//证件类型
+                        String identityCard;
+                        if ("身份证".equals(ideentityType)){
+                            identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1)).replaceAll("[^xX0-9]", "");	//身份证号
+                        }else {
+                            identityCard = ExcelUtils.getCellFormatValue(row.getCell((short)1)).replaceAll("[\t\n' ']", "");	//身份证号
+                        }
+						String name = ExcelUtils.getCellFormatValue(row.getCell((short)2)).replaceAll("[\t\n' ']", "");	// 姓名
+						String sex = ExcelUtils.getCellFormatValue(row.getCell((short)3)).replaceAll("[\t\n' ']", "");//性别
+						String grade = ExcelUtils.getCellFormatValue(row.getCell((short)4)).replaceAll("[\t\n' ']", "");		//年级
 						Cell cell = row.getCell((short) 5);
 						cell.setCellType(CellType.STRING);
-						String studentClass = ExcelUtils.getCellFormatValue(cell).replace(" ", "");	//班级
+						String studentClass = ExcelUtils.getCellFormatValue(cell).replaceAll("[\t\n' ']", "");	//班级
 						cell = row.getCell((short) 6);
 						cell.setCellType(CellType.STRING);
-						String phone = ExcelUtils.getCellFormatValue(cell).replace(" ", "");		//手机号
-						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7)).replace(" ", "");//民族
+						String phone = ExcelUtils.getCellFormatValue(cell).replaceAll("[^0-9]", "");		//手机号
+						String nation = ExcelUtils.getCellFormatValue(row.getCell((short)7)).replaceAll("[\t\n' ']", "");//民族
 
-						String nakedFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)8));//左眼裸眼视力
-						String correctionFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)9));//左眼戴镜视力
-						String nakedFarvisionOd= ExcelUtils.getCellFormatValue(row.getCell((short)10));//右眼裸眼视力
-						String correctionFarvisionOd=ExcelUtils.getCellFormatValue(row.getCell((short)11));//右眼戴镜视力
-						String diopterSOd=ExcelUtils.getCellFormatValue(row.getCell((short)12));//右-球镜
-						String diopterCOd=ExcelUtils.getCellFormatValue(row.getCell((short)13));//右-柱镜
-						String diopterAOd=ExcelUtils.getCellFormatValue(row.getCell((short)14));//右-轴位
-						String diopterSOs=ExcelUtils.getCellFormatValue(row.getCell((short)15));//左-球镜
-						String diopterCOs=ExcelUtils.getCellFormatValue(row.getCell((short)16));//左-柱镜
-						String diopterAOs=ExcelUtils.getCellFormatValue(row.getCell((short)17));//左-轴位
-						String checktime=ExcelUtils.getCellFormatValue(row.getCell((short)18));//检查时间
+						String nakedFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)8)).replaceAll("[\t\n' ']", "");//左眼裸眼视力
+						String correctionFarvisionOs=ExcelUtils.getCellFormatValue(row.getCell((short)9)).replaceAll("[\t\n' ']", "");//左眼戴镜视力
+						String nakedFarvisionOd= ExcelUtils.getCellFormatValue(row.getCell((short)10)).replaceAll("[\t\n' ']", "");//右眼裸眼视力
+						String correctionFarvisionOd=ExcelUtils.getCellFormatValue(row.getCell((short)11)).replaceAll("[\t\n' ']", "");//右眼戴镜视力
+						String diopterSOd=ExcelUtils.getCellFormatValue(row.getCell((short)12)).replaceAll("[\t\n' ']", "");//右-球镜
+						String diopterCOd=ExcelUtils.getCellFormatValue(row.getCell((short)13)).replaceAll("[\t\n' ']", "");//右-柱镜
+						String diopterAOd=ExcelUtils.getCellFormatValue(row.getCell((short)14)).replaceAll("[\t\n' ']", "");//右-轴位
+						String diopterSOs=ExcelUtils.getCellFormatValue(row.getCell((short)15)).replaceAll("[\t\n' ']", "");//左-球镜
+						String diopterCOs=ExcelUtils.getCellFormatValue(row.getCell((short)16)).replaceAll("[\t\n' ']", "");//左-柱镜
+						String diopterAOs=ExcelUtils.getCellFormatValue(row.getCell((short)17)).replaceAll("[\t\n' ']", "");//左-轴位
+						String checktime=ExcelUtils.getCellFormatValue(row.getCell((short)18)).replaceAll("[\t\n' ']", "");//检查时间
 
                         if (!checkRealName(name)){
                             list.add(rowNum + 1);
