@@ -39,7 +39,7 @@ public interface StudentNewDao {
 	
 	int update(StudentNewDO student);
 
-	List<StudentNewDO> shifanactivityid();
+	List<StudentNewDO> shifanactivityid(Map<String,Object> map);
 	List<StudentNewDO> shifanschool(Integer activityId);
 
 	

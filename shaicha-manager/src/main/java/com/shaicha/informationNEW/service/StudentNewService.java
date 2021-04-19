@@ -38,7 +38,7 @@ public interface StudentNewService {
 
 	List<StudentNewDO> activitygetschool(Integer activityId);
 
-	List<StudentNewDO> shifanactivityid();
+	List<StudentNewDO> shifanactivityid(Map<String,Object> map);
 	List<StudentNewDO> shifanschool(Integer activityId);
 	
 	int save(StudentNewDO student);

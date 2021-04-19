@@ -138,13 +138,13 @@ public class StudentNewController {
 		if(!username.equals("admin") && !username.equals("shujuzhongxin")){
 			params.put("sysId", ShiroUtils.getUserId());
 	    }
-		List<SchoolNewDO> school = schoolService.list(params);
-		model.addAttribute("school", school);
+//		List<SchoolNewDO> school = schoolService.list(params);
+//		model.addAttribute("school", school);
 		//Map<String,Object> map = new HashMap<String, Object>();
-		List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
-		model.addAttribute("activity",stuactivity);
-		List<StudentNewDO> shifanstudent = studentNewService.shifanactivityid();
-		ActivityListNewDO shifanactivity = new ActivityListNewDO();
+//		List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
+//		model.addAttribute("activity",stuactivity);
+		List<StudentNewDO> shifanstudent = studentNewService.shifanactivityid(params);
+		ActivityListNewDO shifanactivity ;
 		List<ActivityListNewDO> shifanactivitylist = new ArrayList<>();
 		for(StudentNewDO studentNewDO:shifanstudent){
 			shifanactivity = activityListNewService.get(studentNewDO.getActivityId());

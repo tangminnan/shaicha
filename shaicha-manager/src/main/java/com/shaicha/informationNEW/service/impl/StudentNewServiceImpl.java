@@ -112,8 +112,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 	}
 
 	@Override
-	public List<StudentNewDO> shifanactivityid() {
-		return studentNewDao.shifanactivityid();
+	public List<StudentNewDO> shifanactivityid(Map<String,Object> map) {
+		return studentNewDao.shifanactivityid(map);
 	}
 
 	@Override
