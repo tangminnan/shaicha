@@ -126,7 +126,7 @@
 	<select id="zhongdubuliang" resultType="int">
 		<![CDATA[ SELECT count(*) from (
 		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
-		where a.jinshi >=4.6 and a.jinshi <= 4.9 ]]>
+		where a.jinshi >=4.6 and a.jinshi < 4.9 ]]>
 	</select>	
 	<!-- 重度 -->
 	<select id="gaodubuliang" resultType="int">

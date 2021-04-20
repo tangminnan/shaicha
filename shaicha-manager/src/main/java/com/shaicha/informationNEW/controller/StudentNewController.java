@@ -495,21 +495,21 @@ public class StudentNewController {
 		ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 		List<ResultCornealNewDO> resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
+		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"":zhuanhuan(resultCornealDO.getCornealD()));
 
-		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealNewDO();
 		resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
-		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealD()==null?"":zhuanhuan(resultCornealDO.getCornealD()));
+		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 
 		resultCornealDO = new ResultCornealNewDO();
 		resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr1L",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
-		model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealMmr1L",resultCornealDO.getCornealD()==null?"":zhuanhuan(resultCornealDO.getCornealD()));
+		model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 
 
 
@@ -517,8 +517,8 @@ public class StudentNewController {
 		resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-		model.addAttribute("cornealMmr2L",resultCornealDO.getCornealD()==null?"0":zhuanhuan(resultCornealDO.getCornealD()));
-		model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealMmr2L",resultCornealDO.getCornealD()==null?"":zhuanhuan(resultCornealDO.getCornealD()));
+		model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		//医生的建议
 		Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
 		int birth = 0;
@@ -1618,8 +1618,8 @@ public class StudentNewController {
 				ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
 				if(resultEyeaxisDOList.size()>0)
 					resultEyeaxisDO=resultEyeaxisDOList.get(0);
-				model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOd().toString()));
-				model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOs().toString()));
+				model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":df.format(resultEyeaxisDO.getFirstCheckOd()));
+				model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":df.format(resultEyeaxisDO.getFirstCheckOs()));
 				
 				System.out.println("===========================");
 				System.out.println("===========================");
@@ -1627,19 +1627,19 @@ public class StudentNewController {
 				ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 				List<ResultCornealNewDO> resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R1");
 				if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-				model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-				model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+				model.addAttribute("cornealMmr1R",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+				model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 				resultCornealDO = new ResultCornealNewDO();
 				resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R2");
 				if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-				model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-				model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+				model.addAttribute("cornealMmr2R",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+				model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 				
 				resultCornealDO = new ResultCornealNewDO();
 			    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R1");
 			    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-			    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-			    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+			    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+			    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 				
 				
 			    
@@ -1647,8 +1647,8 @@ public class StudentNewController {
 			    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R2");
 			    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-			   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-			   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+			   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+			   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 				//医生的建议
 			   Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
 			   int birth = 0;
@@ -2033,8 +2033,8 @@ public class StudentNewController {
 		ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
-		model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOd().toString()));
-		model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOs().toString()));
+		model.addAttribute("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":df.format(resultEyeaxisDO.getFirstCheckOd()));
+		model.addAttribute("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":df.format(resultEyeaxisDO.getFirstCheckOs()));
 		
 		System.out.println("===========================");
 		System.out.println("===========================");
@@ -2042,19 +2042,19 @@ public class StudentNewController {
 		ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 		List<ResultCornealNewDO> resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealMmr1R",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+		model.addAttribute("cornealDr1R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealNewDO();
 		resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"R","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		model.addAttribute("cornealMmr2R",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+		model.addAttribute("cornealDr2R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		
 		resultCornealDO = new ResultCornealNewDO();
 	    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R1");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+	    model.addAttribute("cornealMmr1L",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+	    model.addAttribute("cornealDr1L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		
 		
 	    
@@ -2062,8 +2062,8 @@ public class StudentNewController {
 	    resultCornealDOList = studentNewService.getResultCornealDOList(studentDO.getId(),"L","R2");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealD()==null?"0":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+	   model.addAttribute("cornealMmr2L",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+	   model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		//医生的建议
 	   Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
 	   int birth = 0;

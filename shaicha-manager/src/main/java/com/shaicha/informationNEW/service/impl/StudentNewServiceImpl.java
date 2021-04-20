@@ -200,7 +200,6 @@ public class StudentNewServiceImpl implements StudentNewService {
 				if (!"筛查".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0)))&&!"验光".equals(ExcelUtils.getCellFormatValue(sheet.getRow(0).getCell((short)0))))
 				    return R.error("请使用提供的模板进行导入!");
 				//判断导入的Excel中是否有未填项
-                int lastRowNum = sheet.getLastRowNum();
                 for (int a=2;a<=sheet.getLastRowNum();a++){
                     row = sheet.getRow(a);
 					if (ExcelUtils.getCellFormatValue(row.getCell((short)0))!=""&&
@@ -813,6 +812,7 @@ public class StudentNewServiceImpl implements StudentNewService {
 			for(int i=0;i<ids.length;i++){
 				Map<String, Object> params = createPeramsMapF(ids[i]);
 				if(params==null) continue;
+                params.put("i",i);
 				list.add(params);
 			}
 			map.put("list",list);
@@ -1008,8 +1008,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 		ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
 		if(resultEyeaxisDOList.size()>0)
 			resultEyeaxisDO=resultEyeaxisDOList.get(0);
-		params.put("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOd().toString()));
-		params.put("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":zhuanhuan(resultEyeaxisDO.getFirstCheckOs().toString()));
+		params.put("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":df.format(resultEyeaxisDO.getFirstCheckOd()));
+		params.put("secondCheckOs", resultEyeaxisDO.getFirstCheckOs()==null?"":df.format(resultEyeaxisDO.getFirstCheckOs()));
 		
 		System.out.println("===========================");
 		System.out.println("===========================");
@@ -1017,19 +1017,19 @@ public class StudentNewServiceImpl implements StudentNewService {
 		ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
 		List<ResultCornealNewDO> resultCornealDOList = studentNewDao.getResultCornealDOList(studentDO.getId(),"R","R1");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		params.put("cornealMmr1R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-		params.put("cornealDr1R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		params.put("cornealMmr1R",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+		params.put("cornealDr1R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		resultCornealDO = new ResultCornealNewDO();
 		resultCornealDOList = studentNewDao.getResultCornealDOList(studentDO.getId(),"R","R2");
 		if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-		params.put("cornealMmr2R",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-		params.put("cornealDr2R", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+		params.put("cornealMmr2R",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+		params.put("cornealDr2R", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		
 		resultCornealDO = new ResultCornealNewDO();
 	    resultCornealDOList = studentNewDao.getResultCornealDOList(studentDO.getId(),"L","R1");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-	    params.put("cornealMmr1L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-	    params.put("cornealDr1L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+	    params.put("cornealMmr1L",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+	    params.put("cornealDr1L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		
 		
 	    
@@ -1037,8 +1037,8 @@ public class StudentNewServiceImpl implements StudentNewService {
 	    resultCornealDOList = studentNewDao.getResultCornealDOList(studentDO.getId(),"L","R2");
 	    if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
 
-	    params.put("cornealMmr2L",resultCornealDO.getCornealMm()==null?"0":zhuanhuan(resultCornealDO.getCornealMm()));
-	    params.put("cornealDr2L", resultCornealDO.getCornealDeg()==null?"0":resultCornealDO.getCornealDeg());
+	    params.put("cornealMmr2L",resultCornealDO.getCornealMm()==null?"":zhuanhuan(resultCornealDO.getCornealMm()));
+	    params.put("cornealDr2L", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 		//医生的建议
 	   Date birthday = studentDO.getBirthday()==null?new Date():studentDO.getBirthday();
 	   int birth = 0;

@@ -1052,10 +1052,8 @@ public class StudentServiceImpl implements StudentService {
 			String nakedFarvisionOd = s.getNakedFarvisionOd();
 			String nakedFarvisionOs = s.getNakedFarvisionOs();
 			nakedFarvisionOd = nakedFarvisionOd.compareTo(nakedFarvisionOs) > 0 ? nakedFarvisionOs : nakedFarvisionOd;
-
-			nakedFarvisionOd = nakedFarvisionOd.compareTo(nakedFarvisionOs) > 0 ? nakedFarvisionOs : nakedFarvisionOd;
 			if (!StringUtils.isBlank(nakedFarvisionOd)) {
-				if ("1.0".equals(nakedFarvisionOd) || "10/10".equals(nakedFarvisionOd)) {
+				if ("1.0".equals(nakedFarvisionOd) || "10/10".equals(nakedFarvisionOd) || "5.0".equals(nakedFarvisionOd)) {
 					luoyanshilii = 5.0;
 				}
 			}

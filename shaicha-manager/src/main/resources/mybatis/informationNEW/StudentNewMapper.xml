@@ -158,7 +158,10 @@
         select count(*) from t_student_new
         <where>
             <if test="id != null and id != ''"> and id = #{id} </if>
-            <if test="shili == 'jinshi'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0')) and last_check_time is not NULL </if>
+            <if test="shili == 'jinshi'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or ((dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜') ) and last_check_time is not NULL </if>
+            <if test="shili == 'didu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' and dengxiaoqiujingr > '-3.0') or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl > '-3.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'zhongdu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt;= '-3.0' and dengxiaoqiujingr > '-6.0') or (dengxiaoqiujingl &lt;= '-3.0' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl > '-6.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'gaodu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt;= '-6.0') or (dengxiaoqiujingl &lt;= '-6.0' and naked_farvision_os &lt; '5.0') ) and last_check_time is not NULL </if>
             <if test="shili == 'buliang'"> AND (naked_farvision_od &lt; '5.0'  or  naked_farvision_os &lt; '5.0') and last_check_time is not NULL </if>
             <if test="shili == 'jiaxing'"> AND ((naked_farvision_od >= '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os >= '5.0')) and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
             <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75')) and last_check_time is not NULL </if>
