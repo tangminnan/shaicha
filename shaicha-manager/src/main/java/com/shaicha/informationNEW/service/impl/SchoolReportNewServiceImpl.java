@@ -580,8 +580,8 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 		List<Map<String,String>> jiajin = new ArrayList<Map<String,String>>();
 		
 		List<StudentNewDO> gradejs = studentDao.querySchoolGrade(school,activityId);
-		checkMap.remove("shili");
-		checkMap.remove("studentSex");
+//		checkMap.remove("shili");
+//		checkMap.remove("studentSex");
 		for (StudentNewDO studentDO : gradejs) {
 			Map<String,String> jia1 = new HashMap<String,String>();
 			Integer linchuangy = 0;
@@ -594,24 +594,24 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService{
 			String dir = "0";
 			String zhongr = "0";
 			String gaor = "0";
-			checkMap.put("grade",studentDO.getGrade());
-            List<StudentNewDO> studentNewDOS = studentDao.listNoShiFan(checkMap);
-            for (StudentNewDO s : studentNewDOS) {
-                Double luoyanshilii = 0.0;
-                Double dengxiaoqiujing = 0.0;
-                String nakedFarvisionOd = s.getNakedFarvisionOd();
-                String nakedFarvisionOs = s.getNakedFarvisionOs();
-                nakedFarvisionOd = nakedFarvisionOd.compareTo(nakedFarvisionOs) > 0 ? nakedFarvisionOs : nakedFarvisionOd;
-                if (!StringUtils.isBlank(nakedFarvisionOd)) {
-                    if ("1.0".equals(nakedFarvisionOd) || "10/10".equals(nakedFarvisionOd) || "5.0".equals(nakedFarvisionOd)) {
-                        luoyanshilii = 5.0;
-                    }
-                }
-                Double dengxiaoqiujingR = s.getDengxiaoqiujingr();
-                Double dengxiaoqiujingL = s.getDengxiaoqiujingl();
-                dengxiaoqiujing = dengxiaoqiujingR > dengxiaoqiujingL ? dengxiaoqiujingL : dengxiaoqiujingR;
-                
-            }
+//			checkMap.put("grade",studentDO.getGrade());
+//            List<StudentNewDO> studentNewDOS = studentDao.listNoShiFan(checkMap);
+//            for (StudentNewDO s : studentNewDOS) {
+//                Double luoyanshilii = 0.0;
+//                Double dengxiaoqiujing = 0.0;
+//                String nakedFarvisionOd = s.getNakedFarvisionOd();
+//                String nakedFarvisionOs = s.getNakedFarvisionOs();
+//                nakedFarvisionOd = nakedFarvisionOd.compareTo(nakedFarvisionOs) > 0 ? nakedFarvisionOs : nakedFarvisionOd;
+//                if (!StringUtils.isBlank(nakedFarvisionOd)) {
+//                    if ("1.0".equals(nakedFarvisionOd) || "10/10".equals(nakedFarvisionOd) || "5.0".equals(nakedFarvisionOd)) {
+//                        luoyanshilii = 5.0;
+//                    }
+//                }
+//                Double dengxiaoqiujingR = s.getDengxiaoqiujingr();
+//                Double dengxiaoqiujingL = s.getDengxiaoqiujingl();
+//                dengxiaoqiujing = dengxiaoqiujingR > dengxiaoqiujingL ? dengxiaoqiujingL : dengxiaoqiujingR;
+//
+//            }
             int gradeCheckNum = schoolReportDao.activityGradeByCheckNum(activityId,school,studentDO.getGrade());
 			linchuangy = schoolReportDao.jinshiqianqi(activityId,school,studentDO.getGrade());
 			jiajinshiy = schoolReportDao.jiaxingjinshi(activityId,school,studentDO.getGrade());
