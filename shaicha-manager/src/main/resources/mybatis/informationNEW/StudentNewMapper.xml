@@ -81,18 +81,19 @@
 		</if>
 	</select>
     <select id="listNoShiFan" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-        select `id`,model_type,ideentity_type,school_code,xue_bu,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,q_r_code,last_check_time,activity_id,sys_id,school_id from t_student_new
+        select `id`,model_type,ideentity_type,school_code,xue_bu,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`height`,`weight`,`add_time`,`status`,naked_farvision_od,naked_farvision_os,dengxiaoqiujingr,dengxiaoqiujingl,q_r_code,last_check_time,activity_id,sys_id,school_id from t_student_new
         <where>
             <if test="id != null and id != ''"> and id = #{id} </if>
-            <if test="shili == 'jinshi'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or ((dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜') ) and last_check_time is not NULL </if>
-            <if test="shili == 'didu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' and dengxiaoqiujingr > '-3.0') or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl > '-3.0') ) and last_check_time is not NULL </if>
-            <if test="shili == 'zhongdu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt;= '-3.0' and dengxiaoqiujingr > '-6.0') or (dengxiaoqiujingl &lt;= '-3.0' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl > '-6.0') ) and last_check_time is not NULL </if>
-            <if test="shili == 'gaodu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt;= '-6.0') or (dengxiaoqiujingl &lt;= '-6.0' and naked_farvision_os &lt; '5.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'jinshi'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or ((dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜')) and last_check_time is not NULL </if>
+            <if test="shili == 'didu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' and dengxiaoqiujingr >= '-3.0') or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl >= '-3.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'zhongdu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-3.0' and dengxiaoqiujingr >= '-6.0') or (dengxiaoqiujingl &lt; '-3.0' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl >= '-6.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'gaodu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-6.0') or (dengxiaoqiujingl &lt; '-6.0' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜') and last_check_time is not NULL </if>
             <if test="shili == 'buliang'"> AND (naked_farvision_od &lt; '5.0'  or  naked_farvision_os &lt; '5.0') and last_check_time is not NULL </if>
             <if test="shili == 'jiaxing'"> AND ((naked_farvision_od >= '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os >= '5.0')) and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
-            <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75')) and last_check_time is not NULL </if>
+            <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' and naked_farvision_od >= '5.0' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75' and naked_farvision_os >= '5.0')) and last_check_time is not NULL </if>
             <if test="shili == 'zhengchang'"> AND naked_farvision_od >= '5.0' and naked_farvision_os >= '5.0' and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
             <if test="shili == 'nocheck'"> and last_check_time is null </if>
+            <if test="check == 'check'"> and last_check_time is not null </if>
             <if test="checkType != null and checkType != ''"> and check_type != #{checkType} </if>
             <if test="studentName != null and studentName != ''"> and student_name like concat('%', #{studentName},'%') </if>
             <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
@@ -159,14 +160,16 @@
         <where>
             <if test="id != null and id != ''"> and id = #{id} </if>
             <if test="shili == 'jinshi'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or ((dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜') ) and last_check_time is not NULL </if>
-            <if test="shili == 'didu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' and dengxiaoqiujingr > '-3.0') or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl > '-3.0') ) and last_check_time is not NULL </if>
-            <if test="shili == 'zhongdu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt;= '-3.0' and dengxiaoqiujingr > '-6.0') or (dengxiaoqiujingl &lt;= '-3.0' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl > '-6.0') ) and last_check_time is not NULL </if>
-            <if test="shili == 'gaodu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt;= '-6.0') or (dengxiaoqiujingl &lt;= '-6.0' and naked_farvision_os &lt; '5.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'didu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' and dengxiaoqiujingr >= '-3.0') or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl >= '-3.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'zhongdu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-3.0' and dengxiaoqiujingr >= '-6.0') or (dengxiaoqiujingl &lt; '-3.0' and naked_farvision_os &lt; '5.0' and dengxiaoqiujingl >= '-6.0') ) and last_check_time is not NULL </if>
+            <if test="shili == 'gaodu'"> AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-6.0') or (dengxiaoqiujingl &lt; '-6.0' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜') and last_check_time is not NULL </if>
             <if test="shili == 'buliang'"> AND (naked_farvision_od &lt; '5.0'  or  naked_farvision_os &lt; '5.0') and last_check_time is not NULL </if>
             <if test="shili == 'jiaxing'"> AND ((naked_farvision_od >= '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os >= '5.0')) and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
-            <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75')) and last_check_time is not NULL </if>
+            <if test="shili == 'linchuang'"> AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' and naked_farvision_od >= '5.0' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75' and naked_farvision_os >= '5.0')) and last_check_time is not NULL </if>
             <if test="shili == 'zhengchang'"> AND naked_farvision_od >= '5.0' and naked_farvision_os >= '5.0' and last_check_time is not NULL and naked_farvision_os !='塑形镜' </if>
             <if test="shili == 'nocheck'"> and last_check_time is null </if>
+            <if test="check == 'check'"> and last_check_time is not null </if>
+            <if test="linian != null and linian != ''"> and DATE_FORMAT(last_check_time, '%Y') = #{linian} </if>
             <if test="checkType != null and checkType != ''"> and check_type != #{checkType} </if>
             <if test="studentName != null and studentName != ''"> and student_name = #{studentName} </if>
             <if test="studentSex != null and studentSex != ''"> and student_sex = #{studentSex} </if>
@@ -186,6 +189,7 @@
             <if test="lastCheckTime != null and lastCheckTime != ''"> and last_check_time = #{lastCheckTime} </if>
             <if test="activityId != null and activityId != ''"> and activity_id = #{activityId} </if>
             <if test="sysId != null and sysId != ''"> and sys_id = #{sysId} </if>
+            <if test="xueBu != null and xueBu != ''"> and xue_bu = #{xueBu} </if>
             <if test="schoolId != null and schoolId != ''"> and school_id = #{schoolId} </if>
         </where>
     </select>

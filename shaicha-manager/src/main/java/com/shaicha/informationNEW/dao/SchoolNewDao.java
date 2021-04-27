@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 
@@ -33,4 +34,5 @@ public interface SchoolNewDao {
 	int batchRemove(Integer[] ids);
 
     List<StudentNewDO> listAll();
+    void updateStudent(@Param("school") String school, @Param("schoolId") Integer schoolId);
 }

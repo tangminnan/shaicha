@@ -7368,7 +7368,6 @@
             <w:p/>
 			</#list>
             <w:p/>
-            <w:p>
         <w:pPr>
           <w:rPr>
             <w:rFonts w:hint="fareast"/>
@@ -7479,7 +7478,7 @@
                   <w:vertAlign w:val="baseline"/>
                   <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
                 </w:rPr>
-                <w:t>真性近视学生表</w:t>
+                <w:t>筛查性近视学生表</w:t>
               </w:r>
             </w:p>
           </w:tc>

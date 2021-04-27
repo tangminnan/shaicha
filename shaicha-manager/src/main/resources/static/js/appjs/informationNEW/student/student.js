@@ -182,7 +182,24 @@ function reLoad() {
 	var identityCard = $("#identityCard").val();
 	var idc = identityCard.split("JOIN")[0];
 	$("#identityCard").val(idc);
-	$('#exampleTable').bootstrapTable('refresh');
+	var shili = $("#shili").val();
+	 if(shili!="" && shili!="nocheck" && $("#stuschool option:selected").val()!=""){
+	    var data = {
+            studentName:$("#studentName").val(),
+            identityCard:$("#identityCard").val(),
+            school:$("#stuschool option:selected").val(),
+            studentSex:$("#studentSex option:selected").val(),
+            grade:$("#grade option:selected").val(),
+            studentClass:$("#studentClass option:selected").val(),
+            id:$("#xueshengid").val(),
+            activityId:$("#activity").val(),
+            shili:$("#shili").val()
+	    }
+	    var data = JSON.stringify(data);
+        window.open("/informationNEW/student/mingdan/"+data);
+    }else {
+        $('#exampleTable').bootstrapTable('refresh');
+    }
 }
 function add() {
 	var checkType='PU_TONG';

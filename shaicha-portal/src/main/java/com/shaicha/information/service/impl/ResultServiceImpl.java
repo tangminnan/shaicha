@@ -737,6 +737,22 @@ public class ResultServiceImpl implements ResultService{
 				if("AVG".equals(d.getType()) && "L".equals(d.getIfrl()))
 					studentDO.setDengxiaoqiujingl(d.getDengxiaoqiujing());
 			}
+			if (studentDO.getDengxiaoqiujingl()==null){
+                for(ResultDiopterDO d :diopterDOs){
+                    if("L".equals(d.getIfrl())) {
+                        studentDO.setDengxiaoqiujingl(d.getDengxiaoqiujing());
+                        break;
+                    }
+                }
+            }
+            if (studentDO.getDengxiaoqiujingr()==null){
+                for(ResultDiopterDO d :diopterDOs){
+                    if("R".equals(d.getIfrl())){
+                        studentDO.setDengxiaoqiujingr(d.getDengxiaoqiujing());
+                        break;
+                    }
+                }
+            }
 			studentDao.updateStudentDOshi(studentDO);	
 		}
 	}
@@ -787,13 +803,19 @@ public class ResultServiceImpl implements ResultService{
 		List<ResultDiopterDO> diopterDOs = new ArrayList<ResultDiopterDO>();
 		List<ResultCornealDO> cornealDOs = new ArrayList<ResultCornealDO>();
 	
-		List<ResultEyesightDO> resultEyesightDOList=	eyesightDao.getEyesightDO(id);
+		List<ResultEyesightDO> resultEyesightDOList= eyesightDao.getEyesightDO(id);
 		ResultEyesightDO resultEyesightDO = new ResultEyesightDO();
 		if(resultEyesightDOList.size()>0){
 			Date date = resultEyesightDOList.get(0).getCheckDate();
 			if(checkIfSaveResult(date))
 				resultEyesightDO=resultEyesightDOList.get(0);
-		}
+		}else {
+            List<ResultQuestionDO> questionDOS=resultQuestionDao.get(id.intValue());
+            if (questionDOS.size()>0 && questionDOS.get(0).getQuestionOneI()==3){
+                resultEyesightDO.setNakedFarvisionOd("塑形镜");
+                resultEyesightDO.setNakedFarvisionOs("塑形镜");
+            }
+        }
 		
 		List<ResultEyeaxisDO> resultEyeaxisDOList=  eyeaxisDao.getEyeaxisDO(id);
 		ResultEyeaxisDO resultEyeaxisDO = new ResultEyeaxisDO();
@@ -836,10 +858,10 @@ public class ResultServiceImpl implements ResultService{
 			diopterDOs = diopterDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 			cornealDOs=cornealDao.getByOptometryId(resultOptometryDO.getTOptometryId());
 		}
-        List<ResultQuestionDO> questionDOS=resultQuestionDao.get(id.intValue());
-		if (questionDOS.size()>0 && questionDOS.get(0).getQuestionOneI()==3){
-		    resultEyesightDO.setNakedFarvisionOd("塑形镜");
-		    resultEyesightDO.setNakedFarvisionOs("塑形镜");
+//        List<ResultQuestionDO> questionDOS=resultQuestionDao.get(id.intValue());
+//		if (questionDOS.size()>0 && questionDOS.get(0).getQuestionOneI()==3){
+//		    resultEyesightDO.setNakedFarvisionOd("塑形镜");
+//		    resultEyesightDO.setNakedFarvisionOs("塑形镜");
 //		    if (diopterDOs.size()>0){
 //		        for (ResultDiopterDO diopterDO : diopterDOs){
 //		            if ("AVG".equals(diopterDO.getType()) && "L".equals(diopterDO.getIfrl())){
@@ -862,7 +884,7 @@ public class ResultServiceImpl implements ResultService{
 //                diopterDOs.add(diopterDO);
 //            }
 
-        }
+//        }
 
 		resultMap.put("resultEyesightDO", resultEyesightDO);
 		resultMap.put("resultEyeaxisDO", resultEyeaxisDO);

@@ -35,7 +35,8 @@ public interface ResultDiopterNewDao {
 	List<ResultDiopterNewDO> getByToptometryId(Integer tOptometryId);
 	
 	List<ResultDiopterNewDO> getYanGuang(@Param("ifRL") String ifRL,@Param("studentId") Integer id,@Param("activityId") Integer activityId);
-	
+	List<ResultDiopterNewDO> getYanGuangAll(@Param("ifRL") String ifRL,@Param("studentId") Integer id,@Param("activityId") Integer activityId);
+
 	List<ResultDiopterNewDO> jianchashijian();
 	
 	List<ResultDiopterNewDO> queryTimeBetween(@Param("startDate") Date startDate,@Param("endDate") Date endDate);

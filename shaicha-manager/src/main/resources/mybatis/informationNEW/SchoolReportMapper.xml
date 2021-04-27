@@ -24,19 +24,19 @@
 	 activity_id = #{activityId} and school = #{school} and last_check_time is not null and grade=#{grade}
 	</select>
 	<select id="activitySexByCheckNum" resultType="int">
-		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
+		SELECT count(*) from t_student_new
 		where 
-		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school} and s.student_sex = #{studentSex}
+		activity_id = #{activityId} and school = #{school} and student_sex = #{studentSex} and last_check_time is not null
 	</select>
 	<select id="activityGradeSexByCheckNum" resultType="int">
-		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
-		where 
-		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school} and s.grade = #{grade} and s.student_sex = #{studentSex}
+		SELECT count(*) from t_student_new
+		where
+		activity_id = #{activityId} and school = #{school} and grade = #{grade} and student_sex = #{studentSex} and last_check_time is not null
 	</select>
 	<select id="activityGradeClassByCheckNum" resultType="int">
-		SELECT count(*) from t_student_new s,t_result_eyesight_new r 
+		SELECT count(*) from t_student_new
 		where 
-		s.id = r.student_id and r.activity_id = #{activityId} and s.school = #{school} and s.grade = #{grade} and s.student_class = #{studentClass}
+		activity_id = #{activityId} and school = #{school} and grade = #{grade} and student_class = #{studentClass} and last_check_time is not null
 	</select>
 	<!-- 检查近视人数 -->
 	<select id="schoolCheckJinshi" resultType="int">
@@ -119,25 +119,25 @@
 	<!-- 轻度 -->
 	<select id="qingdubuliang" resultType="int">
 		SELECT count(*) from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} and last_check_time is not null)a
 		where a.jinshi = 4.9
 	</select>	
 	<!-- 中度 -->
 	<select id="zhongdubuliang" resultType="int">
 		<![CDATA[ SELECT count(*) from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} and last_check_time is not null)a
 		where a.jinshi >=4.6 and a.jinshi < 4.9 ]]>
 	</select>	
 	<!-- 重度 -->
 	<select id="gaodubuliang" resultType="int">
 		<![CDATA[ SELECT count(*) from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} )a 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} and last_check_time is not null)a
 		where a.jinshi <= 4.5 ]]>
 	</select>	
 	<!-- 总计 -->
 	<select id="buliangTotal" resultType="int">
 		<![CDATA[ SELECT count(*) from (
-		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school}  and grade = #{grade} )a 
+		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school}  and grade = #{grade} and last_check_time is not null)a
 		where a.jinshi < 5.0 ]]>
 	</select>	
 	<!--图 -->

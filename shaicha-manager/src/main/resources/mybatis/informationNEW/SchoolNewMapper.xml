@@ -154,6 +154,9 @@
 		</set>
 		where id = #{id}
 	</update>
+    <update id="updateStudent">
+        update t_student_new set school = #{school} where school_id = #{schoolId}
+    </update>
 	
 	<delete id="remove">
 		delete from t_school_new where id = #{value}

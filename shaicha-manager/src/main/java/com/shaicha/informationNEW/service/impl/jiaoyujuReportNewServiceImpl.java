@@ -69,10 +69,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 	@Override
 	public void baogaojiaoyuju(HttpServletRequest request, HttpServletResponse response) {
 		try {
-//			Map<String, Object> params = jiaoyujubaogao(request, response);
 			Map<String, Object> params = jyujubaogao(request, response);
-//            System.out.println(params);
-//			createDoc(response,params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "给教育局报告检测.ftl");
 			createDoc(response,params, new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()), "教育局报告(II).ftl");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,329 +77,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		
 	}
 	
-	//数据
-	public Map<String, Object> jiaoyujubaogao(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, Object> params = new HashMap<String, Object>(); 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
-		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月");
-		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-		DecimalFormat df = new DecimalFormat("0.0");
-		Integer activityId = Integer.valueOf(request.getParameter("activityId"));	
-		String parameter = request.getParameter("school");
-		String[] split1 = parameter.split(",");
-		String date = request.getParameter("date");
-		String cityname = jiaoyujuReportDao.getAddress(split1[0]).getAreaname();
-		//System.out.println(cityname);
-		params.put("address", cityname);
-		StudentNewDO maxMin = jiaoyujuReportDao.getMaxMinCheckDate(activityId);
-		params.put("kai", maxMin.getMincheckdate()==null?"":sdf.format(maxMin.getMincheckdate()));
-		params.put("jie", maxMin.getMaxcheckdate()==null?"":sdf.format(maxMin.getMaxcheckdate()));
-		params.put("newDate", sdf2.format(new Date()));
-		//图
-		Map<String,Object> ls = new HashMap<>();
-		ls.put("type", date);
-		List<LinShiUrlDO> lsu = linShiUrlDao.list(ls);
-		for (LinShiUrlDO linShiUrlDO : lsu) {
-			params.put(linShiUrlDO.getName(), linShiUrlDO.getImgUrl());
-			
-			linShiUrlDao.remove(linShiUrlDO.getId());
-		}
-		
-		UserDO userDO = userMapper.get(activityListNewDao.get(activityId).getSysId());
-		params.put("zhongxin", userDO.getZhongxinName());
-		
-		List<Map<String, Integer>> list1 = new ArrayList<Map<String, Integer>>();
-		List<Integer> list2 = new ArrayList<>();
-		String parameter1 = request.getParameter("school");
-		String[] split = parameter1.split(",");
-		params.put("school", split.length);
-		for (String string : split) {
-			Map<String,Integer> map = new HashMap<String,Integer>();
-			map.put(jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu(), jiaoyujuReportDao.schoolByCheckNum(activityId,string));
-			list1.add(map);
-			list2.add(jiaoyujuReportDao.schoolByCheckNum(activityId,string));
-		}
-		int renshu = 0;
-		int you = 0;
-		int xiao = 0;
-		int chu = 0;
-		int gao = 0;
-		int your = 0;
-		int xiaor = 0;
-		int chur = 0;
-		int gaor = 0;
-		for(Map<String, Integer> map : list1){
-			for(Map.Entry<String, Integer> m : map.entrySet()){
-				if(m.getKey().equals("幼儿园")){
-					you++;
-					your += m.getValue();
-				}
-				if(m.getKey().equals("小学")){
-					xiao++;
-					xiaor += m.getValue();
-				}
-				if(m.getKey().equals("初中")){
-					chu++;
-					chur += m.getValue();
-				}
-				if(m.getKey().equals("高中")){
-					gao++;
-					gaor += m.getValue();
-				}
-			}
-		}
-		for (Integer integer : list2) {
-			renshu += integer.intValue();
-		}
-		
-		params.put("gong", renshu);
-		params.put("you", you);//幼儿园数
-		params.put("xiao", xiao);//小学数
-		params.put("chu", chu);//初中数
-		params.put("gao", gao);//高中数
 
-        params.put("your", your);//幼儿园人数
-        params.put("xiaor", xiaor);//小学人数
-        params.put("chur", chur);//初中人数
-        params.put("gaor", gaor);//高中人数
-		
-		//近视
-		List<Map<String, String>> list3 = new ArrayList<Map<String, String>>();
-		List<Map<String, Integer>> list4 = new ArrayList<Map<String, Integer>>();
-		List<Map<String, Integer>> list6 = new ArrayList<Map<String, Integer>>();
-		for (String string : split) {
-			Map<String,String> map = new HashMap<String,String>();
-			Map<String,Integer> map2 = new HashMap<String,Integer>();
-			Map<String,Integer> map3 = new HashMap<String,Integer>();
-			int checkNum = jiaoyujuReportDao.activityByCheckNum(activityId,string);
-			int jinshiqianqi = jiaoyujuReportDao.jinshiqianqi(activityId,string);
-			double double1 = checkNum==0?0:Double.parseDouble(df.format((double)jinshiqianqi/(double)checkNum*100));
-			int jiaxingjinshi = jiaoyujuReportDao.jiaxingjinshi(activityId,string);
-			double double2 = checkNum==0?0:Double.parseDouble(df.format((double)jiaxingjinshi/(double)checkNum*100));
-			int didujinshi = jiaoyujuReportDao.didujinshi(activityId,string);
-			double double3 = checkNum==0?0:Double.parseDouble(df.format((double)didujinshi/(double)checkNum*100));
-			int zhongdujinshi = jiaoyujuReportDao.zhongdujinshi(activityId,string);
-			double double4 = checkNum==0?0:Double.parseDouble(df.format((double)zhongdujinshi/(double)checkNum*100));
-			int gaodujinshi = jiaoyujuReportDao.gaodujinshi(activityId,string);
-			double double5 = gaodujinshi==0?0:Double.parseDouble(df.format((double)gaodujinshi/(double)checkNum*100));
-			Integer jinzongy = didujinshi+zhongdujinshi+gaodujinshi;
-			String jinzongr = df.format(double3+double4+double5);
-			map.put("xuexiao", string);
-			map.put("xuebu",jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu());
-			map.put("jiancha", String.valueOf(checkNum));
-			map.put("qq", String.valueOf(jinshiqianqi));
-			map.put("jx", String.valueOf(jiaxingjinshi));
-			map.put("dd", String.valueOf(didujinshi));
-			map.put("zd", String.valueOf(zhongdujinshi));
-			map.put("gd", String.valueOf(gaodujinshi));
-			map.put("qqr", String.valueOf(double1));
-			map.put("jxr", String.valueOf(double2));
-			map.put("ddr", String.valueOf(double3));
-			map.put("zdr", String.valueOf(double4));
-			map.put("gdr", String.valueOf(double5));
-			map.put("zz", String.valueOf(jinzongy));
-			map.put("zzr", jinzongr);
-			list3.add(map);
-			map2.put(jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu(), checkNum);
-			list4.add(map2);
-			map3.put(jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu(), jinzongy);
-			list6.add(map3);
-		}
-		params.put("jinshi", list3);
-		
-		int jiaJS1 =0;
-		int jiaJS3= 0;
-		int jiaJS5= 0;
-		int jiaJS7= 0;
-		int jiaJS9= 0;
-		int jiaJS22= 0;
-		int jiaJS44=0;
-		for (Map<String, String> map : list3) {
-			for(Map.Entry<String, String> m : map.entrySet()){
-				if(m.getKey().equals("qq")){
-					jiaJS1 += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("jx")){
-					jiaJS3 += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("dd")){
-					jiaJS5 += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("zd")){
-					jiaJS7 += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("gd")){
-					jiaJS9 += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("zz")){
-					jiaJS22 += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("jiancha")){
-					jiaJS44 += Integer.parseInt(m.getValue());
-				}
-			}
-		}
-		params.put("AA", jiaJS1);
-		params.put("BB", jiaJS44==0?0:df.format(((double)jiaJS1/(double)jiaJS44)*100));
-		params.put("CC", jiaJS3);
-		params.put("DD", jiaJS44==0?0:df.format(((double)jiaJS3/(double)jiaJS44)*100));
-		params.put("EE", jiaJS5);
-		params.put("FF", jiaJS44==0?0:df.format(((double)jiaJS5/(double)jiaJS44)*100));
-		params.put("GG", jiaJS7);
-		params.put("HH", jiaJS44==0?0:df.format(((double)jiaJS7/(double)jiaJS44)*100));
-		params.put("II", jiaJS9);
-		params.put("JJ", jiaJS44==0?0:df.format(((double)jiaJS9/(double)jiaJS44)*100));
-		params.put("KK", jiaJS22);
-		params.put("LL", jiaJS44==0?0:df.format(((double)jiaJS22/(double)jiaJS44)*100));
-		params.put("MM", jiaJS44);
-		
-		int sy =0;
-		int sx = 0;
-		int sc= 0;
-		int sg= 0;
-		for (Map<String, Integer> map : list4) {
-			for(Map.Entry<String, Integer> m : map.entrySet()){
-				if(m.getKey().equals("幼儿园")){
-					sy += m.getValue();
-				}
-				if(m.getKey().equals("小学")){
-					sx += m.getValue();
-				}
-				if(m.getKey().equals("初中")){
-					sc += m.getValue();
-				}
-				if(m.getKey().equals("高中")){
-					sg += m.getValue();
-				}
-			}
-		}
-		params.put("sy", sy);
-		params.put("sx", sx);
-		params.put("sc", sc);
-		params.put("sg", sg);
-		
-		//不良
-		List<Map<String, String>> list5 = new ArrayList<Map<String, String>>();
-		for (String string : split) {
-			Map<String,String> map = new HashMap<String,String>();
-			int checkNum = jiaoyujuReportDao.activityByCheckNum(activityId,string);
-			int qingdubuliang = jiaoyujuReportDao.qingdubuliang(activityId,string);
-			double double1 = checkNum==0?0:Double.parseDouble(df.format((double)qingdubuliang/(double)checkNum*100));
-			int zhongdubuliang = jiaoyujuReportDao.zhongdubuliang(activityId,string);
-			double double2 = checkNum==0?0:Double.parseDouble(df.format((double)zhongdubuliang/(double)checkNum*100));
-			int gaodubuliang = jiaoyujuReportDao.gaodubuliang(activityId,string);
-			double double3 = checkNum==0?0:Double.parseDouble(df.format((double)gaodubuliang/(double)checkNum*100));
-			int buliangtotal = jiaoyujuReportDao.buliangtotal(activityId,string);
-			double double4 = checkNum==0?0:Double.parseDouble(df.format((double)buliangtotal/(double)checkNum*100));
-			map.put("xuexiao", string);
-			map.put("xuebu", jiaoyujuReportDao.getSchoolxuebu(string,activityId).getXueBu());
-			map.put("jiancha", String.valueOf(checkNum));
-			map.put("qd", String.valueOf(qingdubuliang));
-			map.put("qdr", String.valueOf(double1));
-			map.put("zd", String.valueOf(zhongdubuliang));
-			map.put("zdr", String.valueOf(double2));
-			map.put("zzd", String.valueOf(gaodubuliang));
-			map.put("zzdr", String.valueOf(double3));
-			map.put("bl", String.valueOf(buliangtotal));
-			map.put("blr", String.valueOf(double4));
-			
-			list5.add(map);
-		}
-		params.put("biliang", list5);
-		
-		int checkT = 0;
-		int qingNT = 0;
-		int zhongNT= 0;
-		int zzhongNT= 0;
-		int bulingNT=0;
-		for (Map<String, String> map : list5) {
-			for(Map.Entry<String, String> m : map.entrySet()){
-				if(m.getKey().equals("jiancha")){
-					checkT += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("qd")){
-					qingNT += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("zd")){
-					zhongNT += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("zzd")){
-					zzhongNT += Integer.parseInt(m.getValue());
-				}
-				if(m.getKey().equals("bl")){
-					bulingNT += Integer.parseInt(m.getValue());
-				}
-			}
-		}
-		
-		params.put("NN", checkT);
-		params.put("OO", qingNT);
-		params.put("PP", checkT==0?0:df.format(((double)qingNT/(double)checkT)*100));
-		params.put("QQ", zhongNT);
-		params.put("RR", checkT==0?0:df.format(((double)zhongNT/(double)checkT)*100));
-		params.put("SS", zzhongNT);
-		params.put("TT", checkT==0?0:df.format(((double)zzhongNT/(double)checkT)*100));
-		params.put("UU", bulingNT);
-		params.put("VV", checkT==0?0:df.format(((double)bulingNT/(double)checkT)*100));		
-		
-		int daijingNum = 0;
-		int jiaozhengNum = 0;
-		for (String string : split) {
-			daijingNum += jiaoyujuReportDao.daijingrenshu(activityId,string);
-			jiaozhengNum += jiaoyujuReportDao.jiaozhengbuzurenshu(activityId, string);
-		}
-		String format = checkT==0?"0":df.format(((double)daijingNum/(double)checkT)*100);
-		String jiaozheng = daijingNum==0?"0":df.format(((double)jiaozhengNum/(double)daijingNum)*100);
-		params.put("dj", daijingNum);
-		params.put("djr", format);
-		params.put("jz", jiaozhengNum);
-		params.put("jzr", jiaozheng);
-		
-		double yo = 0;
-		double xi = 0;
-		double ch = 0;
-		double ga = 0;
-		for (Map<String, Integer> map : list6) {
-			for(Map.Entry<String, Integer> m : map.entrySet()){
-				if(m.getKey().equals("幼儿园")){
-					yo += m.getValue();
-				}
-				if(m.getKey().equals("小学")){
-					xi += m.getValue();
-				}
-				if(m.getKey().equals("初中")){
-					ch += m.getValue();
-				}
-				if(m.getKey().equals("高中")){
-					ga += m.getValue();
-				}
-			}
-		}
-		params.put("yo", sy==0?0:df.format(((double)yo/(double)sy)*100));
-		params.put("xi", sx==0?0:df.format(((double)xi/(double)sx)*100));
-		params.put("ch", sc==0?0:df.format(((double)ch/(double)sc)*100));
-		params.put("ga", sg==0?0:df.format(((double)ga/(double)sg)*100));
-		
-		int nan = 0;
-		int nanr = 0;
-		int nv = 0;
-		int nvr = 0;
-		for (String string : split) {
-			nan += jiaoyujuReportDao.sexCheckNum(activityId,1,string);
-			nanr += jiaoyujuReportDao.sexJinshiNum(activityId,1,string);
-			nv += jiaoyujuReportDao.sexCheckNum(activityId,2,string);
-			nvr += jiaoyujuReportDao.sexJinshiNum(activityId,2,string);
-		}
-		params.put("WW", nan);
-		params.put("XX", nv);
-		params.put("YY", nanr);
-		params.put("ZZ", nvr);
-		params.put("njsr", nan==0?0:df.format(((double)nanr/(double)nan)*100));
-		params.put("vjsr", nv==0?0:df.format(((double)nvr/(double)nv)*100));
-		
-		return params;
-		
-	}
     //新教育局报告数据
 	public Map<String, Object> jyujubaogao(HttpServletRequest request, HttpServletResponse response){
         Map<String, Object> params = new HashMap<String, Object>();
@@ -413,7 +88,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
         String parameter = request.getParameter("school");
         String[] split1 = parameter.split(",");
         String date = request.getParameter("date");
-        SchoolNewDO aDo = jiaoyujuReportDao.getAddress(split1[0]);
+        SchoolNewDO aDo = jiaoyujuReportDao.getAddress(split1[0]).get(0);
         String cityname = "";
         if (aDo!=null){
             cityname = aDo.getCityname()+aDo.getAreaname();
@@ -459,20 +134,69 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
         List<Map<String, String>> list3 = new ArrayList<Map<String, String>>();
         List<Map<String, Integer>> list4 = new ArrayList<Map<String, Integer>>();
         List<Map<String, Integer>> list6 = new ArrayList<Map<String, Integer>>();
+        Map<String,Object> checkMap = new HashMap<String,Object>();
+        checkMap.put("activityId", activityId);
+        checkMap.put("check","check");
         for (String string : split1) {
             Map<String,String> map = new HashMap<String,String>();
             Map<String,Integer> map2 = new HashMap<String,Integer>();
             Map<String,Integer> map3 = new HashMap<String,Integer>();
+            int jinshiqianqi = 0;
+            int jiaxingjinshi = 0;
+            int didujinshi = 0;
+            int zhongdujinshi = 0;
+            int gaodujinshi = 0;
+            checkMap.put("school",string);
+            List<StudentNewDO> studentNewDOS = studentDao.listNoShiFan(checkMap);
+            Double luoyanl;Double luoyanr;Double dengxiaoqiujingR;Double dengxiaoqiujingL;
+            for (StudentNewDO s : studentNewDOS) {
+                String nakedFarvisionOd = s.getNakedFarvisionOd()==null?"0.0":s.getNakedFarvisionOd();
+                String nakedFarvisionOs = s.getNakedFarvisionOs()==null?"0.0":s.getNakedFarvisionOs();
+                try {
+                    luoyanl = Double.parseDouble(nakedFarvisionOs);
+                } catch (NumberFormatException e) {
+                    luoyanl = 0.0;
+                }
+                try {
+                    luoyanr = Double.parseDouble(nakedFarvisionOd);
+                } catch (NumberFormatException e) {
+                    luoyanr = 0.0;
+                }
+                if (s.getDengxiaoqiujingl()==null || s.getDengxiaoqiujingr()==null) continue;
+                dengxiaoqiujingR = s.getDengxiaoqiujingr();
+                dengxiaoqiujingL = s.getDengxiaoqiujingl();
+                if ((luoyanl<5.0 && dengxiaoqiujingL<-6.0) || (luoyanr<5.0 && dengxiaoqiujingR<-6.0) || "塑形镜".equals(nakedFarvisionOd)){
+                    gaodujinshi++;
+                    continue;
+                }
+                if ((luoyanl<5.0 && dengxiaoqiujingL>=-6.0 && dengxiaoqiujingL<-3.0) || (luoyanr<5.0 && dengxiaoqiujingR>=-6.0 && dengxiaoqiujingR<-3.0)){
+                    zhongdujinshi++;
+                    continue;
+                }
+                if ((luoyanl<5.0 && dengxiaoqiujingL<-0.5 && dengxiaoqiujingL >= -3.0) || (luoyanr<5.0 && dengxiaoqiujingR<-0.5 && dengxiaoqiujingR >= -3.0)){
+                    didujinshi++;
+                    continue;
+                }
+                if ((luoyanl>=5.0 && dengxiaoqiujingL < -0.5)||(luoyanr>=5.0&&dengxiaoqiujingR<-0.5)){
+                    jiaxingjinshi++;
+                    continue;
+                }
+                if ((dengxiaoqiujingL>=-0.5 && dengxiaoqiujingL <=0.75 && luoyanl >= 5.0)||(dengxiaoqiujingR>=-0.5 && dengxiaoqiujingR <=0.75 && luoyanr >= 5.0)){
+                    jinshiqianqi++;
+                    continue;
+                }
+
+            }
+//            int jinshiqianqi = jiaoyujuReportDao.jinshiqianqi(activityId,string);
+//            int jiaxingjinshi = jiaoyujuReportDao.jiaxingjinshi(activityId,string);
+//            int didujinshi = jiaoyujuReportDao.didujinshi(activityId,string);
+//            int zhongdujinshi = jiaoyujuReportDao.zhongdujinshi(activityId,string);
+//            int gaodujinshi = jiaoyujuReportDao.gaodujinshi(activityId,string);
             int checkNum = jiaoyujuReportDao.activityByCheckNum(activityId,string);
-            int jinshiqianqi = jiaoyujuReportDao.jinshiqianqi(activityId,string);
             double double1 = checkNum==0?0:Double.parseDouble(df.format((double)jinshiqianqi/(double)checkNum*100));
-            int jiaxingjinshi = jiaoyujuReportDao.jiaxingjinshi(activityId,string);
             double double2 = checkNum==0?0:Double.parseDouble(df.format((double)jiaxingjinshi/(double)checkNum*100));
-            int didujinshi = jiaoyujuReportDao.didujinshi(activityId,string);
             double double3 = checkNum==0?0:Double.parseDouble(df.format((double)didujinshi/(double)checkNum*100));
-            int zhongdujinshi = jiaoyujuReportDao.zhongdujinshi(activityId,string);
             double double4 = checkNum==0?0:Double.parseDouble(df.format((double)zhongdujinshi/(double)checkNum*100));
-            int gaodujinshi = jiaoyujuReportDao.gaodujinshi(activityId,string);
             double double5 = gaodujinshi==0?0:Double.parseDouble(df.format((double)gaodujinshi/(double)checkNum*100));
             Integer jinzongy = didujinshi+zhongdujinshi+gaodujinshi;
             String jinzongr = df.format(double3+double4+double5);
@@ -708,7 +432,6 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月");
             DecimalFormat df = new DecimalFormat("0.0");
 
-
             params.put("schoolName", school);
             params.put("newDate", sdf.format(new Date()));
 
@@ -722,6 +445,9 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 
                 linShiUrlDao.remove(linShiUrlDO.getId());
             }
+            Map<String,Object> checkMap = new HashMap<String,Object>();
+            checkMap.put("activityId", activityId);
+            checkMap.put("school", school);
 
             //基本情况
             int zongNum = schoolReportDao.zongNum(activityId,school);
@@ -745,12 +471,15 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 
             //男女近视
             int nanCheckNum = schoolReportDao.activitySexByCheckNum(activityId,school,1);
-            int nanjinshi = schoolReportDao.schoolSexjinshi(activityId,school,1);
+            checkMap.put("studentSex",1);
+            checkMap.put("shili","jinshi");
+            int nanjinshi = studentDao.countNoShiFan(checkMap);
             params.put("checkNanNum", nanCheckNum);
             params.put("myopiaNanRate", nanCheckNum==0?0:df.format(((double)nanjinshi/(double)nanCheckNum)*100));
             params.put("myopiaNanNum", nanjinshi);
             int nvCheckNum = schoolReportDao.activitySexByCheckNum(activityId,school,2);
-            int nvjinshi = schoolReportDao.schoolSexjinshi(activityId,school,2);
+            checkMap.put("studentSex",2);
+            int nvjinshi = studentDao.countNoShiFan(checkMap);
             params.put("checkNvNum", nvCheckNum);
             params.put("myopiaNvRate", nvCheckNum==0?0:df.format(((double)nvjinshi/(double)nvCheckNum)*100));
             params.put("myopiaNvNum", nvjinshi);
@@ -758,10 +487,12 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
             //男近视
             List<Map<String,Object>> listnn = new ArrayList<Map<String,Object>>();
             List<StudentNewDO> gradenn = studentDao.querySchoolGrade(school,activityId);
+            checkMap.put("studentSex",1);
             for (StudentNewDO studentDO : gradenn) {
                 Map<String,Object> nnNum = new HashMap<>();
+                checkMap.put("grade",studentDO.getGrade());
                 int nanGradeCheckNum = schoolReportDao.activityGradeSexByCheckNum(activityId,school,studentDO.getGrade(),1);
-                int nanGradeCheckjinshi = schoolReportDao.sexGradeCheckjinshi(activityId,school,studentDO.getGrade(),1);
+                int nanGradeCheckjinshi = studentDao.countNoShiFan(checkMap);
                 nnNum.put("checkNanNum", nanGradeCheckNum);
                 nnNum.put("myopiaNanRate", nanGradeCheckNum==0?0:df.format(((double)nanGradeCheckjinshi/(double)nanGradeCheckNum)*100));
                 nnNum.put("nj", studentDO.getGrade());
@@ -773,10 +504,12 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
             //女近视
             List<Map<String,Object>> listmm = new ArrayList<Map<String,Object>>();
             List<StudentNewDO> grademm = studentDao.querySchoolGrade(school,activityId);
+            checkMap.put("studentSex",2);
             for (StudentNewDO studentDO : grademm) {
                 Map<String,Object> mmNum = new HashMap<>();
+                checkMap.put("grade",studentDO.getGrade());
                 int nvGradeCheckNum = schoolReportDao.activityGradeSexByCheckNum(activityId,school,studentDO.getGrade(),2);
-                int nvGradeCheckjinshi = schoolReportDao.sexGradeCheckjinshi(activityId,school,studentDO.getGrade(),2);
+                int nvGradeCheckjinshi = studentDao.countNoShiFan(checkMap);
                 mmNum.put("checkNvNum", nvGradeCheckNum);
                 mmNum.put("myopiaNvRate", nvGradeCheckNum==0?0:df.format(((double)nvGradeCheckjinshi/(double)nvGradeCheckNum)*100));
                 mmNum.put("nj", studentDO.getGrade());
@@ -786,35 +519,38 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
             params.put("listmm", listmm);
 
             //各班级近视率
-            List<Map<String,Object>> listbj = new ArrayList<Map<String,Object>>();
-
-            List<StudentNewDO> gradebj = studentDao.querySchoolGrade(school,activityId);
-            for (StudentNewDO studentDO : gradebj) {
-                Map<String,Object> yi = new HashMap<String,Object>();
-                List<Map<String,Object>> aa = new ArrayList<Map<String,Object>>();
-                Map<String,Object> mapClassyi = new HashMap<String,Object>();
-                mapClassyi.put("school", school);
-                mapClassyi.put("activityId", activityId);
-                mapClassyi.put("grade", studentDO.getGrade());
-                List<StudentNewDO> classCountyi = studentDao.queryGradeClassCount(mapClassyi);
-                for(StudentNewDO stu : classCountyi){
-                    Map<String,Object> classyi = new HashMap<String,Object>();
-                    classyi.put("class", stu.getStudentClass());
-                    int jcyi = schoolReportDao.activityGradeClassByCheckNum(activityId,school,studentDO.getGrade(),stu.getStudentClass());
-                    int jsyi = schoolReportDao.schoolGradeClassjinshi(activityId,school,studentDO.getGrade(),stu.getStudentClass());
-                    int blyi = schoolReportDao.schoolGradeClassbuliang(activityId,school,studentDO.getGrade(),stu.getStudentClass());
-                    classyi.put("classNum", jcyi);
-                    classyi.put("classMyopiaRate", jcyi==0?0:df.format(((double)jsyi/(double)jcyi*100)));
-                    classyi.put("classMyopiaNum", jsyi);
-                    classyi.put("classbuliangRate", jcyi==0?0:df.format(((double)blyi/(double)jcyi*100)));
-                    classyi.put("classbuliang", blyi);
-                    aa.add(classyi);
-                }
-                yi.put("grade", studentDO.getGrade());
-                yi.put("classyi", aa);
-                listbj.add(yi);
-            }
-            params.put("firstClass", listbj);
+//            List<Map<String,Object>> listbj = new ArrayList<Map<String,Object>>();
+//
+//            List<StudentNewDO> gradebj = studentDao.querySchoolGrade(school,activityId);
+//            for (StudentNewDO studentDO : gradebj) {
+//                Map<String,Object> yi = new HashMap<String,Object>();
+//                List<Map<String,Object>> aa = new ArrayList<Map<String,Object>>();
+//                Map<String,Object> mapClassyi = new HashMap<String,Object>();
+//                mapClassyi.put("school", school);
+//                mapClassyi.put("activityId", activityId);
+//                mapClassyi.put("grade", studentDO.getGrade());
+//                List<StudentNewDO> classCountyi = studentDao.queryGradeClassCount(mapClassyi);
+//                for(StudentNewDO stu : classCountyi){
+//                    Map<String,Object> classyi = new HashMap<String,Object>();
+//                    mapClassyi.put("studentClass", stu.getStudentClass());
+//                    int jcyi = schoolReportDao.activityGradeClassByCheckNum(activityId,school,studentDO.getGrade(),stu.getStudentClass());
+//                    mapClassyi.put("shili", "jinshi");
+//                    int jsyi = studentDao.countNoShiFan(mapClassyi);
+//                    mapClassyi.put("shili", "buliang");
+//                    int blyi = studentDao.countNoShiFan(mapClassyi);
+//                    classyi.put("classNum", jcyi);
+//                    classyi.put("class", stu.getStudentClass());
+//                    classyi.put("classMyopiaRate", jcyi==0?0:df.format(((double)jsyi/(double)jcyi*100)));
+//                    classyi.put("classMyopiaNum", jsyi);
+//                    classyi.put("classbuliangRate", jcyi==0?0:df.format(((double)blyi/(double)jcyi*100)));
+//                    classyi.put("classbuliang", blyi);
+//                    aa.add(classyi);
+//                }
+//                yi.put("grade", studentDO.getGrade());
+//                yi.put("classyi", aa);
+//                listbj.add(yi);
+//            }
+//            params.put("firstClass", listbj);
 
             //不良
             List<Map<String,String>> listT = new ArrayList<Map<String,String>>();
@@ -897,8 +633,12 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 
             //近视
             List<Map<String,String>> jiajin = new ArrayList<Map<String,String>>();
-
+            List<StudentNewDO> jiaxing = new ArrayList<>();
             List<StudentNewDO> gradejs = studentDao.querySchoolGrade(school,activityId);
+
+            checkMap.remove("studentSex");
+            checkMap.remove("shili");
+            checkMap.put("check","check");
             for (StudentNewDO studentDO : gradejs) {
                 Map<String,String> jia1 = new HashMap<String,String>();
                 Integer linchuangy = 0;
@@ -911,12 +651,50 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
                 String dir = "0";
                 String zhongr = "0";
                 String gaor = "0";
+                checkMap.put("grade",studentDO.getGrade());
+                List<StudentNewDO> studentNewDOS = studentDao.listNoShiFan(checkMap);
                 int gradeCheckNum = schoolReportDao.activityGradeByCheckNum(activityId,school,studentDO.getGrade());
-                linchuangy = schoolReportDao.jinshiqianqi(activityId,school,studentDO.getGrade());
-                jiajinshiy = schoolReportDao.jiaxingjinshi(activityId,school,studentDO.getGrade());
-                diy = schoolReportDao.didujinshi(activityId,school,studentDO.getGrade());
-                zhongy = schoolReportDao.zhongdujinshi(activityId,school,studentDO.getGrade());
-                gaoy = schoolReportDao.gaodujinshi(activityId,school,studentDO.getGrade());
+                Double luoyanl;Double luoyanr;Double dengxiaoqiujingR;Double dengxiaoqiujingL;
+                for (StudentNewDO s : studentNewDOS) {
+
+                    String nakedFarvisionOd = s.getNakedFarvisionOd()==null?"0.0":s.getNakedFarvisionOd();
+                    String nakedFarvisionOs = s.getNakedFarvisionOs()==null?"0.0":s.getNakedFarvisionOs();
+                    try {
+                        luoyanl = Double.parseDouble(nakedFarvisionOs);
+                    } catch (NumberFormatException e) {
+                        luoyanl = 0.0;
+                    }
+                    try {
+                        luoyanr = Double.parseDouble(nakedFarvisionOd);
+                    } catch (NumberFormatException e) {
+                        luoyanr = 0.0;
+                    }
+                    if (s.getDengxiaoqiujingl()==null || s.getDengxiaoqiujingr()==null) continue;
+                    dengxiaoqiujingR = s.getDengxiaoqiujingr();
+                    dengxiaoqiujingL = s.getDengxiaoqiujingl();
+                    if ((luoyanl<5.0 && dengxiaoqiujingL<-6.0) || (luoyanr<5.0 && dengxiaoqiujingR<-6.0) || "塑形镜".equals(nakedFarvisionOd)){
+                        gaoy++;
+                        continue;
+                    }
+                    if ((luoyanl<5.0 && dengxiaoqiujingL>=-6.0 && dengxiaoqiujingL<-3.0) || (luoyanr<5.0 && dengxiaoqiujingR>=-6.0 && dengxiaoqiujingR<-3.0)){
+                        zhongy++;
+                        continue;
+                    }
+                    if ((luoyanl<5.0 && dengxiaoqiujingL<-0.5 && dengxiaoqiujingL >= -3.0) || (luoyanr<5.0 && dengxiaoqiujingR<-0.5 && dengxiaoqiujingR >= -3.0)){
+                        diy++;
+                        continue;
+                    }
+                    if ((luoyanl>=5.0 && dengxiaoqiujingL < -0.5)||(luoyanr>=5.0&&dengxiaoqiujingR < -0.5)){
+                        jiajinshiy++;
+                        jiaxing.add(s);
+                        continue;
+                    }
+                    if ((dengxiaoqiujingL >=-0.5 && dengxiaoqiujingL <= 0.75 && luoyanl >= 5.0)||(dengxiaoqiujingR>=-0.5 && dengxiaoqiujingR <= 0.75 && luoyanr >= 5.0)){
+                        linchuangy++;
+                        continue;
+                    }
+
+                }
                 linchuangr = gradeCheckNum==0?"0":df.format(((double)linchuangy/(double)gradeCheckNum)*100);
                 jiajinshir = gradeCheckNum==0?"0":df.format(((double)jiajinshiy/(double)gradeCheckNum)*100);
                 dir = gradeCheckNum==0?"0":df.format(((double)diy/(double)gradeCheckNum)*100);
@@ -1029,9 +807,14 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		DecimalFormat df = new DecimalFormat("0.0");
 		int renshu = 0;
 		int jinshi = 0;
+        Map<String,Object> checkMap = new HashMap<String,Object>();
+        checkMap.put("activityId", activityId);
+        checkMap.put("grade",grade);
+        checkMap.put("shili","jinshi");
 		for (String string : school) {
-			 renshu += jiaoyujuReportDao.nowCheckNum(activityId,string,grade);	
-			 jinshi += jiaoyujuReportDao.nowgradejinshi(activityId,string,grade);
+            checkMap.put("school", string);
+			renshu += jiaoyujuReportDao.nowCheckNum(activityId,string,grade);
+			jinshi += studentDao.countNoShiFan(checkMap);
 		}
 		double double1 = renshu==0?0:Double.parseDouble(df.format((double)jinshi/(double)renshu*100));
 		return double1;
@@ -1186,9 +969,15 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		DecimalFormat df = new DecimalFormat("0.0");
 		int renshu = 0;
 		int jinshi = 0;
+        Map<String,Object> checkMap = new HashMap<String,Object>();
+        checkMap.put("activityId", activityId);
+        checkMap.put("xueBu",xueBu);
+        checkMap.put("linian",checkDate);
+        checkMap.put("shili","jinshi");
 		for (String string : school) {
-			 renshu += jiaoyujuReportDao.linianXuebuRenshu(xueBu,activityId,string,checkDate);
-			 jinshi += jiaoyujuReportDao.linianXueBujinshi(xueBu,activityId,string,checkDate);
+            checkMap.put("school", string);
+            renshu += jiaoyujuReportDao.linianXuebuRenshu(xueBu,activityId,string,checkDate);
+			jinshi += studentDao.countNoShiFan(checkMap);
 		}
 		
 		double double1 = renshu==0?0:Double.parseDouble(df.format((double)jinshi/(double)renshu*100));
@@ -1234,9 +1023,15 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService{
 		DecimalFormat df = new DecimalFormat("0.0");
 		int renshu = 0;
 		int jinshi = 0;
+        Map<String,Object> checkMap = new HashMap<String,Object>();
+        checkMap.put("activityId", activityId);
+        checkMap.put("studentSex", studentSex);
+        checkMap.put("shili","jinshi");
+        checkMap.put("linian",checkDate);
 		for (String string : school) {
+		    checkMap.put("school",string);
 			 renshu += jiaoyujuReportDao.linianSexrenshu(studentSex,activityId,string,checkDate);
-			 jinshi += jiaoyujuReportDao.linianSexjinshi(studentSex,activityId,string,checkDate);
+			 jinshi += studentDao.countNoShiFan(checkMap);
 		}
 		
 		double double1 = renshu==0?0:Double.parseDouble(df.format((double)jinshi/(double)renshu*100));

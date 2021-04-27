@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import com.shaicha.informationNEW.domain.StudentNewDO;
 import com.shaicha.informationNEW.domain.SchoolNewDO;
 
+import java.util.List;
+
 @Mapper
 public interface jiaoyujuReportNewDao {
 	
-	SchoolNewDO getAddress(String OrgName);
+	List<SchoolNewDO> getAddress(String OrgName);
 	
 	StudentNewDO getMaxMinCheckDate(Integer activityId);
 	

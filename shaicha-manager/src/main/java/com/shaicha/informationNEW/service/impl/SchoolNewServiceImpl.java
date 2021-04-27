@@ -42,7 +42,11 @@ public class SchoolNewServiceImpl implements SchoolNewService {
 	
 	@Override
 	public int update(SchoolNewDO school){
-		return schoolDao.update(school);
+        int update = schoolDao.update(school);
+        if (update==1) {
+            schoolDao.updateStudent(school.getOrgname(), school.getId());
+        }
+		return update;
 	}
 	
 	@Override
