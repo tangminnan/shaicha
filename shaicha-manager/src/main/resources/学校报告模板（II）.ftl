@@ -1504,7 +1504,7 @@
                             </w:pPr>
                             <w:r>
                                 <w:rPr>
-                                    <w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast"/>
+                                    <w:rFonts w:fareast="宋体" w:hint="default"/>
                                     <w:color w:val="000000"/>
                                     <w:kern w:val="0"/>
                                     <w:sz-cs w:val="21"/>
@@ -4467,6 +4467,7 @@
                             <w:tcBorders>
                                 <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
+                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
                                 <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                             </w:tcBorders>
                             <w:shd w:val="clear" w:color="000000" w:fill="FFFFFF"/>
@@ -4502,7 +4503,7 @@
                             <w:tcBorders>
                                 <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:left w:val="nil"/>
-                                <w:bottom w:val="nil"/>
+                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
                                 <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                             </w:tcBorders>
                             <w:shd w:val="clear" w:color="000000" w:fill="FFFFFF"/>
@@ -5129,7 +5130,7 @@
                         <w:tcPr>
                             <w:tcW w:w="1026" w:type="dxa"/>
                             <w:tcBorders>
-                                <w:top w:val="nil"/>
+                                <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:left w:val="nil"/>
                                 <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
@@ -7099,7 +7100,7 @@
                         <w:p>
                             <w:pPr>
                                 <w:widowControl w:val="off"/>
-                                <w:jc w:val="both"/>
+                                <w:jc w:val="center"/>
                                 <w:rPr>
                                     <w:rFonts w:fareast="宋体" w:hint="default"/>
                                     <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
@@ -7122,7 +7123,7 @@
                         <w:p>
                             <w:pPr>
                                 <w:widowControl w:val="off"/>
-                                <w:jc w:val="both"/>
+                                <w:jc w:val="center"/>
                             </w:pPr>
                             <w:r>
                                 <w:t>检测人数</w:t>
@@ -7137,7 +7138,7 @@
                         <w:p>
                             <w:pPr>
                                 <w:widowControl w:val="off"/>
-                                <w:jc w:val="both"/>
+                                <w:jc w:val="center"/>
                             </w:pPr>
                             <w:r>
                                 <w:t>近视人数</w:t>
@@ -7152,7 +7153,7 @@
                         <w:p>
                             <w:pPr>
                                 <w:widowControl w:val="off"/>
-                                <w:jc w:val="both"/>
+                                <w:jc w:val="center"/>
                             </w:pPr>
                             <w:r>
                                 <w:t>近视率</w:t>
@@ -7167,7 +7168,7 @@
                         <w:p>
                             <w:pPr>
                                 <w:widowControl w:val="off"/>
-                                <w:jc w:val="both"/>
+                                <w:jc w:val="center"/>
                                 <w:rPr>
                                     <w:rFonts w:fareast="宋体" w:hint="fareast"/>
                                     <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
@@ -7178,7 +7179,7 @@
                                     <w:rFonts w:hint="fareast"/>
                                     <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
                                 </w:rPr>
-                                <w:t>不良人数</w:t>
+                                <w:t>视力不良人数</w:t>
                             </w:r>
                         </w:p>
                     </w:tc>
@@ -7190,7 +7191,7 @@
                         <w:p>
                             <w:pPr>
                                 <w:widowControl w:val="off"/>
-                                <w:jc w:val="both"/>
+                                <w:jc w:val="center"/>
                                 <w:rPr>
                                     <w:rFonts w:fareast="宋体" w:hint="default"/>
                                     <w:lang w:val="EN-US" w:fareast="ZH-CN"/>
@@ -7235,7 +7236,7 @@
                         <w:p>
                             <w:pPr>
                                 <w:widowControl w:val="off"/>
-                                <w:jc w:val="both"/>
+                                <w:jc w:val="center"/>
                             </w:pPr>
                             <w:r>
                                 <w:t>${yi.class!''}班</w:t>

@@ -171,7 +171,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService {
                 if (s.getDengxiaoqiujingl() == null || s.getDengxiaoqiujingr() == null) continue;
                 dengxiaoqiujingR = s.getDengxiaoqiujingr();
                 dengxiaoqiujingL = s.getDengxiaoqiujingl();
-                if ((luoyanl < 5.0 && dengxiaoqiujingL < -6.0) || (luoyanr < 5.0 && dengxiaoqiujingR < -6.0) || "塑形镜".equals(nakedFarvisionOd)) {
+                if ((luoyanl < 5.0 && dengxiaoqiujingL < -6.0) || (luoyanr < 5.0 && dengxiaoqiujingR < -6.0)) {
                     gaodujinshi++;
                     continue;
                 }
@@ -689,7 +689,7 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService {
                     if (s.getDengxiaoqiujingl() == null || s.getDengxiaoqiujingr() == null) continue;
                     dengxiaoqiujingR = s.getDengxiaoqiujingr();
                     dengxiaoqiujingL = s.getDengxiaoqiujingl();
-                    if ((luoyanl < 5.0 && dengxiaoqiujingL < -6.0) || (luoyanr < 5.0 && dengxiaoqiujingR < -6.0) || "塑形镜".equals(nakedFarvisionOd)) {
+                    if ((luoyanl < 5.0 && dengxiaoqiujingL < -6.0) || (luoyanr < 5.0 && dengxiaoqiujingR < -6.0)) {
                         gaoy++;
                         continue;
                     }

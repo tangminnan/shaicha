@@ -155,7 +155,7 @@
 		<![CDATA[
          SELECT count(*) from (
 		SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where activity_id = #{activityId} and school = #{school} and grade = #{grade} and last_check_time is not null)a
-		where a.jinshi <= 4.5
+		where a.jinshi <= 4.5 and a.jinshi >= 3.0
         ]]>
 	</select>
     <!-- 总计 -->
@@ -197,6 +197,9 @@
     <select id="liniangradeCheck" resultType="int">
 		SELECT count(*) from t_student_new where school = #{school} and grade = #{grade} and date_format(last_check_time,'%Y') = #{lastCheckTime}
 	</select>
+    <select id="liniangradeCheckBySys" resultType="int">
+		SELECT count(*) from t_student_new where school = #{school} and grade = #{grade} and date_format(last_check_time,'%Y') = #{lastCheckTime} and sys_id = #{sysId}
+	</select>
     <!-- 近视 -->
     <select id="liniangradeCheckjinshi" resultType="int">
 		<![CDATA[
@@ -210,6 +213,13 @@
     <select id="liniangradeCheckbuliang" resultType="int">
 		<![CDATA[
          SELECT count(*) from (SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where school = #{school} and grade = #{grade})a
+        where a.jinshi < 5.0
+		and date_format(a.last_check_time,'%Y') =#{lastCheckTime}
+        ]]>
+	</select>
+    <select id="liniangradeCheckbuliangBySys" resultType="int">
+		<![CDATA[
+         SELECT count(*) from (SELECT * ,least(naked_farvision_od,naked_farvision_os) jinshi from t_student_new where school = #{school} and grade = #{grade} and sys_id = #{sysId})a
         where a.jinshi < 5.0
 		and date_format(a.last_check_time,'%Y') =#{lastCheckTime}
         ]]>

@@ -83,6 +83,7 @@ public interface StudentNewDao {
 	
 	List<StudentNewDO> querySchoolGrade(@Param("school") String school,@Param("activityId") Integer activityId);
 	List<StudentNewDO> querySchoolGradeLiNian(String school);
+	List<StudentNewDO> querySchoolGradeLiNianBySys(@Param("school")String school,@Param("sysId")Long sysId);
 	List<StudentNewDO> queryGradeClassCount(Map<String,Object> map);
 		
 	List<StudentNewDO> queryStudentGrade(@Param("school") String school,@Param("grade") String grade,@Param("activityId") Integer activityId,@Param("studentClass") String studentClass);	

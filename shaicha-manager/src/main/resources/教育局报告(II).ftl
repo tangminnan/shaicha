@@ -14843,6 +14843,7 @@
                             <w:tcBorders>
                                 <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:left w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
+                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
                                 <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                             </w:tcBorders>
                             <w:shd w:val="clear" w:color="000000" w:fill="FFFFFF"/>
@@ -14878,7 +14879,7 @@
                             <w:tcBorders>
                                 <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:left w:val="nil"/>
-                                <w:bottom w:val="nil"/>
+                                <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="000000"/>
                                 <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                             </w:tcBorders>
                             <w:shd w:val="clear" w:color="000000" w:fill="FFFFFF"/>
@@ -15505,7 +15506,7 @@
                         <w:tcPr>
                             <w:tcW w:w="1026" w:type="dxa"/>
                             <w:tcBorders>
-                                <w:top w:val="nil"/>
+                                <w:top w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:left w:val="nil"/>
                                 <w:bottom w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>
                                 <w:right w:val="single" w:sz="8" wx:bdrwidth="20" w:space="0" w:color="auto"/>

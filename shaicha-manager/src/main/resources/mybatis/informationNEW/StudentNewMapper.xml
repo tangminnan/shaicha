@@ -168,6 +168,7 @@
             <if test="birthday != null and birthday != ''">and birthday = #{birthday}</if>
             <if test="identityCard != null and identityCard != ''">and identity_card = #{identityCard}</if>
             <if test="school != null and school != ''">and school = #{school}</if>
+            <if test="linian != null and linian != ''">and DATE_FORMAT(last_check_time, '%Y') = #{linian}</if>
             <if test="grade != null and grade != ''">and grade = #{grade}</if>
             <if test="studentClass != null and studentClass != ''">and student_class = #{studentClass}</if>
             <if test="phone != null and phone != ''">and phone = #{phone}</if>
@@ -188,7 +189,7 @@
         <where>
             <if test="id != null and id != ''">and id = #{id}</if>
             <if test="shili == 'jinshi'">AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' ) or
-                ((dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜') ) and
+                ((dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os &lt; '5.0') or naked_farvision_os = '塑形镜')) and
                 last_check_time is not NULL
             </if>
             <if test="shili == 'didu'">AND ((naked_farvision_od &lt; '5.0' and dengxiaoqiujingr &lt; '-0.5' and
@@ -210,7 +211,9 @@
                 (dengxiaoqiujingl &lt; '-0.5' and naked_farvision_os >= '5.0')) and last_check_time is not NULL and
                 naked_farvision_os !='塑形镜'
             </if>
-            <if test="shili == 'linchuang'">AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75') or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75')) and last_check_time is not NULL
+            <if test="shili == 'linchuang'">AND ((dengxiaoqiujingr >= '-0.5' and dengxiaoqiujingr &lt;= '0.75' and
+                naked_farvision_od >= '5.0' ) or (dengxiaoqiujingl >= '-0.5' and dengxiaoqiujingl &lt;= '0.75' and
+                naked_farvision_os >= '5.0')) and last_check_time is not NULL
             </if>
             <if test="shili == 'zhengchang'">AND naked_farvision_od >= '5.0' and naked_farvision_os >= '5.0' and
                 last_check_time is not NULL and naked_farvision_os !='塑形镜'
@@ -928,6 +931,11 @@ LIMIT #{i},#{j}
 
     <select id="querySchoolGradeLiNian" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
 		select id, school,student_name,grade ,xue_bu from t_student_new where school = #{school} group by grade
+		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
+	</select>
+
+    <select id="querySchoolGradeLiNianBySys" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
+		select id, school,student_name,grade ,xue_bu from t_student_new where school = #{school} and sys_id = #{sysId} group by grade
 		ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
 	</select>
 
