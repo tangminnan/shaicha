@@ -1661,22 +1661,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService {
                     mapPP.put("生活视力-左", "");
                 }
                 List<ResultQuestionDO> questionDOList = resultQuestionDao.getQuestion(studentNewDO.getId());
-                if (questionDOList.size() > 0 && questionDOList.get(0).getQuestionTwoL() != null && !"".equals(questionDOList.get(0).getQuestionTwoL())) {
-                    mapPP.put("球镜-左", "-" + questionDOList.get(0).getQuestionTwoL());
-                    mapPP.put("柱镜-左", "");
-                    mapPP.put("轴位-左", "");
-                } else {
-                    if (L.size() > 0) {
-                        resultDiopterDO = L.get(0);
-                        mapPP.put("球镜-左", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
-                        mapPP.put("柱镜-左", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
-                        mapPP.put("轴位-左", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
-                    } else {
-                        mapPP.put("球镜-左", "");
-                        mapPP.put("柱镜-左", "");
-                        mapPP.put("轴位-左", "");
-                    }
-                }
+
                 if (questionDOList.size() > 0 && questionDOList.get(0).getQuestionTwoR() != null && !"".equals(questionDOList.get(0).getQuestionTwoR())) {
                     mapPP.put("球镜-右", "-" + questionDOList.get(0).getQuestionTwoR());
                     mapPP.put("柱镜-右", "");
@@ -1691,6 +1676,22 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService {
                         mapPP.put("球镜-右", "");
                         mapPP.put("柱镜-右", "");
                         mapPP.put("轴位-右", "");
+                    }
+                }
+                if (questionDOList.size() > 0 && questionDOList.get(0).getQuestionTwoL() != null && !"".equals(questionDOList.get(0).getQuestionTwoL())) {
+                    mapPP.put("球镜-左", "-" + questionDOList.get(0).getQuestionTwoL());
+                    mapPP.put("柱镜-左", "");
+                    mapPP.put("轴位-左", "");
+                } else {
+                    if (L.size() > 0) {
+                        resultDiopterDO = L.get(0);
+                        mapPP.put("球镜-左", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
+                        mapPP.put("柱镜-左", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
+                        mapPP.put("轴位-左", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
+                    } else {
+                        mapPP.put("球镜-左", "");
+                        mapPP.put("柱镜-左", "");
+                        mapPP.put("轴位-左", "");
                     }
                 }
 //                List<ResultEyeaxisNewDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentNewDO.getId());
@@ -1886,18 +1887,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService {
                     os = Double.parseDouble(nakedFarvisionOs);
                 }
 
-                if (L.size() > 0) {
-                    resultDiopterDO = L.get(0);
-                    mapPP.put("球镜-左", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
-                    mapPP.put("柱镜-左", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
-                    mapPP.put("轴位-左", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
-                    dengxiaoqiujingL = resultDiopterDO.getDengxiaoqiujing() == null ? 0.0 : resultDiopterDO.getDengxiaoqiujing();
-                    zhujingqL = resultDiopterDO.getDiopterC() == null ? 0.0 : resultDiopterDO.getDiopterC();
-                } else {
-                    mapPP.put("球镜-左", "");
-                    mapPP.put("柱镜-左", "");
-                    mapPP.put("轴位-左", "");
-                }
+
                 if (R.size() > 0) {
                     resultDiopterDO = R.get(0);
                     mapPP.put("球镜-右", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
@@ -1909,6 +1899,19 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService {
                     mapPP.put("球镜-右", "");
                     mapPP.put("柱镜-右", "");
                     mapPP.put("轴位-右", "");
+                }
+
+                if (L.size() > 0) {
+                    resultDiopterDO = L.get(0);
+                    mapPP.put("球镜-左", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
+                    mapPP.put("柱镜-左", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
+                    mapPP.put("轴位-左", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
+                    dengxiaoqiujingL = resultDiopterDO.getDengxiaoqiujing() == null ? 0.0 : resultDiopterDO.getDengxiaoqiujing();
+                    zhujingqL = resultDiopterDO.getDiopterC() == null ? 0.0 : resultDiopterDO.getDiopterC();
+                } else {
+                    mapPP.put("球镜-左", "");
+                    mapPP.put("柱镜-左", "");
+                    mapPP.put("轴位-左", "");
                 }
                 String yz = "";
                 String zz = "";
