@@ -775,161 +775,7 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService {
         params.put("numJSTotal", jiaJS22);
         params.put("rateJSTotal", df.format(((double) jiaJS22 / (double) checkT) * 100));
 
-        //附件
-//		List<Map<String,Object>> xuesheng = new ArrayList<Map<String,Object>>();
-//		DecimalFormat df2 = new DecimalFormat("0.00");
-//		List<StudentNewDO> gradefj = studentDao.querySchoolGrade(school,activityId);
-//		for (StudentNewDO studentDO : gradefj) {
-//			Map<String,Object> mapClassyi = new HashMap<String,Object>();
-//			mapClassyi.put("school", school);
-//			mapClassyi.put("activityId", activityId);
-//			mapClassyi.put("grade", studentDO.getGrade());
-//			List<StudentNewDO> classCountyi = studentDao.queryGradeClassCount(mapClassyi);
-//			for(StudentNewDO stu : classCountyi){
-//				Map<String,Object> mapbb = new HashMap<String,Object>();
-//				List<Map<String,Object>> bb = new ArrayList<Map<String,Object>>();
-//				List<StudentNewDO> grade = studentDao.queryStudentGrade(school,studentDO.getGrade(),activityId,stu.getStudentClass());
-//				if(grade.size()>0){
-//				for (StudentNewDO studentDO2 : grade) {
-//					Map<String,Object> mapPP = new HashMap<String,Object>();
-//					ResultEyesightNewDO resultEyesightDO = new ResultEyesightNewDO();
-//					ResultDiopterNewDO resultDiopterDO = new ResultDiopterNewDO();
-//					ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
-//					ResultEyeaxisNewDO resultEyeaxisDO = new ResultEyeaxisNewDO();
-//					ResultEyepressureNewDO resultEyepressureDO = new ResultEyepressureNewDO();
-//					List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentDO2.getId());
-//					List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentDO2.getId(),activityId);
-//					List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentDO2.getId(),activityId);
-//					List<ResultCornealNewDO> LR1 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R1",activityId);
-//					List<ResultCornealNewDO> LR2 = resultCornealDao.getCornealMm("L", studentDO2.getIdentityCard(),"R2",activityId);
-//					List<ResultCornealNewDO> RR1 = resultCornealDao.getCornealMm("R", studentDO2.getIdentityCard(),"R1",activityId);
-//					List<ResultCornealNewDO> RR2 = resultCornealDao.getCornealMm("R", studentDO2.getIdentityCard(),"R2",activityId);
-//					List<ResultEyeaxisNewDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentDO2.getId());
-//					List<ResultEyepressureNewDO> eyepressure = resultEyepressureDao.getEyepressure(studentDO2.getId());
-//					mapPP.put("studentName", studentDO2.getStudentName());
-//					mapPP.put("studentSex", studentDO2.getStudentSex()==null? 1:studentDO2.getStudentSex());
-//					if(lifeShili.size()>0){
-//						resultEyesightDO = lifeShili.get(0);
-//						mapPP.put("nakedNearvisionOd", resultEyesightDO.getNakedFarvisionOd()==null?"":resultEyesightDO.getNakedFarvisionOd());
-//						mapPP.put("nakedNearvisionOs", resultEyesightDO.getNakedFarvisionOs()==null?"":resultEyesightDO.getNakedFarvisionOs());
-//						mapPP.put("lifeNearvisionOd", resultEyesightDO.getCorrectionFarvisionOd()==null?"":resultEyesightDO.getCorrectionFarvisionOd());
-//						mapPP.put("lifeNearvisionOs", resultEyesightDO.getCorrectionFarvisionOs()==null?"":resultEyesightDO.getCorrectionFarvisionOs());
-//					}else{
-//						mapPP.put("nakedNearvisionOd", "");
-//						mapPP.put("nakedNearvisionOs", "");
-//						mapPP.put("lifeNearvisionOd", "");
-//						mapPP.put("lifeNearvisionOs", "");
-//					}
-//					if(L.size()>0){
-//						resultDiopterDO = L.get(0);
-//						String diopterSL="";
-//						if(resultDiopterDO.getDiopterS()!=null){
-//							if(resultDiopterDO.getDiopterS()==0)
-//								diopterSL = "0";
-//							if(resultDiopterDO.getDiopterS()!=0)
-//								diopterSL = df2.format(resultDiopterDO.getDiopterS());
-//							if(resultDiopterDO.getDiopterS()>0){
-//								diopterSL="+"+diopterSL;
-//							}
-//						}
-//						String diopterCL = "";
-//						if(resultDiopterDO.getDiopterC()!=null){
-//							if(resultDiopterDO.getDiopterC()==0){
-//								diopterCL = "0";
-//							}
-//							if(resultDiopterDO.getDiopterC()!=0){
-//								diopterCL = df2.format(resultDiopterDO.getDiopterC());
-//							}
-//						}
-//						mapPP.put("diopterSOs", diopterSL);
-//						mapPP.put("diopterCOs", diopterCL);
-//						mapPP.put("diopterAOs", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-//					}else{
-//						mapPP.put("diopterSOs", "");
-//						mapPP.put("diopterCOs", "");
-//						mapPP.put("diopterAOs", "");
-//					}
-//					if(R.size()>0){
-//						resultDiopterDO = R.get(0);
-//						String diopterSR="";
-//						if(resultDiopterDO.getDiopterS()!=null){
-//							if(resultDiopterDO.getDiopterS()==0)
-//								diopterSR = "0";
-//							if(resultDiopterDO.getDiopterS()!=0)
-//								diopterSR = df2.format(resultDiopterDO.getDiopterS());
-//							if(resultDiopterDO.getDiopterS()>0){
-//								diopterSR="+"+diopterSR;
-//							}
-//						}
-//						String diopterCR = "";
-//						if(resultDiopterDO.getDiopterC()!=null){
-//							if(resultDiopterDO.getDiopterC()==0){
-//								diopterCR = "0";
-//							}
-//							if(resultDiopterDO.getDiopterC()!=0){
-//								diopterCR = df2.format(resultDiopterDO.getDiopterC());
-//							}
-//						}
-//						mapPP.put("diopterSOd", diopterSR);
-//						mapPP.put("diopterCOd", diopterCR);
-//						mapPP.put("diopterAOd", resultDiopterDO.getDiopterA()==null?"":resultDiopterDO.getDiopterA());
-//					}else{
-//						mapPP.put("diopterSOd", "");
-//						mapPP.put("diopterCOd", "");
-//						mapPP.put("diopterAOd", "");
-//					}
-//					if(LR1.size()>0){
-//						resultCornealDO = LR1.get(0);
-//						mapPP.put("cornealR1Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-//					}else{
-//						mapPP.put("cornealR1Os", "");
-//					}
-//					if(LR2.size()>0){
-//						resultCornealDO = LR2.get(0);
-//						mapPP.put("cornealR2Os", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-//					}else{
-//						mapPP.put("cornealR2Os","");
-//					}
-//					if(RR1.size()>0){
-//						resultCornealDO = RR1.get(0);
-//						mapPP.put("cornealR1Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-//					}else{
-//						mapPP.put("cornealR1Od", "");
-//					}
-//					if(RR2.size()>0){
-//						resultCornealDO = RR2.get(0);
-//						mapPP.put("cornealR2Od", resultCornealDO.getCornealMm()==null?"":resultCornealDO.getCornealMm());
-//					}else{
-//						mapPP.put("cornealR2Od", "");
-//					}
-//					if(eyeaxis.size()>0){
-//						resultEyeaxisDO = eyeaxis.get(0);
-//						mapPP.put("secondCheckOd",resultEyeaxisDO.getFirstCheckOd()==null?"":resultEyeaxisDO.getFirstCheckOd());
-//						mapPP.put("secondCheckOs",resultEyeaxisDO.getFirstCheckOs()==null?"":resultEyeaxisDO.getFirstCheckOs());
-//					}else{
-//						mapPP.put("secondCheckOd","");
-//						mapPP.put("secondCheckOs","");
-//					}
-//					if(eyepressure.size()>0){
-//						resultEyepressureDO = eyepressure.get(0);
-//						mapPP.put("eyePressureOd", resultEyepressureDO.getEyePressureOd()==null?"":resultEyepressureDO.getEyePressureOd());
-//						mapPP.put("eyePressureOs", resultEyepressureDO.getEyePressureOs()==null?"":resultEyepressureDO.getEyePressureOs());
-//					}else{
-//						mapPP.put("eyePressureOd", "");
-//						mapPP.put("eyePressureOs", "");
-//					}
-//					bb.add(mapPP);
-//				}
-//				mapbb.put("grade", studentDO.getGrade());
-//				mapbb.put("class", stu.getStudentClass());
-//				mapbb.put("chaDate", sdf.format(activityListDao.get(activityId).getAddTime()));
-//				mapbb.put("jieguo", bb);
-//				xuesheng.add(mapbb);
-//			}
-//			}
-//		}
-//
-//		params.put("xuesheng", xuesheng);
+
         ls.put("school", school);
         ls.put("activityId", activityId);
         ls.put("shili", "jinshi");
@@ -1628,160 +1474,159 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService {
     @Override
     public void shaichawenjuanRep(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
-        Integer activityId = Integer.valueOf(request.getParameter("activityId"));
-        String school = request.getParameter("school");
-        String Stype = request.getParameter("Stype");
+//        Integer activityId = Integer.valueOf(request.getParameter("activityId"));
+//        String school = request.getParameter("school");
+//        String Stype = request.getParameter("Stype");
         List<Map<String, Object>> bb = new ArrayList<Map<String, Object>>();
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("activityId", activityId);
-        map.put("school", school);
+//        map.put("activityId", activityId);
+//        map.put("school", school);
 //		map.put("grade","二年级");
 //		map.put("studentClass","5");
-        map.put("shili", Stype);
+//        map.put("shili", Stype);
 //		map.put("check","check");
 //		map.put("xueBu","幼儿园");
-        List<StudentNewDO> list = studentDao.listNoShiFan(map);
+        int l = 0;
         DecimalFormat df = new DecimalFormat("0.00");
-        if (list.size() > 0) {
-            String activitytime = sdf.format(activityListDao.get(activityId).getAddTime());
-            for (StudentNewDO studentNewDO : list) {
-                Map<String, Object> mapPP = new LinkedHashMap<String, Object>();
-                ResultEyesightNewDO resultEyesightDO;
-                ResultDiopterNewDO resultDiopterDO;
-                List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentNewDO.getId());
-                List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentNewDO.getId(), activityId);
-                if (L.size() == 0) {
-                    L = resultDiopterDao.getYanGuangAll("L", studentNewDO.getId(), activityId);
-                }
-                List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentNewDO.getId(), activityId);
-                if (R.size() == 0) {
-                    R = resultDiopterDao.getYanGuangAll("R", studentNewDO.getId(), activityId);
-                }
-                mapPP.put("学校", studentNewDO.getSchool());
-                mapPP.put("年级", studentNewDO.getGrade());
-                mapPP.put("班级", studentNewDO.getStudentClass());
-                mapPP.put("学部", studentNewDO.getXueBu() == null ? "" : studentNewDO.getXueBu());
-                mapPP.put("姓名", studentNewDO.getStudentName());
-                mapPP.put("身份证号", studentNewDO.getIdentityCard());
-                mapPP.put("民族", studentNewDO.getNation() == null ? "" : studentNewDO.getNation());
-                mapPP.put("手机号", studentNewDO.getPhone() == null ? "" : studentNewDO.getPhone());
-                mapPP.put("生日", studentNewDO.getBirthday() == null ? "" : sdf.format(studentNewDO.getBirthday()));
-                mapPP.put("检查时间", studentNewDO.getLastCheckTime() == null ? "" : sdf.format(studentNewDO.getLastCheckTime()));
-                if (studentNewDO.getStudentSex() != null && studentNewDO.getStudentSex() == 1) {
-                    mapPP.put("性别", "男");
-                } else if (studentNewDO.getStudentSex() != null && studentNewDO.getStudentSex() == 2) {
-                    mapPP.put("性别", "女");
-                } else {
-                    mapPP.put("性别", "");
-                }
-                SchoolNewDO schoolNewDO = schoolNewDao.get(studentNewDO.getSchoolId());
-                mapPP.put("省", schoolNewDO.getProvincename());
-                mapPP.put("市", schoolNewDO.getCityname());
-                mapPP.put("市区县", schoolNewDO.getAreaname());
-                mapPP.put("活动时间", activitytime);
-                if (lifeShili.size() > 0) {
-                    resultEyesightDO = lifeShili.get(0);
-                    mapPP.put("裸眼视力-右", resultEyesightDO.getNakedFarvisionOd() == null ? "" : resultEyesightDO.getNakedFarvisionOd());
-                    mapPP.put("裸眼视力-左", resultEyesightDO.getNakedFarvisionOs() == null ? "" : resultEyesightDO.getNakedFarvisionOs());
-                    mapPP.put("生活视力-右", resultEyesightDO.getCorrectionFarvisionOd() == null ? "" : resultEyesightDO.getCorrectionFarvisionOd());
-                    mapPP.put("生活视力-左", resultEyesightDO.getCorrectionFarvisionOs() == null ? "" : resultEyesightDO.getCorrectionFarvisionOs());
-                } else {
-                    mapPP.put("裸眼视力-右", "");
-                    mapPP.put("裸眼视力-左", "");
-                    mapPP.put("生活视力-右", "");
-                    mapPP.put("生活视力-左", "");
-                }
-                List<ResultQuestionDO> questionDOList = resultQuestionDao.getQuestion(studentNewDO.getId());
+        String[] strings = new String[]{"祥泰实验学校","育秀中学小学部","育秀小学","爱都小学","育晖小学","舜耕小学","外海实验学校","历山双语学校","名士小学","银座英才幼儿园"};
+        for (String school : strings) {
+            List<String> likeSchool = studentDao.likeSchool(school);
+            for (String s : likeSchool) {
+                map.put("identityCard",s);
+                List<StudentNewDO> list = studentDao.listNoShiFan(map);
+                if (list.size() > 0) {
+                    for (StudentNewDO studentNewDO : list) {
+                        Integer activityId = studentNewDO.getActivityId();
+//                        String activitytime = sdf.format(activityListDao.get(activityId).getAddTime());
+                        Map<String, Object> mapPP = new LinkedHashMap<String, Object>();
+                        ResultEyesightNewDO resultEyesightDO;
+                        ResultDiopterNewDO resultDiopterDO;
+                        List<ResultEyesightNewDO> lifeShili = resultEyesightDao.getLifeShili(studentNewDO.getId());
+                        List<ResultDiopterNewDO> L = resultDiopterDao.getYanGuang("L", studentNewDO.getId(), activityId);
+                        if (L.size() == 0) {
+                            L = resultDiopterDao.getYanGuangAll("L", studentNewDO.getId(), activityId);
+                        }
+                        List<ResultDiopterNewDO> R = resultDiopterDao.getYanGuang("R", studentNewDO.getId(), activityId);
+                        if (R.size() == 0) {
+                            R = resultDiopterDao.getYanGuangAll("R", studentNewDO.getId(), activityId);
+                        }
+                        mapPP.put("学校", studentNewDO.getSchool());
+                        mapPP.put("年级", studentNewDO.getGrade());
+                        mapPP.put("班级", studentNewDO.getStudentClass());
+                        mapPP.put("学部", studentNewDO.getXueBu() == null ? "" : studentNewDO.getXueBu());
+                        mapPP.put("姓名", studentNewDO.getStudentName());
+                        mapPP.put("身份证号", studentNewDO.getIdentityCard());
+                        mapPP.put("民族", studentNewDO.getNation() == null ? "" : studentNewDO.getNation());
+                        mapPP.put("手机号", studentNewDO.getPhone() == null ? "" : studentNewDO.getPhone());
+                        mapPP.put("生日", studentNewDO.getBirthday() == null ? "" : sdf.format(studentNewDO.getBirthday()));
+                        mapPP.put("检查时间", studentNewDO.getLastCheckTime() == null ? "" : sdf.format(studentNewDO.getLastCheckTime()));
+                        if (studentNewDO.getStudentSex() != null && studentNewDO.getStudentSex() == 1) {
+                            mapPP.put("性别", "男");
+                        } else if (studentNewDO.getStudentSex() != null && studentNewDO.getStudentSex() == 2) {
+                            mapPP.put("性别", "女");
+                        } else {
+                            mapPP.put("性别", "");
+                        }
+                        SchoolNewDO schoolNewDO = schoolNewDao.get(studentNewDO.getSchoolId());
+                        mapPP.put("省", schoolNewDO.getProvincename());
+                        mapPP.put("市", schoolNewDO.getCityname());
+                        mapPP.put("市区县", schoolNewDO.getAreaname());
+//                        mapPP.put("活动时间", activitytime);
+                        if (lifeShili.size() > 0) {
+                            resultEyesightDO = lifeShili.get(0);
+                            mapPP.put("裸眼视力-右", resultEyesightDO.getNakedFarvisionOd() == null ? "" : resultEyesightDO.getNakedFarvisionOd());
+                            mapPP.put("裸眼视力-左", resultEyesightDO.getNakedFarvisionOs() == null ? "" : resultEyesightDO.getNakedFarvisionOs());
+                            mapPP.put("生活视力-右", resultEyesightDO.getCorrectionFarvisionOd() == null ? "" : resultEyesightDO.getCorrectionFarvisionOd());
+                            mapPP.put("生活视力-左", resultEyesightDO.getCorrectionFarvisionOs() == null ? "" : resultEyesightDO.getCorrectionFarvisionOs());
+                        } else {
+                            mapPP.put("裸眼视力-右", "");
+                            mapPP.put("裸眼视力-左", "");
+                            mapPP.put("生活视力-右", "");
+                            mapPP.put("生活视力-左", "");
+                        }
+                        List<ResultQuestionDO> questionDOList = resultQuestionDao.getQuestion(studentNewDO.getId());
 
-                if (questionDOList.size() > 0 && questionDOList.get(0).getQuestionTwoR() != null && !"".equals(questionDOList.get(0).getQuestionTwoR())) {
-                    mapPP.put("球镜-右", "-" + questionDOList.get(0).getQuestionTwoR());
-                    mapPP.put("柱镜-右", "");
-                    mapPP.put("轴位-右", "");
-                } else {
-                    if (R.size() > 0) {
-                        resultDiopterDO = R.get(0);
-                        mapPP.put("球镜-右", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
-                        mapPP.put("柱镜-右", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
-                        mapPP.put("轴位-右", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
-                    } else {
-                        mapPP.put("球镜-右", "");
-                        mapPP.put("柱镜-右", "");
-                        mapPP.put("轴位-右", "");
-                    }
-                }
-                if (questionDOList.size() > 0 && questionDOList.get(0).getQuestionTwoL() != null && !"".equals(questionDOList.get(0).getQuestionTwoL())) {
-                    mapPP.put("球镜-左", "-" + questionDOList.get(0).getQuestionTwoL());
-                    mapPP.put("柱镜-左", "");
-                    mapPP.put("轴位-左", "");
-                } else {
-                    if (L.size() > 0) {
-                        resultDiopterDO = L.get(0);
-                        mapPP.put("球镜-左", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
-                        mapPP.put("柱镜-左", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
-                        mapPP.put("轴位-左", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
-                    } else {
-                        mapPP.put("球镜-左", "");
-                        mapPP.put("柱镜-左", "");
-                        mapPP.put("轴位-左", "");
-                    }
-                }
-//                List<ResultEyeaxisNewDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentNewDO.getId());
-//                if (eyeaxis.size()>0){
-//                    mapPP.put("眼轴右眼",eyeaxis.get(0).getFirstCheckOd()==null?"":eyeaxis.get(0).getFirstCheckOd());
-//                    mapPP.put("眼轴左眼",eyeaxis.get(0).getFirstCheckOs()==null?"":eyeaxis.get(0).getFirstCheckOs());
-//                }else {
-//                    mapPP.put("眼轴右眼","");
-//                    mapPP.put("眼轴左眼","");
-//                }
-//                ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
-//                List<ResultCornealNewDO> resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"R","R1");
-//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-//                mapPP.put("右眼-K1",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-//                mapPP.put("右眼-K1轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
-//                resultCornealDO = new ResultCornealNewDO();
-//                resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"R","R2");
-//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-//                mapPP.put("右眼-K2",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-//                mapPP.put("右眼-K2轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
-//
-//                resultCornealDO = new ResultCornealNewDO();
-//                resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"L","R1");
-//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-//                mapPP.put("左眼-K1",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-//                mapPP.put("左眼-K1轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
-//                resultCornealDO = new ResultCornealNewDO();
-//                resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"L","R2");
-//                if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
-//                mapPP.put("左眼-K2",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
-//                mapPP.put("左眼-K2轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
+                        if (questionDOList.size() > 0 && questionDOList.get(0).getQuestionTwoR() != null && !"".equals(questionDOList.get(0).getQuestionTwoR())) {
+                            mapPP.put("球镜-右", "-" + questionDOList.get(0).getQuestionTwoR());
+                            mapPP.put("柱镜-右", "");
+                            mapPP.put("轴位-右", "");
+                        } else {
+                            if (R.size() > 0) {
+                                resultDiopterDO = R.get(0);
+                                mapPP.put("球镜-右", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
+                                mapPP.put("柱镜-右", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
+                                mapPP.put("轴位-右", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
+                            } else {
+                                mapPP.put("球镜-右", "");
+                                mapPP.put("柱镜-右", "");
+                                mapPP.put("轴位-右", "");
+                            }
+                        }
+                        if (questionDOList.size() > 0 && questionDOList.get(0).getQuestionTwoL() != null && !"".equals(questionDOList.get(0).getQuestionTwoL())) {
+                            mapPP.put("球镜-左", "-" + questionDOList.get(0).getQuestionTwoL());
+                            mapPP.put("柱镜-左", "");
+                            mapPP.put("轴位-左", "");
+                        } else {
+                            if (L.size() > 0) {
+                                resultDiopterDO = L.get(0);
+                                mapPP.put("球镜-左", resultDiopterDO.getDiopterS() == null ? "" : resultDiopterDO.getDiopterS());
+                                mapPP.put("柱镜-左", resultDiopterDO.getDiopterC() == null ? "" : resultDiopterDO.getDiopterC());
+                                mapPP.put("轴位-左", resultDiopterDO.getDiopterA() == null ? "" : resultDiopterDO.getDiopterA());
+                            } else {
+                                mapPP.put("球镜-左", "");
+                                mapPP.put("柱镜-左", "");
+                                mapPP.put("轴位-左", "");
+                            }
+                        }
+                        List<ResultEyeaxisNewDO> eyeaxis = resultEyeaxisDao.getEyeaxis(studentNewDO.getId());
+                        if (eyeaxis.size()>0){
+                            mapPP.put("眼轴右眼",eyeaxis.get(0).getFirstCheckOd()==null?"":eyeaxis.get(0).getFirstCheckOd());
+                            mapPP.put("眼轴左眼",eyeaxis.get(0).getFirstCheckOs()==null?"":eyeaxis.get(0).getFirstCheckOs());
+                        }else {
+                            mapPP.put("眼轴右眼","");
+                            mapPP.put("眼轴左眼","");
+                        }
+                        ResultCornealNewDO resultCornealDO = new ResultCornealNewDO();
+                        List<ResultCornealNewDO> resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"R","R1");
+                        if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+                        mapPP.put("右眼-K1",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+                        mapPP.put("右眼-K1轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
+                        resultCornealDO = new ResultCornealNewDO();
+                        resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"R","R2");
+                        if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+                        mapPP.put("右眼-K2",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+                        mapPP.put("右眼-K2轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 
-                if (questionDOList.size() > 0) {
-                    ResultQuestionDO resultQuestionDO = questionDOList.get(0);
-                    if ("".equals(resultQuestionDO.getQuestionOneI()) || resultQuestionDO.getQuestionOneI() == null) {
-                        mapPP.put("目前孩子戴镜类型", "");
-                    } else if (1 == resultQuestionDO.getQuestionOneI()) {
-                        mapPP.put("目前孩子戴镜类型", "框架眼镜");
-                    } else if (2 == resultQuestionDO.getQuestionOneI()) {
-                        mapPP.put("目前孩子戴镜类型", "隐形眼镜");
-                    } else if (3 == resultQuestionDO.getQuestionOneI()) {
-                        mapPP.put("目前孩子戴镜类型", "夜戴角膜塑形镜");
-                    } else if (4 == resultQuestionDO.getQuestionOneI()) {
-                        mapPP.put("目前孩子戴镜类型", "不戴镜");
-                    }
-                    if (!"".equals(resultQuestionDO.getQuestionOneS()) && resultQuestionDO.getQuestionOneS() != null) {
-                        mapPP.put("目前孩子戴镜类型", resultQuestionDO.getQuestionOneS());
-                    }
+                        resultCornealDO = new ResultCornealNewDO();
+                        resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"L","R1");
+                        if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+                        mapPP.put("左眼-K1",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+                        mapPP.put("左眼-K1轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
+                        resultCornealDO = new ResultCornealNewDO();
+                        resultCornealDOList = studentNewDao.getResultCornealDOList(studentNewDO.getId(),"L","R2");
+                        if(resultCornealDOList.size()>0) resultCornealDO = resultCornealDOList.get(0);
+                        mapPP.put("左眼-K2",resultCornealDO.getCornealD()==null?"":df.format(zhuanhuan(resultCornealDO.getCornealD())));
+                        mapPP.put("左眼-K2轴位", resultCornealDO.getCornealDeg()==null?"":resultCornealDO.getCornealDeg());
 
-//					mapPP.put("右眼戴镜的近视度数",resultQuestionDO.getQuestionTwoR()==null?"":resultQuestionDO.getQuestionTwoR());
-//					mapPP.put("左眼戴镜的近视度数",resultQuestionDO.getQuestionTwoL()==null?"":resultQuestionDO.getQuestionTwoL());
-//					mapPP.put("是否存在眼部疾病史",resultQuestionDO.getQuestionThree()==null?"":resultQuestionDO.getQuestionThree());
-
-                } else {
-                    mapPP.put("目前孩子戴镜类型", "");
-//					mapPP.put("右眼戴镜的近视度数","");
-//					mapPP.put("左眼戴镜的近视度数","");
-//					mapPP.put("是否存在眼部疾病史","");
-                }
+                        if (questionDOList.size() > 0) {
+                            ResultQuestionDO resultQuestionDO = questionDOList.get(0);
+                            if ("".equals(resultQuestionDO.getQuestionOneI()) || resultQuestionDO.getQuestionOneI() == null) {
+                                mapPP.put("目前孩子戴镜类型", "");
+                            } else if (1 == resultQuestionDO.getQuestionOneI()) {
+                                mapPP.put("目前孩子戴镜类型", "框架眼镜");
+                            } else if (2 == resultQuestionDO.getQuestionOneI()) {
+                                mapPP.put("目前孩子戴镜类型", "隐形眼镜");
+                            } else if (3 == resultQuestionDO.getQuestionOneI()) {
+                                mapPP.put("目前孩子戴镜类型", "夜戴角膜塑形镜");
+                            } else if (4 == resultQuestionDO.getQuestionOneI()) {
+                                mapPP.put("目前孩子戴镜类型", "不戴镜");
+                            }
+                            if (!"".equals(resultQuestionDO.getQuestionOneS()) && resultQuestionDO.getQuestionOneS() != null) {
+                                mapPP.put("目前孩子戴镜类型", resultQuestionDO.getQuestionOneS());
+                            }
+                        } else {
+                            mapPP.put("目前孩子戴镜类型", "");
+                        }
 //                List<ChanpinRecordDetailsDO> list4 = chanpinRecordDetailsDao.getByChanpin(null);
 //                for (ChanpinRecordDetailsDO chanpinRecordDetailsDO : list4) {
 //                    mapPP.put(chanpinRecordDetailsDO.getTitleName(), "");
@@ -1802,13 +1647,19 @@ public class SchoolReportNewServiceImpl implements SchoolReportNewService {
 //					}
 //				}
 
-                bb.add(mapPP);
+                        bb.add(mapPP);
+                        l++;
+                        System.out.println(l);
+                    }
+                }
+//                else {
+//                    Map<String, Object> mapp = new HashMap<String, Object>();
+//                    mapp.put("信息", "暂无数据！！！");
+//                    bb.add(mapp);
+//                }
             }
-        } else {
-            Map<String, Object> mapp = new HashMap<String, Object>();
-            mapp.put("信息", "暂无数据！！！");
-            bb.add(mapp);
         }
+
 
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

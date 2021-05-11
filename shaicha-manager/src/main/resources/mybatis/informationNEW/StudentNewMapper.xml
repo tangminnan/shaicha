@@ -1009,5 +1009,9 @@ LIMIT #{i},#{j}
 		select COUNT(*) from t_student_new where activity_id = #{activityId} and school_id = #{schoolId} and last_check_time is not null
 	</select>
 
+    <select id="likeSchool" resultType="string">
+        SELECT DISTINCT identity_card FROM t_student_new WHERE school like CONCAT('%',#{value},'%') ORDER BY field(grade,'幼儿园','一年级','二年级','三年级','四年级','五年级','六年级','初一','初二','初三','初四','高一','高二','高三')
+    </select>
+
 
 </mapper>

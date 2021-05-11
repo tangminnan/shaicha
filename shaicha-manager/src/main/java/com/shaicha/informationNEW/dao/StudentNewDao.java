@@ -128,4 +128,6 @@ public interface StudentNewDao {
     int countNoShiFan(Map<String, Object> map);
 
     List<String> getSchoolCheckDate(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
+
+    List<String> likeSchool(String school);
 }

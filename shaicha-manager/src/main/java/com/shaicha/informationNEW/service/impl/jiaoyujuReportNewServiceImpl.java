@@ -88,7 +88,14 @@ public class jiaoyujuReportNewServiceImpl implements jiaoyujuReportNewService {
         String parameter = request.getParameter("school");
         String[] split1 = parameter.split(",");
         String date = request.getParameter("date");
-        SchoolNewDO aDo = jiaoyujuReportDao.getAddress(split1[0]).get(0);
+        List<SchoolNewDO> address = jiaoyujuReportDao.getAddress(split1[0]);
+        if (address.size()<=0 && split1.length>1){
+            address = jiaoyujuReportDao.getAddress(split1[1]);
+        }
+        SchoolNewDO aDo = new SchoolNewDO();
+        if (address.size()>0){
+            aDo = address.get(0);
+        }
         String cityname = "";
         if (aDo != null) {
             cityname = aDo.getCityname() + aDo.getAreaname();
