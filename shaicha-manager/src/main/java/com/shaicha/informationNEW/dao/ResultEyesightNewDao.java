@@ -33,6 +33,7 @@ public interface ResultEyesightNewDao {
 	int batchRemove(Integer[] tEyesightIds);
 	
 	List<ResultEyesightNewDO> getLifeShili(@Param("studentId") Integer studentId);
+	List<ResultEyesightNewDO> oldgetLifeShili(@Param("studentId") Integer studentId);
 
 
     Map<String,String> getYuCeData(Integer id);

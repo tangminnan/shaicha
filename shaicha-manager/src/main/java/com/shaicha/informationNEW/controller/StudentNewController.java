@@ -1606,6 +1606,23 @@ public class StudentNewController {
         //基本信息获取
         StudentNewDO studentDO = studentNewService.get(id);
         if (studentDO == null || studentDO.getLastCheckTime() == null) return "information/student/示范校筛查打印";
+        if(studentDO.getQRCode()==null){
+            String qrCode = studentNewService.qrCode(studentDO.getIdentityCard());
+            if (StringUtils.isNotBlank(qrCode)){
+                studentDO.setQRCode(qrCode);
+            }else {
+                qrCode = studentDO.getId().toString().substring(0,3) + studentDO.getStudentSex() + (int)(8999 * Math.random() + 1000);
+                Map map = new HashMap();
+                map.put("QRCode",qrCode);
+                while (studentNewService.list(map).size()>0){
+                    qrCode = studentDO.getId().toString().substring(0,3) + studentDO.getStudentSex() + (int)(8999 * Math.random() + 1000);
+                    map.put("QRCode",qrCode);
+                }
+                studentDO.setQRCode(qrCode);
+                studentNewService.updateCode(studentDO);
+            }
+        }
+        model.addAttribute("qrCode", studentDO.getQRCode());
         model.addAttribute("school", studentDO.getSchool());
         model.addAttribute("grade", studentDO.getGrade().toString());
         model.addAttribute("studentClass", studentDO.getStudentClass().toString());
@@ -2021,6 +2038,23 @@ public class StudentNewController {
         StudentNewDO studentDO = studentNewService.get(id);
         if (studentDO == null || studentDO.getLastCheckTime() == null) return "information/student/示范校筛查打印";
         Integer activityId = studentDO.getActivityId();
+        if(studentDO.getQRCode()==null){
+            String qrCode = studentNewService.qrCode(studentDO.getIdentityCard());
+            if (StringUtils.isNotBlank(qrCode)){
+                studentDO.setQRCode(qrCode);
+            }else {
+                qrCode = studentDO.getId().toString().substring(0,3) + studentDO.getStudentSex() + (int)(8999 * Math.random() + 1000);
+                Map map = new HashMap();
+                map.put("QRCode",qrCode);
+                while (studentNewService.list(map).size()>0){
+                    qrCode = studentDO.getId().toString().substring(0,3) + studentDO.getStudentSex() + (int)(8999 * Math.random() + 1000);
+                    map.put("QRCode",qrCode);
+                }
+                studentDO.setQRCode(qrCode);
+                studentNewService.updateCode(studentDO);
+            }
+        }
+        model.addAttribute("qrCode", studentDO.getQRCode());
         model.addAttribute("school", studentDO.getSchool());
         model.addAttribute("grade", studentDO.getGrade().toString());
         model.addAttribute("studentClass", studentDO.getStudentClass().toString());

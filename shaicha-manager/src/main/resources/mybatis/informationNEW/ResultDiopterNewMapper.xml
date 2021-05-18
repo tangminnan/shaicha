@@ -141,6 +141,17 @@
 		 ON d.t_optometry_id=o.t_optometry_id
 		 where d.ifRL = #{ifRL} and o.student_id= #{studentId} and d.activity_id = #{activityId}
 	</select>
+    <select id="oldgetYanGuang" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
+		select d.`diopter_s`,d.`diopter_c`,d.`diopter_a` from t_result_diopter d join t_result_optometry o
+		 ON d.t_optometry_id=o.t_optometry_id
+		 where d.type = 'AVG'
+		and d.ifRL = #{ifRL} and o.student_id= #{studentId}
+	</select>
+    <select id="oldgetYanGuangAll" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
+		select d.`diopter_s`,d.`diopter_c`,d.`diopter_a` from t_result_diopter d join t_result_optometry o
+		 ON d.t_optometry_id=o.t_optometry_id
+		 where d.ifRL = #{ifRL} and o.student_id= #{studentId}
+	</select>
 
 	<select id="jianchashijian" resultType="com.shaicha.informationNEW.domain.ResultDiopterNewDO">
 	

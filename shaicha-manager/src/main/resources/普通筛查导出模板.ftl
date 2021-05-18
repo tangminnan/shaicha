@@ -684,7 +684,46 @@
 										<w:highlight w:val="none" />
 										<w:u w:val="single" /></w:rPr>
 									<w:t>${mm.lastCheckTime!''}</w:t>
-								</w:r>								
+								</w:r>
+                                <w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+										<w:color w:val="000000" />
+										<w:sz w:val="21" />
+										<w:sz-cs w:val="21" />
+										<w:highlight w:val="none" />
+										<w:u w:val="single" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t>        </w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:cs="宋体" w:hint="fareast" />
+										<w:color w:val="000000" />
+										<w:sz w:val="21" />
+										<w:sz-cs w:val="21" />
+										<w:highlight w:val="none" />
+										<w:u w:val="none" />
+										<w:lang w:val="EN-US" w:fareast="ZH-CN" /></w:rPr>
+									<w:t></w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:cs="宋体" w:hint="fareast" />
+										<w:sz w:val="24" />
+										<w:lang w:val="ZH-CN" /></w:rPr>
+									<w:t>检查编号：</w:t>
+								</w:r>
+								<w:r>
+									<w:rPr>
+										<w:rFonts w:ascii="宋体" w:h-ansi="宋体" w:fareast="宋体" w:cs="宋体" w:hint="fareast" />
+										<w:color w:val="000000" />
+										<w:sz w:val="21" />
+										<w:sz-cs w:val="21" />
+										<w:highlight w:val="none" />
+										<w:u w:val="single" /></w:rPr>
+									<w:t>${mm.qrCode!''}</w:t>
+								</w:r>
 							</w:p>
 						</w:tc>
 					</w:tr>

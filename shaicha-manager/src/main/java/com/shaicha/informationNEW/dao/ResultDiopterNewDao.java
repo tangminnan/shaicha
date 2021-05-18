@@ -36,6 +36,8 @@ public interface ResultDiopterNewDao {
 	
 	List<ResultDiopterNewDO> getYanGuang(@Param("ifRL") String ifRL,@Param("studentId") Integer id,@Param("activityId") Integer activityId);
 	List<ResultDiopterNewDO> getYanGuangAll(@Param("ifRL") String ifRL,@Param("studentId") Integer id,@Param("activityId") Integer activityId);
+	List<ResultDiopterNewDO> oldgetYanGuang(@Param("ifRL") String ifRL,@Param("studentId") Integer id);
+	List<ResultDiopterNewDO> oldgetYanGuangAll(@Param("ifRL") String ifRL,@Param("studentId") Integer id);
 
 	List<ResultDiopterNewDO> jianchashijian();
 	

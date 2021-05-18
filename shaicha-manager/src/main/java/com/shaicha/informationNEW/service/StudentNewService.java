@@ -44,6 +44,7 @@ public interface StudentNewService {
 	int save(StudentNewDO student);
 	
 	int update(StudentNewDO student);
+    int updateCode(StudentNewDO studentDO);
 	
 	int remove(Integer id);
 	
@@ -125,4 +126,6 @@ public interface StudentNewService {
 	int activitySchoolCheckNum( Integer activityId, Integer schoolId);
 
     int countNoShiFan(Map<String, Object> map);
+
+    String qrCode(String identityCard);
 }

@@ -145,6 +145,11 @@
 		,ifnull(`naked_farvision_od`,'') nakedFarvisionOd,ifnull(`naked_farvision_os`,'') nakedFarvisionOs
 		 from t_result_eyesight_new where student_id = #{studentId}
 	</select>
+    <select id="oldgetLifeShili" resultType="com.shaicha.informationNEW.domain.ResultEyesightNewDO">
+		select ifnull(`correction_farvision_od`,'') correctionFarvisionOd,ifnull(`correction_farvision_os`,'') correctionFarvisionOs
+		,ifnull(`naked_farvision_od`,'') nakedFarvisionOd,ifnull(`naked_farvision_os`,'') nakedFarvisionOs
+		 from t_result_eyesight where student_id = #{studentId}
+	</select>
 	<select id="getYuCeData" resultType="java.util.Map">
 		select naked_farvision_od_y,naked_farvision_os_y from t_result_eyesight_new where student_id = #{id}
 	</select>

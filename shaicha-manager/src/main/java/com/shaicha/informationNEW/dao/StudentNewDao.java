@@ -30,6 +30,7 @@ public interface StudentNewDao {
 	List<StudentNewDO> list(Map<String,Object> map);
 
 	List<StudentNewDO> activitygetschool(Integer activityId);
+	List<StudentNewDO> allCityStudent();
 
 	
 	int count(Map<String,Object> map);
@@ -100,6 +101,7 @@ public interface StudentNewDao {
 	int countS(Map<String, Object> paMap);
 
 	void updateS(StudentNewDO studentDO);
+    int updateCode(StudentNewDO studentDO);
 
 	List<StudentNewDO> getAllCheckStudentDO(@Param("i") int i,@Param("j") int j);
 
@@ -130,4 +132,6 @@ public interface StudentNewDao {
     List<String> getSchoolCheckDate(@Param("activityId") Integer activityId,@Param("schoolId") Integer schoolId);
 
     List<String> likeSchool(String school);
+
+    String qrCode(String identityCard);
 }
