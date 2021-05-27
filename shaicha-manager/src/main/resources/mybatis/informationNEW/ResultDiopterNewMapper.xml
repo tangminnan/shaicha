@@ -76,8 +76,8 @@
 			`check_date`,
 			y1Y,
 			y2Y,
-			`dengxiaoqiujing`,
-			`activity_id`
+			`dengxiaoqiujing`
+
 		)
 		values
 		(
@@ -95,8 +95,8 @@
 			#{checkDate},
 			#{y1Y},
 			#{y2Y},
-			#{dengxiaoqiujing},
-			#{activityId}
+			#{dengxiaoqiujing}
+
 		)
 	</insert>
 	 

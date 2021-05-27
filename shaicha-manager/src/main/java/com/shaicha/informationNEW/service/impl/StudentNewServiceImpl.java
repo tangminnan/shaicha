@@ -383,6 +383,7 @@ public class StudentNewServiceImpl implements StudentNewService {
                             resultOptometryDO.setIdentityCard(identityCard);
                             resultOptometryDO.setActivityId(activityId.toString());
                             if (resultOptometryNewDao.save(resultOptometryDO) > 0) {
+//                            if (1 > 0) {
                                 ResultDiopterNewDO rd = new ResultDiopterNewDO();
                                 rd.settOptometryId(resultOptometryDO.gettOptometryId());
                                 rd.setDiopterS(Double.parseDouble(diopterSOd == "" ? "0.0" : diopterSOd));
@@ -415,8 +416,6 @@ public class StudentNewServiceImpl implements StudentNewService {
                                 rs.setIdentityCard(identityCard);
                                 resultDiopterNewDao.save(rs);
                             }
-
-
                         }
 
                         num++;

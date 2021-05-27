@@ -1025,7 +1025,7 @@ LIMIT #{i},#{j}
     </select>
 
     <select id="allCityStudent" resultType="com.shaicha.informationNEW.domain.StudentNewDO">
-        SELECT `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`add_time`,last_check_time,xue_bu,activity_id FROM t_student WHERE address = '济南市' and DATE_FORMAT(last_check_time ,'%Y') = '2018' ORDER BY id LIMIT 60000
+        SELECT `id`,`student_name`,`student_sex`,`nation`,`birthday`,`identity_card`,`school`,`grade`,`student_class`,`phone`,`address`,`add_time`,last_check_time,xue_bu,activity_id FROM t_student WHERE address = '淄博市' and DATE_FORMAT(last_check_time ,'%Y') = '2019'
     </select>
 
 

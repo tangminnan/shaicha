@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +67,7 @@ public class ExcelExportUtil4DIY extends ExcelExportUtil {
 		}
 
 		// book
-		Workbook workbook = new HSSFWorkbook();     // HSSFWorkbook=2003/xls、XSSFWorkbook=2007/xlsx
+		Workbook workbook = new XSSFWorkbook();     // HSSFWorkbook=2003/xls、XSSFWorkbook=2007/xlsx
 		Sheet sheet = workbook.createSheet("sheet0");
 		HSSFColor.HSSFColorPredefined headColor = HSSFColor.HSSFColorPredefined.LIGHT_GREEN;
 		// sheet header row

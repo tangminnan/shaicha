@@ -7,7 +7,7 @@
     <artifactId>shaicha-manager</artifactId>
     <version>1.6.9</version>
     <packaging>jar</packaging>
-	 
+
     <name>shaicha-manager</name>
     <description>Demo project for Spring Boot</description>
 
@@ -28,62 +28,62 @@
     </properties>
 
     <dependencies>
- <!--    
-	<dependency>  
-	    <groupId>org.apache.poi</groupId>  
-	    <artifactId>poi</artifactId>  
-	    <version>3.14</version>  
-	</dependency>  
-	
-	<dependency>
-	  <groupId>org.apache.poi</groupId>
-	  <artifactId>poi-ooxml</artifactId>
-	  <version>3.14</version>
-	</dependency>
-	
-		excel
-		<dependency>
-			<groupId>org.apache.log4j</groupId>
-			<artifactId>com.springsource.org.apache.log4j</artifactId>
-			<version>1.2.15</version>
-		</dependency>
- 
-		jxl表格操作
-		<dependency>
-			<groupId>net.sourceforge.jexcelapi</groupId>
-			<artifactId>jxl</artifactId>
-			<version>2.6.12</version>
-		</dependency>
-	 -->
-<!--  <dependency>
-  <groupId>org.apache.poi</groupId>
-  <artifactId>poi-scratchpad</artifactId>
-  <version>3.14</version>
-</dependency>
+        <!--
+           <dependency>
+               <groupId>org.apache.poi</groupId>
+               <artifactId>poi</artifactId>
+               <version>3.14</version>
+           </dependency>
 
-<dependency>
-  <groupId>fr.opensagres.xdocreport</groupId>
-  <artifactId>xdocreport</artifactId>
-  <version>1.0.6</version>
-</dependency>
+           <dependency>
+             <groupId>org.apache.poi</groupId>
+             <artifactId>poi-ooxml</artifactId>
+             <version>3.14</version>
+           </dependency>
 
-<dependency>
-  <groupId>org.apache.poi</groupId>
-  <artifactId>poi-ooxml-schemas</artifactId>
-  <version>3.14</version>
-</dependency>
+               excel
+               <dependency>
+                   <groupId>org.apache.log4j</groupId>
+                   <artifactId>com.springsource.org.apache.log4j</artifactId>
+                   <version>1.2.15</version>
+               </dependency>
 
-<dependency>
-  <groupId>org.apache.poi</groupId>
-  <artifactId>ooxml-schemas</artifactId>
-  <version>1.3</version>
-</dependency>
+               jxl表格操作
+               <dependency>
+                   <groupId>net.sourceforge.jexcelapi</groupId>
+                   <artifactId>jxl</artifactId>
+                   <version>2.6.12</version>
+               </dependency>
+            -->
+        <!--  <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-scratchpad</artifactId>
+          <version>3.14</version>
+        </dependency>
 
-<dependency>
-  <groupId>org.jsoup</groupId>
-  <artifactId>jsoup</artifactId>
-  <version>1.11.3</version>
-</dependency> -->
+        <dependency>
+          <groupId>fr.opensagres.xdocreport</groupId>
+          <artifactId>xdocreport</artifactId>
+          <version>1.0.6</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>poi-ooxml-schemas</artifactId>
+          <version>3.14</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.apache.poi</groupId>
+          <artifactId>ooxml-schemas</artifactId>
+          <version>1.3</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.jsoup</groupId>
+          <artifactId>jsoup</artifactId>
+          <version>1.11.3</version>
+        </dependency> -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
@@ -97,7 +97,7 @@
             <artifactId>sqljdbc4</artifactId>
             <version>4.0</version>
         </dependency>
-		<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
@@ -206,8 +206,8 @@
             <artifactId>ehcache</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
         <!--</dependency>-->
         <!-- quartz -->
         <dependency>
@@ -231,9 +231,9 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-devtools</artifactId>-->
-            <!--<optional>true</optional>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-devtools</artifactId>-->
+        <!--<optional>true</optional>-->
         <!--</dependency>-->
         <!--activiti-->
         <dependency>
@@ -257,14 +257,14 @@
             <artifactId>activiti-diagram-rest</artifactId>
             <version>${activiti.version}</version>
         </dependency>
-        
-       <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
-<dependency>
-    <groupId>org.freemarker</groupId>
-    <artifactId>freemarker</artifactId>
-   
-</dependency>
-       
+
+        <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+
+        </dependency>
+
 
         <!--swagger2-->
         <dependency>
@@ -291,48 +291,48 @@
             <version>1.9.2</version>
         </dependency>
 
-		<!--xxl-excel -->
-		<dependency>
-			<groupId>com.xuxueli</groupId>
-			<artifactId>xxl-excel</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-        
+        <!--xxl-excel -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-excel</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- 二维码 -->
         <dependency>
-		    <groupId>com.google.zxing</groupId>
-		    <artifactId>core</artifactId>
-		    <version>3.3.0</version>
-		</dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
         <!-- 条形码 -->
         <dependency>
             <groupId>net.sf.barcode4j</groupId>
             <artifactId>barcode4j</artifactId>
             <version>2.1</version>
         </dependency>
-		
+
         <!--war包部署需要-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-web</artifactId>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.springframework.boot</groupId>-->
-                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-web</artifactId>-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>javax.servlet</groupId>-->
-            <!--<artifactId>javax.servlet-api</artifactId>-->
-            <!--<version>3.1.0</version>-->
-            <!--<scope>provided</scope>-->
+        <!--<groupId>javax.servlet</groupId>-->
+        <!--<artifactId>javax.servlet-api</artifactId>-->
+        <!--<version>3.1.0</version>-->
+        <!--<scope>provided</scope>-->
         <!--</dependency>-->
-           <!--<dependency>-->
-          	<!--<groupId>org.scala-lang</groupId>-->
-          	<!--<artifactId>scala-library</artifactId>-->
-          	<!--<version>2.11.0</version>-->
-          <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.scala-lang</groupId>-->
+        <!--<artifactId>scala-library</artifactId>-->
+        <!--<version>2.11.0</version>-->
+        <!--</dependency>-->
     </dependencies>
     <build>
         <plugins>

@@ -132,23 +132,7 @@ public class Base64Utils {
 	}
 
 	
-	public static void main(String[] args) throws Exception {
-		 
-		//本地图片地址
-		String url = "地址";
-		//在线图片地址
-		String string = "http://121.36.8.243:8066/files/zhongxin/f78cf88c-9bf1-493c-afa2-4cb9b1f8f5da.jpg";
-		
-		//String str = Base64Utils.ImageToBase64ByLocal(url);
-		
-		String ste = Base64Utils.ImageToBase64ByOnline(string);
-		
-		System.out.println(ste);
-		
-		//Base64Utils.Base64ToImage(str,"保存地址/test1.jpg");
-		
-		//Base64Utils.Base64ToImage(ste, "保存地址/test2.jpg");
-	}
+
 
 	
 	
