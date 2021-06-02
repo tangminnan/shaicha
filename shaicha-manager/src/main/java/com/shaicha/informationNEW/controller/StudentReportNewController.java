@@ -87,27 +87,14 @@ public class StudentReportNewController {
 		Map<String, Object> map = new HashMap<>();
 		String school = request.getParameter("school");
 		Integer activityId = Integer.valueOf(request.getParameter("activityId"));
-		/*Map<String, Object> mapp = new HashMap<>();
-		mapp.put("activityId", activityId);
-		List<StudentNewDO> list = studentService.list(mapp);
-		if(list.size()<=0){
-			map.put("code", "-1");
-		}else{
-			map.put("code", "0");*/
-		//String schoolNum = request.getParameter("schoolNum");
 		Map<String, List<Object>> overYearMyopia = schoolReportService.overYearMyopia(school);
 		Map<String, List<Object>> gradeMyopia = schoolReportService.gradeMyopia(school,activityId);
 		Map<String, List<Object>> overYearGradeMyopia = schoolReportService.overYearGradeMyopia(school);
 		Map<String, List<Object>> overYearGradeBuliang = schoolReportService.overYearGradeBuliang(school);
-//		Map<String, List<Double>> studentSexMyopia = schoolReportService.studentSexMyopia(school,activityId);
 		Map<String, List<Object>> overYearSexNan = schoolReportService.overYearSexNan(school);
 		Map<String, List<Object>> overYearSexNv = schoolReportService.overYearSexNv(school);
 		Map<String, List<Object>> overYearGradeSex = schoolReportService.overYearGradeSex(school,activityId);
-//		Map<String, Object> shangcibulingjinshi = schoolReportService.shangcibulingjinshi(school,activityId);
-		
 		map.put("overYearMyopia", overYearMyopia.get("overYearMyopia"));
-		
-//		map.put("gradeMyopia", gradeMyopia.get("gradeMyopia"));
 		
 		map.put("seventeen", overYearGradeMyopia.get("seventeen"));
 		map.put("eighteen", overYearGradeMyopia.get("eighteen"));
@@ -117,10 +104,7 @@ public class StudentReportNewController {
 		map.put("jin",overYearGradeBuliang.get("eighteen"));
 		map.put("ming",overYearGradeBuliang.get("nineteen"));
 
-//		map.put("studentSexMyopia", studentSexMyopia.get("studentSexMyopia"));
-		
 		map.put("studentSexNanMyopia", overYearSexNan.get("studentSexMyopia"));
-		
 		map.put("studentSexNvMyopia", overYearSexNv.get("studentSexMyopia"));
 		
 		map.put("overYearSexNan", overYearGradeSex.get("overYearSexNan"));
@@ -128,15 +112,8 @@ public class StudentReportNewController {
 		
 		map.put("year", overYearMyopia.get("year"));
 		map.put("grade", gradeMyopia.get("grade"));
-		
-//		map.put("blshujus", shangcibulingjinshi.get("blshujus"));
-//		map.put("blshujuz", shangcibulingjinshi.get("blshujuz"));
-//		map.put("jsshujus", shangcibulingjinshi.get("jsshujus"));
-//		map.put("jsshujuz", shangcibulingjinshi.get("jsshujuz"));
-		//}
+
 		return map;
-		
-		
 	}
 	
 	/**

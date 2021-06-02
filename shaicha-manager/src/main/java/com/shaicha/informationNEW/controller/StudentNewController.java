@@ -73,8 +73,6 @@ public class StudentNewController {
     @Autowired
     private StudentNewService studentNewService;
     @Autowired
-    private ResultEyesightNewService resultEyesightNewService;
-    @Autowired
     private ResultOptometryNewService resultOptometryNewService;
     @Autowired
     private SchoolNewService schoolService;
@@ -94,8 +92,6 @@ public class StudentNewController {
     @GetMapping()
     @RequiresPermissions("information:student:student")
     String Student(Model model) {
-        //List<StudentNewDO> studentList = studentNewService.getList();
-        //model.addAttribute("studentList", studentList);
         Map<String, Object> params = new HashMap<>();
         String username = ShiroUtils.getUser().getUsername();
         if (!username.equals("admin") && !username.equals("shujuzhongxin")) {
@@ -103,7 +99,6 @@ public class StudentNewController {
         }
         List<SchoolNewDO> school = schoolService.list(params);
         model.addAttribute("school", school);
-        //Map<String,Object> map = new HashMap<String, Object>();
         List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
         model.addAttribute("activity", stuactivity);
         return "informationNEW/student/student";
@@ -132,18 +127,11 @@ public class StudentNewController {
      */
     @GetMapping("/demonstration")
     public String demonstration(Model model) {
-        //List<StudentNewDO> studentList = studentNewService.getList();
-        //model.addAttribute("studentList", studentList);
         Map<String, Object> params = new HashMap<>();
         String username = ShiroUtils.getUser().getUsername();
         if (!username.equals("admin") && !username.equals("shujuzhongxin")) {
             params.put("sysId", ShiroUtils.getUserId());
         }
-//		List<SchoolNewDO> school = schoolService.list(params);
-//		model.addAttribute("school", school);
-        //Map<String,Object> map = new HashMap<String, Object>();
-//		List<ActivityListNewDO> stuactivity = activityListNewService.list(params);
-//		model.addAttribute("activity",stuactivity);
         List<StudentNewDO> shifanstudent = studentNewService.shifanactivityid(params);
         ActivityListNewDO shifanactivity;
         List<ActivityListNewDO> shifanactivitylist = new ArrayList<>();
@@ -1766,20 +1754,7 @@ public class StudentNewController {
         model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg() == null ? "" : resultCornealDO.getCornealDeg());
         //医生的建议
         Date birthday = studentDO.getBirthday() == null ? new Date() : studentDO.getBirthday();
-        int birth = 0;
-        try {
-            birth = TimeUtils.getAgeByBirth(birthday);
 
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-//			   if(birth>=3 && birth<=5){
-//				   model.addAttribute("ifStu","1");
-//			   }else{
-//				   model.addAttribute("ifStu","2");
-//			   }
         if ("幼儿园".equals(studentDO.getXueBu())) {
             model.addAttribute("ifStu", "1");
         } else {
@@ -1800,20 +1775,13 @@ public class StudentNewController {
                 os = Double.parseDouble(nakedFarvisionOs);
             }
         }
-//			    od=od<os?od:os;
-//			    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
         double yuanjingshiliL = 0, yuanjingshiliR = 0;//原镜视力
-        String ssL = "ss", ssR = "ss";
         if (!StringUtils.isBlank(correctionFarvisionOd) && isDouble(correctionFarvisionOd)) {
             yuanjingshiliR = Double.parseDouble(correctionFarvisionOd);
         }
         if (!StringUtils.isBlank(correctionFarvisionOs) && isDouble(correctionFarvisionOs)) {
             yuanjingshiliL = Double.parseDouble(correctionFarvisionOs);
         }
-        if (yuanjingshiliL == 0)
-            ssL = "wuyuanjing";
-        if (yuanjingshiliR == 0)
-            ssR = "wuyuanjing";
 
         if (od >= 5.0 && dengxiaoqiujingR > 0.75 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "视力目前正常，无近视发生。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
@@ -2022,6 +1990,16 @@ public class StudentNewController {
 				}*/
         if (studentDO.getSysId() == 46)
             return "informationNEW/student/青海普通筛查打印";
+        if ("育秀小学".equals(studentDO.getSchool()))
+            return "informationNEW/student/普通筛查打印-无广告";
+        if ("育晖小学".equals(studentDO.getSchool()))
+            return "informationNEW/student/普通筛查打印-无广告";
+        if ("爱都小学".equals(studentDO.getSchool()))
+            return "informationNEW/student/普通筛查打印-无广告";
+        if ("育秀中学小学部".equals(studentDO.getSchool()))
+            return "informationNEW/student/普通筛查打印-无广告";
+        if ("舜耕小学".equals(studentDO.getSchool()))
+            return "informationNEW/student/普通筛查打印-无广告";
         return "informationNEW/student/普通筛查打印";
     }
 
@@ -2196,21 +2174,6 @@ public class StudentNewController {
         model.addAttribute("cornealMmr2L", resultCornealDO.getCornealD() == null ? "" : df.format(zhuanhuan(resultCornealDO.getCornealD())));
         model.addAttribute("cornealDr2L", resultCornealDO.getCornealDeg() == null ? "" : resultCornealDO.getCornealDeg());
         //医生的建议
-        Date birthday = studentDO.getBirthday() == null ? new Date() : studentDO.getBirthday();
-        int birth = 0;
-        try {
-            birth = TimeUtils.getAgeByBirth(birthday);
-
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-//	   if(birth>=3 && birth<=5){
-//		   model.addAttribute("ifStu","1");
-//	   }else{
-//		   model.addAttribute("ifStu","2");
-//	   }
         if ("幼儿园".equals(studentDO.getXueBu())) {
             model.addAttribute("ifStu", "1");
         } else {
@@ -2223,146 +2186,109 @@ public class StudentNewController {
         if (!StringUtils.isBlank(nakedFarvisionOs) && isDouble(nakedFarvisionOs)) {
             os = Double.parseDouble(nakedFarvisionOs);
         }
-//	    od=od<os?od:os;
-//	    dengxiaoqiujingL=dengxiaoqiujingL<dengxiaoqiujingR?dengxiaoqiujingL:dengxiaoqiujingR;
         double yuanjingshiliL = 0, yuanjingshiliR = 0;//原镜视力
-        String ssL = "ss", ssR = "ss";
         if (!StringUtils.isBlank(correctionFarvisionOd) && isDouble(correctionFarvisionOd)) {
-//	    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
             yuanjingshiliR = Double.parseDouble(correctionFarvisionOd);
         }
         if (!StringUtils.isBlank(correctionFarvisionOs) && isDouble(correctionFarvisionOs)) {
-//	    	correctionFarvisionOd=correctionFarvisionOd.compareTo(correctionFarvisionOs)>0?correctionFarvisionOs:correctionFarvisionOd;
             yuanjingshiliL = Double.parseDouble(correctionFarvisionOs);
         }
-        if (yuanjingshiliL == 0)
-            ssL = "wuyuanjing";
-        if (yuanjingshiliR == 0)
-            ssR = "wuyuanjing";
 
         if (od >= 5.0 && dengxiaoqiujingR > 0.75 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "视力目前正常，无近视发生。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","无");
         }
         if (os >= 5.0 && dengxiaoqiujingL > 0.75 && zhujingqL > -1.0) {
             model.addAttribute("zdoctorchubu", "视力目前正常，无近视发生。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","无");
         }
 
         if (od >= 5.0 && dengxiaoqiujingR > 0.75 && zhujingqr <= -1.0) {
             model.addAttribute("ydoctorchubu", "视力目前正常，散光，无近视发生。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","无");
         }
         if (os >= 5.0 && dengxiaoqiujingL > 0.75 && zhujingqL <= -1.0) {
             model.addAttribute("zdoctorchubu", "视力目前正常，散光，无近视发生。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","无");
         }
 
         if (od >= 5.0 && dengxiaoqiujingR >= -0.5 && dengxiaoqiujingR <= 0.75 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "视力目前正常，近视临床前期。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，防控近视的发生，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","近视临床前期");
         }
         if (os >= 5.0 && dengxiaoqiujingL >= -0.5 && dengxiaoqiujingL <= 0.75 && zhujingqL > -1.0) {
             model.addAttribute("zdoctorchubu", "视力目前正常，近视临床前期。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，防控近视的发生，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","近视临床前期");
         }
 
         if (od >= 5.0 && dengxiaoqiujingR >= -0.5 && dengxiaoqiujingR <= 0.75 && zhujingqr <= -1.0) {
             model.addAttribute("ydoctorchubu", "视力目前正常，散光，近视临床前期。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，防控近视的发生，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","近视临床前期");
         }
         if (os >= 5.0 && dengxiaoqiujingL >= -0.5 && dengxiaoqiujingL <= 0.75 && zhujingqL <= -1.0) {
             model.addAttribute("zdoctorchubu", "视力目前正常，散光，近视临床前期。请注意卫生用眼，避免长时间近距离持续用眼，多参加户外活动，建议建立完善的视觉健康档案，防控近视的发生，更好地进行近视发生的预警。");
-            //    	model.addAttribute("yujing","近视临床前期");
         }
 
         if (od >= 5.0 && dengxiaoqiujingR < -0.5 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "视力目前正常，属于假性近视。根据目前检查结果，有发生真性近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，采用科学的防控措施，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
-            //    	model.addAttribute("yujing","假性近视");
         }
         if (os >= 5.0 && dengxiaoqiujingL < -0.5 && zhujingqL > -1.0) {
             model.addAttribute("zdoctorchubu", "视力目前正常，属于假性近视。根据目前检查结果，有发生真性近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，采用科学的防控措施，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
-            //    	model.addAttribute("yujing","假性近视");
         }
 
         if (od >= 5.0 && dengxiaoqiujingR < -0.5 && zhujingqr <= -1.0) {
             model.addAttribute("ydoctorchubu", "视力目前正常，属于假性近视，散光。根据目前检查结果，有发生真性近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，采用科学的防控措施，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
-            //    	model.addAttribute("yujing","假性近视");
         }
         if (os >= 5.0 && dengxiaoqiujingL < -0.5 && zhujingqL <= -1.0) {
             model.addAttribute("zdoctorchubu", "视力目前正常，属于假性近视，散光。根据目前检查结果，有发生真性近视的可能。建议您到医院进行进一步散瞳检查，以确定是否近期可能发展为近视，并请严格注意用眼卫生，避免长时间近距离持续用眼，采用科学的防控措施，多参加户外活动，建立完善的视觉健康档案，避免假性近视发展为真性近视。");
-            //    	model.addAttribute("yujing","假性近视");
         }
         if (od < 5.0 && dengxiaoqiujingR >= -0.5 && yuanjingshiliR >= 5.0 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。合理卫生用眼，建议到医院进一步检查，了解远视储备值情况，预防近视的发生。");
-            //    	model.addAttribute("yujing","无");
         }
         if (os < 5.0 && dengxiaoqiujingL >= -0.5 && yuanjingshiliL >= 5.0 && zhujingqL > -1.0) {
             model.addAttribute("zdoctorchubu", "戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。合理卫生用眼，建议到医院进一步检查，了解远视储备值情况，预防近视的发生。");
-            //    	model.addAttribute("yujing","无");
         }
 
         if (od < 5.0 && dengxiaoqiujingR >= -0.5 && yuanjingshiliR >= 5.0 && zhujingqr <= -1.0) {
             model.addAttribute("ydoctorchubu", "散光，戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。合理卫生用眼，建议到医院进一步检查，了解远视储备值情况，预防近视的发生。");
-            //    	model.addAttribute("yujing","无");
         }
         if (os < 5.0 && dengxiaoqiujingL >= -0.5 && yuanjingshiliL >= 5.0 && zhujingqL <= -1.0) {
             model.addAttribute("zdoctorchubu", "散光，戴原镜视力正常。请继续佩戴原来的眼镜，遵医嘱定期复查。合理卫生用眼，建议到医院进一步检查，了解远视储备值情况，预防近视的发生。");
-            //    	model.addAttribute("yujing","无");
         }
 
         if (od < 5.0 && dengxiaoqiujingR < -0.5 && yuanjingshiliR >= 5.0 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "戴原镜视力正常，近视。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展；建议到正规医院，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
-            //    	model.addAttribute("yujing","近视");
         }
         if (os < 5.0 && dengxiaoqiujingL < -0.5 && yuanjingshiliL >= 5.0 && zhujingqL > -1.0) {
             model.addAttribute("zdoctorchubu", "戴原镜视力正常，近视。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展；建议到正规医院，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
-            //    	model.addAttribute("yujing","近视");
         }
 
         if (od < 5.0 && dengxiaoqiujingR < -0.5 && yuanjingshiliR >= 5.0 && zhujingqr <= -1.0) {
             model.addAttribute("ydoctorchubu", "戴原镜视力正常，近视，散光。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展；建议到正规医院，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
-            //    	model.addAttribute("yujing","近视");
         }
         if (os < 5.0 && dengxiaoqiujingL < -0.5 && yuanjingshiliL >= 5.0 && zhujingqL <= -1.0) {
             model.addAttribute("zdoctorchubu", "戴原镜视力正常，近视，散光。请继续佩戴原来的眼镜，遵医嘱定期复查。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展；建议到正规医院，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。");
-            //    	model.addAttribute("yujing","近视");
         }
 
         if (od < 5.0 && dengxiaoqiujingR >= -0.5 && yuanjingshiliR < 5.0 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "视力异常。建议及时到正规医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼部疾病，并及时采取相应治疗措施；若已明确诊断，请遵医嘱及时定期复查，进行科学规范的治疗。");
-            //    	model.addAttribute("yujing","近视");
         }
         if (os < 5.0 && dengxiaoqiujingL >= -0.5 && yuanjingshiliL < 5.0 && zhujingqL > -1.0) {
             model.addAttribute("zdoctorchubu", "视力异常。建议及时到正规医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼部疾病，并及时采取相应治疗措施；若已明确诊断，请遵医嘱及时定期复查，进行科学规范的治疗。");
-            //    	model.addAttribute("yujing","近视");
         }
 
         if (od < 5.0 && dengxiaoqiujingR >= -0.5 && yuanjingshiliR < 5.0 && zhujingqr <= -1.0) {
             model.addAttribute("ydoctorchubu", "视力异常，散光。建议及时到正规医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼部疾病，并及时采取相应治疗措施；若已明确诊断，请遵医嘱及时定期复查，进行科学规范的治疗。");
-            //    	model.addAttribute("yujing","近视");
         }
         if (os < 5.0 && dengxiaoqiujingL >= -0.5 && yuanjingshiliL < 5.0 && zhujingqL <= -1.0) {
             model.addAttribute("zdoctorchubu", "视力异常，散光。建议及时到正规医院接受详细检查，明确诊断是否为屈光不正、弱视、斜视、视功能异常以及其他眼部疾病，并及时采取相应治疗措施；若已明确诊断，请遵医嘱及时定期复查，进行科学规范的治疗。");
-            //    	model.addAttribute("yujing","近视");
         }
 
         if (od < 5.0 && dengxiaoqiujingR < -0.5 && yuanjingshiliR < 5.0 && zhujingqr > -1.0) {
             model.addAttribute("ydoctorchubu", "视力下降，近视。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病；若已进行近视矫治，根据检查结果提示，眼镜度数可能需要调整，请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
-            //    	model.addAttribute("yujing","近视");
         }
         if (os < 5.0 && dengxiaoqiujingL < -0.5 && yuanjingshiliL < 5.0 && zhujingqL > -1.0) {
             model.addAttribute("zdoctorchubu", "视力下降，近视。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病；若已进行近视矫治，根据检查结果提示，眼镜度数可能需要调整，请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
-            //    	model.addAttribute("yujing","近视");
         }
 
         if (od < 5.0 && dengxiaoqiujingR < -0.5 && yuanjingshiliR < 5.0 && zhujingqr <= -1.0) {
             model.addAttribute("ydoctorchubu", "视力下降，近视，散光。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病；若已进行近视矫治，根据检查结果提示，眼镜度数可能需要调整，请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
-            //    	model.addAttribute("yujing","近视");
         }
         if (os < 5.0 && dengxiaoqiujingL < -0.5 && yuanjingshiliL < 5.0 && zhujingqL <= -1.0) {
             model.addAttribute("zdoctorchubu", "视力下降，近视，散光。建议及时到医院接受近视的详细检查，通过散瞳明确近视的程度并排除其他眼病；若已进行近视矫治，根据检查结果提示，眼镜度数可能需要调整，请及时到医院进行复查，采取科学的方法进行近视的防控或采取相应眼病治疗措施，避免低度近视发展为中度近视，避免中度近视发展为高度近视，减少高度近视的并发症发生。并请严格注意用眼卫生，避免长时间近距离持续用眼，多参加户外活动，建立完善的视觉健康档案，延缓近视的进展。");
-            //    	model.addAttribute("yujing","近视");
         }
 
 	   /* if(od>=5.0 && dengxiaoqiujingR>0.75){
